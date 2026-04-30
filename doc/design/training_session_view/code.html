@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Vault - Course Training</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #131317;
+        }
+        h1, h2, h3, .headline-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .achievement-glow {
+            box-shadow: 0 20px 40px -15px rgba(242, 202, 80, 0.15);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#e5e1e8",
+                        "background": "#131317",
+                        "outline-variant": "#4d4635",
+                        "surface-container": "#201f24",
+                        "secondary-container": "#264191",
+                        "on-tertiary-container": "#3a4559",
+                        "inverse-surface": "#e5e1e8",
+                        "inverse-primary": "#735c00",
+                        "surface-container-highest": "#353439",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#e9c349",
+                        "outline": "#99907c",
+                        "on-tertiary": "#263143",
+                        "secondary": "#b6c4ff",
+                        "on-secondary-fixed-variant": "#264191",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#05297a",
+                        "surface-container-low": "#1b1b20",
+                        "tertiary-fixed-dim": "#bcc7de",
+                        "on-primary-container": "#554300",
+                        "surface-dim": "#131317",
+                        "on-surface": "#e5e1e8",
+                        "primary-fixed-dim": "#e9c349",
+                        "surface": "#131317",
+                        "on-surface-variant": "#d0c5af",
+                        "surface-variant": "#353439",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "inverse-on-surface": "#303035",
+                        "on-tertiary-fixed": "#111c2d",
+                        "secondary-fixed": "#dce1ff",
+                        "surface-container-lowest": "#0e0e12",
+                        "on-secondary-container": "#9db2ff",
+                        "surface-bright": "#39383e",
+                        "on-primary-fixed": "#241a00",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "tertiary": "#c3cee6",
+                        "tertiary-container": "#a8b3ca",
+                        "on-primary-fixed-variant": "#574500",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "surface-container-high": "#2a292e",
+                        "on-secondary-fixed": "#00164e",
+                        "primary-fixed": "#ffe088",
+                        "primary-container": "#d4af37",
+                        "tertiary-fixed": "#d8e3fb",
+                        "primary": "#f2ca50",
+                        "on-primary": "#3c2f00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131317] dark:bg-[#131317] flex justify-between items-center px-8 h-20 w-full bg-gradient-to-b from-[#1b1b20] to-transparent shadow-[0_20px_40px_-15px_rgba(242,202,80,0.06)]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border border-outline-variant/20">
+<img alt="Executive Profile" class="w-full h-full object-cover" data-alt="Close-up professional portrait of a confident male executive in a dark tailored suit against a blurred office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHCAUjQE1pOOxmceZszaTa6HBxdbFZatG6eay4w74L1gRBY26twoVzzFW-5vOoBG6dGr8DRilsNBPXbCRDDc6G60aQnO9jN-tgHhG68vPO00sqVbr-d-kTl2BBbjREttY-frjsgSrKvK6HVEMRy6dLA2rJ6LLnHnQHV61Vdb5xG1iF2aN5wArlEuQ-UEMXgePtMhNBXUebhwzpzlpdfyf1S3X-9aXdLNqsHyHoxWFAqP8VdoDC93nD54_FDRM6Xf00-jYU_945Rw"/>
+</div>
+<span class="font-['Plus_Jakarta_Sans'] font-bold text-[1.75rem] tracking-tight text-[#D4AF37]">The Vault</span>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300 ease-out active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-28 px-6 max-w-6xl mx-auto space-y-12">
+<!-- Video Hero Section -->
+<section class="relative group">
+<div class="relative aspect-video rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant/10 shadow-2xl">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent z-10"></div>
+<img alt="Course Background" class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" data-alt="Cinematic wide shot of a high-end modern dark boardroom with ambient golden lighting and glowing screens on the wall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3Ta07LalT1i9ehOlVeoN2uxHo8-xCrJ4hNNSKck5n_g87ekbCuuzdmkcUBNiASgzncadJpI-rfPleEgz95TCA_PqGoTnXnkbKe62onYnnAki03OJPVvdOk9vTCXnTHIWxTNgVWc_WXDzMqnEm6_hAzJPSJibHnnaDS9WaUUJB6d3t4448yHu8xZGPUYg4nqhDp16_rsWi_Un70H4WEHwjujV-WHu_APpKvjWKfn8PRrxZDO8LZnRQeuNlr7XImgOKqoUgwdl-qg"/>
+<!-- Play Button Overlay -->
+<div class="absolute inset-0 flex items-center justify-center z-20">
+<button class="w-24 h-24 rounded-full bg-primary/90 text-on-primary flex items-center justify-center achievement-glow hover:scale-110 transition-transform duration-300 group/play">
+<span class="material-symbols-outlined text-5xl translate-x-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Video Progress Mock -->
+<div class="absolute bottom-0 left-0 w-full h-1.5 bg-surface-container-highest z-30">
+<div class="h-full bg-primary w-1/3"></div>
+</div>
+</div>
+</section>
+<!-- Lesson Header -->
+<section class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[0.75rem] font-medium tracking-widest uppercase">Module 04</span>
+<span class="text-on-surface-variant text-[0.75rem] font-medium uppercase tracking-widest">24 Minutes Remaining</span>
+</div>
+<h1 class="text-4xl md:text-5xl font-bold tracking-tight text-on-surface leading-tight max-w-3xl">Strategic Leverage &amp; High-Stakes Decision Engineering</h1>
+<p class="text-on-surface-variant text-lg leading-relaxed max-w-2xl">
+                Master the architectural frameworks used by top-tier executives to navigate complex high-risk environments without compromising long-term equity.
+            </p>
+</section>
+<!-- Content Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Left Column: Takeaways -->
+<div class="md:col-span-2 space-y-8">
+<div class="bg-surface-container-low p-8 rounded-xl space-y-8">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold text-primary tracking-tight">Key Takeaways</h2>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div class="space-y-6">
+<!-- Takeaway Item -->
+<div class="flex gap-6 group">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant/10 text-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="space-y-2">
+<h3 class="text-on-surface font-semibold">The 80/20 Decision Matrix</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Identify the 20% of strategic actions that drive 80% of executive outcomes in high-pressure quarters.</p>
+</div>
+</div>
+<!-- Takeaway Item -->
+<div class="flex gap-6 group">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant/10 text-primary">
+<span class="material-symbols-outlined">shield_with_heart</span>
+</div>
+<div class="space-y-2">
+<h3 class="text-on-surface font-semibold">Risk Mitigation Protocols</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Establish failsafes that protect corporate assets during aggressive expansion phases.</p>
+</div>
+</div>
+<!-- Takeaway Item -->
+<div class="flex gap-6 group">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant/10 text-primary">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<div class="space-y-2">
+<h3 class="text-on-surface font-semibold">Influence Without Authority</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Advanced psychological frameworks for aligning cross-functional teams around a singular vision.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Call to Action -->
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="flex-1 bg-gradient-to-r from-primary-container to-primary text-on-primary py-4 px-8 rounded-lg font-bold text-lg hover:shadow-[0_0_20px_rgba(242,202,80,0.3)] transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-3">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Mark as Complete
+                    </button>
+<button class="flex-1 bg-transparent border border-outline-variant/30 text-primary py-4 px-8 rounded-lg font-bold text-lg hover:bg-primary/5 transition-all duration-300 flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">download</span>
+                        Download Resources
+                    </button>
+</div>
+</div>
+<!-- Right Column: Context/Resources -->
+<div class="space-y-8">
+<div class="bg-surface-container rounded-xl p-6 border border-outline-variant/10 space-y-6">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Recommended Tools</h3>
+<div class="space-y-4">
+<div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant/10 flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<p class="text-sm font-medium text-on-surface">Decision Log Template</p>
+<p class="text-[0.7rem] text-on-surface-variant uppercase">XLSX • 2.4 MB</p>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant/10 flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div>
+<p class="text-sm font-medium text-on-surface">Executive Reading List</p>
+<p class="text-[0.7rem] text-on-surface-variant uppercase">PDF • 1.1 MB</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-secondary-container/20 to-transparent p-6 rounded-xl border border-secondary-container/10">
+<h3 class="text-sm font-bold uppercase tracking-widest text-secondary mb-4">Elite Coaching Tip</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed italic">
+                        "Your speed of implementation is the only differentiator that matters in a globalized market. Don't just watch—execute."
+                    </p>
+<div class="mt-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container border border-primary/20 flex items-center justify-center text-[10px] font-bold text-primary">JD</div>
+<span class="text-[0.75rem] font-medium text-on-surface">Jason Draven, Master Coach</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-24 px-6 pb-6 bg-[#0e0e12]/90 backdrop-blur-xl z-50 border-t border-[#4d4635]/15 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Vault</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f2ca50] scale-110 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Training</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Coaching</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Resources</span>
+</a>
+</nav>
+</body></html>

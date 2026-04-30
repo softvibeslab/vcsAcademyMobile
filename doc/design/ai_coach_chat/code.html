@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VCSA Pocket AI Coach</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #131317;
+        }
+        .headline-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-vault-gradient {
+            background: radial-gradient(circle at top right, rgba(38, 65, 145, 0.15), transparent),
+                        radial-gradient(circle at bottom left, rgba(212, 175, 55, 0.05), transparent);
+        }
+        /* Custom scrollbar for horizontal suggestion pills */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#3a4559",
+                      "surface-container-low": "#1b1b20",
+                      "on-error": "#690005",
+                      "primary-fixed": "#ffe088",
+                      "surface-tint": "#e9c349",
+                      "on-primary-container": "#554300",
+                      "secondary": "#b6c4ff",
+                      "surface-container": "#201f24",
+                      "primary": "#f2ca50",
+                      "tertiary-fixed-dim": "#bcc7de",
+                      "on-secondary-container": "#9db2ff",
+                      "on-tertiary": "#263143",
+                      "on-primary": "#3c2f00",
+                      "inverse-primary": "#735c00",
+                      "on-secondary": "#05297a",
+                      "on-surface-variant": "#d0c5af",
+                      "surface": "#131317",
+                      "surface-bright": "#39383e",
+                      "on-background": "#e5e1e8",
+                      "tertiary-fixed": "#d8e3fb",
+                      "secondary-container": "#264191",
+                      "surface-variant": "#353439",
+                      "on-secondary-fixed": "#00164e",
+                      "primary-fixed-dim": "#e9c349",
+                      "inverse-surface": "#e5e1e8",
+                      "error-container": "#93000a",
+                      "secondary-fixed": "#dce1ff",
+                      "background": "#131317",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-container": "#a8b3ca",
+                      "on-tertiary-fixed-variant": "#3c475a",
+                      "on-surface": "#e5e1e8",
+                      "on-primary-fixed": "#241a00",
+                      "primary-container": "#d4af37",
+                      "outline-variant": "#4d4635",
+                      "inverse-on-surface": "#303035",
+                      "on-secondary-fixed-variant": "#264191",
+                      "tertiary": "#c3cee6",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#b6c4ff",
+                      "surface-dim": "#131317",
+                      "surface-container-high": "#2a292e",
+                      "surface-container-highest": "#353439",
+                      "surface-container-lowest": "#0e0e12",
+                      "on-primary-fixed-variant": "#574500",
+                      "outline": "#99907c",
+                      "on-tertiary-fixed": "#111c2d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Manrope"],
+                      "label": ["Manrope"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col bg-vault-gradient">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-surface/80 backdrop-blur-md">
+<div class="flex justify-between items-center w-full px-6 py-8 max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface text-2xl">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="headline-font text-xl font-bold tracking-tight text-[#e5e1e8]">AI Coach</span>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-[10px] font-bold text-emerald-500 uppercase tracking-wider">Online</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2.5 rounded-xl bg-surface-container-low text-primary hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">history</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Chat Canvas -->
+<main class="flex-1 flex flex-col overflow-y-auto px-6 pb-40 max-w-4xl mx-auto w-full space-y-12">
+<!-- Welcome State -->
+<section class="flex flex-col items-center justify-center text-center py-12 space-y-6">
+<div class="relative">
+<div class="absolute inset-0 blur-3xl bg-primary/10 rounded-full"></div>
+<div class="relative w-24 h-24 rounded-3xl bg-surface-container-high flex items-center justify-center border border-outline-variant/15">
+<span class="material-symbols-outlined text-5xl text-primary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+</div>
+<div class="space-y-2">
+<h1 class="headline-font text-3xl font-bold tracking-tight text-on-surface">How can I help you win today?</h1>
+<p class="text-on-surface-variant max-w-xs mx-auto text-sm leading-relaxed">Describe a sales objection or a complex deal situation to get high-performance strategies.</p>
+</div>
+</section>
+<!-- Suggestion Pills -->
+<section class="flex overflow-x-auto gap-3 pb-4 hide-scrollbar -mx-6 px-6">
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-surface-container border border-outline-variant/20 text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all duration-300 text-sm font-medium">Price is too high</button>
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-surface-container border border-outline-variant/20 text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all duration-300 text-sm font-medium">Need to talk to spouse</button>
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-surface-container border border-outline-variant/20 text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all duration-300 text-sm font-medium">Not interested right now</button>
+<button class="flex-shrink-0 px-5 py-2.5 rounded-full bg-surface-container border border-outline-variant/20 text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all duration-300 text-sm font-medium">Already have membership</button>
+</section>
+<!-- Chat History Example -->
+<div class="space-y-8">
+<!-- User Message -->
+<div class="flex justify-end">
+<div class="max-w-[85%] px-5 py-4 rounded-2xl rounded-tr-sm bg-primary-container text-on-primary-container shadow-lg">
+<p class="font-medium">The client says it's too expensive</p>
+</div>
+</div>
+<!-- AI Response -->
+<div class="flex justify-start items-start gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-container flex items-center justify-center shrink-0 mt-1">
+<span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="max-w-[90%] space-y-4">
+<div class="px-6 py-5 rounded-2xl rounded-tl-sm bg-surface-container text-on-surface shadow-xl border border-outline-variant/10">
+<p class="text-sm leading-relaxed mb-4">Handling price objections is about shifting the focus from <span class="italic">cost</span> to <span class="text-primary font-bold">value</span>. When they say "it's too expensive," they're actually saying they haven't seen the return on investment yet.</p>
+<!-- Callout Box -->
+<div class="p-4 rounded-xl bg-primary/5 border-l-4 border-primary space-y-1 mb-6">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">vpn_key</span>
+<span class="headline-font text-xs font-black uppercase tracking-widest">Key Move</span>
+</div>
+<p class="text-sm font-bold text-on-surface">Empathize and normalize the concern</p>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface-container-high border border-outline-variant/20 hover:border-primary/40 transition-all group">
+<span class="material-symbols-outlined text-lg text-primary">analytics</span>
+<span class="text-xs font-bold text-on-surface group-hover:text-primary">View Logical Approach</span>
+</button>
+<button class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface-container-high border border-outline-variant/20 hover:border-primary/40 transition-all group">
+<span class="material-symbols-outlined text-lg text-primary">auto_stories</span>
+<span class="text-xs font-bold text-on-surface group-hover:text-primary">View Story Approach</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-24 left-0 w-full px-6 z-40 max-w-4xl mx-auto left-1/2 -translate-x-1/2">
+<div class="bg-surface-container-highest/95 backdrop-blur-xl border border-outline-variant/20 rounded-2xl p-2 flex items-center gap-2 shadow-2xl">
+<button class="p-3 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface placeholder-on-surface-variant text-sm py-3 px-2" placeholder="Describe your situation..." type="text"/>
+<button class="w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-on-primary shadow-[0_8px_20px_rgba(242,202,80,0.2)] active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+<!-- Persistent Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#131317] border-t border-[#4d4635]/15 shadow-[0_-20px_40px_rgba(242,202,80,0.06)]">
+<!-- Dashboard -->
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:text-[#F2CA50] transition-all duration-300 scale-95 active:duration-150" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">Dashboard</span>
+</a>
+<!-- AI Coach (Active) -->
+<a class="flex flex-col items-center justify-center text-[#F2CA50] bg-[#264191]/20 rounded-xl px-3 py-1 scale-95 active:duration-150" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">AI Coach</span>
+</a>
+<!-- Pre-Tour -->
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:text-[#F2CA50] transition-all duration-300 scale-95 active:duration-150" href="#">
+<span class="material-symbols-outlined mb-1">bolt</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">Pre-Tour</span>
+</a>
+<!-- Quick Wins -->
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:text-[#F2CA50] transition-all duration-300 scale-95 active:duration-150" href="#">
+<span class="material-symbols-outlined mb-1">menu_book</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">Quick Wins</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:text-[#F2CA50] transition-all duration-300 scale-95 active:duration-150" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">Profile</span>
+</a>
+</nav>
+</body></html>

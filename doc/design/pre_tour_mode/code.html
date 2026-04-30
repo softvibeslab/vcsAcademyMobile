@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VCSA Pocket Pre-Tour Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#3a4559",
+                    "surface-container-low": "#1b1b20",
+                    "on-error": "#690005",
+                    "primary-fixed": "#ffe088",
+                    "surface-tint": "#e9c349",
+                    "on-primary-container": "#554300",
+                    "secondary": "#b6c4ff",
+                    "surface-container": "#201f24",
+                    "primary": "#f2ca50",
+                    "tertiary-fixed-dim": "#bcc7de",
+                    "on-secondary-container": "#9db2ff",
+                    "on-tertiary": "#263143",
+                    "on-primary": "#3c2f00",
+                    "inverse-primary": "#735c00",
+                    "on-secondary": "#05297a",
+                    "on-surface-variant": "#d0c5af",
+                    "surface": "#131317",
+                    "surface-bright": "#39383e",
+                    "on-background": "#e5e1e8",
+                    "tertiary-fixed": "#d8e3fb",
+                    "secondary-container": "#264191",
+                    "surface-variant": "#353439",
+                    "on-secondary-fixed": "#00164e",
+                    "primary-fixed-dim": "#e9c349",
+                    "inverse-surface": "#e5e1e8",
+                    "error-container": "#93000a",
+                    "secondary-fixed": "#dce1ff",
+                    "background": "#131317",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-container": "#a8b3ca",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "on-surface": "#e5e1e8",
+                    "on-primary-fixed": "#241a00",
+                    "primary-container": "#d4af37",
+                    "outline-variant": "#4d4635",
+                    "inverse-on-surface": "#303035",
+                    "on-secondary-fixed-variant": "#264191",
+                    "tertiary": "#c3cee6",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#b6c4ff",
+                    "surface-dim": "#131317",
+                    "surface-container-high": "#2a292e",
+                    "surface-container-highest": "#353439",
+                    "surface-container-lowest": "#0e0e12",
+                    "on-primary-fixed-variant": "#574500",
+                    "outline": "#99907c",
+                    "on-tertiary-fixed": "#111c2d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans", "sans-serif"],
+                    "body": ["Manrope", "sans-serif"],
+                    "label": ["Manrope", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #131317; }
+        .headline-font { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-glow {
+            background: radial-gradient(circle at top right, rgba(38, 65, 145, 0.15), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(212, 175, 55, 0.05), transparent 40%);
+        }
+        .timer-glow {
+            box-shadow: 0 0 40px rgba(242, 202, 80, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface overflow-hidden">
+<!-- Pre-Tour Mode: Full Screen Modal -->
+<main class="fixed inset-0 z-[100] bg-surface glass-glow flex flex-col h-screen">
+<!-- Header -->
+<header class="flex justify-between items-center px-8 pt-10 pb-6 w-full max-w-2xl mx-auto">
+<div class="flex flex-col">
+<h1 class="headline-font text-2xl font-bold tracking-tight text-on-surface">PRE-TOUR MODE</h1>
+<p class="text-on-surface-variant text-sm font-medium">2-minute preparation routine</p>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-low hover:bg-surface-container transition-colors duration-300">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</header>
+<!-- Main Scrollable Canvas -->
+<div class="flex-1 overflow-y-auto px-6 pb-32 space-y-12">
+<!-- Timer Section -->
+<section class="flex flex-col items-center justify-center py-8">
+<div class="relative w-64 h-64 flex items-center justify-center">
+<!-- Progress Ring -->
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-outline-variant/20" cx="128" cy="128" fill="transparent" r="120" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary timer-glow" cx="128" cy="128" fill="transparent" r="120" stroke="currentColor" stroke-dasharray="753" stroke-dashoffset="188" stroke-width="4"></circle>
+</svg>
+<div class="z-10 text-center flex flex-col items-center">
+<span class="headline-font text-6xl font-bold tracking-tighter text-on-surface">2:00</span>
+<p class="text-label-md text-on-surface-variant uppercase tracking-[0.2em] mt-2">Focused Prep</p>
+</div>
+</div>
+<button class="mt-10 px-10 py-4 rounded-full bg-gradient-to-r from-primary-container to-primary text-on-primary font-bold shadow-[0_10px_30px_rgba(242,202,80,0.2)] hover:scale-105 active:scale-95 transition-all duration-300">
+                    Begin Prep
+                </button>
+</section>
+<!-- Preparation Stack -->
+<section class="max-w-2xl mx-auto w-full space-y-6">
+<!-- 1. Mindset Affirmation -->
+<div class="p-8 rounded-xl bg-surface-container-low border border-outline-variant/15 flex flex-col space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">psychology</span>
+</div>
+<h3 class="text-title-md font-semibold text-on-surface">Mindset Affirmation</h3>
+</div>
+<p class="text-xl italic font-medium leading-relaxed text-on-surface-variant">
+                        "I am confident, prepared, and ready to create value"
+                    </p>
+<div class="flex justify-end">
+<button class="flex items-center gap-2 px-6 py-2 rounded-full border border-outline-variant/30 text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-sm">refresh</span>
+<span class="text-sm font-bold uppercase tracking-wider">Repeat 3x</span>
+</button>
+</div>
+</div>
+<!-- 2. Quick Win of the Day -->
+<div class="p-8 rounded-xl bg-surface-container-low border border-outline-variant/15 flex flex-col space-y-6">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-xl">bolt</span>
+</div>
+<h3 class="text-title-md font-semibold text-on-surface">Quick Win of the Day</h3>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold tracking-widest uppercase">MINDSET</span>
+</div>
+<div class="flex flex-col space-y-2">
+<h4 class="text-lg font-bold text-on-surface">Breaking The Pact</h4>
+<p class="text-on-surface-variant text-sm">Identifica y rompe 3 patrones mentales limitantes</p>
+</div>
+<div class="flex justify-end">
+<button class="text-primary text-sm font-bold uppercase tracking-wider flex items-center gap-1 hover:gap-2 transition-all">
+                            View Full <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- 3. Objection Prep -->
+<div class="p-8 rounded-xl bg-surface-container-low border border-outline-variant/15 flex flex-col space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-xl">forum</span>
+</div>
+<h3 class="text-title-md font-semibold text-on-surface">Objection Prep</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex items-center gap-4 text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="text-sm">"The price is higher than the competitor"</span>
+</li>
+<li class="flex items-center gap-4 text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="text-sm">"We need to discuss this internally"</span>
+</li>
+<li class="flex items-center gap-4 text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="text-sm">"Not sure if the timing is right"</span>
+</li>
+</ul>
+<div class="flex justify-end pt-2">
+<button class="flex items-center gap-2 px-6 py-2 rounded-full border border-outline-variant/30 text-primary hover:bg-primary/5 transition-all">
+<span class="text-sm font-bold uppercase tracking-wider">Review Responses</span>
+</button>
+</div>
+</div>
+<!-- 4. Goal Reminder -->
+<div class="p-8 rounded-xl bg-surface-container-low border border-outline-variant/15 flex flex-col space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">flag</span>
+</div>
+<h3 class="text-title-md font-semibold text-on-surface">Goal Reminder</h3>
+</div>
+<div class="flex items-center gap-4 py-2">
+<div class="flex-1 text-center border-r border-outline-variant/20">
+<p class="headline-font text-2xl font-bold text-on-surface">1</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Sale</p>
+</div>
+<div class="flex-1 text-center border-r border-outline-variant/20">
+<p class="headline-font text-2xl font-bold text-on-surface">3</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Tours</p>
+</div>
+<div class="flex-1 text-center">
+<p class="material-symbols-outlined text-2xl text-primary" style="font-variation-settings: 'FILL' 1;">smart_toy</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">AI Ready</p>
+</div>
+</div>
+<div class="flex justify-center">
+<button class="w-full py-4 rounded-xl bg-primary/10 text-primary border border-primary/20 font-bold hover:bg-primary/20 transition-all">
+                            I'm Ready
+                        </button>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-surface via-surface/95 to-transparent flex flex-col items-center space-y-4">
+<button class="w-full max-w-2xl py-5 rounded-full bg-gradient-to-r from-primary-container to-primary text-on-primary font-black text-lg tracking-widest uppercase shadow-[0_15px_40px_rgba(242,202,80,0.15)] hover:scale-[1.02] active:scale-95 transition-all">
+                Start Tour
+            </button>
+<p class="text-label-md text-on-surface-variant italic opacity-80">"Victory loves preparation. You have everything you need."</p>
+</footer>
+</main>
+<!-- Background Decoration -->
+<div class="fixed top-0 right-0 w-1/3 h-1/3 bg-secondary-container/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+<div class="fixed bottom-0 left-0 w-1/3 h-1/3 bg-primary-container/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
+</body></html>

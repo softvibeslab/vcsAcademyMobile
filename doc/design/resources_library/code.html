@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Vault - Resources Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#e5e1e8",
+                    "background": "#131317",
+                    "outline-variant": "#4d4635",
+                    "surface-container": "#201f24",
+                    "secondary-container": "#264191",
+                    "on-tertiary-container": "#3a4559",
+                    "inverse-surface": "#e5e1e8",
+                    "inverse-primary": "#735c00",
+                    "surface-container-highest": "#353439",
+                    "error": "#ffb4ab",
+                    "surface-tint": "#e9c349",
+                    "outline": "#99907c",
+                    "on-tertiary": "#263143",
+                    "secondary": "#b6c4ff",
+                    "on-secondary-fixed-variant": "#264191",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary": "#05297a",
+                    "surface-container-low": "#1b1b20",
+                    "tertiary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#554300",
+                    "surface-dim": "#131317",
+                    "on-surface": "#e5e1e8",
+                    "primary-fixed-dim": "#e9c349",
+                    "surface": "#131317",
+                    "on-surface-variant": "#d0c5af",
+                    "surface-variant": "#353439",
+                    "secondary-fixed-dim": "#b6c4ff",
+                    "inverse-on-surface": "#303035",
+                    "on-tertiary-fixed": "#111c2d",
+                    "secondary-fixed": "#dce1ff",
+                    "surface-container-lowest": "#0e0e12",
+                    "on-secondary-container": "#9db2ff",
+                    "surface-bright": "#39383e",
+                    "on-primary-fixed": "#241a00",
+                    "error-container": "#93000a",
+                    "on-error": "#690005",
+                    "tertiary": "#c3cee6",
+                    "tertiary-container": "#a8b3ca",
+                    "on-primary-fixed-variant": "#574500",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "surface-container-high": "#2a292e",
+                    "on-secondary-fixed": "#00164e",
+                    "primary-fixed": "#ffe088",
+                    "primary-container": "#d4af37",
+                    "tertiary-fixed": "#d8e3fb",
+                    "primary": "#f2ca50",
+                    "on-primary": "#3c2f00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .achievement-glow {
+            box-shadow: 0 20px 40px -15px rgba(242, 202, 80, 0.08);
+        }
+        .obsidian-gradient {
+            background: radial-gradient(circle at top right, rgba(38, 65, 145, 0.15), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(38, 65, 145, 0.1), transparent 40%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen obsidian-gradient">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131317] dark:bg-[#131317] bg-gradient-to-b from-[#1b1b20] to-transparent shadow-[0_20px_40px_-15px_rgba(242,202,80,0.06)]">
+<div class="flex justify-between items-center px-8 h-20 w-full">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional executive headshot of a successful businessman in a dark tailored suit with confident expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxmM1fA7lbu-_APG_AZJ8ObVVPfe1Sw5FQhCVyEJ_8uu87TinRN2w-7A5iZ8euUF07_A8g1HTcrundjiCSYrQQsVUs5MV4pnum3n6RaXc1gC_1dmq-wApJdLR3L3Coy5GePryuqxZ-XISAc9Mqst5sba3MOrWvSOzJ0fukN7BI2JvLWqSvWRe2lLletux171QbkOVXCONONqlRg92KgpN-O39iuTdtECAJQrr-s4Wmm384bKDfNWj_sdIXjfCslOrdDKPbWGpwTA"/>
+</div>
+<h1 class="font-['Plus_Jakarta_Sans'] font-bold text-[1.75rem] tracking-tight text-[#D4AF37]">The Vault</h1>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300 active:scale-95">notifications</button>
+<div class="hidden md:flex gap-8 items-center">
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest text-[#d0c5af] hover:text-[#f2ca50] cursor-pointer transition-colors duration-300">Vault</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest text-[#d0c5af] hover:text-[#f2ca50] cursor-pointer transition-colors duration-300">Training</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest text-[#d0c5af] hover:text-[#f2ca50] cursor-pointer transition-colors duration-300">Coaching</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest text-[#f2ca50]">Resources</span>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-32 px-6 md:px-12 max-w-7xl mx-auto">
+<!-- Hero Section / Header -->
+<section class="mb-16">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="text-primary font-label text-[0.75rem] uppercase tracking-[0.3em] font-bold mb-4 block">Knowledge Base</span>
+<h2 class="text-[3.5rem] font-bold text-on-background leading-none tracking-tighter mb-4">Resources Library</h2>
+<p class="text-on-surface-variant max-w-xl text-lg leading-relaxed">Exclusive access to high-performance frameworks, tactical sales scripts, and executive-level growth strategies.</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-low p-4 px-6 rounded-xl border-l-4 border-primary achievement-glow">
+<span class="block text-on-surface-variant text-xs uppercase tracking-widest mb-1">Total Assets</span>
+<span class="text-2xl font-bold text-primary tracking-tight">128</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Filter Chips -->
+<nav class="flex flex-wrap gap-3 mb-12">
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary text-sm font-medium tracking-wide">All Materials</button>
+<button class="px-6 py-2 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface border border-outline-variant/15 transition-all text-sm font-medium tracking-wide">Sales Scripts</button>
+<button class="px-6 py-2 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface border border-outline-variant/15 transition-all text-sm font-medium tracking-wide">E-Books</button>
+<button class="px-6 py-2 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface border border-outline-variant/15 transition-all text-sm font-medium tracking-wide">PDF Guides</button>
+<button class="px-6 py-2 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface border border-outline-variant/15 transition-all text-sm font-medium tracking-wide">Templates</button>
+</nav>
+<!-- Bento Grid / Resources Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1: Featured Ebook -->
+<div class="lg:col-span-2 group relative bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container transition-all duration-300">
+<div class="flex flex-col md:flex-row h-full">
+<div class="w-full md:w-2/5 relative h-64 md:h-auto">
+<img class="w-full h-full object-cover" data-alt="Close-up of a high-end hardcover book with elegant gold foil lettering on a dark minimalist background with professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmOJjn8v7piP4n43w1P-BUD5HneUAWwWnvu2sVsGgspHT8GSEMDXmIM4_yxBpfbgrdMQVFC6WKAZhQfuOO0Upo_MHm3ceQHfUsicVT71UcDNC6BFt3U5r45ZhB-RHtHwF8i0svQiXhlLZg568euExwU5XutKHq36Mz0I4dgS3dHBrTJCmLaXdKdgV0PI-Vi1yi4kGVyuEUdEr0j5VW5MG44s90Y3gEKOCQY5ob1wkFEIhFt3HR6UDVDGwx7Mf1BLFnQeKVwHP_VQ"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-low/80 via-transparent to-transparent hidden md:block"></div>
+</div>
+<div class="p-8 flex flex-col justify-between w-full md:w-3/5">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Featured</span>
+<span class="material-symbols-outlined text-primary text-xl" data-weight="fill">auto_stories</span>
+</div>
+<h3 class="text-2xl font-bold text-on-background mb-3 group-hover:text-primary transition-colors">The 100M Negotiation Blueprint</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Master the psychological levers used by elite global negotiators to close eight-figure deals without compromising margins.</p>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-outline font-medium tracking-widest uppercase">Ebook • 42 Pages</span>
+<button class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-on-primary shadow-lg shadow-primary/20 hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: PDF Guide -->
+<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between group hover:bg-surface-container transition-all duration-300">
+<div>
+<div class="flex items-center justify-between mb-8">
+<span class="material-symbols-outlined text-primary-container text-3xl">picture_as_pdf</span>
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-outline">PDF GUIDE</span>
+</div>
+<h3 class="text-xl font-bold text-on-background mb-3 group-hover:text-primary transition-colors">Q4 Market Expansion Strategy</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Tactical framework for cross-border operations and high-growth territory penetration.</p>
+</div>
+<div class="mt-12 pt-6 border-t border-outline-variant/15 flex items-center justify-between">
+<span class="text-xs text-outline font-medium tracking-widest uppercase">1.2 MB</span>
+<button class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center text-primary hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-xl">download</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Sales Script -->
+<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between group hover:bg-surface-container transition-all duration-300">
+<div>
+<div class="flex items-center justify-between mb-8">
+<span class="material-symbols-outlined text-primary-container text-3xl">terminal</span>
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-outline">SALES SCRIPT</span>
+</div>
+<h3 class="text-xl font-bold text-on-background mb-3 group-hover:text-primary transition-colors">The Irresistible Close v2.1</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Step-by-step vocal tonality and objection handling scripts for high-ticket closing calls.</p>
+</div>
+<div class="mt-12 pt-6 border-t border-outline-variant/15 flex items-center justify-between">
+<span class="text-xs text-outline font-medium tracking-widest uppercase">DOCX • 12 KB</span>
+<button class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center text-primary hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-xl">download</span>
+</button>
+</div>
+</div>
+<!-- Card 4: Ebook Small -->
+<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between group hover:bg-surface-container transition-all duration-300">
+<div>
+<div class="flex items-center justify-between mb-8">
+<span class="material-symbols-outlined text-primary-container text-3xl">library_books</span>
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-outline">E-BOOK</span>
+</div>
+<h3 class="text-xl font-bold text-on-background mb-3 group-hover:text-primary transition-colors">Mindset of the Top 1%</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">An exploration into the daily routines and cognitive habits of ultra-high-net-worth achievers.</p>
+</div>
+<div class="mt-12 pt-6 border-t border-outline-variant/15 flex items-center justify-between">
+<span class="text-xs text-outline font-medium tracking-widest uppercase">Ebook • 85 Pages</span>
+<button class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center text-primary hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-xl">download</span>
+</button>
+</div>
+</div>
+<!-- Card 5: Visual Framework -->
+<div class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between group hover:bg-surface-container transition-all duration-300">
+<div>
+<div class="flex items-center justify-between mb-8">
+<span class="material-symbols-outlined text-primary-container text-3xl">schema</span>
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-outline">ASSET PACK</span>
+</div>
+<h3 class="text-xl font-bold text-on-background mb-3 group-hover:text-primary transition-colors">Brand Identity Playbook</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Visual templates and guidelines for establishing a premium brand presence in any vertical.</p>
+</div>
+<div class="mt-12 pt-6 border-t border-outline-variant/15 flex items-center justify-between">
+<span class="text-xs text-outline font-medium tracking-widest uppercase">ZIP • 45 MB</span>
+<button class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center text-primary hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-xl">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Pagination/Load More Footer -->
+<div class="mt-20 flex flex-col items-center gap-6">
+<button class="bg-surface-container text-on-surface px-12 py-4 rounded-xl border border-outline-variant/20 hover:border-primary/40 transition-all font-medium tracking-wide uppercase text-xs">Load More Archive</button>
+<p class="text-outline text-xs tracking-widest uppercase">Displaying 5 of 128 Elite Assets</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#0e0e12]/90 backdrop-blur-xl border-t border-[#4d4635]/15 h-24 px-6 pb-6 flex justify-around items-center md:hidden">
+<div class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all cursor-pointer">
+<span class="material-symbols-outlined text-2xl">lock</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Vault</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all cursor-pointer">
+<span class="material-symbols-outlined text-2xl">workspace_premium</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Training</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all cursor-pointer">
+<span class="material-symbols-outlined text-2xl">psychology</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Coaching</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f2ca50] scale-110 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Resources</span>
+</div>
+</nav>
+</body></html>

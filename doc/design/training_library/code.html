@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Training Library | The Vault</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #131317;
+            color: #e5e1e8;
+        }
+        h1, h2, h3, .headline-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .achievement-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #f2ca50 100%);
+        }
+        .navy-glow {
+            background: radial-gradient(circle at top right, rgba(38, 65, 145, 0.15), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(38, 65, 145, 0.1), transparent 40%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#e5e1e8",
+                        "background": "#131317",
+                        "outline-variant": "#4d4635",
+                        "surface-container": "#201f24",
+                        "secondary-container": "#264191",
+                        "on-tertiary-container": "#3a4559",
+                        "inverse-surface": "#e5e1e8",
+                        "inverse-primary": "#735c00",
+                        "surface-container-highest": "#353439",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#e9c349",
+                        "outline": "#99907c",
+                        "on-tertiary": "#263143",
+                        "secondary": "#b6c4ff",
+                        "on-secondary-fixed-variant": "#264191",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#05297a",
+                        "surface-container-low": "#1b1b20",
+                        "tertiary-fixed-dim": "#bcc7de",
+                        "on-primary-container": "#554300",
+                        "surface-dim": "#131317",
+                        "on-surface": "#e5e1e8",
+                        "primary-fixed-dim": "#e9c349",
+                        "surface": "#131317",
+                        "on-surface-variant": "#d0c5af",
+                        "surface-variant": "#353439",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "inverse-on-surface": "#303035",
+                        "on-tertiary-fixed": "#111c2d",
+                        "secondary-fixed": "#dce1ff",
+                        "surface-container-lowest": "#0e0e12",
+                        "on-secondary-container": "#9db2ff",
+                        "surface-bright": "#39383e",
+                        "on-primary-fixed": "#241a00",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "tertiary": "#c3cee6",
+                        "tertiary-container": "#a8b3ca",
+                        "on-primary-fixed-variant": "#574500",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "surface-container-high": "#2a292e",
+                        "on-secondary-fixed": "#00164e",
+                        "primary-fixed": "#ffe088",
+                        "primary-container": "#d4af37",
+                        "tertiary-fixed": "#d8e3fb",
+                        "primary": "#f2ca50",
+                        "on-primary": "#3c2f00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface navy-glow min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131317] dark:bg-[#131317] bg-gradient-to-b from-[#1b1b20] to-transparent shadow-[0_20px_40px_-15px_rgba(242,202,80,0.06)] flex justify-between items-center px-8 h-20 w-full">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest border border-outline-variant/20 overflow-hidden">
+<img alt="Executive Profile" class="w-full h-full object-cover" data-alt="Close-up professional portrait of a confident male executive in a charcoal suit, cinematic lighting, corporate high-end aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1HnGEspOJnmVL_45BNh3QEVcZOyRTwERQBZ7VsclNSxG2z9sTEpzPNmRsJ8GrA7UO5BN82LROq-bao8WkTjeBYASxwvaiv0yWnXMaAuot9d4hrC3q6WK4on-JlZjWvWyIco-QONdf1sZrM34gAfpzOg0N1Qr8aCMfu_MQa_VDIus0eHSxKp9KBaD6knjKwMcQzmuhhrtf3zdBjtqVLOGWYPzFVsEnvP8Y1kSjJHV2IMBpOFVjzWBmlAPlSMZM7_qOU9pbsv9yZw"/>
+</div>
+<h1 class="font-['Plus_Jakarta_Sans'] font-bold text-[1.75rem] tracking-tight text-[#D4AF37]">The Vault</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8 text-[#d0c5af]">
+<a class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest hover:text-[#f2ca50] transition-colors duration-300" href="#">Vault</a>
+<a class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest text-[#f2ca50] transition-colors duration-300" href="#">Training</a>
+<a class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest hover:text-[#f2ca50] transition-colors duration-300" href="#">Coaching</a>
+<a class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest hover:text-[#f2ca50] transition-colors duration-300" href="#">Resources</a>
+</nav>
+<button class="text-[#D4AF37] ease-out duration-300 active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-32 px-6 md:px-16 max-w-7xl mx-auto">
+<!-- Hero Section / Metric -->
+<section class="mb-16">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+<div>
+<span class="text-primary font-medium tracking-[0.2em] text-xs uppercase mb-4 block">Academy Performance</span>
+<h2 class="text-on-surface text-5xl md:text-7xl font-bold headline-font leading-tight mb-4">Top Producer <span class="text-primary">Path</span></h2>
+<p class="text-on-surface-variant text-lg max-w-xl font-light">Your journey to the 1% begins here. Master the elite psychological frameworks and tactical execution used by the industry's highest earners.</p>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10 min-w-[280px]">
+<div class="text-primary text-5xl font-bold headline-font mb-2">64%</div>
+<div class="text-on-surface-variant text-sm uppercase tracking-widest font-medium">Path Completion</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full mt-6 overflow-hidden">
+<div class="achievement-gradient h-full w-[64%]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid: Featured Modules -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
+<!-- Active Session Card -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-xl bg-surface-container-low border border-outline-variant/10 p-8 flex flex-col justify-between min-h-[400px]">
+<div class="absolute inset-0 opacity-20 transition-transform duration-700 group-hover:scale-110">
+<img alt="Mindset Mastery" class="w-full h-full object-cover" data-alt="Sleek corporate boardroom with glass walls and skyline view at night, deep blue and gold lighting accents, professional atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbKXfCoPdHQlda_LXGJ3G-_VkvTl1W2-oIupfRyAiUuyFij38FBxW9zlhcQdThvzvMTdxpbejeZJE4NBxCkEM9_ZBlUOSBMh1-NO9uMUjVTHesZCyhpl0Pq48PJ8qrEHkFXM2-fmknrjL9J33OgVsxKlCM5-7YFnjHUsoqKlCq26qFTEo6poq1JkiO-2tiOuueQEiRZZqXtGMs-PhoMYhRYk-YjLilgFVRZMbpGnoB6X_ntLcDaN3j5WlMPB-lJtoPSs22700P5w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/80 to-transparent"></div>
+</div>
+<div class="relative z-10">
+<span class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/30 text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-full border border-secondary-container/50 mb-6">
+<span class="material-symbols-outlined text-[14px]" data-icon="play_circle" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+                        In Progress
+                    </span>
+<h3 class="text-3xl font-bold text-on-surface headline-font mb-2">Session 1: Mindset Mastery</h3>
+<p class="text-on-surface-variant max-w-md">Cognitive reframing techniques for high-stakes negotiation and rejection resilience.</p>
+</div>
+<div class="relative z-10 pt-12">
+<div class="flex justify-between text-sm mb-3">
+<span class="text-on-surface-variant font-medium">Progress: 82%</span>
+<span class="text-primary font-bold">12m remaining</span>
+</div>
+<div class="w-full bg-surface-container-highest/50 h-2 rounded-full overflow-hidden mb-8">
+<div class="achievement-gradient h-full w-[82%]"></div>
+</div>
+<button class="achievement-gradient text-on-primary font-bold py-4 px-10 rounded-lg shadow-[0_10px_20px_-5px_rgba(242,202,80,0.3)] hover:scale-[1.02] transition-transform duration-300">
+                        Resume Session
+                    </button>
+</div>
+</div>
+<!-- Stats Card -->
+<div class="md:col-span-4 flex flex-col gap-8">
+<div class="flex-1 bg-surface-container-low rounded-xl border border-outline-variant/10 p-8 flex flex-col justify-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<div class="text-4xl font-bold headline-font text-on-surface mb-1">12</div>
+<div class="text-on-surface-variant text-xs uppercase tracking-widest">Modules Completed</div>
+</div>
+<div class="flex-1 bg-surface-container-low rounded-xl border border-outline-variant/10 p-8 flex flex-col justify-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" data-icon="timer">timer</span>
+<div class="text-4xl font-bold headline-font text-on-surface mb-1">48.5h</div>
+<div class="text-on-surface-variant text-xs uppercase tracking-widest">Total Training Time</div>
+</div>
+</div>
+</div>
+<!-- Section: Advanced Closing -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-10">
+<div class="flex items-center gap-4">
+<div class="w-2 h-8 achievement-gradient rounded-full"></div>
+<h2 class="text-2xl font-bold headline-font tracking-tight uppercase">Advanced Closing</h2>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium flex items-center gap-2">
+                    View All <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="group bg-surface-container-low rounded-xl border border-outline-variant/5 overflow-hidden transition-all duration-300 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)]">
+<div class="aspect-video relative overflow-hidden">
+<img alt="The Perfect Pitch" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Extreme close-up of a high-end fountain pen on a leather portfolio, dramatic warm spotlight, luxury business aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfc0CWsJcBhQ__rICPvld6ro7IJM9fNOGFkB38HpHsD2dleh72G3CS5rMcy8Qo-yORU2T8O-XDZNOxDrQB1h6uU3vg0gpWjvBnLWXOn-SY314FPT5-pMcqfHZD5kknBx26NMRFzu8nkeAstKiCNhYcqPkrocgfsSDcG-srrC3FekoNEVpSc_nejvMxJtRakMjxAGnOF_Dt1f3ePIDpXmoBUSBGoVZKsusEGe_NiYLrDdVRJMAXMz17RAYE9AykibwuVxV7WZwvTA"/>
+<div class="absolute bottom-4 right-4 bg-background/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-on-surface">45:00</div>
+</div>
+<div class="p-6">
+<h4 class="text-lg font-bold headline-font text-on-surface mb-2">Session 2: The Perfect Pitch</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-6">Structuring your narrative to command authority and eliminate objections before they arise.</p>
+<div class="flex items-center justify-between">
+<div class="w-24 bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%]"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">45% Done</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group bg-surface-container-low rounded-xl border border-outline-variant/5 overflow-hidden transition-all duration-300 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)]">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Objection Handling" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Magnifying glass over a complex financial document, soft golden light hitting the paper, focus on professional details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClb6-2MuMRuLYmKOGKyVag_Tjt-4PKZc0L1svC9iLiKv-i141Ks-4cDDurLvD1e46mM8SlwBeRKBjIh4Yd758UhIzZGxE9gTpTrr3Pdk-DElw-kOEJwPFFWoOk3mniPf_gFoIEKB81XcLSZq7z7FBVtlQX0VskV_akfyzZiBLTTwaUjGs95oge-L5wlhtAWJbhisRR0LDKmIadmiGMHKakd_q_CM89Sr44g80-DswuLY90WIX8N8h0PpMyPBuG0U91HgZolqb9DQ"/>
+<div class="absolute bottom-4 right-4 bg-background/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-on-surface">32:00</div>
+</div>
+<div class="p-6">
+<h4 class="text-lg font-bold headline-font text-on-surface mb-2">Session 3: Objection Alchemy</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-6">Turning 'No' into 'How?' using advanced linguistic patterns and empathy loops.</p>
+<div class="flex items-center justify-between">
+<div class="w-24 bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[0%]"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Not Started</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group bg-surface-container-low rounded-xl border border-outline-variant/5 overflow-hidden transition-all duration-300 hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)]">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Contract Mastery" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Luxury watch and leather briefcase on a dark wood table, moody atmospheric lighting, elite professional lifestyle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB397B2T6eiwRR3EiK4PoYbxQmwwG8D_pNsSZgRFa1qnQ9_rEJfmRQEf0q6DcYszAnePHl14wVMdLypOMqbgf_XjUs0dhmnUfWXbuddgpjBWUlWyYnasFLm35-I2XtDg-wEGxfTeeoYZUgPt-ELo3ccQnYM3_M5Xw0CGHAcbkr5WNwbC9iJz2qgnmp7koadFi-3wnPUjUNVNPhCWxBdNlkw3_mzqufEY7NWBpP26wWxvpchSUjcN5bh_KuCiLuDXH2OE9V9Xg_qug"/>
+<div class="absolute bottom-4 right-4 bg-background/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-on-surface">58:00</div>
+</div>
+<div class="p-6">
+<h4 class="text-lg font-bold headline-font text-on-surface mb-2">Session 4: The Final 5%</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-6">Mastering the logistics of high-ticket contract signing and immediate post-close retention.</p>
+<div class="flex items-center justify-between">
+<div class="w-24 bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[10%]"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Started</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Relationship Building -->
+<section class="mb-20">
+<div class="flex items-center justify-between mb-10">
+<div class="flex items-center gap-4">
+<div class="w-2 h-8 achievement-gradient rounded-full"></div>
+<h2 class="text-2xl font-bold headline-font tracking-tight uppercase">Relationship Building</h2>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium flex items-center gap-2">
+                    View All <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Large Relationship Card -->
+<div class="group flex flex-col md:flex-row bg-surface-container-low rounded-xl border border-outline-variant/5 overflow-hidden transition-all duration-300">
+<div class="md:w-1/2 relative overflow-hidden">
+<img alt="Trust Engineering" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Two professionals in suits shaking hands in front of a floor-to-ceiling window overlooking a city, sunset lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAtjuQDkE5k10b9dHVg4BDfw46ALChOdbpID6cluss29PayTjp-ww_EQ9H7pjYXiTUHSyHZ6iicYHxKcVotu2-cWXR7wWfyLhAflWOfU8ibEwUKxrs5bXUJ5AgKkO5rWmJqf6e1BWPpa5kIbTi5cnEiJCfoZyERzMfLzlbAbNuEU6jYvdO8nGKUE8L_H5rd6Cq6mEXWQj6WfEf5li_C2LNANYWqEwUeE1c5KJmLybSqJ4BrbV0n-1fYKeeMu4Wi7fGEYErVFnnHQ"/>
+</div>
+<div class="md:w-1/2 p-8 flex flex-col justify-center">
+<span class="text-primary-container font-bold text-[10px] tracking-[0.2em] uppercase mb-2">Expert Module</span>
+<h4 class="text-xl font-bold headline-font text-on-surface mb-4">Trust Engineering</h4>
+<p class="text-sm text-on-surface-variant mb-6">Learn the neurological triggers that build instant rapport with ultra-high-net-worth individuals.</p>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="schedule">schedule</span>
+<span class="text-xs font-medium text-on-surface-variant">2h 15m Course</span>
+</div>
+</div>
+</div>
+<!-- Another Relationship Card -->
+<div class="group flex flex-col md:flex-row bg-surface-container-low rounded-xl border border-outline-variant/5 overflow-hidden transition-all duration-300">
+<div class="md:w-1/2 relative overflow-hidden">
+<img alt="The Referral Engine" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Abstract visualization of a network of golden nodes connecting on a dark blue background, glowing connections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOpJzaTQaoT0SiwOsNqx-Sz4_KLRNLnfz7rhFrNIhhVdRFMQPUcetxyX2Suu04v8MY0U3ogNRokxdR1kczqTHwpDYpAqD7v6nvZPRzwVg3x2JSYXee_77BsSW_FkVwp66CC7cF7IL7Wm4OLlTN3Yf5SVDYaTk2T_2sIDUkovNPFPEnpyZQoO96zhH8gbMO9njZni6FoVfRFgAtdSfk6di73ulyMOXV0AnTS_roECdygBtS0OGL2rImr0StCORNEb_cXP9KWHVa2Q"/>
+</div>
+<div class="md:w-1/2 p-8 flex flex-col justify-center">
+<span class="text-primary-container font-bold text-[10px] tracking-[0.2em] uppercase mb-2">Advanced Strategy</span>
+<h4 class="text-xl font-bold headline-font text-on-surface mb-4">The Referral Engine</h4>
+<p class="text-sm text-on-surface-variant mb-6">Systems for generating perpetual, warm introductions from your existing client base.</p>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="schedule">schedule</span>
+<span class="text-xs font-medium text-on-surface-variant">1h 45m Course</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#0e0e12]/90 backdrop-blur-xl border-t border-[#4d4635]/15 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex justify-around items-center h-24 px-6 pb-6 md:hidden">
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] ease-out duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="lock">lock</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest">Vault</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#f2ca50] scale-110 transition-transform ease-out duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest">Training</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] ease-out duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="psychology">psychology</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest">Coaching</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] ease-out duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="library_books">library_books</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest">Resources</span>
+</a>
+</nav>
+</body></html>

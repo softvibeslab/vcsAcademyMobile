@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCSA - Vacation Club Sales Academy | Investment Proposal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-dark: #B4942D;
+            --navy: #1E3A8A;
+            --bg: #020204;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .gradient-gold {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+        }
+        .text-gold { color: var(--gold); }
+        .bg-gold { background-color: var(--gold); }
+        .border-gold { border-color: var(--gold); }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gold) 0%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 gradient-gold flex items-center justify-center">
+                    <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-serif text-sm font-semibold">VCSA</span>
+                    <span class="text-[10px] text-gold uppercase tracking-widest block -mt-1">Sales Academy</span>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm">
+                <a href="#opportunity" class="hover:text-gold transition-colors">Opportunity</a>
+                <a href="#solution" class="hover:text-gold transition-colors">Solution</a>
+                <a href="#projections" class="hover:text-gold transition-colors">Projections</a>
+                <a href="#investment" class="hover:text-gold transition-colors">Invest</a>
+            </div>
+            <a href="mailto:investors@vcsa.com" class="px-4 py-2 gradient-gold text-black text-sm font-semibold rounded hover:opacity-90 transition-opacity">
+                Contact Us
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#1E3A8A]/20 via-transparent to-[#D4AF37]/10"></div>
+        <div class="absolute top-20 left-10 w-72 h-72 bg-[#D4AF37]/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#1E3A8A]/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s;"></div>
+
+        <div class="relative max-w-6xl mx-auto px-6 text-center pt-20">
+            <div class="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 px-4 py-2 rounded-full mb-8">
+                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                </svg>
+                <span class="text-sm text-gold uppercase tracking-wider">Investment Opportunity</span>
+            </div>
+
+            <h1 class="font-serif text-6xl md:text-8xl font-bold mb-6">
+                VCSA
+                <span class="block text-gold mt-4">Vacation Club Sales Academy</span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12">
+                The Sales Operating System for vacation club professionals. Building the future of sales training.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#investment" class="px-8 py-4 gradient-gold text-black font-semibold rounded hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                    View Investment Details
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+                <a href="#opportunity" class="px-8 py-4 border border-white/20 rounded hover:bg-white/5 transition-colors">
+                    Learn More
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20">
+                <div class="text-center">
+                    <p class="text-4xl md:text-5xl font-bold text-gold counter">$10B</p>
+                    <p class="font-semibold mt-2">Market Size</p>
+                    <p class="text-sm text-gray-500">Vacation Club Sales</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl md:text-5xl font-bold text-blue-400 counter">8.2%</p>
+                    <p class="font-semibold mt-2">Target CAGR</p>
+                    <p class="text-sm text-gray-500">Sales Training Industry</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl md:text-5xl font-bold text-green-400 counter">2K</p>
+                    <p class="font-semibold mt-2">Users Year 1</p>
+                    <p class="text-sm text-gray-500">Conservative projection</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl md:text-5xl font-bold text-purple-400 counter">$12.6M</p>
+                    <p class="font-semibold mt-2">ARR Year 5</p>
+                    <p class="text-sm text-gray-500">Conservative projection</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunity Section -->
+    <section id="opportunity" class="py-20 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">
+                    The <span class="text-gold">Opportunity</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    $10B market with zero specialized solutions. Until now.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass p-8 border-l-2 border-l-gold">
+                    <svg class="w-12 h-12 text-gold mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    <h3 class="font-serif text-xl font-semibold mb-2">High Turnover</h3>
+                    <p class="text-gray-400">60-80% annual turnover in sales teams costs $15K-$25K per rep in replacement</p>
+                </div>
+                <div class="glass p-8 border-l-2 border-l-gold">
+                    <svg class="w-12 h-12 text-gold mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h3 class="font-serif text-xl font-semibold mb-2">Slow Onboarding</h3>
+                    <p class="text-gray-400">6-12 month onboarding vs. our target of 4-8 weeks to productivity</p>
+                </div>
+                <div class="glass p-8 border-l-2 border-l-gold">
+                    <svg class="w-12 h-12 text-gold mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                    <h3 class="font-serif text-xl font-semibold mb-2">No Daily Tools</h3>
+                    <p class="text-gray-400">Sales reps rely on paper notes and memory. No systematic prep or performance tracking</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="py-20 bg-gradient-to-b from-[#1E3A8A]/5 to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">
+                    4-Stage <span class="text-gold">Progression System</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    From new hire to top producer in 12 weeks
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-blue-700/20 rounded-lg blur-xl group-hover:blur-2xl transition-all"></div>
+                    <div class="relative glass p-6 border-t-4 border-t-blue-500">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-4xl font-bold text-blue-400">1</span>
+                            <span class="text-xs bg-white/10 px-2 py-1 rounded">1-2 weeks</span>
+                        </div>
+                        <h3 class="font-serif text-lg font-semibold mb-2">New Rep</h3>
+                        <p class="text-sm text-gray-400 mb-3">150 points</p>
+                        <div class="w-full bg-white/10 rounded-full h-2">
+                            <div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-700" style="width: 20%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-purple-700/20 rounded-lg blur-xl group-hover:blur-2xl transition-all"></div>
+                    <div class="relative glass p-6 border-t-4 border-t-purple-500">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-4xl font-bold text-purple-400">2</span>
+                            <span class="text-xs bg-white/10 px-2 py-1 rounded">2-4 weeks</span>
+                        </div>
+                        <h3 class="font-serif text-lg font-semibold mb-2">Developing Rep</h3>
+                        <p class="text-sm text-gray-400 mb-3">300 points</p>
+                        <div class="w-full bg-white/10 rounded-full h-2">
+                            <div class="h-full rounded-full bg-gradient-to-r from-purple-500 to-purple-700" style="width: 40%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-orange-700/20 rounded-lg blur-xl group-hover:blur-2xl transition-all"></div>
+                    <div class="relative glass p-6 border-t-4 border-t-orange-500">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-4xl font-bold text-orange-400">3</span>
+                            <span class="text-xs bg-white/10 px-2 py-1 rounded">4-8 weeks</span>
+                        </div>
+                        <h3 class="font-serif text-lg font-semibold mb-2">Performing Rep</h3>
+                        <p class="text-sm text-gray-400 mb-3">500 points</p>
+                        <div class="w-full bg-white/10 rounded-full h-2">
+                            <div class="h-full rounded-full bg-gradient-to-r from-orange-500 to-orange-700" style="width: 67%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-gold/20 to-[#B4942D]/20 rounded-lg blur-xl group-hover:blur-2xl transition-all"></div>
+                    <div class="relative glass p-6 border-t-4 border-t-gold">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-4xl font-bold text-gold">4</span>
+                            <span class="text-xs bg-white/10 px-2 py-1 rounded">8-12 weeks</span>
+                        </div>
+                        <h3 class="font-serif text-lg font-semibold mb-2">Top Producer</h3>
+                        <p class="text-sm text-gray-400 mb-3">750 points</p>
+                        <div class="w-full bg-white/10 rounded-full h-2">
+                            <div class="h-full rounded-full bg-gradient-to-r from-gold to-[#B4942D]" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenue Streams -->
+            <div class="mt-20">
+                <h3 class="font-serif text-2xl font-bold text-center mb-8">Revenue Streams</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass p-6 text-center hover:border-gold/30 transition-all">
+                        <p class="font-semibold text-lg mb-1">Pro</p>
+                        <p class="text-2xl font-bold text-gold mb-2">$49/mes</p>
+                        <p class="text-sm text-gray-400">Individual reps</p>
+                    </div>
+                    <div class="glass p-6 text-center hover:border-gold/30 transition-all">
+                        <p class="font-semibold text-lg mb-1">Elite</p>
+                        <p class="text-2xl font-bold text-gold mb-2">$99/mes</p>
+                        <p class="text-sm text-gray-400">Professionals</p>
+                    </div>
+                    <div class="glass p-6 text-center hover:border-gold/30 transition-all">
+                        <p class="font-semibold text-lg mb-1">Team</p>
+                        <p class="text-2xl font-bold text-gold mb-2">$299/mes</p>
+                        <p class="text-sm text-gray-400">Up to 10 reps</p>
+                    </div>
+                    <div class="glass p-6 text-center hover:border-gold/30 transition-all">
+                        <p class="font-semibold text-lg mb-1">Enterprise</p>
+                        <p class="text-2xl font-bold text-gold mb-2">Custom</p>
+                        <p class="text-sm text-gray-400">Unlimited reps</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projections Section -->
+    <section id="projections" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">
+                    5-Year <span class="text-gold">Projections</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    Conservative path to $12.6M ARR
+                </p>
+            </div>
+
+            <div class="glass p-8 overflow-x-auto">
+                <table class="w-full min-w-[600px]">
+                    <thead>
+                        <tr class="border-b border-white/10">
+                            <th class="text-left py-4 px-4 font-semibold">Year</th>
+                            <th class="text-right py-4 px-4 font-semibold">Users B2C</th>
+                            <th class="text-right py-4 px-4 font-semibold">MRR B2C</th>
+                            <th class="text-right py-4 px-4 font-semibold">MRR Total</th>
+                            <th class="text-right py-4 px-4 font-semibold">ARR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-white/5 hover:bg-white/5">
+                            <td class="py-4 px-4 font-semibold">1</td>
+                            <td class="text-right py-4 px-4">2,000</td>
+                            <td class="text-right py-4 px-4 text-green-400">$60K</td>
+                            <td class="text-right py-4 px-4 text-gold font-semibold">$82K</td>
+                            <td class="text-right py-4 px-4 font-bold">$984K</td>
+                        </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5">
+                            <td class="py-4 px-4 font-semibold">2</td>
+                            <td class="text-right py-4 px-4">5,000</td>
+                            <td class="text-right py-4 px-4 text-green-400">$150K</td>
+                            <td class="text-right py-4 px-4 text-gold font-semibold">$210K</td>
+                            <td class="text-right py-4 px-4 font-bold">$2.5M</td>
+                        </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5">
+                            <td class="py-4 px-4 font-semibold">3</td>
+                            <td class="text-right py-4 px-4">12,000</td>
+                            <td class="text-right py-4 px-4 text-green-400">$360K</td>
+                            <td class="text-right py-4 px-4 text-gold font-semibold">$510K</td>
+                            <td class="text-right py-4 px-4 font-bold">$6.1M</td>
+                        </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5">
+                            <td class="py-4 px-4 font-semibold">4</td>
+                            <td class="text-right py-4 px-4">25,000</td>
+                            <td class="text-right py-4 px-4 text-green-400">$750K</td>
+                            <td class="text-right py-4 px-4 text-gold font-semibold">$1.05M</td>
+                            <td class="text-right py-4 px-4 font-bold">$12.6M</td>
+                        </tr>
+                        <tr class="hover:bg-white/5">
+                            <td class="py-4 px-4 font-semibold">5</td>
+                            <td class="text-right py-4 px-4">50,000</td>
+                            <td class="text-right py-4 px-4 text-green-400">$1.5M</td>
+                            <td class="text-right py-4 px-4 text-gold font-semibold">$2.1M</td>
+                            <td class="text-right py-4 px-4 font-bold">$25.2M</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Competitors -->
+            <div class="mt-16">
+                <h3 class="font-serif text-2xl font-bold text-center mb-8">Market Comparables</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="glass p-6 text-center">
+                        <p class="font-semibold text-lg mb-1">Gong.io</p>
+                        <p class="text-sm text-gray-400 mb-2">$100M+ ARR</p>
+                        <p class="text-2xl font-bold text-gold">$2.1B valuation</p>
+                        <p class="text-xs text-gray-500 mt-2">21x multiple</p>
+                    </div>
+                    <div class="glass p-6 text-center">
+                        <p class="font-semibold text-lg mb-1">Outreach</p>
+                        <p class="text-sm text-gray-400 mb-2">$150M+ ARR</p>
+                        <p class="text-2xl font-bold text-gold">$1.1B valuation</p>
+                        <p class="text-xs text-gray-500 mt-2">7.3x multiple</p>
+                    </div>
+                    <div class="glass p-6 text-center">
+                        <p class="font-semibold text-lg mb-1">Highspot</p>
+                        <p class="text-sm text-gray-400 mb-2">$150M+ ARR</p>
+                        <p class="text-2xl font-bold text-gold">$2.3B valuation</p>
+                        <p class="text-xs text-gray-500 mt-2">15.3x multiple</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Section -->
+    <section id="investment" class="py-20 bg-gradient-to-b from-gold/5 to-transparent">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="glass p-8 md:p-12 border border-gold/30 text-center">
+                <div class="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 px-4 py-2 rounded-full mb-6">
+                    <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="text-sm text-gold uppercase tracking-wider">Investment Opportunity</span>
+                </div>
+
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">
+                    Seed Round: <span class="text-gold">$500K</span>
+                </h2>
+
+                <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                    Join us in building the Sales Operating System for the $10B vacation club industry.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="p-4 bg-white/5 rounded">
+                        <p class="text-3xl font-bold text-gold mb-1">10.4x</p>
+                        <p class="text-sm text-gray-400">ROI Year 5 (Conservative)</p>
+                    </div>
+                    <div class="p-4 bg-white/5 rounded">
+                        <p class="text-3xl font-bold text-gold mb-1">$30-50M</p>
+                        <p class="text-sm text-gray-400">Valuation Year 5</p>
+                    </div>
+                    <div class="p-4 bg-white/5 rounded">
+                        <p class="text-3xl font-bold text-gold mb-1">8:1</p>
+                        <p class="text-sm text-gray-400">LTV:CAC Ratio</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="mailto:investors@vcsa.com?subject=Investment%20Inquiry" class="px-8 py-4 gradient-gold text-black font-semibold rounded hover:opacity-90 transition-opacity">
+                        Schedule a Call
+                    </a>
+                    <a href="mailto:investors@vcsa.com?subject=Request%20Deck" class="px-8 py-4 border border-white/20 rounded hover:bg-white/5 transition-colors">
+                        Request Full Deck
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <p class="font-serif text-2xl font-bold text-gold">VCSA</p>
+                    <p class="text-sm text-gray-400">Vacation Club Sales Academy</p>
+                </div>
+                <div class="flex gap-8 text-sm text-gray-400">
+                    <a href="mailto:investors@vcsa.com" class="hover:text-gold transition-colors">investors@vcsa.com</a>
+                    <a href="mailto:press@vcsa.com" class="hover:text-gold transition-colors">press@vcsa.com</a>
+                </div>
+                <p class="text-sm text-gray-500">© 2026 VCSA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate numbers on scroll
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = counter.innerText;
+                const hasPlus = target.includes('+');
+                const hasK = target.includes('K');
+                const hasM = target.includes('M');
+                const hasB = target.includes('B');
+                const hasDollar = target.includes('$');
+                const hasPercent = target.includes('%');
+
+                let value = parseFloat(target.replace(/[^0-9.]/g, ''));
+                let current = 0;
+                const increment = value / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= value) {
+                        current = value;
+                        clearInterval(timer);
+                    }
+                    let display = current.toFixed(0);
+                    if (hasK) display = current >= 1000 ? (current/1000).toFixed(1) + 'K' : current;
+                    if (hasM) display = current >= 1000 ? (current/1000).toFixed(0) + 'M' : current;
+                    if (hasB) display = current >= 1000 ? (current/1000).toFixed(0) + 'B' : current;
+                    if (hasDollar) display = '$' + display;
+                    if (hasPercent) display = display + '%';
+                    if (hasPlus) display = display + '+';
+                    counter.innerText = display;
+                }, 30);
+            });
+        };
+
+        // Trigger animation when section is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.grid.grid-cols-2');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+    </script>
+</body>
+</html>

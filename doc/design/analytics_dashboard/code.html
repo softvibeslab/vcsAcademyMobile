@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Vault | Strategy Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#e5e1e8",
+                        "background": "#131317",
+                        "outline-variant": "#4d4635",
+                        "surface-container": "#201f24",
+                        "secondary-container": "#264191",
+                        "on-tertiary-container": "#3a4559",
+                        "inverse-surface": "#e5e1e8",
+                        "inverse-primary": "#735c00",
+                        "surface-container-highest": "#353439",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#e9c349",
+                        "outline": "#99907c",
+                        "on-tertiary": "#263143",
+                        "secondary": "#b6c4ff",
+                        "on-secondary-fixed-variant": "#264191",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#05297a",
+                        "surface-container-low": "#1b1b20",
+                        "tertiary-fixed-dim": "#bcc7de",
+                        "on-primary-container": "#554300",
+                        "surface-dim": "#131317",
+                        "on-surface": "#e5e1e8",
+                        "primary-fixed-dim": "#e9c349",
+                        "surface": "#131317",
+                        "on-surface-variant": "#d0c5af",
+                        "surface-variant": "#353439",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "inverse-on-surface": "#303035",
+                        "on-tertiary-fixed": "#111c2d",
+                        "secondary-fixed": "#dce1ff",
+                        "surface-container-lowest": "#0e0e12",
+                        "on-secondary-container": "#9db2ff",
+                        "surface-bright": "#39383e",
+                        "on-primary-fixed": "#241a00",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "tertiary": "#c3cee6",
+                        "tertiary-container": "#a8b3ca",
+                        "on-primary-fixed-variant": "#574500",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "surface-container-high": "#2a292e",
+                        "on-secondary-fixed": "#00164e",
+                        "primary-fixed": "#ffe088",
+                        "primary-container": "#d4af37",
+                        "tertiary-fixed": "#d8e3fb",
+                        "primary": "#f2ca50",
+                        "on-primary": "#3c2f00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .achievement-glow {
+            box-shadow: 0 20px 40px -15px rgba(242, 202, 80, 0.15);
+        }
+        body {
+            background-color: #131317;
+            background-image: radial-gradient(circle at top right, rgba(38, 65, 145, 0.1), transparent),
+                              radial-gradient(circle at bottom left, rgba(38, 65, 145, 0.05), transparent);
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131317] flex justify-between items-center px-8 h-20 w-full shadow-[0_20px_40px_-15px_rgba(242,202,80,0.06)] bg-gradient-to-b from-[#1b1b20] to-transparent">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant/20 overflow-hidden">
+<img alt="Executive Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a professional executive in a dark tailored suit with soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3oEZPYwTwDTHPO1_UEGVFpit8Uw5Nh3B47RZqC-obOCG3weG-rWymab6GCsf1n6NGYKtjhTjh96ea6IV4daVRsT6YpCgCY4lUmqBJQ51eIYuBOhm8ccooNFFwXQhnQeIahe7hsF-tcnLyFEG71Bf73mbPpMYykpfaTGrkm8-OCHpTxOz3G37yOlSocZglUv5NsZ3NNOTKs8yHpzzHjdPF5KqvyCc2v5R4jjfyZeqe5z0tfkbu37f1RE54T2PH_gYGLych6uOo4Q"/>
+</div>
+<h1 class="font-['Plus_Jakarta_Sans'] font-bold text-[1.75rem] tracking-tight text-[#D4AF37]">The Vault</h1>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300 ease-out active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="hidden md:flex gap-8">
+<a class="text-[#f2ca50] font-['Plus_Jakarta_Sans'] font-bold tracking-widest uppercase text-sm" href="#">Vault</a>
+<a class="text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300 font-['Plus_Jakarta_Sans'] font-medium tracking-widest uppercase text-sm" href="#">Training</a>
+<a class="text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300 font-['Plus_Jakarta_Sans'] font-medium tracking-widest uppercase text-sm" href="#">Coaching</a>
+<a class="text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300 font-['Plus_Jakarta_Sans'] font-medium tracking-widest uppercase text-sm" href="#">Resources</a>
+</div>
+</div>
+</header>
+<main class="pt-32 px-8 max-w-7xl mx-auto space-y-16">
+<!-- Hero Section: Display Metrics -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="space-y-2">
+<p class="text-on-surface-variant font-label text-xs uppercase tracking-[0.2em]">Annual Recurring Revenue</p>
+<h2 class="text-[3.5rem] font-bold text-primary leading-none tabular-nums">$2.48M</h2>
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="text-sm font-medium">+14.2% vs last year</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-on-surface-variant font-label text-xs uppercase tracking-[0.2em]">Strategy Execution Index</p>
+<h2 class="text-[3.5rem] font-bold text-on-background leading-none tabular-nums">94<span class="text-primary text-2xl">/100</span></h2>
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm font-medium">Optimal Performance Range</span>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-on-surface-variant font-label text-xs uppercase tracking-[0.2em]">Active Portfolios</p>
+<h2 class="text-[3.5rem] font-bold text-on-background leading-none tabular-nums">12</h2>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">group</span>
+<span class="text-sm font-medium">Across 4 Global Markets</span>
+</div>
+</div>
+</section>
+<!-- Main Analytics Bento Grid -->
+<section class="grid grid-cols-12 gap-8">
+<!-- Revenue Growth Line Chart -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low p-8 rounded-xl shadow-2xl relative overflow-hidden group">
+<div class="flex justify-between items-center mb-12">
+<div>
+<h3 class="text-xl font-bold font-headline text-on-background">Monthly Revenue Growth</h3>
+<p class="text-on-surface-variant text-sm mt-1">Projected vs Actual performance trajectories</p>
+</div>
+<div class="flex gap-4">
+<span class="flex items-center gap-2 text-xs font-label uppercase tracking-widest text-on-surface-variant">
+<span class="w-3 h-[2px] bg-outline-variant"></span> Target
+                        </span>
+<span class="flex items-center gap-2 text-xs font-label uppercase tracking-widest text-primary">
+<span class="w-3 h-[2px] bg-primary"></span> Actual
+                        </span>
+</div>
+</div>
+<!-- Visual Representation of a Line Chart -->
+<div class="h-64 flex items-end justify-between relative">
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none">
+<path class="drop-shadow-[0_0_8px_rgba(242,202,80,0.4)]" d="M0 200 Q 100 180, 200 150 T 400 100 T 600 120 T 800 40 T 1000 60" fill="none" stroke="#d4af37" stroke-linecap="round" stroke-width="4"></path>
+<path d="M0 210 Q 100 200, 200 190 T 400 170 T 600 160 T 800 140 T 1000 120" fill="none" stroke="#4d4635" stroke-dasharray="8,8" stroke-width="2"></path>
+</svg>
+<div class="absolute bottom-0 w-full flex justify-between px-2">
+<span class="text-[0.65rem] text-on-surface-variant/50 font-label uppercase">Jan</span>
+<span class="text-[0.65rem] text-on-surface-variant/50 font-label uppercase">Mar</span>
+<span class="text-[0.65rem] text-on-surface-variant/50 font-label uppercase">May</span>
+<span class="text-[0.65rem] text-on-surface-variant/50 font-label uppercase">Jul</span>
+<span class="text-[0.65rem] text-on-surface-variant/50 font-label uppercase">Sep</span>
+<span class="text-[0.65rem] text-on-surface-variant/50 font-label uppercase">Nov</span>
+</div>
+</div>
+</div>
+<!-- Strengths vs Weaknesses Radar -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low p-8 rounded-xl relative">
+<h3 class="text-xl font-bold font-headline text-on-background mb-8">Strategic Health</h3>
+<div class="aspect-square relative flex items-center justify-center">
+<!-- Faux Radar Chart Visual -->
+<div class="absolute inset-0 border border-outline-variant/10 rounded-full scale-100"></div>
+<div class="absolute inset-0 border border-outline-variant/10 rounded-full scale-75"></div>
+<div class="absolute inset-0 border border-outline-variant/10 rounded-full scale-50"></div>
+<svg class="w-full h-full rotate-45" viewbox="0 0 100 100">
+<polygon fill="rgba(38, 65, 145, 0.3)" points="50,10 90,50 70,90 30,80 10,40" stroke="#b6c4ff" stroke-width="0.5"></polygon>
+<polygon fill="rgba(242, 202, 80, 0.4)" points="50,20 80,50 60,70 40,65 25,45" stroke="#f2ca50" stroke-width="1"></polygon>
+</svg>
+<div class="absolute top-0 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Acquisition</div>
+<div class="absolute right-0 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Retention</div>
+<div class="absolute bottom-0 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Yield</div>
+<div class="absolute left-0 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Scale</div>
+</div>
+<div class="mt-8 space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-sm text-on-surface-variant">Core Strength</span>
+<span class="text-sm font-bold text-primary">Market Agility</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm text-on-surface-variant">Critical Gap</span>
+<span class="text-sm font-bold text-on-background">Post-Sales Flow</span>
+</div>
+</div>
+</div>
+<!-- Conversion Rates Bar Chart -->
+<div class="col-span-12 bg-surface-container-low p-8 rounded-xl">
+<div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-12">
+<div>
+<h3 class="text-xl font-bold font-headline text-on-background">Tour Conversion Rates</h3>
+<p class="text-on-surface-variant text-sm mt-1">Efficiency of engagement across active regions</p>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-primary tabular-nums">38.4%</span>
+<span class="text-xs text-secondary font-label uppercase tracking-widest">Global Average</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8 items-end h-48">
+<div class="flex flex-col items-center gap-4 h-full justify-end">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all duration-500 hover:bg-primary-container" style="height: 65%;"></div>
+<span class="text-[0.65rem] text-on-surface-variant font-label uppercase">North Am.</span>
+</div>
+<div class="flex flex-col items-center gap-4 h-full justify-end">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all duration-500 hover:bg-primary-container" style="height: 82%;"></div>
+<span class="text-[0.65rem] text-on-surface-variant font-label uppercase">Europe</span>
+</div>
+<div class="flex flex-col items-center gap-4 h-full justify-end">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all duration-500 hover:bg-primary-container" style="height: 45%;"></div>
+<span class="text-[0.65rem] text-on-surface-variant font-label uppercase">APAC</span>
+</div>
+<div class="flex flex-col items-center gap-4 h-full justify-end">
+<div class="w-full bg-primary rounded-t-lg shadow-[0_-4px_20px_rgba(242,202,80,0.3)]" style="height: 94%;"></div>
+<span class="text-[0.65rem] text-primary font-bold font-label uppercase">DACH</span>
+</div>
+<div class="flex flex-col items-center gap-4 h-full justify-end">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all duration-500 hover:bg-primary-container" style="height: 30%;"></div>
+<span class="text-[0.65rem] text-on-surface-variant font-label uppercase">LATAM</span>
+</div>
+<div class="flex flex-col items-center gap-4 h-full justify-end">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all duration-500 hover:bg-primary-container" style="height: 58%;"></div>
+<span class="text-[0.65rem] text-on-surface-variant font-label uppercase">MENA</span>
+</div>
+<div class="flex flex-col items-center gap-4 h-full justify-end">
+<div class="w-full bg-secondary-container rounded-t-lg transition-all duration-500 hover:bg-primary-container" style="height: 72%;"></div>
+<span class="text-[0.65rem] text-on-surface-variant font-label uppercase">Oceania</span>
+</div>
+</div>
+</div>
+<!-- Insight Card -->
+<div class="col-span-12 md:col-span-6 lg:col-span-4 bg-gradient-to-br from-secondary-container to-[#0e0e12] p-8 rounded-xl border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-4" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h4 class="text-lg font-bold text-on-background mb-4">Strategic Insight</h4>
+<p class="text-on-surface-variant leading-relaxed text-sm">
+                    Retention rates in the <span class="text-on-background font-bold underline decoration-primary/50">Europe Region</span> are currently outperforming projections by 22%. Recommend scaling training assets to APAC to stabilize churn.
+                </p>
+<button class="mt-8 text-primary font-label text-xs uppercase tracking-widest flex items-center gap-2 group">
+                    Deploy Update 
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Detail List (Table-free) -->
+<div class="col-span-12 md:col-span-6 lg:col-span-8 bg-surface-container-low p-8 rounded-xl">
+<h3 class="text-xl font-bold font-headline text-on-background mb-8">Performance Leaderboard</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant font-label font-bold text-lg">01</span>
+<div>
+<p class="font-bold text-on-background">Quarterly Upsell Drive</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Growth Division</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary">+$420k</p>
+<div class="bg-secondary-container/20 px-2 py-0.5 rounded text-[10px] text-secondary font-bold inline-block">COMPLETED</div>
+</div>
+</div>
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant font-label font-bold text-lg">02</span>
+<div>
+<p class="font-bold text-on-background">SaaS Optimization Path</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Core Infrastructure</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-on-background">+$115k</p>
+<div class="bg-primary/10 px-2 py-0.5 rounded text-[10px] text-primary font-bold inline-block">ACTIVE</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant font-label font-bold text-lg">03</span>
+<div>
+<p class="font-bold text-on-background">Enterprise Tour Pack</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Sales Enablement</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-on-background">+$88k</p>
+<div class="bg-outline-variant/20 px-2 py-0.5 rounded text-[10px] text-on-surface-variant font-bold inline-block">PENDING</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-24 px-6 pb-6 bg-[#0e0e12]/90 backdrop-blur-xl border-t border-[#4d4635]/15 z-50 md:hidden">
+<a class="flex flex-col items-center justify-center text-[#f2ca50] scale-110 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Vault</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all" href="#">
+<span class="material-symbols-outlined">workspace_premium</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Training</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Coaching</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] transition-all" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Resources</span>
+</a>
+</nav>
+<!-- Contextual FAB -->
+<button class="fixed bottom-10 right-10 w-16 h-16 rounded-full bg-gradient-to-tr from-primary-container to-primary text-on-primary shadow-[0_10px_40px_rgba(212,175,55,0.4)] flex items-center justify-center achievement-glow transition-transform hover:scale-110 active:scale-90 z-50">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'wght' 600;">add_chart</span>
+</button>
+</body></html>

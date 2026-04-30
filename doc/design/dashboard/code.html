@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "on-tertiary-container": "#3a4559",
+                  "surface-container-low": "#1b1b20",
+                  "on-error": "#690005",
+                  "primary-fixed": "#ffe088",
+                  "surface-tint": "#e9c349",
+                  "on-primary-container": "#554300",
+                  "secondary": "#b6c4ff",
+                  "surface-container": "#201f24",
+                  "primary": "#f2ca50",
+                  "tertiary-fixed-dim": "#bcc7de",
+                  "on-secondary-container": "#9db2ff",
+                  "on-tertiary": "#263143",
+                  "on-primary": "#3c2f00",
+                  "inverse-primary": "#735c00",
+                  "on-secondary": "#05297a",
+                  "on-surface-variant": "#d0c5af",
+                  "surface": "#131317",
+                  "surface-bright": "#39383e",
+                  "on-background": "#e5e1e8",
+                  "tertiary-fixed": "#d8e3fb",
+                  "secondary-container": "#264191",
+                  "surface-variant": "#353439",
+                  "on-secondary-fixed": "#00164e",
+                  "primary-fixed-dim": "#e9c349",
+                  "inverse-surface": "#e5e1e8",
+                  "error-container": "#93000a",
+                  "secondary-fixed": "#dce1ff",
+                  "background": "#131317",
+                  "on-error-container": "#ffdad6",
+                  "tertiary-container": "#a8b3ca",
+                  "on-tertiary-fixed-variant": "#3c475a",
+                  "on-surface": "#e5e1e8",
+                  "on-primary-fixed": "#241a00",
+                  "primary-container": "#d4af37",
+                  "outline-variant": "#4d4635",
+                  "inverse-on-surface": "#303035",
+                  "on-secondary-fixed-variant": "#264191",
+                  "tertiary": "#c3cee6",
+                  "error": "#ffb4ab",
+                  "secondary-fixed-dim": "#b6c4ff",
+                  "surface-dim": "#131317",
+                  "surface-container-high": "#2a292e",
+                  "surface-container-highest": "#353439",
+                  "surface-container-lowest": "#0e0e12",
+                  "on-primary-fixed-variant": "#574500",
+                  "outline": "#99907c",
+                  "on-tertiary-fixed": "#111c2d"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.125rem",
+                  "lg": "0.25rem",
+                  "xl": "0.5rem",
+                  "full": "0.75rem"
+          },
+          "fontFamily": {
+                  "headline": ["Plus Jakarta Sans"],
+                  "body": ["DM Sans"],
+                  "label": ["Manrope"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #131317;
+      background-image: radial-gradient(circle at top right, rgba(38, 65, 145, 0.15), transparent),
+                        radial-gradient(circle at bottom left, rgba(38, 65, 145, 0.1), transparent);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .glass-card {
+      background: rgba(27, 27, 32, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(77, 70, 53, 0.15);
+    }
+    .gold-glow {
+      box-shadow: 0 0 25px rgba(242, 202, 80, 0.12);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full docked top-0 bg-transparent flex justify-between items-center px-6 py-8 max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="professional headshot of a businessman in a dark navy suit with soft cinematic studio lighting and deep background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbvHpURO-WbzAfSFLk9puq-HgNrgZGJzWPxdp242LSqm2eMOwr5eAM8enE-sT8kyBrsuX2raUwFPlhUIqSTmXz79V0D6QTpSwAows9H7qiXtce6IlcHGHi7uV6WL-NKRl-X1x0rr2dvXqGqx94E2WRYkYJ93Yc9KLK8aVZCkaRR5FVbyVbsn16A_SFtXX5cCbPcciTBnENmz3g9F-dG5NlsMgJgmo9CsWJJgjpcmk2urYjzXD5X4-NtbmDcUMdKPKY-2zBzLYJWA"/>
+</div>
+<h1 class="font-headline text-xl font-bold tracking-tight text-on-surface">Good morning, Carlos</h1>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/15">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="local_fire_department">local_fire_department</span>
+<span class="font-headline font-bold text-primary">15</span>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 space-y-12">
+<!-- Hero Section: Readiness Score -->
+<section class="flex flex-col items-center justify-center py-8">
+<div class="relative flex items-center justify-center">
+<!-- Progress Ring SVG -->
+<svg class="w-64 h-64 transform -rotate-90">
+<circle class="text-surface-container-low" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary gold-glow" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-dasharray="691" stroke-dashoffset="193" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-7xl font-bold text-primary tracking-tighter">72</span>
+<span class="text-sm font-medium text-on-surface-variant uppercase tracking-widest mt-1">Readiness Score</span>
+</div>
+</div>
+<div class="mt-6 flex items-center gap-2 bg-secondary-container/20 text-secondary px-4 py-1.5 rounded-full text-sm font-medium border border-secondary-container/30">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span>5% this week</span>
+</div>
+</section>
+<!-- Daily Goals Grid -->
+<section>
+<div class="flex justify-between items-end mb-6">
+<h2 class="text-lg font-bold text-on-surface">Daily Goals</h2>
+<span class="text-xs text-on-surface-variant font-medium">Monday, Oct 24</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Goal 1 -->
+<div class="surface-container-low p-6 rounded-full border border-outline-variant/15 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="tour">tour</span>
+</div>
+<span class="text-sm font-bold text-on-surface">2/3</span>
+</div>
+<div>
+<p class="text-sm font-medium text-on-surface-variant">Tours</p>
+<div class="w-full h-1.5 bg-surface-container mt-2 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[66%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Goal 2 -->
+<div class="surface-container-low p-6 rounded-full border border-outline-variant/15 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-xl bg-secondary-container/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="payments">payments</span>
+</div>
+<span class="text-sm font-bold text-on-surface">0/1</span>
+</div>
+<div>
+<p class="text-sm font-medium text-on-surface-variant">Sales</p>
+<div class="w-full h-1.5 bg-surface-container mt-2 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-0 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Goal 3 -->
+<div class="surface-container-low p-6 rounded-full border border-outline-variant/15 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-xl bg-tertiary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="smart_toy">smart_toy</span>
+</div>
+<span class="text-sm font-bold text-on-surface">0/3</span>
+</div>
+<div>
+<p class="text-sm font-medium text-on-surface-variant">AI Coach</p>
+<div class="w-full h-1.5 bg-surface-container mt-2 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-0 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Actions -->
+<section>
+<h2 class="text-lg font-bold text-on-surface mb-6">Quick Actions</h2>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<button class="glass-card p-6 rounded-xl flex flex-col items-center gap-3 hover:bg-surface-container transition-all group">
+<span class="material-symbols-outlined text-primary-container text-3xl group-hover:scale-110 transition-transform" data-icon="bolt">bolt</span>
+<span class="text-sm font-medium">Pre-Tour</span>
+</button>
+<button class="glass-card p-6 rounded-xl flex flex-col items-center gap-3 hover:bg-surface-container transition-all group">
+<span class="material-symbols-outlined text-primary-container text-3xl group-hover:scale-110 transition-transform" data-icon="smart_toy">smart_toy</span>
+<span class="text-sm font-medium">AI Coach</span>
+</button>
+<button class="glass-card p-6 rounded-xl flex flex-col items-center gap-3 hover:bg-surface-container transition-all group">
+<span class="material-symbols-outlined text-primary-container text-3xl group-hover:scale-110 transition-transform" data-icon="menu_book">menu_book</span>
+<span class="text-sm font-medium">Quick Wins</span>
+</button>
+<button class="glass-card p-6 rounded-xl flex flex-col items-center gap-3 hover:bg-surface-container transition-all group">
+<span class="material-symbols-outlined text-primary-container text-3xl group-hover:scale-110 transition-transform" data-icon="history_edu">history_edu</span>
+<span class="text-sm font-medium">Post-Tour</span>
+</button>
+<button class="glass-card p-6 rounded-xl flex flex-col items-center gap-3 hover:bg-surface-container transition-all group">
+<span class="material-symbols-outlined text-primary-container text-3xl group-hover:scale-110 transition-transform" data-icon="person">person</span>
+<span class="text-sm font-medium">Profile</span>
+</button>
+<button class="glass-card p-6 rounded-xl flex flex-col items-center gap-3 hover:bg-surface-container transition-all group">
+<span class="material-symbols-outlined text-primary-container text-3xl group-hover:scale-110 transition-transform" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#131317] dark:bg-[#131317] border-t border-[#4d4635]/15 shadow-[0_-20px_40px_rgba(242,202,80,0.06)]">
+<!-- Active: Dashboard -->
+<a class="flex flex-col items-center justify-center text-[#F2CA50] bg-[#264191]/20 rounded-xl px-3 py-1 scale-95 active:duration-150 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:text-[#F2CA50] hover:opacity-100 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">AI Coach</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:text-[#F2CA50] hover:opacity-100 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">Pre-Tour</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:text-[#F2CA50] hover:opacity-100 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">Quick Wins</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:text-[#F2CA50] hover:opacity-100 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide">Profile</span>
+</a>
+</nav>
+</body></html>

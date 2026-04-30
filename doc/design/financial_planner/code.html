@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#e5e1e8",
+                    "background": "#131317",
+                    "outline-variant": "#4d4635",
+                    "surface-container": "#201f24",
+                    "secondary-container": "#264191",
+                    "on-tertiary-container": "#3a4559",
+                    "inverse-surface": "#e5e1e8",
+                    "inverse-primary": "#735c00",
+                    "surface-container-highest": "#353439",
+                    "error": "#ffb4ab",
+                    "surface-tint": "#e9c349",
+                    "outline": "#99907c",
+                    "on-tertiary": "#263143",
+                    "secondary": "#b6c4ff",
+                    "on-secondary-fixed-variant": "#264191",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary": "#05297a",
+                    "surface-container-low": "#1b1b20",
+                    "tertiary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#554300",
+                    "surface-dim": "#131317",
+                    "on-surface": "#e5e1e8",
+                    "primary-fixed-dim": "#e9c349",
+                    "surface": "#131317",
+                    "on-surface-variant": "#d0c5af",
+                    "surface-variant": "#353439",
+                    "secondary-fixed-dim": "#b6c4ff",
+                    "inverse-on-surface": "#303035",
+                    "on-tertiary-fixed": "#111c2d",
+                    "secondary-fixed": "#dce1ff",
+                    "surface-container-lowest": "#0e0e12",
+                    "on-secondary-container": "#9db2ff",
+                    "surface-bright": "#39383e",
+                    "on-primary-fixed": "#241a00",
+                    "error-container": "#93000a",
+                    "on-error": "#690005",
+                    "tertiary": "#c3cee6",
+                    "tertiary-container": "#a8b3ca",
+                    "on-primary-fixed-variant": "#574500",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "surface-container-high": "#2a292e",
+                    "on-secondary-fixed": "#00164e",
+                    "primary-fixed": "#ffe088",
+                    "primary-container": "#d4af37",
+                    "tertiary-fixed": "#d8e3fb",
+                    "primary": "#f2ca50",
+                    "on-primary": "#3c2f00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #131317;
+            color: #e5e1e8;
+        }
+        .editorial-gradient {
+            background: radial-gradient(circle at top right, rgba(38, 65, 145, 0.15), transparent),
+                        radial-gradient(circle at bottom left, rgba(212, 175, 55, 0.05), transparent);
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #4d4635;
+            border-radius: 2px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #f2ca50;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -8px;
+            box-shadow: 0 0 10px rgba(242, 202, 80, 0.4);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="editorial-gradient min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131317] dark:bg-[#131317] bg-gradient-to-b from-[#1b1b20] to-transparent shadow-[0_20px_40px_-15px_rgba(242,202,80,0.06)] flex justify-between items-center px-8 h-20 w-full">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a high-end executive in a dark tailored suit with soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW986yXARdGK81B4BSf4QsMq7b6KqDlj-jZ05FZXFLwqZI_bSh0y2E-4YPaqjGN5xBpY-GbhjLT3oFLr-HpgTE17qR5glgi2ScGcPU4OESnfyJYJr_WLpumgTflnY8QqBdT2T8Dbl7N5PkOvEro9FzYxUrm2buzem1X8lqod2OBeflodWl7STsXbCX87fRevY_xT-S2lFVA_P7qPgy92RVggCOZCOstTpl5NC_kKv9_9gGKGx6fv4Kh0suFaakYw8Zk1-rKvVz8w"/>
+</div>
+<h1 class="font-['Plus_Jakarta_Sans'] font-bold text-[1.75rem] tracking-tight text-[#D4AF37]">The Vault</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 items-center mr-8">
+<a class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300" href="#">Strategy</a>
+<a class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300" href="#">Performance</a>
+<a class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest text-[#d0c5af] hover:text-[#f2ca50] transition-colors duration-300" href="#">Network</a>
+</div>
+<button class="material-symbols-outlined text-[#D4AF37] ease-out duration-300 active:scale-95">notifications</button>
+</div>
+</header>
+<main class="pt-32 px-6 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="mb-16">
+<span class="text-primary font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-[0.3em] mb-4 block">Commission Strategy</span>
+<h2 class="text-on-background font-headline font-bold text-[3.5rem] leading-none mb-4">Financial Planner</h2>
+<p class="text-on-surface-variant max-w-2xl text-lg">Architect your earnings. Model your quarterly performance by adjusting your volume and conversion targets to visualize your high-performance outcomes.</p>
+</div>
+<!-- Bento Grid Calculator -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Input Controls (Main Card) -->
+<div class="lg:col-span-7 bg-surface-container-low p-10 rounded-xl flex flex-col gap-12 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary-container/5 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+<div>
+<div class="flex justify-between items-end mb-6">
+<label class="text-on-surface font-headline font-bold text-[1.125rem]">Target Sales Volume</label>
+<span class="text-primary font-headline font-bold text-2xl">$450,000</span>
+</div>
+<input class="w-full" max="1000000" min="0" step="10000" type="range" value="450000"/>
+<div class="flex justify-between mt-4 text-on-surface-variant text-[0.75rem] uppercase tracking-widest">
+<span>$0</span>
+<span>$1,000,000</span>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-6">
+<label class="text-on-surface font-headline font-bold text-[1.125rem]">Target Closing Rate</label>
+<span class="text-primary font-headline font-bold text-2xl">24%</span>
+</div>
+<input class="w-full" max="100" min="0" step="1" type="range" value="24"/>
+<div class="flex justify-between mt-4 text-on-surface-variant text-[0.75rem] uppercase tracking-widest">
+<span>0%</span>
+<span>100%</span>
+</div>
+</div>
+<div class="pt-8 grid grid-cols-2 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-lg border-b border-outline-variant/15">
+<span class="text-on-surface-variant text-[0.75rem] uppercase tracking-widest block mb-2">Commission Tier</span>
+<span class="text-on-background font-headline font-bold text-xl">Platinum Elite (8%)</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-lg border-b border-outline-variant/15">
+<span class="text-on-surface-variant text-[0.75rem] uppercase tracking-widest block mb-2">Accelerator Multiplier</span>
+<span class="text-on-background font-headline font-bold text-xl">1.2x Active</span>
+</div>
+</div>
+</div>
+<!-- Commission Display (Hero Card) -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<div class="bg-surface-container p-10 rounded-xl shadow-[20px_20px_60px_rgba(0,0,0,0.4)] flex flex-col items-center justify-center text-center border border-outline-variant/5">
+<span class="text-on-surface-variant font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-[0.3em] mb-6">Estimated Commission</span>
+<div class="text-primary font-headline font-bold text-[4rem] leading-none mb-6 drop-shadow-[0_10px_20px_rgba(242,202,80,0.2)]">
+                        $43,200
+                    </div>
+<div class="bg-secondary-container/20 text-on-secondary-container px-4 py-1 rounded-full text-[0.75rem] font-bold uppercase tracking-widest">
+                        Q3 Projection
+                    </div>
+</div>
+<!-- Financial Breakdown -->
+<div class="bg-surface-container-low p-10 rounded-xl flex flex-col gap-8">
+<h3 class="text-on-background font-headline font-bold text-[1.125rem]">Post-Tax Realization</h3>
+<div class="space-y-6">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline-variant">account_balance_wallet</span>
+<span class="text-on-surface-variant">Gross Commission</span>
+</div>
+<span class="text-on-background font-medium">$43,200.00</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">trending_down</span>
+<span class="text-on-surface-variant">Estimated Tax (28%)</span>
+</div>
+<span class="text-error font-medium">-$12,096.00</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">savings</span>
+<span class="text-on-surface-variant">Benefit Deductions</span>
+</div>
+<span class="text-on-background font-medium">-$840.00</span>
+</div>
+<div class="h-px bg-outline-variant/15 my-2"></div>
+<div class="flex justify-between items-center">
+<span class="text-on-background font-headline font-bold text-lg">Net Income</span>
+<span class="text-primary font-headline font-bold text-2xl">$30,264.00</span>
+</div>
+</div>
+<button class="w-full bg-gradient-to-r from-primary-container to-primary text-on-primary py-4 rounded-lg font-headline font-bold uppercase tracking-widest text-[0.75rem] hover:shadow-[0_0_20px_rgba(242,202,80,0.3)] transition-all duration-300 ease-out active:scale-95">
+                        Commit to Strategy
+                    </button>
+</div>
+</div>
+</div>
+<!-- Performance Context -->
+<div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-lowest/50 p-8 rounded-xl border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-4">bolt</span>
+<h4 class="text-on-background font-headline font-bold mb-2">High-Cap Multiplier</h4>
+<p class="text-on-surface-variant text-sm">You are currently 84% towards the next commission bracket of 10%.</p>
+</div>
+<div class="bg-surface-container-lowest/50 p-8 rounded-xl border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-4">analytics</span>
+<h4 class="text-on-background font-headline font-bold mb-2">Historical Accuracy</h4>
+<p class="text-on-surface-variant text-sm">Your projected volume aligns with your average performance from Q3 2023.</p>
+</div>
+<div class="bg-surface-container-lowest/50 p-8 rounded-xl border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary mb-4">military_tech</span>
+<h4 class="text-on-background font-headline font-bold mb-2">Quarterly Bonus</h4>
+<p class="text-on-surface-variant text-sm">Hitting this target triggers a $5,000 performance milestone bonus.</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-24 px-6 pb-6 bg-[#0e0e12]/90 backdrop-blur-xl border-t border-[#4d4635]/15 z-50">
+<div class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] ease-out duration-300 active:scale-90">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Vault</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f2ca50] scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Training</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] ease-out duration-300 active:scale-90">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Coaching</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#d0c5af] opacity-60 hover:opacity-100 hover:text-[#f2ca50] ease-out duration-300 active:scale-90">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-[0.75rem] uppercase tracking-widest mt-1">Resources</span>
+</div>
+</nav>
+</body></html>
