@@ -127,6 +127,11 @@ const blueprintAliases: Record<number, string> = {
   11: 'T.O. Pricing'
 };
 
+function formatCurrency(value?: number | string) {
+  const amount = Number(value) || 0;
+  return `$${amount.toLocaleString('en-US')}`;
+}
+
 export default function App() {
   const [token, setToken] = useState('');
   const [showLogin, setShowLogin] = useState(false);
@@ -143,6 +148,7 @@ export default function App() {
   const [goalHistory, setGoalHistory] = useState<GoalSheetEntry[]>([]);
   const [goalMetrics, setGoalMetrics] = useState<Dashboard['metrics'] | null>(null);
   const [selectedStepId, setSelectedStepId] = useState('step_5');
+  const [showStepDetail, setShowStepDetail] = useState(false);
   const [agentPrompt, setAgentPrompt] = useState('Help me practice Step 5');
   const [agentResponse, setAgentResponse] = useState('');
   const [goalVolume, setGoalVolume] = useState('8450');
@@ -197,6 +203,7 @@ export default function App() {
     setAgentResponse('');
     setScreenMessage('');
     setActiveTab('home');
+    setShowStepDetail(false);
     setShowLogin(false);
   }
 
@@ -258,6 +265,10 @@ export default function App() {
   useEffect(() => {
     if (token) load(token).catch((error) => setScreenMessage(`API error: ${error.message}`));
   }, [token]);
+
+  useEffect(() => {
+    if (activeTab !== 'roadmap') setShowStepDetail(false);
+  }, [activeTab]);
 
   async function login() {
     setIsAuthenticating(true);
@@ -352,7 +363,7 @@ export default function App() {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.appShell}>
         <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-          {activeTab !== 'roleplay' && <LoggedInHeader firstName={firstName} />}
+          {activeTab === 'home' && <LoggedInHeader />}
           {screenMessage ? <Notice text={screenMessage} /> : null}
           {isLoading ? <Text style={styles.muted}>Syncing workspace...</Text> : null}
           {activeTab === 'home' && renderHome()}
@@ -473,8 +484,8 @@ export default function App() {
           <View style={styles.progressGrid}>
             <ProgressTile icon={Target} label="Goal Progress" value={`${roadmapPercent}%`} trend="On track" />
             <ProgressTile icon={ClipboardCheck} label="Closing %" value={`${dashboard?.metrics?.closing_percent ?? 0}%`} trend="+6%" />
-            <ProgressTile icon={Bot} label="VPG" value={`$${dashboard?.metrics?.vpg ?? 0}`} trend="+12%" />
-            <ProgressTile icon={BarChart3} label="Sales Volume" value={`$${goalMetrics?.volume ?? 8450}`} trend="+15%" />
+            <ProgressTile icon={Bot} label="VPG" value={formatCurrency(dashboard?.metrics?.vpg ?? 0)} trend="+12%" />
+            <ProgressTile icon={BarChart3} label="Sales Volume" value={formatCurrency(goalMetrics?.volume ?? 8450)} trend="+15%" />
           </View>
         </GlassCard>
         <GlassCard accent>
@@ -496,7 +507,7 @@ export default function App() {
   }
 
   function renderRoadmap() {
-    if (selectedStep && activeTab === 'roadmap' && selectedStepId === selectedStep.id && selectedStep.step_number === 5) {
+    if (selectedStep && showStepDetail) {
       return renderStepDetail();
     }
     return (
@@ -520,7 +531,14 @@ export default function App() {
         </GlassCard>
         <Text style={styles.sectionTitle}>YOUR 11-STEP BLUEPRINT</Text>
         {steps.map((step) => (
-          <TouchableOpacity key={step.id} style={[styles.roadmapRow, step.status === 'current' && styles.roadmapRowActive]} onPress={() => setSelectedStepId(step.id)}>
+          <TouchableOpacity
+            key={step.id}
+            style={[styles.roadmapRow, step.status === 'current' && styles.roadmapRowActive]}
+            onPress={() => {
+              setSelectedStepId(step.id);
+              setShowStepDetail(true);
+            }}
+          >
             <View style={[styles.stepIconCircle, step.status === 'completed' && styles.stepDone]}>
               {step.status === 'completed' ? <Check color={ink} size={24} /> : <Text style={styles.stepIconText}>{step.step_number}</Text>}
             </View>
@@ -552,7 +570,7 @@ export default function App() {
     const step = selectedStep;
     return (
       <>
-        <TouchableOpacity style={styles.backLink} onPress={() => setSelectedStepId(currentStep?.id || 'step_4')}>
+        <TouchableOpacity style={styles.backLink} onPress={() => setShowStepDetail(false)}>
           <ChevronLeft color={gold} size={24} />
           <Text style={styles.goldText}>Back to Roadmap</Text>
         </TouchableOpacity>
@@ -623,7 +641,7 @@ export default function App() {
             <OptionCard text="No, I Didn’t Sell\nTell us why" />
           </View>
           <View style={styles.twoCol}>
-            <InputBlock label="Sales Volume (USD)" value={`$ ${goalVolume}`} onChangeText={(value) => setGoalVolume(value.replace(/[^0-9]/g, ''))} />
+            <InputBlock label="Sales Volume (USD)" value={formatCurrency(goalVolume)} onChangeText={(value) => setGoalVolume(value.replace(/[^0-9]/g, ''))} />
             <InputBlock label="# of Sales" value={goalSales} onChangeText={setGoalSales} />
           </View>
         </GoalSection>
@@ -633,8 +651,8 @@ export default function App() {
         <GoalSection number="4" title="YOUR METRICS" icon={BarChart3} subtitle="Track your key performance metrics">
           <View style={styles.metricCards}>
             <GoalMetric label="Closing %" value={`${dashboard?.metrics?.closing_percent ?? 28}%`} goal="/ 40% goal" trend="↓ 12% vs yesterday" />
-            <GoalMetric label="VPG" value={`$${dashboard?.metrics?.vpg ?? 8450}`} goal="/ $10,000 goal" trend="↓ $1,550 vs yesterday" />
-            <GoalMetric label="Volume" value={`$${goalMetrics?.volume ?? 8450}`} goal="/ $15,000 goal" trend="↑ $2,450 vs yesterday" good />
+            <GoalMetric label="VPG" value={formatCurrency(dashboard?.metrics?.vpg ?? 8450)} goal="/ $10,000 goal" trend="↓ $1,550 vs yesterday" />
+            <GoalMetric label="Volume" value={formatCurrency(goalMetrics?.volume ?? 8450)} goal="/ $15,000 goal" trend="↑ $2,450 vs yesterday" good />
           </View>
         </GoalSection>
         <GoalSection number="5" title="FOLLOW UP REMINDER" icon={CalendarDays} subtitle="Plan your follow ups">
@@ -769,13 +787,10 @@ function CenteredStatus({ text }: { text: string }) {
   );
 }
 
-function LoggedInHeader({ firstName }: { firstName: string }) {
+function LoggedInHeader() {
   return (
     <View style={styles.loggedHeader}>
-      <View>
-        <BrandCompact />
-        <Text style={styles.headerName}>Good morning, <Text style={styles.goldText}>{firstName}</Text></Text>
-      </View>
+      <BrandCompact />
       <View style={styles.headerActions}>
         <Bell color="#fff" size={26} />
         <View style={styles.avatar}><Text style={styles.avatarText}>AB</Text></View>
@@ -898,7 +913,7 @@ function GoalSection({ number, title, subtitle, icon: Icon, children }: { number
 }
 
 function OptionCard({ text, selected }: { text: string; selected?: boolean }) {
-  const [lead, ...rest] = text.split('\n');
+  const [lead, ...rest] = text.split(/\\n|\n/);
   return (
     <View style={[styles.optionCard, selected && styles.optionSelected]}>
       <Text style={[styles.optionLead, selected && styles.goldText]}>{lead}</Text>
@@ -921,7 +936,7 @@ function GoalMetric({ label, value, goal, trend, good }: { label: string; value:
   return (
     <View style={styles.goalMetric}>
       <Text style={styles.bodyText}>{label}</Text>
-      <Text style={styles.metricBig}>{value}</Text>
+      <Text adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1} style={styles.metricBig}>{value}</Text>
       <Text style={styles.muted}>{goal}</Text>
       <View style={styles.progressBar}><View style={styles.progressFill} /></View>
       <Text style={good ? styles.goodTrend : styles.badTrend}>{trend}</Text>
@@ -986,7 +1001,7 @@ function ProgressTile({ icon: Icon, label, value, trend }: { icon: React.Compone
     <View style={styles.progressTile}>
       <Icon color={gold} size={36} />
       <Text style={styles.muted}>{label}</Text>
-      <Text style={styles.metricBig}>{value}</Text>
+      <Text adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1} style={styles.metricBig}>{value}</Text>
       <Text style={styles.goodTrend}>{trend}</Text>
     </View>
   );
@@ -1058,7 +1073,7 @@ const styles = StyleSheet.create({
   brandCompact: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 10
+    gap: 8
   },
   logoText: {
     color: gold,
@@ -1069,7 +1084,7 @@ const styles = StyleSheet.create({
   logoTextSmall: {
     color: gold,
     fontFamily: Platform.select({ ios: 'Georgia', default: 'serif' }),
-    fontSize: 42,
+    fontSize: 38,
     fontWeight: '900'
   },
   brandDivider: {
@@ -1079,7 +1094,7 @@ const styles = StyleSheet.create({
   },
   brandDividerSmall: {
     backgroundColor: 'rgba(255,255,255,0.32)',
-    height: 32,
+    height: 28,
     width: 1
   },
   brandLabel: {
@@ -1090,40 +1105,34 @@ const styles = StyleSheet.create({
   },
   brandLabelSmall: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '900'
   },
   loggedHeader: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 26,
+    marginBottom: 22,
     paddingTop: 8
   },
   headerActions: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 18
+    gap: 12
   },
   avatar: {
     alignItems: 'center',
     borderColor: gold,
-    borderRadius: 28,
+    borderRadius: 24,
     borderWidth: 1.5,
-    height: 54,
+    height: 48,
     justifyContent: 'center',
-    width: 54
+    width: 48
   },
   avatarText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: '900'
-  },
-  headerName: {
-    color: '#fff',
-    fontSize: 33,
-    fontWeight: '900',
-    marginTop: 22
   },
   title: {
     color: '#fff',
@@ -1509,8 +1518,9 @@ const styles = StyleSheet.create({
   },
   metricBig: {
     color: '#fff',
-    fontSize: 27,
+    fontSize: 22,
     fontWeight: '900',
+    lineHeight: 27,
     marginVertical: 6
   },
   goodTrend: {
@@ -1991,7 +2001,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     flex: 1,
-    padding: 10
+    padding: 8
   },
   followRow: {
     alignItems: 'center',

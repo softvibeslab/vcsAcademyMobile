@@ -57,6 +57,7 @@ This runs:
 - [x] Local production-ready auth flows: change password, forgot/reset demo, invite, enable/disable, and session invalidation.
 - [x] Mobile UX split into launch-ready screens: Home, Roadmap, Smart Agent, GoalSheet, Roleplay, Library, and Profile.
 - [x] Sprint 17 mobile visual fidelity pass aligned to supplied dark/gold mockups.
+- [x] Sprint 18 mobile screenshot QA captured across Welcome, Login, Home, Roadmap, Step Detail, GoalSheet, Roleplay, and Resources.
 - [x] Demo users seeded by role.
 - [x] Demo knowledge base expanded with Blueprint resources, compliance resources, and multiple roleplay scenarios.
 - [x] Smart Agent provider interface with local retrieval, citations, recommendations, and sensitive-content guardrails.
@@ -76,5 +77,6 @@ This runs:
 - [ ] Replace local SQLite with managed database when target hosting is selected.
 - [ ] Replace `https://api.example.com` in EAS profiles with production API URL.
 - [ ] Produce native iOS/Android builds through EAS.
+- [ ] Replace placeholder/generated Smart Agent artwork with final brand-approved production assets if required by App Store launch.
 - [ ] Configure monitoring/error reporting provider.
 - [ ] Complete stakeholder UAT sign-off.

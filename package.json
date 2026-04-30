@@ -20,11 +20,15 @@
     "build:web": "npm --workspace frontend run build",
     "doctor:mobile": "npx expo-doctor",
     "export:mobile:web": "cd apps/mobile && npx expo export --platform web --output-dir dist-mobile-web",
+    "qa:mobile:screenshots": "node tools/qa/mobile-screenshots.mjs",
     "release:check": "npm run check && npm run build:web && npm run doctor:mobile && npm run export:mobile:web"
   },
   "overrides": {
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
   }
 }
