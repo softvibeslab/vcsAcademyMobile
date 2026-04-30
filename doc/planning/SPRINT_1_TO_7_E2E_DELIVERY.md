@@ -82,11 +82,18 @@ Current verification result:
 
 - `npm test`: passed, 5/5 domain tests.
 - `npm run e2e:api`: passed, full API smoke flow.
-- `npm install`: blocked locally by disk space with `ENOSPC: no space left on device` while installing Expo/React Native dependencies. The partial `node_modules` folder was removed after the failed install.
+- `npm install`: passed after cleaning npm cache and freeing disk space.
+- `npm --workspace frontend run build`: passed.
+- `npx expo-doctor`: passed, 17/17 checks.
+- `npx expo export --platform web`: passed.
+- Local dev servers verified:
+  - Backend: `http://127.0.0.1:8001/api/health`
+  - Webapp: `http://127.0.0.1:5173/`
+  - Mobile web preview: `http://127.0.0.1:8082/`
 
 ## Known Constraints
 
 - Persistence is in-memory for the first E2E slice.
 - Auth is a demo session contract, not a production provider.
-- Mobile and web apps are scaffolded to call the API, but full web/native builds require a successful JS dependency install.
+- Mobile and web apps are scaffolded and verified for web/dev preview. Native iOS/Android builds still need platform-specific EAS or simulator validation.
 - Smart Agent is a deterministic guardrailed implementation, not yet connected to a hosted model or retrieval index.
