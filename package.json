@@ -1,0 +1,18 @@
+{
+  "name": "vcsa-academy",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/mobile",
+    "frontend",
+    "packages/domain"
+  ],
+  "scripts": {
+    "dev:backend": "python3 -m uvicorn backend.app.main:app --reload --host 127.0.0.1 --port 8001",
+    "dev:web": "npm --workspace frontend run dev",
+    "dev:mobile": "npm --workspace apps/mobile run start",
+    "test": "node --test packages/domain/test/*.test.mjs",
+    "e2e:api": "python3 backend/tests/e2e_smoke.py",
+    "check": "npm test && npm run e2e:api"
+  }
+}

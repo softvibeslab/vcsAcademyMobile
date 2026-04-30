@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "WL Sales Academy",
+    "slug": "wl-sales-academy",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#020506"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
