@@ -14,7 +14,7 @@ Sprint 8 begins by replacing the first E2E slice's in-memory backend behavior wi
 - Demo user seed:
   - Email: `rep@vcsa.local`
   - Password: `demo123`
-  - Roles: `sales_rep`, `manager`
+  - Roles: `sales_rep`
 - Password hashing with PBKDF2-HMAC-SHA256.
 - Bearer session tokens stored in SQLite.
 - Auth endpoints:

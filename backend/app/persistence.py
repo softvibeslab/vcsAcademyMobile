@@ -151,9 +151,20 @@ def init_db() -> None:
                 created_at TEXT NOT NULL
             );
 
+            CREATE TABLE IF NOT EXISTS password_reset_tokens (
+                token TEXT PRIMARY KEY,
+                user_id TEXT NOT NULL,
+                purpose TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                expires_at TEXT NOT NULL,
+                used_at TEXT,
+                FOREIGN KEY(user_id) REFERENCES users(id)
+            );
+
             CREATE INDEX IF NOT EXISTS idx_goalsheet_user_date ON goalsheet_entries(user_id, entry_date);
             CREATE INDEX IF NOT EXISTS idx_audit_actor_created ON audit_events(actor_user_id, created_at);
             CREATE INDEX IF NOT EXISTS idx_certification_user_created ON certification_decisions(user_id, created_at);
+            CREATE INDEX IF NOT EXISTS idx_password_reset_user ON password_reset_tokens(user_id, expires_at);
             """
         )
     seed_demo_data()
@@ -306,6 +317,12 @@ def get_user(user_id: str) -> dict[str, Any] | None:
         return row_to_user(row)
 
 
+def get_user_by_email(email: str) -> dict[str, Any] | None:
+    with connect() as db:
+        row = db.execute("SELECT * FROM users WHERE lower(email) = lower(?)", (email,)).fetchone()
+        return row_to_user(row)
+
+
 def save_user(user: dict[str, Any], password: str | None = None) -> dict[str, Any]:
     now = datetime.utcnow().isoformat()
     user_id = user.get("id") or f"user_{secrets.token_hex(6)}"
@@ -347,6 +364,56 @@ def save_user(user: dict[str, Any], password: str | None = None) -> dict[str, An
     if not saved:
         raise RuntimeError("Failed to save user")
     return saved
+
+
+def set_user_password(user_id: str, password: str) -> None:
+    now = datetime.utcnow().isoformat()
+    with connect() as db:
+        db.execute(
+            "UPDATE users SET password_hash = ?, updated_at = ? WHERE id = ?",
+            (hash_password(password), now, user_id),
+        )
+        db.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
+
+
+def set_user_status(user_id: str, status: str) -> dict[str, Any] | None:
+    now = datetime.utcnow().isoformat()
+    with connect() as db:
+        db.execute("UPDATE users SET status = ?, updated_at = ? WHERE id = ?", (status, now, user_id))
+        if status != "active":
+            db.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
+    return get_user(user_id)
+
+
+def create_password_reset_token(user_id: str, purpose: str = "password_reset", ttl_minutes: int = 30) -> dict[str, Any]:
+    now = datetime.utcnow()
+    expires_at = now + timedelta(minutes=ttl_minutes)
+    token = secrets.token_urlsafe(24)
+    with connect() as db:
+        db.execute(
+            """
+            INSERT INTO password_reset_tokens (token, user_id, purpose, created_at, expires_at, used_at)
+            VALUES (?, ?, ?, ?, ?, NULL)
+            """,
+            (token, user_id, purpose, now.isoformat(), expires_at.isoformat()),
+        )
+    return {"token": token, "user_id": user_id, "purpose": purpose, "expires_at": expires_at.isoformat()}
+
+
+def consume_password_reset_token(token: str, purpose: str = "password_reset") -> dict[str, Any] | None:
+    now = datetime.utcnow().isoformat()
+    with connect() as db:
+        row = db.execute(
+            """
+            SELECT * FROM password_reset_tokens
+            WHERE token = ? AND purpose = ? AND used_at IS NULL AND expires_at > ?
+            """,
+            (token, purpose, now),
+        ).fetchone()
+        if not row:
+            return None
+        db.execute("UPDATE password_reset_tokens SET used_at = ? WHERE token = ?", (now, token))
+        return {"token": row["token"], "user_id": row["user_id"], "purpose": row["purpose"], "expires_at": row["expires_at"]}
 
 
 def authenticate(email: str, password: str) -> dict[str, Any] | None:

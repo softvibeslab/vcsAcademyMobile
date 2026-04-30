@@ -85,6 +85,24 @@ class LoginIn(BaseModel):
     password: str
 
 
+class ChangePasswordIn(BaseModel):
+    current_password: str
+    new_password: str = Field(min_length=8)
+
+
+class ForgotPasswordIn(BaseModel):
+    email: str
+
+
+class ResetPasswordIn(BaseModel):
+    token: str
+    new_password: str = Field(min_length=8)
+
+
+class UserStatusIn(BaseModel):
+    status: Literal["active", "inactive"]
+
+
 class UserIn(BaseModel):
     id: str | None = None
     email: str
@@ -316,6 +334,45 @@ def login(payload: LoginIn, response: Response) -> dict[str, Any]:
     )
     audit(user, "auth_login", "user", user["id"], "success")
     return envelope({"user": user, "token": session["token"], "expires_at": session["expires_at"]})
+
+
+@app.post("/api/auth/change-password")
+def change_password(payload: ChangePasswordIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+    if not persistence.authenticate(user["email"], payload.current_password):
+        audit(user, "auth_change_password", "user", user["id"], "blocked")
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+    persistence.set_user_password(user["id"], payload.new_password)
+    audit(user, "auth_change_password", "user", user["id"], "success")
+    return envelope(message="Password changed")
+
+
+@app.post("/api/auth/forgot-password")
+def forgot_password(payload: ForgotPasswordIn) -> dict[str, Any]:
+    user = persistence.get_user_by_email(payload.email)
+    reset = persistence.create_password_reset_token(user["id"]) if user else None
+    if user:
+        audit(user, "auth_password_reset_requested", "user", user["id"], "success")
+    return envelope(
+        {
+            "delivery": "demo_local",
+            "reset_token": reset["token"] if reset else None,
+            "expires_at": reset["expires_at"] if reset else None,
+        },
+        "If the user exists, reset instructions were generated.",
+    )
+
+
+@app.post("/api/auth/reset-password")
+def reset_password(payload: ResetPasswordIn) -> dict[str, Any]:
+    reset = persistence.consume_password_reset_token(payload.token)
+    if not reset:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset token")
+    user = persistence.get_user(reset["user_id"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    persistence.set_user_password(user["id"], payload.new_password)
+    audit(user, "auth_password_reset_completed", "user", user["id"], "success")
+    return envelope(message="Password reset")
 
 
 @app.post("/api/auth/logout")
@@ -645,6 +702,31 @@ def admin_users(user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]
 def admin_save_user(payload: UserIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
     saved = persistence.save_user(payload.model_dump(exclude={"password"}), payload.password)
     audit(user, "admin_user_saved", "user", saved["id"], "success", {"roles": saved["roles"]})
+    return envelope({"user": saved})
+
+
+@app.post("/api/admin/users/invite")
+def admin_invite_user(payload: UserIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    temporary_password = payload.password or f"Temp{uuid4().hex[:8]}!"
+    saved = persistence.save_user(payload.model_dump(exclude={"password"}), temporary_password)
+    reset = persistence.create_password_reset_token(saved["id"], "invite", ttl_minutes=7 * 24 * 60)
+    audit(user, "admin_user_invited", "user", saved["id"], "success", {"roles": saved["roles"]})
+    return envelope(
+        {
+            "user": saved,
+            "temporary_password": temporary_password,
+            "invite_token": reset["token"],
+            "expires_at": reset["expires_at"],
+        }
+    )
+
+
+@app.patch("/api/admin/users/{user_id}/status")
+def admin_update_user_status(user_id: str, payload: UserStatusIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    saved = persistence.set_user_status(user_id, payload.status)
+    if not saved:
+        raise HTTPException(status_code=404, detail="User not found")
+    audit(user, "admin_user_status_changed", "user", user_id, "success", {"status": payload.status})
     return envelope({"user": saved})
 
 

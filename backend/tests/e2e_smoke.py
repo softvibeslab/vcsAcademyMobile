@@ -117,6 +117,44 @@ def main():
     assert any(item["id"] == "pricing-guide" and item["has_access"] is False for item in resources)
     admin_users = assert_success(client.get("/api/admin/users", headers=admin_headers))["users"]
     assert any(item["email"] == "rep@vcsa.local" for item in admin_users)
+    invited = assert_success(
+        client.post(
+            "/api/admin/users/invite",
+            headers=admin_headers,
+            json={
+                "id": "user_qa_auth",
+                "email": "qa-auth@vcsa.local",
+                "display_name": "QA Auth Rep",
+                "roles": ["sales_rep"],
+                "team_id": "team_demo",
+                "permissions": ["resource:step-5-script:read"],
+                "status": "active",
+                "password": "tempdemo123",
+            },
+        )
+    )
+    assert invited["invite_token"]
+    qa_headers = {
+        "Authorization": f"Bearer {assert_success(client.post('/api/auth/login', json={'email': 'qa-auth@vcsa.local', 'password': 'tempdemo123'}))['token']}"
+    }
+    assert_success(
+        client.post(
+            "/api/auth/change-password",
+            headers=qa_headers,
+            json={"current_password": "tempdemo123", "new_password": "changedemo123"},
+        )
+    )
+    assert client.post("/api/auth/login", json={"email": "qa-auth@vcsa.local", "password": "tempdemo123"}).status_code == 401
+    changed_login = assert_success(client.post("/api/auth/login", json={"email": "qa-auth@vcsa.local", "password": "changedemo123"}))
+    reset_request = assert_success(client.post("/api/auth/forgot-password", json={"email": "qa-auth@vcsa.local"}))
+    assert reset_request["reset_token"]
+    assert_success(client.post("/api/auth/reset-password", json={"token": reset_request["reset_token"], "new_password": "resetdemo123"}))
+    assert client.get("/api/mobile/me", headers={"Authorization": f"Bearer {changed_login['token']}"}).status_code == 401
+    assert_success(client.post("/api/auth/login", json={"email": "qa-auth@vcsa.local", "password": "resetdemo123"}))
+    disabled = assert_success(client.patch("/api/admin/users/user_qa_auth/status", headers=admin_headers, json={"status": "inactive"}))["user"]
+    assert disabled["status"] == "inactive"
+    assert client.post("/api/auth/login", json={"email": "qa-auth@vcsa.local", "password": "resetdemo123"}).status_code == 401
+    assert_success(client.patch("/api/admin/users/user_qa_auth/status", headers=admin_headers, json={"status": "active"}))
     saved_resource = assert_success(
         client.post(
             "/api/admin/resources",

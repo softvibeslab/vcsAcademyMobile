@@ -43,7 +43,7 @@ npm run release:check
 This runs:
 
 - Domain unit tests.
-- API E2E smoke with auth, RBAC, resources, manager review, certification, admin, audit, and logout checks.
+- API E2E smoke with auth, password change, password reset, invite, enable/disable, RBAC, resources, manager review, certification, admin, audit, and logout checks.
 - Production web build.
 - Expo Doctor.
 - Expo web export for mobile preview.
@@ -53,6 +53,8 @@ This runs:
 - [x] Protected API endpoints require Bearer token.
 - [x] Web login/logout uses real sessions.
 - [x] Mobile login/logout restores session with SecureStore on native and localStorage on web preview.
+- [x] Local production-ready auth flows: change password, forgot/reset demo, invite, enable/disable, and session invalidation.
+- [x] Mobile UX split into launch-ready screens: Home, Roadmap, Smart Agent, GoalSheet, Roleplay, Library, and Profile.
 - [x] Demo users seeded by role.
 - [x] Manager dashboard and certification decision API.
 - [x] Admin users/resources/audit API.
