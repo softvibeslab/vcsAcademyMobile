@@ -56,6 +56,7 @@ This runs:
 - [x] Mobile login/logout restores session with SecureStore on native and localStorage on web preview.
 - [x] Local production-ready auth flows: change password, forgot/reset demo, invite, enable/disable, and session invalidation.
 - [x] Mobile UX split into launch-ready screens: Home, Roadmap, Smart Agent, GoalSheet, Roleplay, Library, and Profile.
+- [x] Sprint 17 mobile visual fidelity pass aligned to supplied dark/gold mockups.
 - [x] Demo users seeded by role.
 - [x] Demo knowledge base expanded with Blueprint resources, compliance resources, and multiple roleplay scenarios.
 - [x] Smart Agent provider interface with local retrieval, citations, recommendations, and sensitive-content guardrails.

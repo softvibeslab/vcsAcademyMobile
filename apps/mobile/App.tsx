@@ -1,11 +1,40 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as SecureStore from 'expo-secure-store';
+import {
+  BarChart3,
+  Bell,
+  BookOpen,
+  Bot,
+  CalendarDays,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  CircleHelp,
+  ClipboardCheck,
+  FileText,
+  Headphones,
+  Home,
+  Lock,
+  Mic,
+  MoreHorizontal,
+  Play,
+  Rocket,
+  Send,
+  Sparkles,
+  Target,
+  Users,
+  Video
+} from 'lucide-react-native';
 import { Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const API_BASE = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8001';
 const SESSION_KEY = 'vcsa_token';
+const gold = '#ffc21a';
+const gold2 = '#ffe58a';
+const ink = '#020506';
 
-type TabKey = 'home' | 'roadmap' | 'agent' | 'goalsheet' | 'roleplay' | 'resources' | 'profile';
+type TabKey = 'home' | 'roadmap' | 'goalsheet' | 'roleplay' | 'resources' | 'support';
 
 type User = {
   id: string;
@@ -35,7 +64,6 @@ type Dashboard = {
     sales_count?: number;
     volume?: number;
   };
-  next_lesson?: Step;
 };
 
 type Resource = {
@@ -50,7 +78,6 @@ type Submission = {
   id: string;
   status: string;
   manager_feedback?: {
-    score?: number;
     recommendation?: string;
     comments?: string;
   };
@@ -73,26 +100,36 @@ type Scenario = {
 
 type GoalSheetEntry = {
   date: string;
-  tour_outcome: string;
-  sales_outcome: string;
   sales_volume: number;
   number_of_sales: number;
-  notes?: string;
-  smart_agent_insight?: string;
 };
 
-const tabs: Array<{ key: TabKey; label: string }> = [
-  { key: 'home', label: 'Home' },
-  { key: 'roadmap', label: 'Roadmap' },
-  { key: 'agent', label: 'Agent' },
-  { key: 'goalsheet', label: 'Goals' },
-  { key: 'roleplay', label: 'Roleplay' },
-  { key: 'resources', label: 'Library' },
-  { key: 'profile', label: 'Profile' }
+const tabs: Array<{ key: TabKey; label: string; icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }> }> = [
+  { key: 'home', label: 'Home', icon: Home },
+  { key: 'roadmap', label: 'Roadmap', icon: Target },
+  { key: 'goalsheet', label: 'GoalSheet', icon: ClipboardCheck },
+  { key: 'roleplay', label: 'Roleplay Live', icon: Users },
+  { key: 'resources', label: 'Resources', icon: BookOpen },
+  { key: 'support', label: 'Support', icon: Headphones }
 ];
+
+const blueprintAliases: Record<number, string> = {
+  1: 'Meet & Greet',
+  2: 'Agenda Control',
+  3: 'Rapport (Breakfast / FORM)',
+  4: 'Discovery / Survey',
+  5: 'Remake the Pact (YES/NO TODAY)',
+  6: '3-Way Pitch',
+  7: 'Property Tour',
+  8: 'Model Suite',
+  9: 'Point of Confirmation',
+  10: 'Programs',
+  11: 'T.O. Pricing'
+};
 
 export default function App() {
   const [token, setToken] = useState('');
+  const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState('rep@vcsa.local');
   const [password, setPassword] = useState('demo123');
@@ -105,12 +142,12 @@ export default function App() {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [goalHistory, setGoalHistory] = useState<GoalSheetEntry[]>([]);
   const [goalMetrics, setGoalMetrics] = useState<Dashboard['metrics'] | null>(null);
-  const [selectedStepId, setSelectedStepId] = useState('step_2');
+  const [selectedStepId, setSelectedStepId] = useState('step_5');
   const [agentPrompt, setAgentPrompt] = useState('Help me practice Step 5');
   const [agentResponse, setAgentResponse] = useState('');
   const [goalVolume, setGoalVolume] = useState('8450');
   const [goalSales, setGoalSales] = useState('1');
-  const [goalNotes, setGoalNotes] = useState('Strong Step 5 transition.');
+  const [goalNotes, setGoalNotes] = useState('');
   const [roleplayTranscript, setRoleplayTranscript] = useState('Practice transcript with a clear Step 5 commitment check.');
   const [authError, setAuthError] = useState('');
   const [screenMessage, setScreenMessage] = useState('');
@@ -119,7 +156,10 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const completedCount = useMemo(() => steps.filter((step) => step.status === 'completed').length, [steps]);
-  const selectedStep = steps.find((step) => step.id === selectedStepId) || steps[0];
+  const selectedStep = steps.find((step) => step.id === selectedStepId) || steps.find((step) => step.step_number === 5) || steps[0];
+  const currentStep = steps.find((step) => step.status === 'current') || steps.find((step) => step.status !== 'completed') || steps[0];
+  const firstName = user?.display_name?.split(' ')[0] || 'Chris';
+  const roadmapPercent = Math.max(dashboard?.blueprint_progress ?? 0, completedCount ? Math.round((completedCount / 11) * 100) : 0);
 
   async function saveStoredToken(nextToken: string) {
     if (Platform.OS === 'web') {
@@ -157,6 +197,7 @@ export default function App() {
     setAgentResponse('');
     setScreenMessage('');
     setActiveTab('home');
+    setShowLogin(false);
   }
 
   async function api(path: string, options: RequestInit = {}, sessionToken = token) {
@@ -200,9 +241,7 @@ export default function App() {
       setScenarios(scenariosData.scenarios);
       setGoalHistory(historyData.entries);
       setGoalMetrics(metricsData.metrics);
-      if (!stepsData.steps.find((step: Step) => step.id === selectedStepId)) {
-        setSelectedStepId(stepsData.steps[0]?.id || 'step_1');
-      }
+      if (!stepsData.steps.find((step: Step) => step.id === selectedStepId)) setSelectedStepId(stepsData.steps[4]?.id || stepsData.steps[0]?.id || 'step_5');
     } finally {
       setIsLoading(false);
     }
@@ -217,9 +256,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (token) {
-      load(token).catch((error) => setScreenMessage(`API error: ${error.message}`));
-    }
+    if (token) load(token).catch((error) => setScreenMessage(`API error: ${error.message}`));
   }, [token]);
 
   async function login() {
@@ -238,6 +275,7 @@ export default function App() {
       await load(payload.data.token);
     } catch (error) {
       clearSession();
+      setShowLogin(true);
       setAuthError(error instanceof Error ? error.message : 'Login failed');
     } finally {
       setIsAuthenticating(false);
@@ -252,10 +290,10 @@ export default function App() {
     }
   }
 
-  async function askAgent() {
+  async function askAgent(message = agentPrompt) {
     const data = await api('/api/smart-agent/chat', {
       method: 'POST',
-      body: JSON.stringify({ message: agentPrompt, mode: 'blueprint_step' })
+      body: JSON.stringify({ message, mode: 'blueprint_step' })
     });
     setAgentResponse(data.response);
     setScreenMessage(data.risk_flags?.length ? `Guardrail: ${data.risk_flags.join(', ')}` : 'Smart Agent response ready.');
@@ -271,7 +309,11 @@ export default function App() {
         sales_outcome: salesCount > 0 ? 'sold' : 'no_sale',
         sales_volume: Number(goalVolume) || 0,
         number_of_sales: salesCount,
-        follow_ups: [{ follow_up_date: '2026-05-01', note: 'Send approved brochure.' }],
+        follow_ups: [
+          { follow_up_date: '2026-05-18', note: 'Send brochure and pricing details' },
+          { follow_up_date: '2026-05-21', note: 'Check availability and offer' },
+          { follow_up_date: '2026-05-24', note: 'Final follow up / close attempt' }
+        ],
         notes: goalNotes
       })
     });
@@ -302,170 +344,319 @@ export default function App() {
     await load();
   }
 
-  if (isRestoringSession) {
-    return (
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.centered}>
-          <Text style={styles.kicker}>WL Sales Academy</Text>
-          <Text style={styles.subtitle}>Restoring secure session...</Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
+  if (isRestoringSession) return <CenteredStatus text="Restoring secure session..." />;
 
-  if (!token) {
-    return (
-      <SafeAreaView style={styles.safeArea}>
-        <ScrollView contentContainerStyle={styles.container}>
-          <View style={styles.hero}>
-            <Text style={styles.kicker}>WL Sales Academy</Text>
-            <Text style={styles.title}>Blueprint command center</Text>
-            <Text style={styles.subtitle}>Sign in to train, roleplay, log performance, and get compliant coaching.</Text>
-          </View>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Secure access</Text>
-            <Text style={styles.inputLabel}>Email</Text>
-            <TextInput autoCapitalize="none" autoComplete="email" keyboardType="email-address" onChangeText={setEmail} style={styles.input} value={email} />
-            <Text style={styles.inputLabel}>Password</Text>
-            <TextInput autoComplete="password" onChangeText={setPassword} secureTextEntry style={styles.input} value={password} />
-            {authError ? <Text style={styles.authError}>{authError}</Text> : null}
-            <TouchableOpacity disabled={isAuthenticating} style={[styles.button, isAuthenticating && styles.disabledButton]} onPress={login}>
-              <Text style={styles.buttonText}>{isAuthenticating ? 'Signing in...' : 'Sign in'}</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
+  if (!token) return showLogin ? renderLogin() : renderWelcome();
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.shell}>
-        <ScrollView contentContainerStyle={styles.container}>
-          <View style={styles.topBar}>
-            <View>
-              <Text style={styles.kicker}>WL Sales Academy</Text>
-              <Text style={styles.screenTitle}>{tabs.find((tab) => tab.key === activeTab)?.label}</Text>
-            </View>
-            <Text style={styles.rolePill}>{user?.roles?.[0] || 'rep'}</Text>
-          </View>
-
-          {screenMessage ? <Text style={styles.notice}>{screenMessage}</Text> : null}
+      <View style={styles.appShell}>
+        <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+          {activeTab !== 'roleplay' && <LoggedInHeader firstName={firstName} />}
+          {screenMessage ? <Notice text={screenMessage} /> : null}
           {isLoading ? <Text style={styles.muted}>Syncing workspace...</Text> : null}
-
           {activeTab === 'home' && renderHome()}
           {activeTab === 'roadmap' && renderRoadmap()}
-          {activeTab === 'agent' && renderAgent()}
           {activeTab === 'goalsheet' && renderGoalSheet()}
           {activeTab === 'roleplay' && renderRoleplay()}
           {activeTab === 'resources' && renderResources()}
-          {activeTab === 'profile' && renderProfile()}
+          {activeTab === 'support' && renderSupport()}
         </ScrollView>
-
-        <View style={styles.tabBar}>
-          {tabs.map((tab) => (
-            <TouchableOpacity key={tab.key} style={[styles.tabButton, activeTab === tab.key && styles.tabButtonActive]} onPress={() => setActiveTab(tab.key)}>
-              <Text style={[styles.tabText, activeTab === tab.key && styles.tabTextActive]}>{tab.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <BottomNav activeTab={activeTab} onSelect={setActiveTab} />
       </View>
     </SafeAreaView>
   );
 
+  function renderWelcome() {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <LinearGradient colors={['#03080b', '#010202']} style={styles.welcome}>
+          <View style={styles.statusSpacer} />
+          <BrandMark stacked />
+          <View style={styles.agentHaloLarge}>
+            <View style={styles.orbitOuter} />
+            <View style={styles.orbitMiddle} />
+            <View style={styles.orbitCore}>
+              <Bot color={gold2} size={64} strokeWidth={1.6} />
+            </View>
+            <FeatureCallout label="Analyze" caption="Every Conversation" style={styles.calloutLeftTop} icon={BarChart3} />
+            <FeatureCallout label="Guide" caption="Every Step" style={styles.calloutRightTop} icon={Rocket} />
+            <FeatureCallout label="Coach" caption="In Real-Time" style={styles.calloutLeftBottom} icon={Bot} />
+            <FeatureCallout label="Elevate" caption="Every Result" style={styles.calloutRightBottom} icon={Target} />
+          </View>
+          <Text style={styles.welcomeEyebrow}>AI-POWERED SALES INTELLIGENCE</Text>
+          <Text style={styles.welcomeTitle}>SMART AGENT</Text>
+          <Text style={styles.welcomeCopy}>Your AI-powered partner that listens, analyzes, and coaches you to close more deals.</Text>
+          <View style={styles.featureGrid}>
+            <MiniFeature icon={Bot} title="AI Analysis" copy="Deep insights from every interaction." />
+            <MiniFeature icon={Users} title="Real-Time Coaching" copy="Personalized guidance when you need it." />
+            <MiniFeature icon={BarChart3} title="Performance Boost" copy="Track progress and close at a higher level." />
+          </View>
+          <View style={styles.coachCard}>
+            <View>
+              <Text style={styles.goldCaps}>YOUR AI COACH</Text>
+              <Text style={styles.coachTitle}>Smart Agent</Text>
+              <Text style={styles.bodyText}>Always with you. Always leveling you up.</Text>
+            </View>
+            <View style={styles.eyeBadge}>
+              <Bot color={gold2} size={36} />
+            </View>
+          </View>
+          <GoldButton label="Get Started" onPress={() => setShowLogin(true)} icon={ChevronRight} />
+          <TouchableOpacity onPress={() => setShowLogin(true)}>
+            <Text style={styles.accountLink}>I already have an account</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+      </SafeAreaView>
+    );
+  }
+
+  function renderLogin() {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.container}>
+          <TouchableOpacity style={styles.backLink} onPress={() => setShowLogin(false)}>
+            <ChevronLeft color={gold} size={24} />
+            <Text style={styles.goldText}>Back</Text>
+          </TouchableOpacity>
+          <BrandMark />
+          <View style={styles.agentEyeHero}>
+            <Bot color={gold2} size={76} strokeWidth={1.4} />
+          </View>
+          <Text style={styles.title}>Welcome to Sales <Text style={styles.goldText}>Academy</Text></Text>
+          <Text style={styles.subtitle}>Your AI-powered partner to train, practice and master every step of the sales process.</Text>
+          <GlassCard>
+            <Text style={styles.cardTitle}>Secure access</Text>
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput autoCapitalize="none" autoComplete="email" keyboardType="email-address" onChangeText={setEmail} placeholder="rep@vcsa.local" placeholderTextColor="#6f7780" style={styles.input} value={email} />
+            <Text style={styles.inputLabel}>Password</Text>
+            <TextInput autoComplete="password" onChangeText={setPassword} placeholder="demo123" placeholderTextColor="#6f7780" secureTextEntry style={styles.input} value={password} />
+            {authError ? <Text style={styles.authError}>{authError}</Text> : null}
+            <GoldButton label={isAuthenticating ? 'Signing in...' : 'Enter Sales Academy'} onPress={login} icon={Rocket} disabled={isAuthenticating} />
+          </GlassCard>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
   function renderHome() {
     return (
       <>
-        <View style={styles.heroCompact}>
-          <Text style={styles.title}>{dashboard?.greeting || 'Ready for today?'}</Text>
-          <Text style={styles.subtitle}>Focus on one Blueprint behavior, one roleplay, and one honest GoalSheet entry.</Text>
-        </View>
-        <View style={styles.metrics}>
-          <Metric label="Blueprint" value={`${dashboard?.blueprint_progress ?? 0}%`} />
-          <Metric label="Closing" value={`${dashboard?.metrics?.closing_percent ?? 0}%`} />
-          <Metric label="VPG" value={`$${dashboard?.metrics?.vpg ?? 0}`} />
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Next best actions</Text>
-          <ActionButton label="Ask Smart Agent" onPress={() => setActiveTab('agent')} />
-          <ActionButton label="Log GoalSheet" onPress={() => setActiveTab('goalsheet')} secondary />
-          <ActionButton label="Run Roleplay" onPress={() => setActiveTab('roleplay')} secondary />
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Certification</Text>
-          <Text style={styles.bodyText}>Status: {certifications[0]?.status || dashboard?.certification_status || 'in_progress'}</Text>
-          <Text style={styles.bodyText}>Completed steps: {completedCount}/11</Text>
-          {certifications[0]?.notes ? <Text style={styles.insight}>{certifications[0].notes}</Text> : null}
-        </View>
+        <Text style={styles.homeTitle}>Good morning, <Text style={styles.goldText}>{firstName}</Text></Text>
+        <Text style={styles.subtitle}>Your Smart Agent is ready to provide valuable resources.</Text>
+        <GlassCard accent>
+          <View style={styles.smartAgentCard}>
+            <Pill label="SMART AGENT" icon={Sparkles} />
+            <View style={styles.agentEyeHero}>
+              <Bot color={gold2} size={76} strokeWidth={1.4} />
+            </View>
+            <Text style={styles.centerTitle}>Your Smart Agent</Text>
+            <Text style={styles.centerCopy}>Ask anything. Get real-time guidance.</Text>
+            <View style={styles.promptBar}>
+              <TextInput onChangeText={setAgentPrompt} placeholder="Ask your agent anything..." placeholderTextColor="#aeb8c2" style={styles.promptInput} value={agentPrompt} />
+              <TouchableOpacity style={styles.sendButton} onPress={() => askAgent()}>
+                <Send color={ink} size={22} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.quickChips}>
+              <Chip label="Objection handling" icon={Bot} onPress={() => askAgent('Help me with objection handling')} />
+              <Chip label="Deal strategy" icon={Target} onPress={() => askAgent('Give me a deal strategy for today')} />
+            </View>
+            {agentResponse ? <Text style={styles.insight}>{agentResponse}</Text> : null}
+          </View>
+        </GlassCard>
+        <GlassCard accent>
+          <View style={styles.rowBetween}>
+            <Text style={styles.cardTitle}>Today's Progress</Text>
+            <Text style={styles.goldText}>View Insights</Text>
+          </View>
+          <View style={styles.progressGrid}>
+            <ProgressTile icon={Target} label="Goal Progress" value={`${roadmapPercent}%`} trend="On track" />
+            <ProgressTile icon={ClipboardCheck} label="Closing %" value={`${dashboard?.metrics?.closing_percent ?? 0}%`} trend="+6%" />
+            <ProgressTile icon={Bot} label="VPG" value={`$${dashboard?.metrics?.vpg ?? 0}`} trend="+12%" />
+            <ProgressTile icon={BarChart3} label="Sales Volume" value={`$${goalMetrics?.volume ?? 8450}`} trend="+15%" />
+          </View>
+        </GlassCard>
+        <GlassCard accent>
+          <View style={styles.rowBetween}>
+            <Text style={styles.cardTitle}>Quick Access</Text>
+            <Text style={styles.goldText}>View all</Text>
+          </View>
+          <View style={styles.quickAccessGrid}>
+            <QuickAccess label="TPR" caption="Top Producer Roadmap" icon={Target} tab="roadmap" />
+            <QuickAccess label="Goal" caption="Smart GoalSheet" icon={ClipboardCheck} tab="goalsheet" />
+            <QuickAccess label="Roleplay" caption="Roleplay Live" icon={Users} tab="roleplay" />
+            <QuickAccess label="Resources" caption="Resources" icon={BookOpen} tab="resources" />
+            <QuickAccess label="Support" caption="Support Contact" icon={Headphones} tab="support" />
+            <QuickAccess label="Access" caption="All Access" icon={Lock} tab="support" />
+          </View>
+        </GlassCard>
       </>
     );
   }
 
   function renderRoadmap() {
+    if (selectedStep && activeTab === 'roadmap' && selectedStepId === selectedStep.id && selectedStep.step_number === 5) {
+      return renderStepDetail();
+    }
     return (
       <>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Top Producer Roadmap</Text>
-          <Text style={styles.bodyText}>Select a step to inspect the training detail, then mark practice complete when ready.</Text>
+        <View style={styles.titleBar}>
+          <Text style={styles.screenTitle}>Top Producer Roadmap</Text>
+          <HelpPill />
         </View>
+        <Text style={styles.subtitle}>Master the blueprint. Execute the perfect sale.</Text>
+        <GlassCard>
+          <View style={styles.stageCard}>
+            <ProgressRing percent={roadmapPercent} />
+            <View style={styles.stageCopy}>
+              <Text style={styles.goldCaps}>CURRENT STAGE</Text>
+              <Text style={styles.cardTitle}>{currentStep?.step_number || 4}. {blueprintAliases[currentStep?.step_number || 4] || currentStep?.title}</Text>
+              <Text style={styles.bodyText}>{currentStep?.description || 'Keep building elite habits.'}</Text>
+              <View style={styles.progressBar}><View style={[styles.progressFill, { width: `${Math.min(100, roadmapPercent)}%` }]} /></View>
+              <Text style={styles.bodyText}>{completedCount} of 11 steps completed</Text>
+            </View>
+          </View>
+        </GlassCard>
+        <Text style={styles.sectionTitle}>YOUR 11-STEP BLUEPRINT</Text>
         {steps.map((step) => (
-          <TouchableOpacity key={step.id} style={[styles.step, selectedStepId === step.id && styles.stepSelected]} onPress={() => setSelectedStepId(step.id)}>
+          <TouchableOpacity key={step.id} style={[styles.roadmapRow, step.status === 'current' && styles.roadmapRowActive]} onPress={() => setSelectedStepId(step.id)}>
+            <View style={[styles.stepIconCircle, step.status === 'completed' && styles.stepDone]}>
+              {step.status === 'completed' ? <Check color={ink} size={24} /> : <Text style={styles.stepIconText}>{step.step_number}</Text>}
+            </View>
             <View style={styles.stepTextBlock}>
-              <Text style={styles.stepTitle}>{step.step_number}. {step.title}</Text>
+              <Text style={styles.rowTitle}>{step.step_number}. {blueprintAliases[step.step_number] || step.title}</Text>
               <Text style={styles.muted}>{step.description}</Text>
             </View>
-            <Text style={[styles.badge, styles[step.status]]}>{step.status}</Text>
+            {step.status === 'current' ? <GoldSmallButton label="Continue" /> : <Text style={[styles.badge, step.status === 'completed' ? styles.completed : styles.locked]}>{step.status === 'completed' ? 'Completed' : `${step.progress_percent}%`}</Text>}
           </TouchableOpacity>
         ))}
-        {selectedStep ? (
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>{selectedStep.title}</Text>
-            <Text style={styles.bodyText}>{selectedStep.description}</Text>
-            <Text style={styles.bodyText}>Practice checklist: purpose, transition, Smart Agent coaching, roleplay.</Text>
-            <ActionButton label="Complete this step" onPress={() => completeStep(selectedStep.id)} />
+        <GlassCard accent>
+          <View style={styles.rowBetween}>
+            <View>
+              <Text style={styles.goldCaps}>TODAY'S FOCUS</Text>
+              <Text style={styles.cardTitle}>Complete your {currentStep?.title || 'Discovery / Survey'}</Text>
+              <Text style={styles.bodyText}>Ask great questions and uncover their true vacation style.</Text>
+            </View>
+            <TouchableOpacity style={styles.smallGoldAction} onPress={() => completeStep(currentStep?.id)}>
+              <Rocket color={ink} size={20} />
+              <Text style={styles.smallGoldActionText}>Start Now</Text>
+            </TouchableOpacity>
           </View>
-        ) : null}
+        </GlassCard>
       </>
     );
   }
 
-  function renderAgent() {
+  function renderStepDetail() {
+    const step = selectedStep;
     return (
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Smart Agent</Text>
-        <Text style={styles.bodyText}>Ask for coaching tied to the Blueprint. Sensitive pricing and fee requests are redirected.</Text>
-        <TextInput multiline onChangeText={setAgentPrompt} style={[styles.input, styles.textArea]} value={agentPrompt} />
-        <ActionButton label="Ask Agent" onPress={askAgent} />
-        {agentResponse ? <Text style={styles.insight}>{agentResponse}</Text> : null}
-      </View>
+      <>
+        <TouchableOpacity style={styles.backLink} onPress={() => setSelectedStepId(currentStep?.id || 'step_4')}>
+          <ChevronLeft color={gold} size={24} />
+          <Text style={styles.goldText}>Back to Roadmap</Text>
+        </TouchableOpacity>
+        <View style={styles.rowBetween}>
+          <View>
+            <Text style={styles.goldCaps}>STEP {step?.step_number || 5} OF 11</Text>
+            <Text style={styles.stepDetailTitle}>Remake the Pact{'\n'}<Text style={styles.goldText}>(YES / NO TODAY)</Text></Text>
+          </View>
+          <HelpPill />
+        </View>
+        <Pill label="High Impact Step" icon={Sparkles} />
+        <GlassCard>
+          <SectionLabel icon={Video} label="WATCH" />
+          <Text style={styles.cardTitle}>How Top Producers Do It</Text>
+          <View style={styles.videoMock}>
+            <View style={styles.playCircle}><Play color="#fff" size={42} fill="#fff" /></View>
+            <Text style={styles.videoTime}>7:24</Text>
+          </View>
+        </GlassCard>
+        <GlassCard>
+          <SectionLabel icon={FileText} label="SCRIPT" />
+          <Text style={styles.cardTitle}>Exact Words That Close</Text>
+          <View style={styles.quoteBox}>
+            <Text style={styles.quoteMark}>“</Text>
+            <Text style={styles.quoteText}>If you like what you see, it makes sense, and if it is 100% affordable, would you feel comfortable giving me a simple <Text style={styles.goldText}>YES today?</Text></Text>
+          </View>
+          <Text style={styles.centerLink}>View Full Script</Text>
+        </GlassCard>
+        <GlassCard>
+          <SectionLabel icon={Headphones} label="AUDIO" />
+          <Text style={styles.cardTitle}>Master the Delivery</Text>
+          <View style={styles.audioBar}>
+            <TouchableOpacity style={styles.audioPlay}><Play color={ink} size={24} fill={ink} /></TouchableOpacity>
+            <Text style={styles.waveform}>|||||||||||||||||||||||||||||</Text>
+            <Text style={styles.bodyText}>5:12</Text>
+          </View>
+        </GlassCard>
+        <Text style={styles.bodyText}>Use <Text style={styles.goldText}>after discovery</Text>, before showing pricing.</Text>
+        <GoldButton label="Run Step" onPress={() => setActiveTab('roleplay')} icon={Rocket} />
+      </>
     );
   }
 
   function renderGoalSheet() {
     return (
       <>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Smart GoalSheet</Text>
-          <Text style={styles.inputLabel}>Sales volume</Text>
-          <TextInput keyboardType="numeric" onChangeText={setGoalVolume} style={styles.input} value={goalVolume} />
-          <Text style={styles.inputLabel}>Number of sales</Text>
-          <TextInput keyboardType="numeric" onChangeText={setGoalSales} style={styles.input} value={goalSales} />
-          <Text style={styles.inputLabel}>Notes</Text>
-          <TextInput multiline onChangeText={setGoalNotes} style={[styles.input, styles.textArea]} value={goalNotes} />
-          <ActionButton label="Save GoalSheet" onPress={saveGoalSheet} />
+        <HeaderLine title="Smart GoalSheet" subtitle="Log your day. Your Agent turns data into results." />
+        <View style={styles.goalHeaderActions}>
+          <TouchableOpacity style={styles.dateButton}>
+            <CalendarDays color={gold} size={18} />
+            <Text style={styles.goldText}>Today, May 16, 2025</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.historyButton}>
+            <BarChart3 color={gold} size={18} />
+            <Text style={styles.goldText}>View History</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.metrics}>
-          <Metric label="Tours" value={`${goalMetrics?.qualified_tours ?? 0}`} />
-          <Metric label="Sales" value={`${goalMetrics?.sales_count ?? 0}`} />
-          <Metric label="Volume" value={`$${goalMetrics?.volume ?? 0}`} />
-        </View>
-        <Text style={styles.sectionTitle}>History</Text>
-        {goalHistory.length ? goalHistory.slice(0, 6).map((entry) => (
-          <View key={`${entry.date}-${entry.sales_volume}`} style={styles.row}>
-            <Text style={styles.rowTitle}>{entry.date}</Text>
-            <Text style={styles.muted}>{entry.number_of_sales} sale · ${entry.sales_volume}</Text>
+        <GoalSection number="1" title="TOUR" icon={Target} subtitle="What type of guest did you take today?">
+          <View style={styles.optionGrid}>
+            {['Q\nQualified', 'CT\nClose Today', 'NQ\nNot Qualified', 'No Tour\nDidn’t take any'].map((item, index) => (
+              <OptionCard key={item} selected={index === 1 || index === 0} text={item} />
+            ))}
           </View>
-        )) : <EmptyState text="No GoalSheet history yet." />}
+        </GoalSection>
+        <GoalSection number="2" title="SALES" icon={BarChart3} subtitle="Did you close any sales today?">
+          <View style={styles.twoCol}>
+            <OptionCard selected text="Yes, I Sold\nRecord your volume" />
+            <OptionCard text="No, I Didn’t Sell\nTell us why" />
+          </View>
+          <View style={styles.twoCol}>
+            <InputBlock label="Sales Volume (USD)" value={`$ ${goalVolume}`} onChangeText={(value) => setGoalVolume(value.replace(/[^0-9]/g, ''))} />
+            <InputBlock label="# of Sales" value={goalSales} onChangeText={setGoalSales} />
+          </View>
+        </GoalSection>
+        <GoalSection number="3" title="IF NO SALE, WHY?" icon={CircleHelp} subtitle="Select the main reason">
+          <View style={styles.selectMock}><Text style={styles.bodyText}>Price was too high</Text><ChevronRight color="#fff" size={18} /></View>
+        </GoalSection>
+        <GoalSection number="4" title="YOUR METRICS" icon={BarChart3} subtitle="Track your key performance metrics">
+          <View style={styles.metricCards}>
+            <GoalMetric label="Closing %" value={`${dashboard?.metrics?.closing_percent ?? 28}%`} goal="/ 40% goal" trend="↓ 12% vs yesterday" />
+            <GoalMetric label="VPG" value={`$${dashboard?.metrics?.vpg ?? 8450}`} goal="/ $10,000 goal" trend="↓ $1,550 vs yesterday" />
+            <GoalMetric label="Volume" value={`$${goalMetrics?.volume ?? 8450}`} goal="/ $15,000 goal" trend="↑ $2,450 vs yesterday" good />
+          </View>
+        </GoalSection>
+        <GoalSection number="5" title="FOLLOW UP REMINDER" icon={CalendarDays} subtitle="Plan your follow ups">
+          {['May 18, 2025 · Send brochure and pricing details', 'May 21, 2025 · Check availability and offer', 'May 24, 2025 · Final follow up / Close attempt'].map((line, index) => (
+            <View style={styles.followRow} key={line}>
+              <Text style={styles.goldText}>#{index + 1}</Text>
+              <Text style={styles.bodyText}>{line}</Text>
+            </View>
+          ))}
+        </GoalSection>
+        <GoalSection number="6" title="ANYTHING ELSE?" icon={FileText} subtitle="Add a quick note about your day">
+          <TextInput multiline onChangeText={setGoalNotes} placeholder="Add a quick note (optional)..." placeholderTextColor="#6f7780" style={[styles.input, styles.noteInput]} value={goalNotes} />
+        </GoalSection>
+        <TouchableOpacity style={styles.agentInsight} onPress={() => askAgent('Analyze my GoalSheet performance')}>
+          <Sparkles color={gold} size={36} />
+          <View style={styles.stepTextBlock}>
+            <Text style={styles.goldCaps}>SMART AGENT INSIGHT</Text>
+            <Text style={styles.bodyText}>Great job closing 1 deal. Focus on <Text style={styles.goldText}>handling more objections</Text> to increase your closing %.</Text>
+          </View>
+          <ChevronRight color={gold} size={24} />
+        </TouchableOpacity>
+        <GoldButton label="Save My Entry" onPress={saveGoalSheet} icon={ClipboardCheck} />
       </>
     );
   }
@@ -474,21 +665,43 @@ export default function App() {
     const scenario = scenarios[0];
     return (
       <>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{scenario?.title || 'Roleplay Live'}</Text>
-          <Text style={styles.bodyText}>{scenario?.buyer_context || 'Practice a realistic customer scenario.'}</Text>
-          <Text style={styles.bodyText}>Objective: {scenario?.objective || 'Submit for manager review.'}</Text>
-          <Text style={styles.inputLabel}>Transcript</Text>
-          <TextInput multiline onChangeText={setRoleplayTranscript} style={[styles.input, styles.textArea]} value={roleplayTranscript} />
-          <ActionButton label="Submit for Review" onPress={submitRoleplay} />
-        </View>
-        <Text style={styles.sectionTitle}>Feedback</Text>
-        {feedback.length ? feedback.slice(0, 6).map((item) => (
-          <View key={item.id} style={styles.row}>
-            <Text style={styles.rowTitle}>{item.status}</Text>
-            <Text style={styles.muted}>{item.manager_feedback?.comments || item.manager_feedback?.recommendation || 'Awaiting review'}</Text>
+        <View style={styles.roleplayHeader}>
+          <View style={styles.rowCenter}>
+            <ChevronLeft color={gold} size={26} />
+            <BrandCompact />
           </View>
-        )) : <EmptyState text="No roleplay submissions yet." />}
+          <View style={styles.roleplayTitleBlock}>
+            <Text style={styles.cardTitle}>Roleplay Live</Text>
+            <Text style={styles.liveText}>● Live</Text>
+          </View>
+          <TouchableOpacity style={styles.endButton}><Text style={styles.endText}>End</Text></TouchableOpacity>
+        </View>
+        <GlassCard>
+          <View style={styles.roleplayStats}>
+            <StatBlock icon={Target} label="Scenario" value={scenario?.title || 'Objection Handling'} caption="Step 4: Remake the Pact" />
+            <StatBlock icon={CalendarDays} label="Time Elapsed" value="08:42" />
+            <StatBlock icon={Mic} label="Your Role" value="Agent" caption="Speaking Now" green />
+          </View>
+        </GlassCard>
+        <View style={styles.videoPanels}>
+          <ParticipantCard label="Coach" />
+          <ParticipantCard label="You (Rep)" speaking />
+        </View>
+        <GlassCard>
+          <View style={styles.controlRow}>
+            <ControlButton icon={Mic} label="Mute" />
+            <ControlButton icon={Video} label="Stop Video" />
+            <ControlButton icon={Send} label="Share Screen" active />
+            <ControlButton icon={Bot} label="Chat" />
+            <ControlButton icon={MoreHorizontal} label="More" />
+          </View>
+        </GlassCard>
+        <View style={styles.tipCard}>
+          <Sparkles color={gold} size={28} />
+          <Text style={styles.tipText}><Text style={styles.goldText}>Tip:</Text> Listen carefully, address the real concern and guide the buyer to a decision.</Text>
+        </View>
+        <TextInput multiline onChangeText={setRoleplayTranscript} placeholder="Roleplay transcript..." placeholderTextColor="#6f7780" style={[styles.input, styles.textArea]} value={roleplayTranscript} />
+        <GoldButton label="Submit for Review" onPress={submitRoleplay} icon={Send} />
       </>
     );
   }
@@ -496,75 +709,334 @@ export default function App() {
   function renderResources() {
     return (
       <>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Resource Library</Text>
-          <Text style={styles.bodyText}>Training resources are shown with server-side permission status.</Text>
-        </View>
+        <HeaderLine title="Resources" subtitle="Approved training, scripts, checklists and sensitive-access content." />
         {resources.map((resource) => (
-          <View key={resource.id} style={styles.row}>
-            <View style={styles.stepTextBlock}>
-              <Text style={styles.rowTitle}>{resource.title}</Text>
-              <Text style={styles.muted}>{resource.resource_type} · {resource.sensitivity}</Text>
+          <GlassCard key={resource.id}>
+            <View style={styles.rowBetween}>
+              <View style={styles.stepTextBlock}>
+                <Text style={styles.cardTitle}>{resource.title}</Text>
+                <Text style={styles.muted}>{resource.resource_type} · {resource.sensitivity}</Text>
+              </View>
+              <Text style={[styles.badge, resource.has_access ? styles.completed : styles.locked]}>{resource.has_access ? 'available' : 'restricted'}</Text>
             </View>
-            <Text style={[styles.badge, resource.has_access ? styles.completed : styles.locked]}>{resource.has_access ? 'available' : 'restricted'}</Text>
-          </View>
+          </GlassCard>
         ))}
       </>
     );
   }
 
-  function renderProfile() {
+  function renderSupport() {
     return (
       <>
-        <View style={styles.card}>
+        <HeaderLine title="Support" subtitle="Access, profile, certification and launch readiness." />
+        <GlassCard>
           <Text style={styles.cardTitle}>{user?.display_name}</Text>
           <Text style={styles.bodyText}>{user?.email}</Text>
           <Text style={styles.bodyText}>Roles: {user?.roles.join(', ')}</Text>
-          <Text style={styles.bodyText}>Session status: active</Text>
-          <Text style={styles.insight}>Password change, reset, invite, disable, and session invalidation are wired in the API for production-ready local auth.</Text>
-          <ActionButton label="Sign out" onPress={logout} danger />
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Launch readiness</Text>
-          <Text style={styles.bodyText}>Secure storage, protected API calls, RBAC, resources, feedback, GoalSheet, and roleplay flows are wired for demo launch.</Text>
-        </View>
+          <Text style={styles.bodyText}>Certification: {certifications[0]?.status || dashboard?.certification_status || 'in_progress'}</Text>
+          <Text style={styles.insight}>Auth, RBAC, Smart Agent, GoalSheet, Roleplay, Resources and Manager/Admin APIs are wired for launch-demo validation.</Text>
+          <TouchableOpacity style={styles.secondaryAction} onPress={logout}><Text style={styles.secondaryActionText}>Sign out</Text></TouchableOpacity>
+        </GlassCard>
+        {feedback.length ? feedback.slice(0, 4).map((item) => (
+          <GlassCard key={item.id}>
+            <Text style={styles.cardTitle}>Roleplay Feedback</Text>
+            <Text style={styles.bodyText}>{item.status}: {item.manager_feedback?.comments || item.manager_feedback?.recommendation || 'Awaiting review'}</Text>
+          </GlassCard>
+        )) : null}
       </>
+    );
+  }
+
+  function QuickAccess({ label, caption, icon: Icon, tab }: { label: string; caption: string; icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; tab: TabKey }) {
+    return (
+      <TouchableOpacity style={styles.quickAccessItem} onPress={() => setActiveTab(tab)}>
+        <Icon color={gold} size={31} strokeWidth={1.7} />
+        <Text style={styles.quickAccessLabel}>{label}</Text>
+        <Text style={styles.quickAccessCaption}>{caption}</Text>
+      </TouchableOpacity>
     );
   }
 }
 
-function Metric({ label, value }: { label: string; value: string }) {
+function CenteredStatus({ text }: { text: string }) {
   return (
-    <View style={styles.metric}>
-      <Text style={styles.metricLabel}>{label}</Text>
-      <Text style={styles.metricValue}>{value}</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.centered}>
+        <BrandMark />
+        <Text style={styles.subtitle}>{text}</Text>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function LoggedInHeader({ firstName }: { firstName: string }) {
+  return (
+    <View style={styles.loggedHeader}>
+      <View>
+        <BrandCompact />
+        <Text style={styles.headerName}>Good morning, <Text style={styles.goldText}>{firstName}</Text></Text>
+      </View>
+      <View style={styles.headerActions}>
+        <Bell color="#fff" size={26} />
+        <View style={styles.avatar}><Text style={styles.avatarText}>AB</Text></View>
+      </View>
     </View>
   );
 }
 
-function ActionButton({ label, onPress, secondary, danger }: { label: string; onPress: () => void; secondary?: boolean; danger?: boolean }) {
+function BrandMark({ stacked }: { stacked?: boolean }) {
   return (
-    <TouchableOpacity style={[styles.actionButton, secondary && styles.secondaryButton, danger && styles.dangerButton]} onPress={onPress}>
-      <Text style={[styles.actionButtonText, secondary && styles.secondaryButtonText, danger && styles.dangerButtonText]}>{label}</Text>
+    <View style={stacked ? styles.brandStacked : styles.brand}>
+      <Text style={styles.logoText}>WL</Text>
+      <View style={styles.brandDivider} />
+      <Text style={styles.brandLabel}>SALES ACADEMY</Text>
+    </View>
+  );
+}
+
+function BrandCompact() {
+  return (
+    <View style={styles.brandCompact}>
+      <Text style={styles.logoTextSmall}>WL</Text>
+      <View style={styles.brandDividerSmall} />
+      <Text style={styles.brandLabelSmall}>SALES ACADEMY</Text>
+    </View>
+  );
+}
+
+function GlassCard({ children, accent }: { children: React.ReactNode; accent?: boolean }) {
+  return (
+    <LinearGradient colors={accent ? ['rgba(10,22,28,0.95)', 'rgba(3,8,10,0.96)'] : ['rgba(12,19,24,0.94)', 'rgba(3,8,10,0.94)']} style={[styles.card, accent && styles.cardAccent]}>
+      {children}
+    </LinearGradient>
+  );
+}
+
+function GoldButton({ label, onPress, icon: Icon, disabled }: { label: string; onPress: () => void; icon?: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; disabled?: boolean }) {
+  return (
+    <TouchableOpacity disabled={disabled} onPress={onPress} style={[styles.goldButton, disabled && styles.disabledButton]}>
+      {Icon ? <Icon color={ink} size={27} strokeWidth={2.2} /> : null}
+      <Text style={styles.goldButtonText}>{label}</Text>
+      <ChevronRight color={ink} size={28} />
     </TouchableOpacity>
   );
 }
 
-function EmptyState({ text }: { text: string }) {
-  return <Text style={styles.empty}>{text}</Text>;
+function Pill({ label, icon: Icon }: { label: string; icon?: React.ComponentType<{ color: string; size: number; strokeWidth?: number }> }) {
+  return (
+    <View style={styles.pill}>
+      {Icon ? <Icon color={gold} size={18} /> : null}
+      <Text style={styles.pillText}>{label}</Text>
+    </View>
+  );
+}
+
+function FeatureCallout({ label, caption, icon: Icon, style }: { label: string; caption: string; icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; style: object }) {
+  return (
+    <View style={[styles.featureCallout, style]}>
+      <Icon color={gold} size={24} />
+      <View>
+        <Text style={styles.calloutLabel}>{label}</Text>
+        <Text style={styles.calloutCaption}>{caption}</Text>
+      </View>
+    </View>
+  );
+}
+
+function MiniFeature({ icon: Icon, title, copy }: { icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; title: string; copy: string }) {
+  return (
+    <View style={styles.miniFeature}>
+      <View style={styles.iconRing}><Icon color={gold} size={28} /></View>
+      <Text style={styles.miniFeatureTitle}>{title}</Text>
+      <Text style={styles.miniFeatureCopy}>{copy}</Text>
+    </View>
+  );
+}
+
+function Notice({ text }: { text: string }) {
+  return <Text style={styles.notice}>{text}</Text>;
+}
+
+function ProgressRing({ percent }: { percent: number }) {
+  return (
+    <View style={styles.progressRing}>
+      <Text style={styles.progressPercent}>{percent}%</Text>
+      <Text style={styles.progressLabel}>ROADMAP{'\n'}COMPLETE</Text>
+    </View>
+  );
+}
+
+function GoldSmallButton({ label }: { label: string }) {
+  return <Text style={styles.goldSmallButton}>{label}</Text>;
+}
+
+function HeaderLine({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <View style={styles.headerLine}>
+      <View>
+        <Text style={styles.screenTitle}>{title}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
+      </View>
+      <View style={styles.eyeSmall}><Bot color={gold2} size={40} /></View>
+    </View>
+  );
+}
+
+function GoalSection({ number, title, subtitle, icon: Icon, children }: { number: string; title: string; subtitle: string; icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; children: React.ReactNode }) {
+  return (
+    <GlassCard>
+      <View style={styles.goalSectionHeader}>
+        <View style={styles.goalIcon}><Icon color={gold} size={22} /></View>
+        <View>
+          <Text style={styles.goalSectionTitle}>{number}. {title}</Text>
+          <Text style={styles.muted}>{subtitle}</Text>
+        </View>
+      </View>
+      {children}
+    </GlassCard>
+  );
+}
+
+function OptionCard({ text, selected }: { text: string; selected?: boolean }) {
+  const [lead, ...rest] = text.split('\n');
+  return (
+    <View style={[styles.optionCard, selected && styles.optionSelected]}>
+      <Text style={[styles.optionLead, selected && styles.goldText]}>{lead}</Text>
+      {rest.length ? <Text style={styles.muted}>{rest.join(' ')}</Text> : null}
+      {selected ? <View style={styles.optionCheck}><Check color={ink} size={14} /></View> : <View style={styles.optionEmpty} />}
+    </View>
+  );
+}
+
+function InputBlock({ label, value, onChangeText }: { label: string; value: string; onChangeText: (value: string) => void }) {
+  return (
+    <View style={styles.inputBlock}>
+      <Text style={styles.inputLabel}>{label}</Text>
+      <TextInput onChangeText={onChangeText} placeholderTextColor="#6f7780" style={styles.input} value={value} />
+    </View>
+  );
+}
+
+function GoalMetric({ label, value, goal, trend, good }: { label: string; value: string; goal: string; trend: string; good?: boolean }) {
+  return (
+    <View style={styles.goalMetric}>
+      <Text style={styles.bodyText}>{label}</Text>
+      <Text style={styles.metricBig}>{value}</Text>
+      <Text style={styles.muted}>{goal}</Text>
+      <View style={styles.progressBar}><View style={styles.progressFill} /></View>
+      <Text style={good ? styles.goodTrend : styles.badTrend}>{trend}</Text>
+    </View>
+  );
+}
+
+function SectionLabel({ icon: Icon, label }: { icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; label: string }) {
+  return (
+    <View style={styles.sectionLabel}>
+      <Icon color={gold} size={22} />
+      <Text style={styles.goldCaps}>{label}</Text>
+    </View>
+  );
+}
+
+function StatBlock({ icon: Icon, label, value, caption, green }: { icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; label: string; value: string; caption?: string; green?: boolean }) {
+  return (
+    <View style={styles.statBlock}>
+      <Icon color={green ? '#29e35f' : gold} size={28} />
+      <Text style={styles.muted}>{label}</Text>
+      <Text style={[styles.statValue, green && styles.greenText]}>{value}</Text>
+      {caption ? <Text style={[styles.muted, green && styles.greenText]}>{caption}</Text> : null}
+    </View>
+  );
+}
+
+function ParticipantCard({ label, speaking }: { label: string; speaking?: boolean }) {
+  return (
+    <View style={styles.participantCard}>
+      <Text style={styles.participantLabel}>{label}</Text>
+      {speaking ? <View style={styles.speakingBadge}><BarChart3 color="#29e35f" size={24} /></View> : null}
+      <View style={styles.personIcon}>
+        <View style={styles.personHead} />
+        <View style={styles.personBody} />
+      </View>
+      <BarChart3 color="#29e35f" size={28} style={styles.audioMini} />
+    </View>
+  );
+}
+
+function ControlButton({ icon: Icon, label, active }: { icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; label: string; active?: boolean }) {
+  return (
+    <View style={styles.controlButton}>
+      <View style={[styles.controlCircle, active && styles.controlActive]}><Icon color="#fff" size={25} /></View>
+      <Text style={styles.controlLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function Chip({ label, icon: Icon, onPress }: { label: string; icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; onPress: () => void }) {
+  return (
+    <TouchableOpacity style={styles.chip} onPress={onPress}>
+      <Icon color={gold} size={21} />
+      <Text style={styles.bodyText}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
+
+function ProgressTile({ icon: Icon, label, value, trend }: { icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; label: string; value: string; trend: string }) {
+  return (
+    <View style={styles.progressTile}>
+      <Icon color={gold} size={36} />
+      <Text style={styles.muted}>{label}</Text>
+      <Text style={styles.metricBig}>{value}</Text>
+      <Text style={styles.goodTrend}>{trend}</Text>
+    </View>
+  );
+}
+
+function HelpPill() {
+  return (
+    <View style={styles.helpPill}>
+      <CircleHelp color="#fff" size={18} />
+      <Text style={styles.bodyText}>How it works</Text>
+    </View>
+  );
+}
+
+function BottomNav({ activeTab, onSelect }: { activeTab: TabKey; onSelect: (tab: TabKey) => void }) {
+  return (
+    <View style={styles.tabBar}>
+      {tabs.map((tab) => {
+        const Icon = tab.icon;
+        const isActive = activeTab === tab.key;
+        return (
+          <TouchableOpacity key={tab.key} style={styles.tabButton} onPress={() => onSelect(tab.key)}>
+            <Icon color={isActive ? gold : '#dce3ea'} size={25} strokeWidth={1.7} />
+            <Text style={[styles.tabText, isActive && styles.tabTextActive]}>{tab.label}</Text>
+            {isActive ? <View style={styles.tabIndicator} /> : null}
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: '#020506',
+    backgroundColor: ink,
     flex: 1
   },
-  shell: {
+  appShell: {
     flex: 1
   },
   container: {
     padding: 20,
-    paddingBottom: 108
+    paddingBottom: 116
+  },
+  welcome: {
+    flex: 1,
+    padding: 24
+  },
+  statusSpacer: {
+    height: 18
   },
   centered: {
     alignItems: 'center',
@@ -572,106 +1044,360 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 24
   },
-  hero: {
-    paddingVertical: 32
+  brand: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 24
   },
-  heroCompact: {
-    paddingBottom: 18
+  brandStacked: {
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 16
   },
-  topBar: {
+  brandCompact: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10
+  },
+  logoText: {
+    color: gold,
+    fontFamily: Platform.select({ ios: 'Georgia', default: 'serif' }),
+    fontSize: 56,
+    fontWeight: '900'
+  },
+  logoTextSmall: {
+    color: gold,
+    fontFamily: Platform.select({ ios: 'Georgia', default: 'serif' }),
+    fontSize: 42,
+    fontWeight: '900'
+  },
+  brandDivider: {
+    backgroundColor: 'rgba(255,255,255,0.36)',
+    height: 44,
+    width: 1
+  },
+  brandDividerSmall: {
+    backgroundColor: 'rgba(255,255,255,0.32)',
+    height: 32,
+    width: 1
+  },
+  brandLabel: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '900',
+    letterSpacing: 3
+  },
+  brandLabelSmall: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '900'
+  },
+  loggedHeader: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 18,
-    paddingTop: 12
+    marginBottom: 26,
+    paddingTop: 8
   },
-  kicker: {
-    color: '#ffc21a',
-    fontSize: 13,
-    fontWeight: '800',
-    marginBottom: 8
+  headerActions: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 18
+  },
+  avatar: {
+    alignItems: 'center',
+    borderColor: gold,
+    borderRadius: 28,
+    borderWidth: 1.5,
+    height: 54,
+    justifyContent: 'center',
+    width: 54
+  },
+  avatarText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '900'
+  },
+  headerName: {
+    color: '#fff',
+    fontSize: 33,
+    fontWeight: '900',
+    marginTop: 22
   },
   title: {
-    color: '#f8fafc',
-    fontSize: 40,
+    color: '#fff',
+    fontSize: 43,
+    fontWeight: '900',
+    lineHeight: 48,
+    textAlign: 'center'
+  },
+  homeTitle: {
+    color: '#fff',
+    fontSize: 36,
+    fontWeight: '900',
+    lineHeight: 42,
+    marginBottom: 8
+  },
+  screenTitle: {
+    color: '#fff',
+    fontSize: 38,
     fontWeight: '900',
     lineHeight: 42
   },
-  screenTitle: {
-    color: '#f8fafc',
-    fontSize: 28,
-    fontWeight: '900'
-  },
   subtitle: {
-    color: '#b9c0c8',
-    fontSize: 16,
-    lineHeight: 24,
-    marginTop: 12
-  },
-  rolePill: {
-    backgroundColor: 'rgba(255,194,26,0.14)',
-    borderRadius: 999,
-    color: '#ffe58a',
-    fontSize: 12,
-    fontWeight: '900',
-    overflow: 'hidden',
-    paddingHorizontal: 10,
-    paddingVertical: 7
-  },
-  notice: {
-    backgroundColor: 'rgba(255,194,26,0.12)',
-    borderColor: 'rgba(255,194,26,0.28)',
-    borderRadius: 8,
-    borderWidth: 1,
-    color: '#ffe58a',
-    marginBottom: 14,
-    padding: 12
-  },
-  card: {
-    backgroundColor: '#071014',
-    borderColor: 'rgba(255,255,255,0.08)',
-    borderRadius: 8,
-    borderWidth: 1,
-    marginBottom: 14,
-    padding: 18
-  },
-  cardTitle: {
-    color: '#f8fafc',
-    fontSize: 21,
-    fontWeight: '900',
-    marginBottom: 12
+    color: '#c7c7c7',
+    fontSize: 18,
+    lineHeight: 27,
+    marginBottom: 18,
+    textAlign: 'center'
   },
   bodyText: {
-    color: '#dce3ea',
-    fontSize: 15,
-    lineHeight: 22,
-    marginBottom: 8
+    color: '#f2f2f2',
+    fontSize: 16,
+    lineHeight: 23
   },
   muted: {
     color: '#aeb8c2',
-    fontSize: 13,
-    lineHeight: 19
+    fontSize: 14,
+    lineHeight: 20
+  },
+  goldText: {
+    color: gold
+  },
+  greenText: {
+    color: '#29e35f'
+  },
+  goldCaps: {
+    color: gold,
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 2
+  },
+  card: {
+    borderColor: 'rgba(255,255,255,0.14)',
+    borderRadius: 8,
+    borderWidth: 1,
+    marginBottom: 16,
+    padding: 18
+  },
+  cardAccent: {
+    borderColor: 'rgba(255,194,26,0.42)'
+  },
+  cardTitle: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: '900',
+    lineHeight: 29
+  },
+  welcomeEyebrow: {
+    color: gold2,
+    fontSize: 15,
+    fontWeight: '900',
+    letterSpacing: 5,
+    marginTop: 10,
+    textAlign: 'center'
+  },
+  welcomeTitle: {
+    color: '#fff',
+    fontSize: 52,
+    fontWeight: '900',
+    letterSpacing: 3,
+    textAlign: 'center'
+  },
+  welcomeCopy: {
+    color: '#e5e5e5',
+    fontSize: 19,
+    lineHeight: 28,
+    marginBottom: 18,
+    textAlign: 'center'
+  },
+  agentHaloLarge: {
+    alignItems: 'center',
+    height: 330,
+    justifyContent: 'center',
+    marginVertical: 2
+  },
+  orbitOuter: {
+    borderColor: 'rgba(255,194,26,0.18)',
+    borderRadius: 145,
+    borderWidth: 1,
+    height: 290,
+    position: 'absolute',
+    width: 290
+  },
+  orbitMiddle: {
+    borderColor: 'rgba(255,194,26,0.45)',
+    borderRadius: 105,
+    borderWidth: 2,
+    height: 210,
+    position: 'absolute',
+    width: 210
+  },
+  orbitCore: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,194,26,0.1)',
+    borderColor: gold,
+    borderRadius: 70,
+    borderWidth: 1.5,
+    height: 140,
+    justifyContent: 'center',
+    shadowColor: gold,
+    shadowOpacity: 0.7,
+    shadowRadius: 22,
+    width: 140
+  },
+  featureCallout: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(9,13,16,0.76)',
+    borderColor: 'rgba(255,194,26,0.72)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 8,
+    padding: 10,
+    position: 'absolute',
+    width: 142
+  },
+  calloutLeftTop: {
+    left: 4,
+    top: 42
+  },
+  calloutRightTop: {
+    right: 4,
+    top: 42
+  },
+  calloutLeftBottom: {
+    left: 4,
+    bottom: 42
+  },
+  calloutRightBottom: {
+    right: 4,
+    bottom: 42
+  },
+  calloutLabel: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: '800'
+  },
+  calloutCaption: {
+    color: '#d8d8d8',
+    fontSize: 11
+  },
+  featureGrid: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 16
+  },
+  miniFeature: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.18)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flex: 1,
+    minHeight: 138,
+    padding: 12
+  },
+  iconRing: {
+    alignItems: 'center',
+    borderColor: gold,
+    borderRadius: 28,
+    borderWidth: 1,
+    height: 56,
+    justifyContent: 'center',
+    marginBottom: 10,
+    width: 56
+  },
+  miniFeatureTitle: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '900',
+    marginBottom: 6,
+    textAlign: 'center'
+  },
+  miniFeatureCopy: {
+    color: '#d8d8d8',
+    fontSize: 12,
+    lineHeight: 17,
+    textAlign: 'center'
+  },
+  coachCard: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,194,26,0.62)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 18,
+    minHeight: 108,
+    padding: 16
+  },
+  coachTitle: {
+    color: '#fff',
+    fontSize: 27,
+    fontWeight: '900'
+  },
+  eyeBadge: {
+    alignItems: 'center',
+    borderColor: gold,
+    borderRadius: 48,
+    borderWidth: 1,
+    height: 96,
+    justifyContent: 'center',
+    width: 96
+  },
+  goldButton: {
+    alignItems: 'center',
+    backgroundColor: gold,
+    borderRadius: 8,
+    flexDirection: 'row',
+    gap: 12,
+    justifyContent: 'space-between',
+    marginTop: 12,
+    minHeight: 72,
+    paddingHorizontal: 24,
+    shadowColor: gold,
+    shadowOpacity: 0.35,
+    shadowRadius: 18
+  },
+  goldButtonText: {
+    color: ink,
+    flex: 1,
+    fontSize: 26,
+    fontWeight: '900',
+    textAlign: 'center'
+  },
+  accountLink: {
+    color: gold2,
+    fontSize: 16,
+    marginTop: 14,
+    textAlign: 'center',
+    textDecorationLine: 'underline'
   },
   inputLabel: {
     color: '#dce3ea',
     fontSize: 13,
     fontWeight: '800',
     marginBottom: 8,
-    marginTop: 4
+    marginTop: 10
   },
   input: {
-    backgroundColor: '#0b171d',
-    borderColor: 'rgba(255,255,255,0.12)',
+    backgroundColor: 'rgba(5,11,14,0.86)',
+    borderColor: 'rgba(255,255,255,0.16)',
     borderRadius: 8,
     borderWidth: 1,
-    color: '#f8fafc',
-    fontSize: 16,
-    marginBottom: 14,
-    minHeight: 48,
-    paddingHorizontal: 12
+    color: '#fff',
+    fontSize: 17,
+    minHeight: 52,
+    paddingHorizontal: 14
+  },
+  noteInput: {
+    minHeight: 78,
+    paddingTop: 12,
+    textAlignVertical: 'top'
   },
   textArea: {
-    minHeight: 104,
+    minHeight: 114,
     paddingTop: 12,
     textAlignVertical: 'top'
   },
@@ -681,186 +1407,774 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     color: '#ffb4b4',
-    marginBottom: 14,
+    marginTop: 12,
     padding: 12
-  },
-  metrics: {
-    flexDirection: 'row',
-    gap: 10,
-    marginBottom: 14
-  },
-  metric: {
-    backgroundColor: '#0b171d',
-    borderRadius: 8,
-    flex: 1,
-    minHeight: 82,
-    padding: 12
-  },
-  metricLabel: {
-    color: '#b9c0c8',
-    fontSize: 12
-  },
-  metricValue: {
-    color: '#ffe58a',
-    fontSize: 22,
-    fontWeight: '900',
-    marginTop: 6
-  },
-  actionButton: {
-    alignItems: 'center',
-    backgroundColor: '#ffc21a',
-    borderRadius: 8,
-    justifyContent: 'center',
-    marginTop: 10,
-    minHeight: 46,
-    paddingHorizontal: 14
-  },
-  actionButtonText: {
-    color: '#020506',
-    fontWeight: '900'
   },
   disabledButton: {
     opacity: 0.62
   },
-  button: {
+  agentEyeHero: {
     alignItems: 'center',
-    backgroundColor: '#ffc21a',
-    borderRadius: 8,
+    alignSelf: 'center',
+    backgroundColor: 'rgba(255,194,26,0.08)',
+    borderColor: 'rgba(255,194,26,0.5)',
+    borderRadius: 125,
+    borderWidth: 1,
+    height: 250,
     justifyContent: 'center',
-    minHeight: 46
+    marginVertical: 16,
+    shadowColor: gold,
+    shadowOpacity: 0.55,
+    shadowRadius: 26,
+    width: 250
   },
-  buttonText: {
-    color: '#020506',
-    fontWeight: '900'
+  smartAgentCard: {
+    alignItems: 'center'
   },
-  secondaryButton: {
-    backgroundColor: 'transparent',
-    borderColor: '#ffc21a',
-    borderWidth: 1
-  },
-  secondaryButtonText: {
-    color: '#ffc21a'
-  },
-  dangerButton: {
-    backgroundColor: 'rgba(255,65,65,0.12)',
-    borderColor: 'rgba(255,65,65,0.36)',
-    borderWidth: 1
-  },
-  dangerButtonText: {
-    color: '#ffb4b4'
-  },
-  insight: {
-    backgroundColor: 'rgba(255,194,26,0.12)',
-    color: '#ffe58a',
-    lineHeight: 21,
-    marginTop: 12,
-    padding: 12
-  },
-  sectionTitle: {
-    color: '#f8fafc',
-    fontSize: 22,
+  centerTitle: {
+    color: '#fff',
+    fontSize: 31,
     fontWeight: '900',
-    marginBottom: 12,
-    marginTop: 20
+    marginTop: 6,
+    textAlign: 'center'
   },
-  step: {
+  centerCopy: {
+    color: '#d8d8d8',
+    fontSize: 17,
+    marginBottom: 14,
+    textAlign: 'center'
+  },
+  promptBar: {
     alignItems: 'center',
-    backgroundColor: '#0b171d',
+    borderColor: 'rgba(255,255,255,0.16)',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.04)',
+    flexDirection: 'row',
+    minHeight: 62,
+    paddingHorizontal: 12,
+    width: '100%'
+  },
+  promptInput: {
+    color: '#fff',
+    flex: 1,
+    fontSize: 17
+  },
+  sendButton: {
+    alignItems: 'center',
+    backgroundColor: gold,
+    borderRadius: 23,
+    height: 46,
+    justifyContent: 'center',
+    width: 46
+  },
+  quickChips: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 12,
+    width: '100%'
+  },
+  chip: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.16)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'center',
+    minHeight: 54,
+    paddingHorizontal: 8
+  },
+  notice: {
+    backgroundColor: 'rgba(255,194,26,0.12)',
+    borderColor: 'rgba(255,194,26,0.28)',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: gold2,
+    lineHeight: 21,
+    marginBottom: 14,
+    padding: 12
+  },
+  progressGrid: {
+    flexDirection: 'row',
+    gap: 8
+  },
+  progressTile: {
+    alignItems: 'center',
+    borderRightColor: 'rgba(255,255,255,0.18)',
+    borderRightWidth: 1,
+    flex: 1,
+    minHeight: 128,
+    padding: 6
+  },
+  metricBig: {
+    color: '#fff',
+    fontSize: 27,
+    fontWeight: '900',
+    marginVertical: 6
+  },
+  goodTrend: {
+    color: '#29e35f',
+    fontSize: 14
+  },
+  badTrend: {
+    color: '#ff4141',
+    fontSize: 14,
+    marginTop: 7
+  },
+  rowBetween: {
+    alignItems: 'center',
     flexDirection: 'row',
     gap: 12,
-    justifyContent: 'space-between',
-    marginBottom: 10,
-    minHeight: 68,
-    padding: 14
+    justifyContent: 'space-between'
   },
-  stepSelected: {
-    borderColor: 'rgba(255,194,26,0.55)'
-  },
-  stepTextBlock: {
-    flex: 1,
-    paddingRight: 8
-  },
-  stepTitle: {
-    color: '#f8fafc',
-    fontWeight: '900',
-    marginBottom: 4
-  },
-  row: {
+  rowCenter: {
     alignItems: 'center',
-    backgroundColor: '#0b171d',
-    borderRadius: 8,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-    minHeight: 58,
-    padding: 14
+    gap: 8
   },
-  rowTitle: {
-    color: '#f8fafc',
-    flex: 1,
-    fontWeight: '900',
-    paddingRight: 10
+  quickAccessGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10
   },
-  badge: {
-    borderRadius: 999,
-    fontSize: 12,
-    fontWeight: '900',
-    overflow: 'hidden',
-    paddingHorizontal: 9,
-    paddingVertical: 6
-  },
-  completed: {
-    backgroundColor: 'rgba(41,227,95,0.16)',
-    color: '#29e35f'
-  },
-  current: {
-    backgroundColor: 'rgba(255,194,26,0.16)',
-    color: '#ffc21a'
-  },
-  locked: {
-    backgroundColor: 'rgba(124,135,145,0.18)',
-    color: '#b9c0c8'
-  },
-  empty: {
-    backgroundColor: '#0b171d',
+  quickAccessItem: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,194,26,0.5)',
     borderRadius: 8,
-    color: '#aeb8c2',
-    padding: 14
+    borderWidth: 1,
+    minHeight: 126,
+    padding: 10,
+    width: '31.5%'
+  },
+  quickAccessLabel: {
+    color: gold,
+    fontSize: 18,
+    fontWeight: '900',
+    marginTop: 6,
+    textAlign: 'center'
+  },
+  quickAccessCaption: {
+    color: '#fff',
+    fontSize: 11,
+    lineHeight: 15,
+    textAlign: 'center'
   },
   tabBar: {
-    backgroundColor: '#071014',
-    borderColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: 'rgba(3,8,10,0.98)',
+    borderColor: 'rgba(255,255,255,0.12)',
     borderTopWidth: 1,
     bottom: 0,
     flexDirection: 'row',
-    gap: 4,
     left: 0,
     paddingBottom: 12,
-    paddingHorizontal: 8,
+    paddingHorizontal: 5,
     paddingTop: 8,
     position: 'absolute',
     right: 0
   },
   tabButton: {
     alignItems: 'center',
-    borderRadius: 8,
     flex: 1,
-    justifyContent: 'center',
-    minHeight: 44,
-    paddingHorizontal: 2
-  },
-  tabButtonActive: {
-    backgroundColor: 'rgba(255,194,26,0.14)'
+    gap: 4,
+    minHeight: 58,
+    justifyContent: 'center'
   },
   tabText: {
-    color: '#aeb8c2',
+    color: '#dce3ea',
     fontSize: 10,
-    fontWeight: '800'
+    textAlign: 'center'
   },
   tabTextActive: {
-    color: '#ffe58a'
+    color: gold,
+    fontWeight: '900'
+  },
+  tabIndicator: {
+    backgroundColor: gold,
+    borderRadius: 4,
+    height: 3,
+    marginTop: 2,
+    width: 42
+  },
+  titleBar: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    gap: 12,
+    justifyContent: 'space-between'
+  },
+  helpPill: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.38)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 7,
+    paddingHorizontal: 12,
+    paddingVertical: 9
+  },
+  stageCard: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 20
+  },
+  stageCopy: {
+    flex: 1
+  },
+  progressRing: {
+    alignItems: 'center',
+    borderColor: gold,
+    borderLeftColor: 'rgba(255,194,26,0.22)',
+    borderRadius: 70,
+    borderWidth: 12,
+    height: 140,
+    justifyContent: 'center',
+    width: 140
+  },
+  progressPercent: {
+    color: gold,
+    fontSize: 33,
+    fontWeight: '900'
+  },
+  progressLabel: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '800',
+    textAlign: 'center'
+  },
+  progressBar: {
+    backgroundColor: 'rgba(255,255,255,0.14)',
+    borderRadius: 6,
+    height: 10,
+    marginVertical: 10,
+    overflow: 'hidden'
+  },
+  progressFill: {
+    backgroundColor: gold,
+    borderRadius: 6,
+    height: '100%',
+    width: '62%'
+  },
+  sectionTitle: {
+    color: '#fff',
+    fontSize: 23,
+    fontWeight: '900',
+    marginBottom: 12,
+    marginTop: 18
+  },
+  roadmapRow: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(8,17,21,0.88)',
+    borderColor: 'rgba(255,255,255,0.13)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 14,
+    marginBottom: 8,
+    minHeight: 86,
+    padding: 14
+  },
+  roadmapRowActive: {
+    borderColor: gold
+  },
+  stepIconCircle: {
+    alignItems: 'center',
+    borderColor: gold,
+    borderRadius: 28,
+    borderWidth: 2,
+    height: 56,
+    justifyContent: 'center',
+    width: 56
+  },
+  stepDone: {
+    backgroundColor: '#29e35f',
+    borderColor: '#29e35f'
+  },
+  stepIconText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '900'
+  },
+  stepTextBlock: {
+    flex: 1
+  },
+  rowTitle: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: '900',
+    lineHeight: 24
+  },
+  badge: {
+    borderRadius: 8,
+    fontSize: 13,
+    fontWeight: '900',
+    overflow: 'hidden',
+    paddingHorizontal: 10,
+    paddingVertical: 7
+  },
+  completed: {
+    backgroundColor: 'rgba(41,227,95,0.14)',
+    color: '#29e35f'
+  },
+  locked: {
+    backgroundColor: 'rgba(124,135,145,0.18)',
+    color: '#b9c0c8'
+  },
+  goldSmallButton: {
+    backgroundColor: gold,
+    borderRadius: 8,
+    color: ink,
+    fontSize: 15,
+    fontWeight: '900',
+    overflow: 'hidden',
+    paddingHorizontal: 12,
+    paddingVertical: 12
+  },
+  smallGoldAction: {
+    alignItems: 'center',
+    backgroundColor: gold,
+    borderRadius: 8,
+    flexDirection: 'row',
+    gap: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 12
+  },
+  smallGoldActionText: {
+    color: ink,
+    fontWeight: '900'
+  },
+  backLink: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 6,
+    marginBottom: 16
+  },
+  stepDetailTitle: {
+    color: '#fff',
+    fontSize: 38,
+    fontWeight: '900',
+    lineHeight: 44,
+    marginBottom: 12
+  },
+  pill: {
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    borderColor: 'rgba(255,194,26,0.7)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 8
+  },
+  pillText: {
+    color: gold,
+    fontSize: 16,
+    fontWeight: '900'
+  },
+  sectionLabel: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 14
+  },
+  videoMock: {
+    alignItems: 'center',
+    backgroundColor: '#211a15',
+    borderRadius: 8,
+    height: 210,
+    justifyContent: 'center',
+    marginTop: 14,
+    overflow: 'hidden'
+  },
+  playCircle: {
+    alignItems: 'center',
+    borderColor: '#fff',
+    borderRadius: 46,
+    borderWidth: 3,
+    height: 92,
+    justifyContent: 'center',
+    width: 92
+  },
+  videoTime: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 4,
+    bottom: 16,
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '900',
+    left: 16,
+    padding: 6,
+    position: 'absolute'
+  },
+  quoteBox: {
+    backgroundColor: 'rgba(255,255,255,0.05)',
+    borderColor: 'rgba(255,255,255,0.14)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 14,
+    padding: 16
+  },
+  quoteMark: {
+    color: gold,
+    fontSize: 54,
+    fontWeight: '900'
+  },
+  quoteText: {
+    color: '#fff',
+    flex: 1,
+    fontSize: 18,
+    lineHeight: 27
+  },
+  centerLink: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '800',
+    marginTop: 14,
+    textAlign: 'center'
+  },
+  audioBar: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.14)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 14,
+    marginTop: 14,
+    minHeight: 78,
+    padding: 14
+  },
+  audioPlay: {
+    alignItems: 'center',
+    backgroundColor: gold,
+    borderRadius: 28,
+    height: 56,
+    justifyContent: 'center',
+    width: 56
+  },
+  waveform: {
+    color: gold,
+    flex: 1,
+    fontSize: 23,
+    letterSpacing: 1
+  },
+  headerLine: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16
+  },
+  eyeSmall: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,194,26,0.44)',
+    borderRadius: 50,
+    borderWidth: 1,
+    height: 100,
+    justifyContent: 'center',
+    width: 100
+  },
+  goalHeaderActions: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 14
+  },
+  dateButton: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,194,26,0.55)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    gap: 8,
+    minHeight: 48,
+    paddingHorizontal: 12
+  },
+  historyButton: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,194,26,0.55)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 8,
+    minHeight: 48,
+    paddingHorizontal: 12
+  },
+  goalSectionHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 14
+  },
+  goalIcon: {
+    alignItems: 'center',
+    borderColor: gold,
+    borderRadius: 16,
+    borderWidth: 1,
+    height: 32,
+    justifyContent: 'center',
+    width: 32
+  },
+  goalSectionTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '900'
+  },
+  optionGrid: {
+    flexDirection: 'row',
+    gap: 8
+  },
+  twoCol: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 12
+  },
+  optionCard: {
+    borderColor: 'rgba(255,255,255,0.16)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flex: 1,
+    minHeight: 88,
+    padding: 12,
+    position: 'relative'
+  },
+  optionSelected: {
+    borderColor: gold
+  },
+  optionLead: {
+    color: '#fff',
+    fontSize: 19,
+    fontWeight: '900',
+    textAlign: 'center'
+  },
+  optionCheck: {
+    alignItems: 'center',
+    backgroundColor: gold,
+    borderRadius: 10,
+    height: 20,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 8,
+    top: 8,
+    width: 20
+  },
+  optionEmpty: {
+    borderColor: 'rgba(255,255,255,0.3)',
+    borderRadius: 10,
+    borderWidth: 1,
+    height: 20,
+    position: 'absolute',
+    right: 8,
+    top: 8,
+    width: 20
+  },
+  inputBlock: {
+    flex: 1
+  },
+  selectMock: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.16)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    minHeight: 54,
+    paddingHorizontal: 14
+  },
+  metricCards: {
+    flexDirection: 'row',
+    gap: 8
+  },
+  goalMetric: {
+    borderColor: 'rgba(255,255,255,0.14)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flex: 1,
+    padding: 10
+  },
+  followRow: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.12)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 8,
+    minHeight: 44,
+    paddingHorizontal: 12
+  },
+  agentInsight: {
+    alignItems: 'center',
+    borderColor: gold,
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 14,
+    padding: 14
+  },
+  roleplayHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    paddingTop: 4
+  },
+  roleplayTitleBlock: {
+    alignItems: 'center'
+  },
+  liveText: {
+    color: '#29e35f',
+    fontSize: 14,
+    fontWeight: '900'
+  },
+  endButton: {
+    backgroundColor: '#df2435',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12
+  },
+  endText: {
+    color: '#fff',
+    fontWeight: '900'
+  },
+  roleplayStats: {
+    flexDirection: 'row'
+  },
+  statBlock: {
+    borderRightColor: 'rgba(255,255,255,0.16)',
+    borderRightWidth: 1,
+    flex: 1,
+    gap: 4,
+    paddingHorizontal: 6
+  },
+  statValue: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '900'
+  },
+  videoPanels: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 16
+  },
+  participantCard: {
+    backgroundColor: '#171d23',
+    borderRadius: 8,
+    flex: 1,
+    height: 420,
+    padding: 18,
+    position: 'relative'
+  },
+  participantLabel: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(0,0,0,0.45)',
+    borderRadius: 6,
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '900',
+    overflow: 'hidden',
+    paddingHorizontal: 10,
+    paddingVertical: 8
+  },
+  speakingBadge: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    borderRadius: 24,
+    height: 48,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 18,
+    top: 18,
+    width: 48
+  },
+  personIcon: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center'
+  },
+  personHead: {
+    backgroundColor: '#e8e8e8',
+    borderRadius: 42,
+    height: 84,
+    width: 84
+  },
+  personBody: {
+    backgroundColor: '#e8e8e8',
+    borderTopLeftRadius: 54,
+    borderTopRightRadius: 54,
+    height: 86,
+    marginTop: 12,
+    width: 142
+  },
+  audioMini: {
+    bottom: 18,
+    left: 18,
+    position: 'absolute'
+  },
+  controlRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  controlButton: {
+    alignItems: 'center',
+    flex: 1,
+    gap: 8
+  },
+  controlCircle: {
+    alignItems: 'center',
+    backgroundColor: '#242a30',
+    borderRadius: 31,
+    height: 62,
+    justifyContent: 'center',
+    width: 62
+  },
+  controlActive: {
+    backgroundColor: '#148b32'
+  },
+  controlLabel: {
+    color: '#fff',
+    fontSize: 13,
+    textAlign: 'center'
+  },
+  tipCard: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.16)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 14,
+    marginBottom: 16,
+    padding: 16
+  },
+  tipText: {
+    color: '#fff',
+    flex: 1,
+    fontSize: 18,
+    lineHeight: 27
+  },
+  secondaryAction: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,194,26,0.55)',
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: 14,
+    minHeight: 48,
+    justifyContent: 'center'
+  },
+  secondaryActionText: {
+    color: gold,
+    fontWeight: '900'
+  },
+  insight: {
+    backgroundColor: 'rgba(255,194,26,0.1)',
+    borderColor: 'rgba(255,194,26,0.28)',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: gold2,
+    lineHeight: 21,
+    marginTop: 12,
+    padding: 12
   }
 });
