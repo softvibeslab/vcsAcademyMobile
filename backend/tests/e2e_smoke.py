@@ -161,6 +161,14 @@ def main():
     assert disabled["status"] == "inactive"
     assert client.post("/api/auth/login", json={"email": "qa-auth@vcsa.local", "password": "resetdemo123"}).status_code == 401
     assert_success(client.patch("/api/admin/users/user_qa_auth/status", headers=admin_headers, json={"status": "active"}))
+    permissioned = assert_success(
+        client.post(
+            "/api/admin/users/user_qa_auth/permissions",
+            headers=admin_headers,
+            json={"permission": "resource:pricing-guide:read", "action": "grant"},
+        )
+    )["user"]
+    assert "resource:pricing-guide:read" in permissioned["permissions"]
     saved_resource = assert_success(
         client.post(
             "/api/admin/resources",

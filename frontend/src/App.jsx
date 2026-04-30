@@ -39,6 +39,7 @@ function App() {
   const [adminUsers, setAdminUsers] = useState([]);
   const [adminResources, setAdminResources] = useState([]);
   const [auditEvents, setAuditEvents] = useState([]);
+  const [workspaceMessage, setWorkspaceMessage] = useState('');
 
   function clearSession() {
     window.localStorage.removeItem(SESSION_KEY);
@@ -55,6 +56,7 @@ function App() {
     setAdminUsers([]);
     setAdminResources([]);
     setAuditEvents([]);
+    setWorkspaceMessage('');
     setActiveView('rep');
   }
 
@@ -212,6 +214,70 @@ function App() {
       body: JSON.stringify({ status, notes: status === 'approved' ? 'Approved for certification.' : 'Continue practice before final approval.' })
     });
     await load();
+    setWorkspaceMessage(`Certification ${status} saved for ${rep.display_name}.`);
+  }
+
+  async function reviewFirstPending() {
+    const submission = managerDashboard?.pending_submissions?.[0];
+    if (!submission) {
+      setWorkspaceMessage('No pending submissions to review.');
+      return;
+    }
+    await api(`/api/roleplay/submissions/${submission.id}/review`, {
+      method: 'POST',
+      body: JSON.stringify({
+        score: 88,
+        rubric_scores: { professional_tone: 5, step_alignment: 4, compliance_awareness: 5 },
+        comments: 'Strong launch-demo review. Keep tightening the transition and confirm the decision clearly.',
+        recommendation: 'continue_practice'
+      })
+    });
+    await load();
+    setWorkspaceMessage('Pending roleplay reviewed with demo rubric.');
+  }
+
+  async function inviteDemoUser() {
+    await api('/api/admin/users/invite', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: 'user_web_invite',
+        email: 'web-invite@vcsa.local',
+        display_name: 'Web Invite Rep',
+        roles: ['sales_rep'],
+        team_id: 'team_demo',
+        permissions: ['resource:step-5-script:read'],
+        status: 'active',
+        password: 'tempdemo123'
+      })
+    });
+    await load();
+    setWorkspaceMessage('Demo user invited. Temporary password: tempdemo123');
+  }
+
+  async function toggleWebInviteUser() {
+    const target = adminUsers.find((item) => item.id === 'user_web_invite') || adminUsers.find((item) => item.email === 'web-invite@vcsa.local');
+    if (!target) {
+      setWorkspaceMessage('Invite the demo user first.');
+      return;
+    }
+    const nextStatus = target.status === 'active' ? 'inactive' : 'active';
+    await api(`/api/admin/users/${target.id}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status: nextStatus })
+    });
+    await load();
+    setWorkspaceMessage(`Web Invite Rep is now ${nextStatus}.`);
+  }
+
+  async function grantPricingAccess() {
+    const target = adminUsers.find((item) => item.id === 'user_web_invite') || adminUsers.find((item) => item.email === 'web-invite@vcsa.local') || adminUsers.find((item) => item.roles.includes('sales_rep'));
+    if (!target) return;
+    await api(`/api/admin/users/${target.id}/permissions`, {
+      method: 'POST',
+      body: JSON.stringify({ permission: 'resource:pricing-guide:read', action: 'grant' })
+    });
+    await load();
+    setWorkspaceMessage(`Pricing access granted to ${target.display_name}.`);
   }
 
   async function publishLaunchResource() {
@@ -229,6 +295,7 @@ function App() {
       })
     });
     await load();
+    setWorkspaceMessage('Go Live resource published.');
   }
 
   async function askAgent() {
@@ -296,6 +363,7 @@ function App() {
       </section>
 
       {error && <section className="error">API error: {error}</section>}
+      {workspaceMessage && <section className="insight">{workspaceMessage}</section>}
 
       <nav className="workspace-nav" aria-label="Workspace views">
         <button className={activeView === 'rep' ? 'nav-active' : 'ghost-button'} onClick={() => setActiveView('rep')}>
@@ -410,9 +478,20 @@ function App() {
             <Metric label="Team VPG" value={`$${managerDashboard?.summary?.team_metrics?.vpg ?? 0}`} />
           </div>
           <div className="actions">
+            <button onClick={reviewFirstPending}><ClipboardCheck size={18} /> Review Pending</button>
             <button onClick={() => certifyFirstRep('needs_practice')}><GraduationCap size={18} /> Mark Needs Practice</button>
             <button onClick={() => certifyFirstRep('approved')}><ShieldCheck size={18} /> Approve Certification</button>
           </div>
+          <h3 className="subhead">Pending reviews</h3>
+          <div className="list">
+            {managerDashboard?.pending_submissions?.length ? managerDashboard.pending_submissions.slice(0, 4).map((item) => (
+              <div className="list-row" key={item.id}>
+                <strong>{item.id}</strong>
+                <span>{item.status} · {item.blueprint_step_id || item.session_id}</span>
+              </div>
+            )) : <p className="muted">No pending submissions.</p>}
+          </div>
+          <h3 className="subhead">Team reps</h3>
           <div className="list">
             {managerDashboard?.reps?.map((rep) => (
               <div className="list-row" key={rep.user.id}>
@@ -431,11 +510,16 @@ function App() {
               <ShieldCheck />
               <h2>Admin Users</h2>
             </div>
+            <div className="actions compact-actions">
+              <button onClick={inviteDemoUser}><Users size={18} /> Invite Demo Rep</button>
+              <button onClick={toggleWebInviteUser}><ShieldCheck size={18} /> Enable/Disable</button>
+              <button onClick={grantPricingAccess}><FileText size={18} /> Grant Pricing</button>
+            </div>
             <div className="list">
               {adminUsers.map((item) => (
                 <div className="list-row" key={item.id}>
                   <strong>{item.display_name}</strong>
-                  <span>{item.roles.join(', ')}</span>
+                  <span>{item.status} · {item.roles.join(', ')} · {item.permissions?.length || 0} permissions</span>
                 </div>
               ))}
             </div>

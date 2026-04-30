@@ -448,6 +448,13 @@ def set_user_status(user_id: str, status: str) -> dict[str, Any] | None:
     return get_user(user_id)
 
 
+def set_user_permissions(user_id: str, permissions: list[str]) -> dict[str, Any] | None:
+    now = datetime.utcnow().isoformat()
+    with connect() as db:
+        db.execute("UPDATE users SET permissions_json = ?, updated_at = ? WHERE id = ?", (json_dumps(sorted(set(permissions))), now, user_id))
+    return get_user(user_id)
+
+
 def create_password_reset_token(user_id: str, purpose: str = "password_reset", ttl_minutes: int = 30) -> dict[str, Any]:
     now = datetime.utcnow()
     expires_at = now + timedelta(minutes=ttl_minutes)

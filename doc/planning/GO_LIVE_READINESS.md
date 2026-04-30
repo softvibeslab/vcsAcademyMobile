@@ -61,6 +61,8 @@ This runs:
 - [x] Smart Agent provider interface with local retrieval, citations, recommendations, and sensitive-content guardrails.
 - [x] Manager dashboard and certification decision API.
 - [x] Admin users/resources/audit API.
+- [x] Web manager workflow can review pending roleplays and submit certification decisions.
+- [x] Web admin workflow can invite users, enable/disable users, grant sensitive permissions, publish resources, and inspect audit activity.
 - [x] Resource permissions and sensitive access audit.
 - [x] Release check script.
 - [x] GitHub Actions release check workflow.

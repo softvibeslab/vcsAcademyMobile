@@ -104,6 +104,11 @@ class UserStatusIn(BaseModel):
     status: Literal["active", "inactive"]
 
 
+class PermissionGrantIn(BaseModel):
+    permission: str
+    action: Literal["grant", "revoke"] = "grant"
+
+
 class UserIn(BaseModel):
     id: str | None = None
     email: str
@@ -765,6 +770,21 @@ def admin_update_user_status(user_id: str, payload: UserStatusIn, user: dict[str
     if not saved:
         raise HTTPException(status_code=404, detail="User not found")
     audit(user, "admin_user_status_changed", "user", user_id, "success", {"status": payload.status})
+    return envelope({"user": saved})
+
+
+@app.post("/api/admin/users/{user_id}/permissions")
+def admin_update_user_permissions(user_id: str, payload: PermissionGrantIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    target = persistence.get_user(user_id)
+    if not target:
+        raise HTTPException(status_code=404, detail="User not found")
+    permissions = set(target.get("permissions", []))
+    if payload.action == "grant":
+        permissions.add(payload.permission)
+    else:
+        permissions.discard(payload.permission)
+    saved = persistence.set_user_permissions(user_id, sorted(permissions))
+    audit(user, "admin_user_permission_changed", "user", user_id, "success", {"permission": payload.permission, "action": payload.action})
     return envelope({"user": saved})
 
 

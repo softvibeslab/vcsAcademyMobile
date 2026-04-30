@@ -214,6 +214,12 @@ button:disabled {
   margin: 0;
 }
 
+.subhead {
+  color: #f8fafc;
+  font-size: 15px;
+  margin: 22px 0 10px;
+}
+
 .metrics {
   display: grid;
   gap: 12px;
