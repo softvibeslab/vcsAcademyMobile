@@ -11,6 +11,7 @@ from backend.app.main import app
 
 
 client = TestClient(app)
+auth_headers = {}
 
 
 def assert_success(response):
@@ -22,19 +23,23 @@ def assert_success(response):
 
 def main():
     assert_success(client.get("/api/health"))
-    me = assert_success(client.get("/api/mobile/me"))
+    login = assert_success(client.post("/api/auth/login", json={"email": "rep@vcsa.local", "password": "demo123"}))
+    auth_headers["Authorization"] = f"Bearer {login['token']}"
+
+    me = assert_success(client.get("/api/mobile/me", headers=auth_headers))
     assert "sales_rep" in me["user"]["roles"]
 
-    steps = assert_success(client.get("/api/blueprint/steps"))["steps"]
+    steps = assert_success(client.get("/api/blueprint/steps", headers=auth_headers))["steps"]
     assert len(steps) == 11
     assert steps[4]["title"] == "Break & Remake the Pact"
 
-    step_5 = assert_success(client.get("/api/blueprint/steps/step_5"))["step"]
+    step_5 = assert_success(client.get("/api/blueprint/steps/step_5", headers=auth_headers))["step"]
     assert step_5["scripts"][0]["script_type"] == "practice"
 
     saved = assert_success(
         client.post(
             "/api/goalsheet",
+            headers=auth_headers,
             json={
                 "date": "2026-04-29",
                 "tour_outcome": "qualified",
@@ -48,21 +53,22 @@ def main():
     )["entry"]
     assert "smart_agent_insight" in saved
 
-    chat = assert_success(client.post("/api/smart-agent/chat", json={"message": "Help me practice Step 5", "mode": "blueprint_step"}))
+    chat = assert_success(client.post("/api/smart-agent/chat", headers=auth_headers, json={"message": "Help me practice Step 5", "mode": "blueprint_step"}))
     assert chat["recommended_actions"][0]["route"] == "RoleplayLive"
 
-    unsafe = assert_success(client.post("/api/smart-agent/chat", json={"message": "Can I hide the fee?", "mode": "general_coach"}))
+    unsafe = assert_success(client.post("/api/smart-agent/chat", headers=auth_headers, json={"message": "Can I hide the fee?", "mode": "general_coach"}))
     assert "hidden_fee_request" in unsafe["risk_flags"]
 
-    scenario = assert_success(client.get("/api/roleplay/scenarios"))["scenarios"][0]
-    session = assert_success(client.post("/api/roleplay/sessions", json={"scenario_id": scenario["id"], "blueprint_step_id": "step_5"}))["session"]
-    assert_success(client.post(f"/api/roleplay/sessions/{session['id']}/complete"))
-    submission = assert_success(client.post("/api/roleplay/submissions", json={"session_id": session["id"], "transcript": "Practice transcript"}))["submission"]
-    pending = assert_success(client.get("/api/roleplay/submissions/pending"))["submissions"]
+    scenario = assert_success(client.get("/api/roleplay/scenarios", headers=auth_headers))["scenarios"][0]
+    session = assert_success(client.post("/api/roleplay/sessions", headers=auth_headers, json={"scenario_id": scenario["id"], "blueprint_step_id": "step_5"}))["session"]
+    assert_success(client.post(f"/api/roleplay/sessions/{session['id']}/complete", headers=auth_headers))
+    submission = assert_success(client.post("/api/roleplay/submissions", headers=auth_headers, json={"session_id": session["id"], "transcript": "Practice transcript"}))["submission"]
+    pending = assert_success(client.get("/api/roleplay/submissions/pending", headers=auth_headers))["submissions"]
     assert pending
     reviewed = assert_success(
         client.post(
             f"/api/roleplay/submissions/{submission['id']}/review",
+            headers=auth_headers,
             json={
                 "score": 86,
                 "rubric_scores": {"professional_tone": 5, "step_alignment": 4},
@@ -73,7 +79,7 @@ def main():
     )["submission"]
     assert reviewed["status"] == "reviewed"
 
-    blocked = client.get("/api/resources/pricing-guide")
+    blocked = client.get("/api/resources/pricing-guide", headers=auth_headers)
     assert blocked.status_code == 403
 
     print("E2E API smoke passed")

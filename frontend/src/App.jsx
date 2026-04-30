@@ -4,10 +4,25 @@ import { Bot, ClipboardCheck, GraduationCap, ShieldCheck, Target, Trophy } from 
 import './styles.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8001';
+let authToken = '';
+
+async function ensureAuth() {
+  if (authToken) return authToken;
+  const response = await fetch(`${API_BASE}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: 'rep@vcsa.local', password: 'demo123' })
+  });
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.detail || 'Login failed');
+  authToken = payload.data.token;
+  return authToken;
+}
 
 async function api(path, options) {
+  const token = await ensureAuth();
   const response = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     ...options
   });
   const payload = await response.json();

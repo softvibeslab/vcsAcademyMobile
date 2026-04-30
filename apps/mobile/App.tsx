@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const API_BASE = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8001';
+let authToken = '';
 
 type Step = {
   id: string;
@@ -21,9 +22,23 @@ type Dashboard = {
   };
 };
 
-async function api(path: string, options?: RequestInit) {
-  const response = await fetch(`${API_BASE}${path}`, {
+async function ensureAuth() {
+  if (authToken) return authToken;
+  const response = await fetch(`${API_BASE}/api/auth/login`, {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: 'rep@vcsa.local', password: 'demo123' })
+  });
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.detail || 'Login failed');
+  authToken = payload.data.token;
+  return authToken;
+}
+
+async function api(path: string, options?: RequestInit) {
+  const token = await ensureAuth();
+  const response = await fetch(`${API_BASE}${path}`, {
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     ...options
   });
   const payload = await response.json();
