@@ -1,6 +1,6 @@
 const appJson = require('./app.json');
 
-const releaseProfiles = new Set(['preview', 'production']);
+const releaseProfiles = new Set(['preview', 'apk', 'production']);
 const localHosts = new Set(['localhost', '127.0.0.1', '0.0.0.0']);
 
 function apiBaseUrl() {

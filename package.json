@@ -21,6 +21,7 @@
     "doctor:mobile": "npx expo-doctor",
     "export:mobile:web": "cd apps/mobile && npx expo export --platform web --output-dir dist-mobile-web",
     "mobile:config": "cd apps/mobile && npx expo config --type public",
+    "mobile:build:apk": "cd apps/mobile && npx eas-cli build --profile apk --platform android",
     "mobile:build:preview": "cd apps/mobile && npx eas-cli build --profile preview --platform all",
     "mobile:build:production": "cd apps/mobile && npx eas-cli build --profile production --platform all",
     "mobile:submit:production": "cd apps/mobile && npx eas-cli submit --profile production --platform all",
