@@ -32,6 +32,10 @@ All seeded accounts use password `demo123`.
 | `VCSA_SMART_AGENT_PROVIDER` | `local` | Smart Agent provider interface selection |
 | `VITE_API_BASE_URL` | `http://127.0.0.1:8001` | Webapp API target |
 | `EXPO_PUBLIC_API_BASE_URL` | `http://127.0.0.1:8001` | Expo app API target |
+| `EXPO_PUBLIC_APP_ENV` | `development` | Expo app environment label |
+| `EXPO_PUBLIC_SENTRY_DSN` | empty | Optional mobile monitoring DSN |
+| `EXPO_IOS_BUNDLE_IDENTIFIER` | `com.whitelabel.salesacademy` | iOS bundle identifier |
+| `EXPO_ANDROID_PACKAGE` | `com.whitelabel.salesacademy` | Android package name |
 
 ## Release Check
 
@@ -69,13 +73,15 @@ This runs:
 - [x] Release check script.
 - [x] GitHub Actions release check workflow.
 - [x] EAS build profile template for development, preview, and production.
+- [x] Expo dynamic release config with guardrails against localhost/placeholder API URLs in preview/production.
+- [x] Mobile release runbook for EAS preview, production, and submit commands.
 - [x] Environment variable example file.
 - [x] Backend seed/reset/doctor operational commands.
 - [x] Backend Dockerfile and Python requirements.
 - [x] Backend readiness endpoint, request IDs, response timing, and baseline security headers.
 - [ ] Configure production `VCSA_CORS_ORIGINS`.
 - [ ] Replace local SQLite with managed database when target hosting is selected.
-- [ ] Replace `https://api.example.com` in EAS profiles with production API URL.
+- [ ] Configure `EXPO_PUBLIC_API_BASE_URL` in EAS with the production API URL.
 - [ ] Produce native iOS/Android builds through EAS.
 - [ ] Replace placeholder/generated Smart Agent artwork with final brand-approved production assets if required by App Store launch.
 - [ ] Configure monitoring/error reporting provider.

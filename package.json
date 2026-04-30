@@ -20,6 +20,10 @@
     "build:web": "npm --workspace frontend run build",
     "doctor:mobile": "npx expo-doctor",
     "export:mobile:web": "cd apps/mobile && npx expo export --platform web --output-dir dist-mobile-web",
+    "mobile:config": "cd apps/mobile && npx expo config --type public",
+    "mobile:build:preview": "cd apps/mobile && npx eas-cli build --profile preview --platform all",
+    "mobile:build:production": "cd apps/mobile && npx eas-cli build --profile production --platform all",
+    "mobile:submit:production": "cd apps/mobile && npx eas-cli submit --profile production --platform all",
     "qa:mobile:screenshots": "node tools/qa/mobile-screenshots.mjs",
     "release:check": "npm run check && npm run build:web && npm run doctor:mobile && npm run export:mobile:web"
   },
