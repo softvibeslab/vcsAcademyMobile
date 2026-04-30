@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from datetime import date, datetime
 from typing import Any, Literal
 from uuid import uuid4
@@ -13,10 +14,16 @@ from backend.app import persistence
 
 app = FastAPI(title="VCSA Academy API", version="0.1.0")
 
+cors_origins = [
+    origin.strip()
+    for origin in os.environ.get("VCSA_CORS_ORIGINS", "http://127.0.0.1:5173,http://localhost:5173,http://127.0.0.1:8082,http://localhost:8082").split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=cors_origins,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -46,6 +53,17 @@ class ApiResponse(BaseModel):
 class LoginIn(BaseModel):
     email: str
     password: str
+
+
+class UserIn(BaseModel):
+    id: str | None = None
+    email: str
+    display_name: str
+    roles: list[str] = ["sales_rep"]
+    team_id: str = "team_demo"
+    permissions: list[str] = []
+    status: Literal["active", "inactive"] = "active"
+    password: str | None = None
 
 
 class GoalSheetEntryIn(BaseModel):
@@ -85,6 +103,22 @@ class RoleplayReviewIn(BaseModel):
     recommendation: str = "continue_practice"
 
 
+class ResourceIn(BaseModel):
+    id: str | None = None
+    title: str
+    resource_type: str = "article"
+    sensitivity: str = "general_training"
+    requires_access_grant: bool = False
+    body: str = ""
+    tags: list[str] = []
+    status: Literal["draft", "published", "archived"] = "published"
+
+
+class CertificationDecisionIn(BaseModel):
+    status: Literal["approved", "denied", "needs_practice"]
+    notes: str = ""
+
+
 @app.on_event("startup")
 def startup() -> None:
     persistence.init_db()
@@ -118,6 +152,20 @@ def require_manager(user: dict[str, Any] = Depends(require_user)) -> dict[str, A
     if not set(user["roles"]).intersection({"manager", "to_manager", "trainer", "coach", "admin"}):
         raise HTTPException(status_code=403, detail="Manager or trainer role required")
     return user
+
+
+def require_admin(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+    if "admin" not in user["roles"]:
+        raise HTTPException(status_code=403, detail="Admin role required")
+    return user
+
+
+def has_resource_access(resource: dict[str, Any], user: dict[str, Any]) -> bool:
+    return (
+        not resource["requires_access_grant"]
+        or f"resource:{resource['id']}:read" in user["permissions"]
+        or "admin" in user["roles"]
+    )
 
 
 def blueprint_progress(step_id: str, completed_steps: set[str]) -> int:
@@ -157,6 +205,26 @@ def calculate_metrics(entries: list[dict[str, Any]]) -> dict[str, Any]:
         "volume": volume,
         "closing_percent": 0 if qualified_tours == 0 else round((sales_count / qualified_tours) * 100),
         "vpg": 0 if qualified_tours == 0 else round(volume / qualified_tours),
+    }
+
+
+def user_summary(user_id: str) -> dict[str, Any]:
+    profile = persistence.get_user(user_id)
+    completed_steps = persistence.get_completed_step_ids(user_id)
+    goalsheets = persistence.list_goalsheets(user_id)
+    reviewed_roleplays = [
+        item
+        for item in persistence.list_roleplay_submissions()
+        if item.get("user_id") == user_id and item.get("status") == "reviewed"
+    ]
+    latest_decision = next(iter(persistence.list_certification_decisions(user_id)), None)
+    return {
+        "user": profile or {"id": user_id, "display_name": user_id, "roles": []},
+        "blueprint_progress": round((len(completed_steps) / len(BLUEPRINT_STEPS)) * 100),
+        "completed_steps": len(completed_steps),
+        "metrics": calculate_metrics(goalsheets),
+        "reviewed_roleplays": len(reviewed_roleplays),
+        "certification_status": latest_decision["status"] if latest_decision else "in_progress",
     }
 
 
@@ -219,6 +287,33 @@ def logout(response: Response, authorization: str | None = Header(default=None))
 @app.get("/api/mobile/me")
 def mobile_me(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
     return envelope({"user": user})
+
+
+@app.get("/api/manager/team-dashboard")
+def manager_team_dashboard(user: dict[str, Any] = Depends(require_manager)) -> dict[str, Any]:
+    team_users = [
+        item
+        for item in persistence.list_users()
+        if item.get("team_id") == user.get("team_id") and "sales_rep" in item.get("roles", [])
+    ]
+    pending = persistence.list_roleplay_submissions("submitted")
+    team_goalsheets = [
+        item
+        for item in persistence.list_all_goalsheets()
+        if any(rep["id"] == item.get("user_id") for rep in team_users)
+    ]
+    return envelope(
+        {
+            "team_id": user.get("team_id"),
+            "summary": {
+                "active_reps": len(team_users),
+                "pending_reviews": len(pending),
+                "team_metrics": calculate_metrics(team_goalsheets),
+            },
+            "reps": [user_summary(item["id"]) for item in team_users],
+            "pending_submissions": pending,
+        }
+    )
 
 
 @app.get("/api/dashboard/rep")
@@ -419,6 +514,12 @@ def pending_roleplay_submissions(user: dict[str, Any] = Depends(require_manager)
     return envelope({"submissions": persistence.list_roleplay_submissions("submitted")})
 
 
+@app.get("/api/roleplay/submissions/mine")
+def my_roleplay_submissions(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+    submissions = [item for item in persistence.list_roleplay_submissions() if item.get("user_id") == user["id"]]
+    return envelope({"submissions": submissions})
+
+
 @app.post("/api/roleplay/submissions/{submission_id}/review")
 def review_roleplay_submission(submission_id: str, payload: RoleplayReviewIn, user: dict[str, Any] = Depends(require_manager)) -> dict[str, Any]:
     submission = persistence.get_roleplay_submission(submission_id)
@@ -433,49 +534,89 @@ def review_roleplay_submission(submission_id: str, payload: RoleplayReviewIn, us
 
 @app.get("/api/resources")
 def resources(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
-    return envelope(
-        {
-            "resources": [
-                {"id": "step-5-script", "title": "Step 5 Practice Script", "resource_type": "script", "sensitivity": "practice_script", "requires_access_grant": False},
-                {"id": "pricing-guide", "title": "T.O. Pricing Guide", "resource_type": "policy", "sensitivity": "pricing_or_fee_related", "requires_access_grant": True},
-            ]
-        }
-    )
+    visible_resources = [
+        {key: value for key, value in resource.items() if key != "body"} | {"has_access": has_resource_access(resource, user)}
+        for resource in persistence.list_resources()
+    ]
+    return envelope({"resources": visible_resources})
 
 
 @app.get("/api/resources/{resource_id}")
 def get_resource(resource_id: str, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
-    resource_list = [
-        {"id": "step-5-script", "title": "Step 5 Practice Script", "resource_type": "script", "sensitivity": "practice_script", "requires_access_grant": False},
-        {"id": "pricing-guide", "title": "T.O. Pricing Guide", "resource_type": "policy", "sensitivity": "pricing_or_fee_related", "requires_access_grant": True},
-    ]
-    resource = next((item for item in resource_list if item["id"] == resource_id), None)
+    resource = persistence.get_resource(resource_id)
     if not resource:
         raise HTTPException(status_code=404, detail="Resource not found")
-    allowed = not resource["requires_access_grant"] or f"resource:{resource_id}:read" in user["permissions"] or "admin" in user["roles"]
+    allowed = has_resource_access(resource, user)
     audit(user, "sensitive_resource_access" if resource["requires_access_grant"] else "resource_access", "resource", resource_id, "success" if allowed else "blocked")
     if not allowed:
         raise HTTPException(status_code=403, detail="You do not have access to this resource")
-    return envelope({"resource": {**resource, "body": "Training-safe resource content."}})
+    return envelope({"resource": resource})
 
 
 @app.get("/api/certifications/readiness/{user_id}")
 def certification_readiness(user_id: str, user: dict[str, Any] = Depends(require_manager)) -> dict[str, Any]:
     required_complete = len(persistence.get_completed_step_ids(user_id)) >= 11
     reviewed_roleplays = [item for item in persistence.list_roleplay_submissions() if item.get("user_id") == user_id and item.get("status") == "reviewed"]
+    latest_decision = next(iter(persistence.list_certification_decisions(user_id)), None)
     return envelope(
         {
             "user_id": user_id,
-            "status": "ready_for_review" if required_complete and reviewed_roleplays else "in_progress",
+            "status": latest_decision["status"] if latest_decision else ("ready_for_review" if required_complete and reviewed_roleplays else "in_progress"),
             "requirements": {
                 "required_blueprint_steps_complete": required_complete,
                 "required_roleplays_reviewed": bool(reviewed_roleplays),
-                "manager_approval_complete": False,
+                "manager_approval_complete": bool(latest_decision and latest_decision["status"] == "approved"),
             },
+            "latest_decision": latest_decision,
         }
     )
 
 
+@app.get("/api/certifications/mine")
+def my_certifications(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+    return envelope({"decisions": persistence.list_certification_decisions(user["id"])})
+
+
+@app.post("/api/certifications/{user_id}/decision")
+def certification_decision(user_id: str, payload: CertificationDecisionIn, user: dict[str, Any] = Depends(require_manager)) -> dict[str, Any]:
+    if not persistence.get_user(user_id):
+        raise HTTPException(status_code=404, detail="User not found")
+    decision = persistence.save_certification_decision(
+        {
+            "user_id": user_id,
+            "manager_user_id": user["id"],
+            "status": payload.status,
+            "notes": payload.notes,
+        }
+    )
+    audit(user, "certification_decision", "user", user_id, "success", {"status": payload.status})
+    return envelope({"decision": decision})
+
+
+@app.get("/api/admin/users")
+def admin_users(user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    return envelope({"users": persistence.list_users()})
+
+
+@app.post("/api/admin/users")
+def admin_save_user(payload: UserIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    saved = persistence.save_user(payload.model_dump(exclude={"password"}), payload.password)
+    audit(user, "admin_user_saved", "user", saved["id"], "success", {"roles": saved["roles"]})
+    return envelope({"user": saved})
+
+
+@app.get("/api/admin/resources")
+def admin_resources(user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    return envelope({"resources": persistence.list_resources(include_unpublished=True)})
+
+
+@app.post("/api/admin/resources")
+def admin_save_resource(payload: ResourceIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    saved = persistence.save_resource(payload.model_dump())
+    audit(user, "admin_resource_saved", "resource", saved["id"], "success", {"sensitivity": saved["sensitivity"]})
+    return envelope({"resource": saved})
+
+
 @app.get("/api/admin/audit-events")
-def get_audit_events(user: dict[str, Any] = Depends(require_manager)) -> dict[str, Any]:
+def get_audit_events(user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
     return envelope({"events": persistence.list_audit_events()})

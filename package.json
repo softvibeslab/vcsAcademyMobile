@@ -13,7 +13,11 @@
     "dev:mobile": "npm --workspace apps/mobile run start",
     "test": "node --test packages/domain/test/*.test.mjs",
     "e2e:api": "python3 backend/tests/e2e_smoke.py",
-    "check": "npm test && npm run e2e:api"
+    "check": "npm test && npm run e2e:api",
+    "build:web": "npm --workspace frontend run build",
+    "doctor:mobile": "npx expo-doctor",
+    "export:mobile:web": "cd apps/mobile && npx expo export --platform web --output-dir dist-mobile-web",
+    "release:check": "npm run check && npm run build:web && npm run doctor:mobile && npm run export:mobile:web"
   },
   "overrides": {
     "react": "19.1.0",

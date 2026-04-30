@@ -123,11 +123,34 @@ def init_db() -> None:
                 created_at TEXT NOT NULL
             );
 
+            CREATE TABLE IF NOT EXISTS resources (
+                id TEXT PRIMARY KEY,
+                title TEXT NOT NULL,
+                resource_type TEXT NOT NULL,
+                sensitivity TEXT NOT NULL,
+                requires_access_grant INTEGER NOT NULL DEFAULT 0,
+                body TEXT NOT NULL,
+                tags_json TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'published',
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS certification_decisions (
+                id TEXT PRIMARY KEY,
+                user_id TEXT NOT NULL,
+                manager_user_id TEXT NOT NULL,
+                status TEXT NOT NULL,
+                notes TEXT NOT NULL,
+                created_at TEXT NOT NULL
+            );
+
             CREATE INDEX IF NOT EXISTS idx_goalsheet_user_date ON goalsheet_entries(user_id, entry_date);
             CREATE INDEX IF NOT EXISTS idx_audit_actor_created ON audit_events(actor_user_id, created_at);
+            CREATE INDEX IF NOT EXISTS idx_certification_user_created ON certification_decisions(user_id, created_at);
             """
         )
-    seed_demo_user()
+    seed_demo_data()
 
 
 def row_to_user(row: sqlite3.Row | None) -> dict[str, Any] | None:
@@ -144,32 +167,69 @@ def row_to_user(row: sqlite3.Row | None) -> dict[str, Any] | None:
     }
 
 
-def seed_demo_user() -> None:
+def upsert_seed_user(
+    user_id: str,
+    email: str,
+    display_name: str,
+    roles: list[str],
+    permissions: list[str],
+    team_id: str = "team_demo",
+) -> None:
     now = datetime.utcnow().isoformat()
     with connect() as db:
-        existing = db.execute("SELECT id FROM users WHERE email = ?", ("rep@vcsa.local",)).fetchone()
-        if existing:
-            return
         db.execute(
             """
             INSERT INTO users (
                 id, email, display_name, password_hash, roles_json, team_id,
                 permissions_json, status, created_at, updated_at
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(email) DO UPDATE SET
+                display_name = excluded.display_name,
+                roles_json = excluded.roles_json,
+                team_id = excluded.team_id,
+                permissions_json = excluded.permissions_json,
+                status = excluded.status,
+                updated_at = excluded.updated_at
             """,
             (
-                "user_demo_rep",
-                "rep@vcsa.local",
-                "Chris Rivera",
+                user_id,
+                email,
+                display_name,
                 hash_password("demo123"),
-                json_dumps(["sales_rep", "manager"]),
-                "team_demo",
-                json_dumps(["resource:step-5-script:read"]),
+                json_dumps(roles),
+                team_id,
+                json_dumps(permissions),
                 "active",
                 now,
                 now,
             ),
         )
+
+
+def seed_demo_data() -> None:
+    now = datetime.utcnow().isoformat()
+    upsert_seed_user(
+        "user_demo_rep",
+        "rep@vcsa.local",
+        "Chris Rivera",
+        ["sales_rep"],
+        ["resource:step-5-script:read"],
+    )
+    upsert_seed_user(
+        "user_demo_manager",
+        "manager@vcsa.local",
+        "Maya Torres",
+        ["manager", "trainer"],
+        ["resource:step-5-script:read", "resource:pricing-guide:read"],
+    )
+    upsert_seed_user(
+        "user_demo_admin",
+        "admin@vcsa.local",
+        "Admin Demo",
+        ["admin"],
+        ["resource:step-5-script:read", "resource:pricing-guide:read", "resource:finance-worksheet:read"],
+    )
+    with connect() as db:
         db.execute(
             """
             INSERT OR REPLACE INTO training_progress (
@@ -178,6 +238,109 @@ def seed_demo_user() -> None:
             """,
             ("user_demo_rep", "blueprint_step", "step_1", "completed", 100, now),
         )
+        default_resources = [
+            (
+                "step-5-script",
+                "Step 5 Practice Script",
+                "script",
+                "practice_script",
+                0,
+                "Use this as training language for practicing a clear, respectful commitment check.",
+                ["blueprint", "step-5", "practice"],
+            ),
+            (
+                "pricing-guide",
+                "T.O. Pricing Guide",
+                "policy",
+                "pricing_or_fee_related",
+                1,
+                "Approved pricing materials only. This content is restricted to authorized leaders.",
+                ["pricing", "sensitive", "to"],
+            ),
+            (
+                "finance-worksheet",
+                "Finance Worksheet",
+                "worksheet",
+                "finance",
+                1,
+                "Internal finance worksheet. Use only with approved access and current source documents.",
+                ["finance", "sensitive"],
+            ),
+        ]
+        for resource in default_resources:
+            db.execute(
+                """
+                INSERT INTO resources (
+                    id, title, resource_type, sensitivity, requires_access_grant, body,
+                    tags_json, status, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, 'published', ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                    title = excluded.title,
+                    resource_type = excluded.resource_type,
+                    sensitivity = excluded.sensitivity,
+                    requires_access_grant = excluded.requires_access_grant,
+                    body = excluded.body,
+                    tags_json = excluded.tags_json,
+                    status = excluded.status,
+                    updated_at = excluded.updated_at
+                """,
+                (*resource[:6], json_dumps(resource[6]), now, now),
+            )
+
+
+def list_users() -> list[dict[str, Any]]:
+    with connect() as db:
+        rows = db.execute("SELECT * FROM users ORDER BY display_name").fetchall()
+        return [row_to_user(row) for row in rows if row_to_user(row)]
+
+
+def get_user(user_id: str) -> dict[str, Any] | None:
+    with connect() as db:
+        row = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+        return row_to_user(row)
+
+
+def save_user(user: dict[str, Any], password: str | None = None) -> dict[str, Any]:
+    now = datetime.utcnow().isoformat()
+    user_id = user.get("id") or f"user_{secrets.token_hex(6)}"
+    password_hash = hash_password(password or "demo123")
+    with connect() as db:
+        existing = db.execute("SELECT id, password_hash, created_at FROM users WHERE id = ? OR lower(email) = lower(?)", (user_id, user["email"])).fetchone()
+        if existing:
+            user_id = existing["id"]
+        db.execute(
+            """
+            INSERT INTO users (
+                id, email, display_name, password_hash, roles_json, team_id,
+                permissions_json, status, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                email = excluded.email,
+                display_name = excluded.display_name,
+                password_hash = excluded.password_hash,
+                roles_json = excluded.roles_json,
+                team_id = excluded.team_id,
+                permissions_json = excluded.permissions_json,
+                status = excluded.status,
+                updated_at = excluded.updated_at
+            """,
+            (
+                user_id,
+                user["email"],
+                user["display_name"],
+                existing["password_hash"] if existing and not password else password_hash,
+                json_dumps(user.get("roles", ["sales_rep"])),
+                user.get("team_id", "team_demo"),
+                json_dumps(user.get("permissions", [])),
+                user.get("status", "active"),
+                existing["created_at"] if existing else now,
+                now,
+            ),
+        )
+    saved = get_user(user_id)
+    if not saved:
+        raise RuntimeError("Failed to save user")
+    return saved
 
 
 def authenticate(email: str, password: str) -> dict[str, Any] | None:
@@ -290,6 +453,12 @@ def list_goalsheets(user_id: str) -> list[dict[str, Any]]:
         return [json_loads(row["payload_json"], {}) for row in rows]
 
 
+def list_all_goalsheets() -> list[dict[str, Any]]:
+    with connect() as db:
+        rows = db.execute("SELECT payload_json FROM goalsheet_entries ORDER BY entry_date DESC").fetchall()
+        return [json_loads(row["payload_json"], {}) for row in rows]
+
+
 def save_roleplay_session(session: dict[str, Any]) -> dict[str, Any]:
     now = datetime.utcnow().isoformat()
     payload = {**session, "updated_at": now}
@@ -341,6 +510,110 @@ def list_roleplay_submissions(status: str | None = None) -> list[dict[str, Any]]
         if status:
             submissions = [item for item in submissions if item.get("status") == status]
         return submissions
+
+
+def row_to_resource(row: sqlite3.Row | None) -> dict[str, Any] | None:
+    if row is None:
+        return None
+    return {
+        "id": row["id"],
+        "title": row["title"],
+        "resource_type": row["resource_type"],
+        "sensitivity": row["sensitivity"],
+        "requires_access_grant": bool(row["requires_access_grant"]),
+        "body": row["body"],
+        "tags": json_loads(row["tags_json"], []),
+        "status": row["status"],
+        "updated_at": row["updated_at"],
+    }
+
+
+def list_resources(include_unpublished: bool = False) -> list[dict[str, Any]]:
+    with connect() as db:
+        if include_unpublished:
+            rows = db.execute("SELECT * FROM resources ORDER BY title").fetchall()
+        else:
+            rows = db.execute("SELECT * FROM resources WHERE status = 'published' ORDER BY title").fetchall()
+        return [item for row in rows if (item := row_to_resource(row))]
+
+
+def get_resource(resource_id: str) -> dict[str, Any] | None:
+    with connect() as db:
+        row = db.execute("SELECT * FROM resources WHERE id = ?", (resource_id,)).fetchone()
+        return row_to_resource(row)
+
+
+def save_resource(resource: dict[str, Any]) -> dict[str, Any]:
+    now = datetime.utcnow().isoformat()
+    resource_id = resource.get("id") or f"res_{secrets.token_hex(6)}"
+    with connect() as db:
+        existing = db.execute("SELECT created_at FROM resources WHERE id = ?", (resource_id,)).fetchone()
+        db.execute(
+            """
+            INSERT INTO resources (
+                id, title, resource_type, sensitivity, requires_access_grant, body,
+                tags_json, status, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                title = excluded.title,
+                resource_type = excluded.resource_type,
+                sensitivity = excluded.sensitivity,
+                requires_access_grant = excluded.requires_access_grant,
+                body = excluded.body,
+                tags_json = excluded.tags_json,
+                status = excluded.status,
+                updated_at = excluded.updated_at
+            """,
+            (
+                resource_id,
+                resource["title"],
+                resource.get("resource_type", "article"),
+                resource.get("sensitivity", "general_training"),
+                1 if resource.get("requires_access_grant", False) else 0,
+                resource.get("body", ""),
+                json_dumps(resource.get("tags", [])),
+                resource.get("status", "published"),
+                existing["created_at"] if existing else now,
+                now,
+            ),
+        )
+    saved = get_resource(resource_id)
+    if not saved:
+        raise RuntimeError("Failed to save resource")
+    return saved
+
+
+def save_certification_decision(decision: dict[str, Any]) -> dict[str, Any]:
+    now = datetime.utcnow().isoformat()
+    payload = {**decision, "id": decision.get("id") or f"cert_{secrets.token_hex(6)}", "created_at": now}
+    with connect() as db:
+        db.execute(
+            """
+            INSERT INTO certification_decisions (id, user_id, manager_user_id, status, notes, created_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (payload["id"], payload["user_id"], payload["manager_user_id"], payload["status"], payload.get("notes", ""), now),
+        )
+    return payload
+
+
+def list_certification_decisions(user_id: str | None = None) -> list[dict[str, Any]]:
+    with connect() as db:
+        if user_id:
+            rows = db.execute("SELECT * FROM certification_decisions WHERE user_id = ? ORDER BY created_at DESC", (user_id,)).fetchall()
+        else:
+            rows = db.execute("SELECT * FROM certification_decisions ORDER BY created_at DESC").fetchall()
+        return [
+            {
+                "id": row["id"],
+                "user_id": row["user_id"],
+                "manager_user_id": row["manager_user_id"],
+                "status": row["status"],
+                "notes": row["notes"],
+                "created_at": row["created_at"],
+            }
+            for row in rows
+        ]
 
 
 def add_audit_event(event: dict[str, Any]) -> None:

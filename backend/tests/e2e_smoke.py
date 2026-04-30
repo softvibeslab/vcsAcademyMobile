@@ -26,11 +26,16 @@ def main():
     unauthenticated = client.get("/api/mobile/me")
     assert unauthenticated.status_code == 401
 
-    login = assert_success(client.post("/api/auth/login", json={"email": "rep@vcsa.local", "password": "demo123"}))
-    auth_headers["Authorization"] = f"Bearer {login['token']}"
+    rep_login = assert_success(client.post("/api/auth/login", json={"email": "rep@vcsa.local", "password": "demo123"}))
+    auth_headers["Authorization"] = f"Bearer {rep_login['token']}"
+    manager_login = assert_success(client.post("/api/auth/login", json={"email": "manager@vcsa.local", "password": "demo123"}))
+    manager_headers = {"Authorization": f"Bearer {manager_login['token']}"}
+    admin_login = assert_success(client.post("/api/auth/login", json={"email": "admin@vcsa.local", "password": "demo123"}))
+    admin_headers = {"Authorization": f"Bearer {admin_login['token']}"}
 
     me = assert_success(client.get("/api/mobile/me", headers=auth_headers))
     assert "sales_rep" in me["user"]["roles"]
+    assert "manager" not in me["user"]["roles"]
 
     steps = assert_success(client.get("/api/blueprint/steps", headers=auth_headers))["steps"]
     assert len(steps) == 11
@@ -66,12 +71,14 @@ def main():
     session = assert_success(client.post("/api/roleplay/sessions", headers=auth_headers, json={"scenario_id": scenario["id"], "blueprint_step_id": "step_5"}))["session"]
     assert_success(client.post(f"/api/roleplay/sessions/{session['id']}/complete", headers=auth_headers))
     submission = assert_success(client.post("/api/roleplay/submissions", headers=auth_headers, json={"session_id": session["id"], "transcript": "Practice transcript"}))["submission"]
-    pending = assert_success(client.get("/api/roleplay/submissions/pending", headers=auth_headers))["submissions"]
+    rep_forbidden = client.get("/api/roleplay/submissions/pending", headers=auth_headers)
+    assert rep_forbidden.status_code == 403
+    pending = assert_success(client.get("/api/roleplay/submissions/pending", headers=manager_headers))["submissions"]
     assert pending
     reviewed = assert_success(
         client.post(
             f"/api/roleplay/submissions/{submission['id']}/review",
-            headers=auth_headers,
+            headers=manager_headers,
             json={
                 "score": 86,
                 "rubric_scores": {"professional_tone": 5, "step_alignment": 4},
@@ -84,6 +91,46 @@ def main():
 
     blocked = client.get("/api/resources/pricing-guide", headers=auth_headers)
     assert blocked.status_code == 403
+
+    manager_dashboard = assert_success(client.get("/api/manager/team-dashboard", headers=manager_headers))
+    assert manager_dashboard["summary"]["active_reps"] >= 1
+
+    readiness = assert_success(client.get("/api/certifications/readiness/user_demo_rep", headers=manager_headers))
+    assert readiness["requirements"]["required_roleplays_reviewed"] is True
+    decision = assert_success(
+        client.post(
+            "/api/certifications/user_demo_rep/decision",
+            headers=manager_headers,
+            json={"status": "needs_practice", "notes": "Complete the remaining Blueprint steps before final approval."},
+        )
+    )["decision"]
+    assert decision["status"] == "needs_practice"
+    mine = assert_success(client.get("/api/certifications/mine", headers=auth_headers))["decisions"]
+    assert mine
+
+    resources = assert_success(client.get("/api/resources", headers=auth_headers))["resources"]
+    assert any(item["id"] == "pricing-guide" and item["has_access"] is False for item in resources)
+    admin_users = assert_success(client.get("/api/admin/users", headers=admin_headers))["users"]
+    assert any(item["email"] == "rep@vcsa.local" for item in admin_users)
+    saved_resource = assert_success(
+        client.post(
+            "/api/admin/resources",
+            headers=admin_headers,
+            json={
+                "id": "launch-checklist",
+                "title": "Launch Checklist",
+                "resource_type": "checklist",
+                "sensitivity": "general_training",
+                "requires_access_grant": False,
+                "body": "Production launch checklist for the academy.",
+                "tags": ["launch", "qa"],
+                "status": "published",
+            },
+        )
+    )["resource"]
+    assert saved_resource["id"] == "launch-checklist"
+    audit_events = assert_success(client.get("/api/admin/audit-events", headers=admin_headers))["events"]
+    assert audit_events
 
     assert_success(client.post("/api/auth/logout", headers=auth_headers))
     expired = client.get("/api/mobile/me", headers=auth_headers)

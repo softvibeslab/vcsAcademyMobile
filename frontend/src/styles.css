@@ -145,6 +145,18 @@ button:disabled {
   color: #f8fafc;
 }
 
+.workspace-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.nav-active {
+  background: linear-gradient(135deg, #ffc21a, #ffe58a);
+  color: #020506;
+}
+
 .pill {
   background: rgba(255, 194, 26, 0.12);
   border: 1px solid rgba(255, 194, 26, 0.4);
@@ -184,6 +196,7 @@ button:disabled {
 }
 
 .span-2 {
+  grid-column: span 2;
   min-height: 240px;
 }
 
@@ -233,6 +246,11 @@ button:disabled {
   margin-top: 22px;
 }
 
+.compact-actions {
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
 .insight {
   background: rgba(255, 194, 26, 0.1);
   border-left: 3px solid #ffc21a;
@@ -280,6 +298,31 @@ button:disabled {
   color: #b9c0c8;
 }
 
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.list-row {
+  align-items: center;
+  background: #0b171d;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  min-height: 54px;
+  padding: 12px 14px;
+}
+
+.list-row strong {
+  color: #f8fafc;
+}
+
+.list-row span,
+.muted {
+  color: #b9c0c8;
+}
+
 .error {
   background: rgba(255, 65, 65, 0.14);
   border: 1px solid rgba(255, 65, 65, 0.35);
@@ -303,5 +346,14 @@ button:disabled {
 
   .agent-eye {
     width: 160px;
+  }
+
+  .span-2 {
+    grid-column: span 1;
+  }
+
+  .list-row {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

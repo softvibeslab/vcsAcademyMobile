@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import { Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const API_BASE = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8001';
+const SESSION_KEY = 'vcsa_token';
 
 type Step = {
   id: string;
@@ -21,20 +23,71 @@ type Dashboard = {
   };
 };
 
+type Resource = {
+  id: string;
+  title: string;
+  has_access: boolean;
+};
+
+type Submission = {
+  id: string;
+  status: string;
+  manager_feedback?: {
+    recommendation?: string;
+  };
+};
+
+type Certification = {
+  id: string;
+  status: string;
+  notes: string;
+};
+
 export default function App() {
   const [token, setToken] = useState('');
   const [email, setEmail] = useState('rep@vcsa.local');
   const [password, setPassword] = useState('demo123');
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [steps, setSteps] = useState<Step[]>([]);
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [feedback, setFeedback] = useState<Submission[]>([]);
+  const [certifications, setCertifications] = useState<Certification[]>([]);
   const [agentResponse, setAgentResponse] = useState('');
   const [authError, setAuthError] = useState('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [isRestoringSession, setIsRestoringSession] = useState(true);
+
+  async function saveStoredToken(nextToken: string) {
+    if (Platform.OS === 'web') {
+      window.localStorage.setItem(SESSION_KEY, nextToken);
+      return;
+    }
+    await SecureStore.setItemAsync(SESSION_KEY, nextToken);
+  }
+
+  async function readStoredToken() {
+    if (Platform.OS === 'web') {
+      return window.localStorage.getItem(SESSION_KEY) || '';
+    }
+    return (await SecureStore.getItemAsync(SESSION_KEY)) || '';
+  }
+
+  async function clearStoredToken() {
+    if (Platform.OS === 'web') {
+      window.localStorage.removeItem(SESSION_KEY);
+      return;
+    }
+    await SecureStore.deleteItemAsync(SESSION_KEY);
+  }
 
   function clearSession() {
+    void clearStoredToken();
     setToken('');
     setDashboard(null);
     setSteps([]);
+    setResources([]);
+    setFeedback([]);
+    setCertifications([]);
     setAgentResponse('');
   }
 
@@ -57,13 +110,27 @@ export default function App() {
 
   async function load(sessionToken = token) {
     if (!sessionToken) return;
-    const [dashboardData, stepsData] = await Promise.all([
+    const [dashboardData, stepsData, resourcesData, feedbackData, certificationData] = await Promise.all([
       api('/api/dashboard/rep', {}, sessionToken),
-      api('/api/blueprint/steps', {}, sessionToken)
+      api('/api/blueprint/steps', {}, sessionToken),
+      api('/api/resources', {}, sessionToken),
+      api('/api/roleplay/submissions/mine', {}, sessionToken),
+      api('/api/certifications/mine', {}, sessionToken)
     ]);
     setDashboard(dashboardData);
     setSteps(stepsData.steps);
+    setResources(resourcesData.resources);
+    setFeedback(feedbackData.submissions);
+    setCertifications(certificationData.decisions);
   }
+
+  useEffect(() => {
+    readStoredToken()
+      .then((storedToken) => {
+        if (storedToken) setToken(storedToken);
+      })
+      .finally(() => setIsRestoringSession(false));
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -83,6 +150,7 @@ export default function App() {
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.detail || 'Login failed');
+      await saveStoredToken(payload.data.token);
       setToken(payload.data.token);
       await load(payload.data.token);
     } catch (error) {
@@ -128,6 +196,39 @@ export default function App() {
     });
     setAgentResponse(data.entry.smart_agent_insight);
     await load();
+  }
+
+  async function completeNextStep() {
+    const current = steps.find((step) => step.status === 'current') || steps.find((step) => step.status !== 'completed');
+    if (!current) return;
+    await api(`/api/blueprint/steps/${current.id}/complete`, { method: 'POST' });
+    await load();
+  }
+
+  async function submitRoleplay() {
+    const scenarioData = await api('/api/roleplay/scenarios');
+    const scenario = scenarioData.scenarios[0];
+    const sessionData = await api('/api/roleplay/sessions', {
+      method: 'POST',
+      body: JSON.stringify({ scenario_id: scenario.id, blueprint_step_id: scenario.blueprint_step_id })
+    });
+    await api(`/api/roleplay/sessions/${sessionData.session.id}/complete`, { method: 'POST' });
+    await api('/api/roleplay/submissions', {
+      method: 'POST',
+      body: JSON.stringify({ session_id: sessionData.session.id, transcript: 'Submitted from mobile launch flow.' })
+    });
+    await load();
+  }
+
+  if (isRestoringSession) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.centered}>
+          <Text style={styles.kicker}>WL Sales Academy</Text>
+          <Text style={styles.subtitle}>Restoring secure session...</Text>
+        </View>
+      </SafeAreaView>
+    );
   }
 
   if (!token) {
@@ -193,6 +294,14 @@ export default function App() {
               <Text style={styles.secondaryButtonText}>Save GoalSheet</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.actions}>
+            <TouchableOpacity style={styles.secondaryButton} onPress={completeNextStep}>
+              <Text style={styles.secondaryButtonText}>Complete Step</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.secondaryButton} onPress={submitRoleplay}>
+              <Text style={styles.secondaryButtonText}>Submit Roleplay</Text>
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity style={styles.logoutButton} onPress={logout}>
             <Text style={styles.logoutButtonText}>Sign out</Text>
           </TouchableOpacity>
@@ -206,6 +315,23 @@ export default function App() {
             <Text style={[styles.badge, styles[step.status as 'completed' | 'current' | 'locked']]}>{step.status}</Text>
           </View>
         ))}
+
+        <Text style={styles.sectionTitle}>Resources</Text>
+        {resources.map((resource) => (
+          <View key={resource.id} style={styles.step}>
+            <Text style={styles.stepTitle}>{resource.title}</Text>
+            <Text style={[styles.badge, resource.has_access ? styles.completed : styles.locked]}>{resource.has_access ? 'available' : 'restricted'}</Text>
+          </View>
+        ))}
+
+        <Text style={styles.sectionTitle}>Feedback and Certification</Text>
+        <View style={styles.card}>
+          <Text style={styles.bodyText}>Certification: {certifications[0]?.status || dashboard?.certification_status || 'in_progress'}</Text>
+          {certifications[0]?.notes ? <Text style={styles.insight}>{certifications[0].notes}</Text> : null}
+          {feedback.length ? feedback.slice(0, 3).map((item) => (
+            <Text key={item.id} style={styles.bodyText}>{item.status}: {item.manager_feedback?.recommendation || 'awaiting review'}</Text>
+          )) : <Text style={styles.bodyText}>No roleplay feedback yet.</Text>}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -229,6 +355,12 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 48
   },
+  centered: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    padding: 24
+  },
   hero: {
     paddingVertical: 32
   },
@@ -249,6 +381,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     marginTop: 14
+  },
+  bodyText: {
+    color: '#dce3ea',
+    fontSize: 15,
+    lineHeight: 22,
+    marginBottom: 8
   },
   card: {
     backgroundColor: '#071014',

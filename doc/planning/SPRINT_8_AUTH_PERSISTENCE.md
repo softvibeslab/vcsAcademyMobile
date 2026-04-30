@@ -29,6 +29,16 @@ Sprint 8 begins by replacing the first E2E slice's in-memory backend behavior wi
   - Roleplay submissions/reviews.
   - Audit events.
 - Web and mobile clients perform demo login before API calls.
+- Web login/logout uses an explicit session form and role-aware workspace views.
+- Mobile login/logout restores session with Expo SecureStore on native and localStorage on web preview.
+- Seeded role accounts:
+  - `rep@vcsa.local`
+  - `manager@vcsa.local`
+  - `admin@vcsa.local`
+- Persistent resources and certification decisions.
+- Manager team dashboard and certification decision APIs.
+- Admin user, resource, and audit APIs.
+- Release check script: `npm run release:check`.
 
 ## Verification
 
@@ -43,9 +53,8 @@ npx expo export --platform web --output-dir dist-mobile-web
 
 ## Next Sprint 8 Work
 
-- Replace demo login with full login screens.
-- Add admin user/role management UI.
-- Add content/resource CRUD.
-- Add audit log viewer.
-- Add MongoDB or production database adapter if required by deployment.
-- Add migration/seed CLI commands.
+- Configure production hosting and managed database target.
+- Add CI runner for `npm run release:check`.
+- Add EAS build profiles for iOS and Android.
+- Connect monitoring/error reporting provider.
+- Run stakeholder UAT and close launch sign-off.
