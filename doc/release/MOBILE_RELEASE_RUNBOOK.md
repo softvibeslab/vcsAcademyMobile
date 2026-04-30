@@ -37,6 +37,12 @@ export EXPO_ANDROID_VERSION_CODE=1
 
 ## Preflight
 
+Validate production environment values:
+
+```bash
+npm run release:env:check
+```
+
 Validate the Expo public config:
 
 ```bash

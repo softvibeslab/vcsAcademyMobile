@@ -79,6 +79,7 @@ This runs:
 - [x] Backend seed/reset/doctor operational commands.
 - [x] Backend Dockerfile and Python requirements.
 - [x] Backend readiness endpoint, request IDs, response timing, and baseline security headers.
+- [x] Production environment preflight rejects local URLs, placeholders, invalid native IDs, and wildcard CORS.
 - [ ] Configure production `VCSA_CORS_ORIGINS`.
 - [ ] Replace local SQLite with managed database when target hosting is selected.
 - [ ] Configure `EXPO_PUBLIC_API_BASE_URL` in EAS with the production API URL.
