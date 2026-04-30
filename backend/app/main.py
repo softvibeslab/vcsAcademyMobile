@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from backend.app import persistence
+from backend.app.smart_agent import get_provider
 
 
 app = FastAPI(title="VCSA Academy API", version="0.1.0")
@@ -241,6 +242,31 @@ def serialize_step(step: tuple[str, int, str, str], completed_steps: set[str]) -
         "status": blueprint_status(step_id, step_number, completed_steps),
         "required_for_certification": True,
     }
+
+
+def smart_agent_knowledge(user: dict[str, Any]) -> list[dict[str, Any]]:
+    step_items = [
+        {
+            "id": step_id,
+            "title": f"Blueprint Step {step_number}: {title}",
+            "summary": description,
+            "body": description,
+            "tags": ["blueprint", f"step-{step_number}", title.lower()],
+        }
+        for step_id, step_number, title, description in BLUEPRINT_STEPS
+    ]
+    resource_items = [
+        {
+            "id": resource["id"],
+            "title": resource["title"],
+            "summary": resource["body"][:180],
+            "body": resource["body"] if has_resource_access(resource, user) else "",
+            "tags": resource.get("tags", []),
+        }
+        for resource in persistence.list_resources()
+        if has_resource_access(resource, user) or not resource["requires_access_grant"]
+    ]
+    return step_items + resource_items
 
 
 def calculate_metrics(entries: list[dict[str, Any]]) -> dict[str, Any]:
@@ -519,24 +545,18 @@ def goalsheet_metrics(user: dict[str, Any] = Depends(require_user)) -> dict[str,
 
 @app.post("/api/smart-agent/chat")
 def smart_agent_chat(payload: ChatIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
-    text = payload.message.lower()
-    risk_flags: list[str] = []
-    if "hide" in text and "fee" in text:
-        risk_flags.append("hidden_fee_request")
-        response = "No. Fees and conditions must be disclosed clearly. Practice a transparent explanation and confirm the client understands before moving forward."
-        action = {"label": "Review fee disclosure training", "route": "Resources", "params": {"tag": "fee-disclosure"}}
-    elif "price" in text or "pricing" in text:
-        risk_flags.append("pricing_guardrail")
-        response = "Use approved pricing materials only. I can help you practice the transition, but I will not invent prices, discounts, or incentives."
-        action = {"label": "Open T.O. Pricing step", "route": "BlueprintStep", "params": {"step": 11}}
-    elif "step 5" in text or "pact" in text:
-        response = "Step 5 is a commitment-setting moment, not pressure. Confirm that if the program makes sense and is affordable, the guest can make a clear yes/no decision today."
-        action = {"label": "Run Step 5 Roleplay", "route": "RoleplayLive", "params": {"blueprint_step": 5}}
-    else:
-        response = "Stay aligned to the Blueprint, keep the language professional, and choose one next action the rep can practice immediately."
-        action = {"label": "Open Roadmap", "route": "Roadmap", "params": {}}
-    audit(user, "smart_agent_chat", "ai_conversation", str(uuid4()), "blocked" if risk_flags else "success", {"risk_flags": risk_flags})
-    return envelope({"response": response, "citations": ["Blueprint knowledge base"], "recommended_actions": [action], "risk_flags": risk_flags, "confidence": 0.82})
+    provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
+    result = provider.answer(payload.message, payload.mode, user, smart_agent_knowledge(user))
+    audit(user, "smart_agent_chat", "ai_conversation", str(uuid4()), "blocked" if result.risk_flags else "success", {"risk_flags": result.risk_flags, "provider": "local"})
+    return envelope(
+        {
+            "response": result.response,
+            "citations": result.citations,
+            "recommended_actions": result.recommended_actions,
+            "risk_flags": result.risk_flags,
+            "confidence": result.confidence,
+        }
+    )
 
 
 @app.post("/api/smart-agent/insights/goalsheet")
@@ -557,7 +577,25 @@ def roleplay_scenarios(user: dict[str, Any] = Depends(require_user)) -> dict[str
                     "buyer_context": "Guest likes the property but avoids making decisions today.",
                     "objective": "Practice a clear, respectful yes/no commitment.",
                     "success_criteria": ["Professional tone", "Clear transition", "No pressure", "Full disclosure awareness"],
-                }
+                },
+                {
+                    "id": "scenario_discovery_motivation",
+                    "blueprint_step_id": "step_4",
+                    "title": "Discovery Motivation",
+                    "difficulty": "easy",
+                    "buyer_context": "Guest gives short answers and has not explained why vacation ownership matters.",
+                    "objective": "Use F.O.R.M. and discovery questions to uncover motivation.",
+                    "success_criteria": ["Open-ended questions", "Active listening", "Clear summary", "No interrogation"],
+                },
+                {
+                    "id": "scenario_confirmation_objection",
+                    "blueprint_step_id": "step_9",
+                    "title": "Point of Confirmation Objection",
+                    "difficulty": "hard",
+                    "buyer_context": "Guest likes the experience but says they need to think about it before hearing programs.",
+                    "objective": "Confirm value and surface the real objection without pressure.",
+                    "success_criteria": ["Calm tone", "Value recap", "Objection clarity", "Manager handoff readiness"],
+                },
             ]
         }
     )

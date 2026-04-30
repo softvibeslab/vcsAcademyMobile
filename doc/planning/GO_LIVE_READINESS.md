@@ -29,6 +29,7 @@ All seeded accounts use password `demo123`.
 | `VCSA_DB_PATH` | `backend/data/vcsa.sqlite3` | Local SQLite database path |
 | `VCSA_SESSION_TTL_DAYS` | `7` | Bearer session lifetime |
 | `VCSA_CORS_ORIGINS` | local web/mobile dev origins | Comma-separated allowed browser origins |
+| `VCSA_SMART_AGENT_PROVIDER` | `local` | Smart Agent provider interface selection |
 | `VITE_API_BASE_URL` | `http://127.0.0.1:8001` | Webapp API target |
 | `EXPO_PUBLIC_API_BASE_URL` | `http://127.0.0.1:8001` | Expo app API target |
 
@@ -56,6 +57,8 @@ This runs:
 - [x] Local production-ready auth flows: change password, forgot/reset demo, invite, enable/disable, and session invalidation.
 - [x] Mobile UX split into launch-ready screens: Home, Roadmap, Smart Agent, GoalSheet, Roleplay, Library, and Profile.
 - [x] Demo users seeded by role.
+- [x] Demo knowledge base expanded with Blueprint resources, compliance resources, and multiple roleplay scenarios.
+- [x] Smart Agent provider interface with local retrieval, citations, recommendations, and sensitive-content guardrails.
 - [x] Manager dashboard and certification decision API.
 - [x] Admin users/resources/audit API.
 - [x] Resource permissions and sensitive access audit.

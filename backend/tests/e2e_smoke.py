@@ -68,11 +68,16 @@ def main():
 
     chat = assert_success(client.post("/api/smart-agent/chat", headers=auth_headers, json={"message": "Help me practice Step 5", "mode": "blueprint_step"}))
     assert chat["recommended_actions"][0]["route"] == "RoleplayLive"
+    assert any("Step 5" in citation or "Practice Script" in citation for citation in chat["citations"])
 
     unsafe = assert_success(client.post("/api/smart-agent/chat", headers=auth_headers, json={"message": "Can I hide the fee?", "mode": "general_coach"}))
     assert "hidden_fee_request" in unsafe["risk_flags"]
+    pricing = assert_success(client.post("/api/smart-agent/chat", headers=auth_headers, json={"message": "Can I make up a discount price?", "mode": "general_coach"}))
+    assert "pricing_guardrail" in pricing["risk_flags"]
 
-    scenario = assert_success(client.get("/api/roleplay/scenarios", headers=auth_headers))["scenarios"][0]
+    scenarios = assert_success(client.get("/api/roleplay/scenarios", headers=auth_headers))["scenarios"]
+    assert len(scenarios) >= 3
+    scenario = scenarios[0]
     session = assert_success(client.post("/api/roleplay/sessions", headers=auth_headers, json={"scenario_id": scenario["id"], "blueprint_step_id": "step_5"}))["session"]
     assert_success(client.post(f"/api/roleplay/sessions/{session['id']}/complete", headers=auth_headers))
     submission = assert_success(client.post("/api/roleplay/submissions", headers=auth_headers, json={"session_id": session["id"], "transcript": "Practice transcript"}))["submission"]
@@ -115,6 +120,7 @@ def main():
 
     resources = assert_success(client.get("/api/resources", headers=auth_headers))["resources"]
     assert any(item["id"] == "pricing-guide" and item["has_access"] is False for item in resources)
+    assert any(item["id"] == "agenda-control-guide" and item["has_access"] is True for item in resources)
     admin_users = assert_success(client.get("/api/admin/users", headers=admin_headers))["users"]
     assert any(item["email"] == "rep@vcsa.local" for item in admin_users)
     invited = assert_success(
