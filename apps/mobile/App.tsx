@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const API_BASE = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8001';
-let authToken = '';
 
 type Step = {
   id: string;
@@ -22,47 +21,89 @@ type Dashboard = {
   };
 };
 
-async function ensureAuth() {
-  if (authToken) return authToken;
-  const response = await fetch(`${API_BASE}/api/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: 'rep@vcsa.local', password: 'demo123' })
-  });
-  const payload = await response.json();
-  if (!response.ok) throw new Error(payload.detail || 'Login failed');
-  authToken = payload.data.token;
-  return authToken;
-}
-
-async function api(path: string, options?: RequestInit) {
-  const token = await ensureAuth();
-  const response = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    ...options
-  });
-  const payload = await response.json();
-  if (!response.ok) throw new Error(payload.detail || 'Request failed');
-  return payload.data;
-}
-
 export default function App() {
+  const [token, setToken] = useState('');
+  const [email, setEmail] = useState('rep@vcsa.local');
+  const [password, setPassword] = useState('demo123');
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [steps, setSteps] = useState<Step[]>([]);
   const [agentResponse, setAgentResponse] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-  async function load() {
+  function clearSession() {
+    setToken('');
+    setDashboard(null);
+    setSteps([]);
+    setAgentResponse('');
+  }
+
+  async function api(path: string, options: RequestInit = {}, sessionToken = token) {
+    const response = await fetch(`${API_BASE}${path}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionToken}`,
+        ...((options.headers as Record<string, string> | undefined) || {})
+      }
+    });
+    const payload = await response.json();
+    if (!response.ok) {
+      if (response.status === 401) clearSession();
+      throw new Error(payload.detail || 'Request failed');
+    }
+    return payload.data;
+  }
+
+  async function load(sessionToken = token) {
+    if (!sessionToken) return;
     const [dashboardData, stepsData] = await Promise.all([
-      api('/api/dashboard/rep'),
-      api('/api/blueprint/steps')
+      api('/api/dashboard/rep', {}, sessionToken),
+      api('/api/blueprint/steps', {}, sessionToken)
     ]);
     setDashboard(dashboardData);
     setSteps(stepsData.steps);
   }
 
   useEffect(() => {
-    load().catch((error) => setAgentResponse(`API error: ${error.message}`));
-  }, []);
+    if (token) {
+      load(token).catch((error) => setAgentResponse(`API error: ${error.message}`));
+    }
+  }, [token]);
+
+  async function login() {
+    setIsAuthenticating(true);
+    setAuthError('');
+    setAgentResponse('');
+    try {
+      const response = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.detail || 'Login failed');
+      setToken(payload.data.token);
+      await load(payload.data.token);
+    } catch (error) {
+      clearSession();
+      setAuthError(error instanceof Error ? error.message : 'Login failed');
+    } finally {
+      setIsAuthenticating(false);
+    }
+  }
+
+  async function logout() {
+    try {
+      if (token) {
+        await api('/api/auth/logout', { method: 'POST' });
+      }
+    } catch {
+      setAgentResponse('');
+    } finally {
+      clearSession();
+    }
+  }
 
   async function askAgent() {
     const data = await api('/api/smart-agent/chat', {
@@ -89,6 +130,45 @@ export default function App() {
     await load();
   }
 
+  if (!token) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.container}>
+          <View style={styles.hero}>
+            <Text style={styles.kicker}>WL Sales Academy</Text>
+            <Text style={styles.title}>Sign in to the Blueprint command center</Text>
+            <Text style={styles.subtitle}>Access training, GoalSheet tracking, roleplay coaching, and certification progress.</Text>
+          </View>
+
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Secure access</Text>
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput
+              autoCapitalize="none"
+              autoComplete="email"
+              keyboardType="email-address"
+              onChangeText={setEmail}
+              style={styles.input}
+              value={email}
+            />
+            <Text style={styles.inputLabel}>Password</Text>
+            <TextInput
+              autoComplete="password"
+              onChangeText={setPassword}
+              secureTextEntry
+              style={styles.input}
+              value={password}
+            />
+            {authError ? <Text style={styles.authError}>{authError}</Text> : null}
+            <TouchableOpacity disabled={isAuthenticating} style={[styles.button, isAuthenticating && styles.disabledButton]} onPress={login}>
+              <Text style={styles.buttonText}>{isAuthenticating ? 'Signing in...' : 'Sign in'}</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -113,6 +193,9 @@ export default function App() {
               <Text style={styles.secondaryButtonText}>Save GoalSheet</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+            <Text style={styles.logoutButtonText}>Sign out</Text>
+          </TouchableOpacity>
           {agentResponse ? <Text style={styles.insight}>{agentResponse}</Text> : null}
         </View>
 
@@ -180,6 +263,33 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginBottom: 14
   },
+  inputLabel: {
+    color: '#dce3ea',
+    fontSize: 13,
+    fontWeight: '800',
+    marginBottom: 8,
+    marginTop: 4
+  },
+  input: {
+    backgroundColor: '#0b171d',
+    borderColor: 'rgba(255,255,255,0.12)',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: '#f8fafc',
+    fontSize: 16,
+    marginBottom: 14,
+    minHeight: 48,
+    paddingHorizontal: 12
+  },
+  authError: {
+    backgroundColor: 'rgba(255,65,65,0.14)',
+    borderColor: 'rgba(255,65,65,0.35)',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: '#ffb4b4',
+    marginBottom: 14,
+    padding: 12
+  },
   metrics: {
     flexDirection: 'row',
     gap: 10
@@ -217,6 +327,9 @@ const styles = StyleSheet.create({
     color: '#020506',
     fontWeight: '900'
   },
+  disabledButton: {
+    opacity: 0.62
+  },
   secondaryButton: {
     alignItems: 'center',
     borderColor: '#ffc21a',
@@ -228,6 +341,19 @@ const styles = StyleSheet.create({
   },
   secondaryButtonText: {
     color: '#ffc21a',
+    fontWeight: '900'
+  },
+  logoutButton: {
+    alignItems: 'center',
+    borderColor: 'rgba(248,250,252,0.16)',
+    borderRadius: 8,
+    borderWidth: 1,
+    minHeight: 44,
+    justifyContent: 'center',
+    marginTop: 12
+  },
+  logoutButtonText: {
+    color: '#f8fafc',
     fontWeight: '900'
   },
   insight: {

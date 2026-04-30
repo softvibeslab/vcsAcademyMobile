@@ -23,6 +23,9 @@ def assert_success(response):
 
 def main():
     assert_success(client.get("/api/health"))
+    unauthenticated = client.get("/api/mobile/me")
+    assert unauthenticated.status_code == 401
+
     login = assert_success(client.post("/api/auth/login", json={"email": "rep@vcsa.local", "password": "demo123"}))
     auth_headers["Authorization"] = f"Bearer {login['token']}"
 
@@ -81,6 +84,10 @@ def main():
 
     blocked = client.get("/api/resources/pricing-guide", headers=auth_headers)
     assert blocked.status_code == 403
+
+    assert_success(client.post("/api/auth/logout", headers=auth_headers))
+    expired = client.get("/api/mobile/me", headers=auth_headers)
+    assert expired.status_code == 401
 
     print("E2E API smoke passed")
 
