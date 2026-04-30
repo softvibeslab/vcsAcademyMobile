@@ -61,6 +61,8 @@ This runs:
 - [x] GitHub Actions release check workflow.
 - [x] EAS build profile template for development, preview, and production.
 - [x] Environment variable example file.
+- [x] Backend seed/reset/doctor operational commands.
+- [x] Backend Dockerfile and Python requirements.
 - [ ] Configure production `VCSA_CORS_ORIGINS`.
 - [ ] Replace local SQLite with managed database when target hosting is selected.
 - [ ] Replace `https://api.example.com` in EAS profiles with production API URL.

@@ -22,6 +22,12 @@ def connect() -> sqlite3.Connection:
     return connection
 
 
+def healthcheck() -> dict[str, Any]:
+    with connect() as db:
+        db.execute("SELECT 1").fetchone()
+    return {"status": "ok", "path": str(DB_PATH)}
+
+
 def json_dumps(value: Any) -> str:
     return json.dumps(value, separators=(",", ":"), sort_keys=True)
 

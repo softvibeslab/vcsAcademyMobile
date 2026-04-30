@@ -254,7 +254,7 @@ def audit(user: dict[str, Any], action: str, target_type: str, target_id: str, o
 
 @app.get("/api/health")
 def health() -> dict[str, Any]:
-    return envelope({"status": "ok", "service": "vcsa-academy-api"})
+    return envelope({"status": "ok", "service": "vcsa-academy-api", "database": persistence.healthcheck()})
 
 
 @app.post("/api/auth/login")
