@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import os
+import time
 from datetime import date, datetime
 from typing import Any, Literal
 from uuid import uuid4
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Response
+from fastapi import Depends, FastAPI, Header, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from backend.app import persistence
@@ -27,6 +29,34 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def operational_headers(request: Request, call_next):
+    request_id = request.headers.get("x-request-id") or f"req_{uuid4().hex[:12]}"
+    start = time.perf_counter()
+    response = await call_next(request)
+    response.headers["X-Request-ID"] = request_id
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["X-Response-Time-ms"] = str(round((time.perf_counter() - start) * 1000, 2))
+    return response
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    request_id = request.headers.get("x-request-id") or f"req_{uuid4().hex[:12]}"
+    return JSONResponse(
+        status_code=500,
+        content={
+            "success": False,
+            "data": None,
+            "message": "Unexpected server error",
+            "error": {"code": "internal_server_error", "request_id": request_id},
+        },
+        headers={"X-Request-ID": request_id},
+    )
 
 
 BLUEPRINT_STEPS = [
@@ -255,6 +285,19 @@ def audit(user: dict[str, Any], action: str, target_type: str, target_id: str, o
 @app.get("/api/health")
 def health() -> dict[str, Any]:
     return envelope({"status": "ok", "service": "vcsa-academy-api", "database": persistence.healthcheck()})
+
+
+@app.get("/api/ready")
+def ready() -> dict[str, Any]:
+    users = persistence.list_users()
+    resources = persistence.list_resources(include_unpublished=True)
+    checks = {
+        "database": persistence.healthcheck()["status"] == "ok",
+        "seed_users": len(users) >= 3,
+        "seed_resources": len(resources) >= 3,
+    }
+    status = "ready" if all(checks.values()) else "degraded"
+    return envelope({"status": status, "checks": checks})
 
 
 @app.post("/api/auth/login")

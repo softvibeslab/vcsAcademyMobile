@@ -22,7 +22,12 @@ def assert_success(response):
 
 
 def main():
-    assert_success(client.get("/api/health"))
+    health_response = client.get("/api/health")
+    assert health_response.headers.get("x-content-type-options") == "nosniff"
+    assert health_response.headers.get("x-frame-options") == "DENY"
+    assert_success(health_response)
+    ready = assert_success(client.get("/api/ready"))
+    assert ready["status"] == "ready"
     unauthenticated = client.get("/api/mobile/me")
     assert unauthenticated.status_code == 401
 

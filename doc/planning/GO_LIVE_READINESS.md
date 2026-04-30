@@ -63,6 +63,7 @@ This runs:
 - [x] Environment variable example file.
 - [x] Backend seed/reset/doctor operational commands.
 - [x] Backend Dockerfile and Python requirements.
+- [x] Backend readiness endpoint, request IDs, response timing, and baseline security headers.
 - [ ] Configure production `VCSA_CORS_ORIGINS`.
 - [ ] Replace local SQLite with managed database when target hosting is selected.
 - [ ] Replace `https://api.example.com` in EAS profiles with production API URL.
