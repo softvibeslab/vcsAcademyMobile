@@ -15,6 +15,81 @@ DB_PATH = Path(os.environ.get("VCSA_DB_PATH", "backend/data/vcsa.sqlite3"))
 SESSION_TTL_DAYS = int(os.environ.get("VCSA_SESSION_TTL_DAYS", "7"))
 
 
+DEMO_PASSWORD = "demo123"
+DEMO_USERS = [
+    {
+        "id": "user_demo_visitor",
+        "email": "visitor@vcsa.local",
+        "display_name": "Visitor Demo",
+        "roles": ["visitor"],
+        "permissions": [],
+        "team_id": "team_demo",
+        "role_label": "Visitor",
+        "description": "Preview the academy experience with basic training access.",
+    },
+    {
+        "id": "user_demo_rep",
+        "email": "rep@vcsa.local",
+        "display_name": "Chris Rivera",
+        "roles": ["sales_rep"],
+        "permissions": ["resource:step-5-script:read"],
+        "team_id": "team_demo",
+        "role_label": "Sales Rep",
+        "description": "Work the roadmap, GoalSheet, resources and roleplay submissions.",
+    },
+    {
+        "id": "user_demo_trainer",
+        "email": "trainer@vcsa.local",
+        "display_name": "Tara Brooks",
+        "roles": ["trainer"],
+        "permissions": ["resource:step-5-script:read", "resource:pricing-guide:read"],
+        "team_id": "team_demo",
+        "role_label": "Trainer",
+        "description": "Review team readiness, coaching needs and certification progress.",
+    },
+    {
+        "id": "user_demo_coach",
+        "email": "coach@vcsa.local",
+        "display_name": "Cole Bennett",
+        "roles": ["coach"],
+        "permissions": ["resource:step-5-script:read"],
+        "team_id": "team_demo",
+        "role_label": "Coach",
+        "description": "Coach reps through roleplay feedback and Smart Agent practice.",
+    },
+    {
+        "id": "user_demo_manager",
+        "email": "manager@vcsa.local",
+        "display_name": "Maya Torres",
+        "roles": ["manager"],
+        "permissions": ["resource:step-5-script:read", "resource:pricing-guide:read"],
+        "team_id": "team_demo",
+        "role_label": "Manager",
+        "description": "Manage team dashboard, pending submissions and certification actions.",
+    },
+    {
+        "id": "user_demo_to_manager",
+        "email": "to-manager@vcsa.local",
+        "display_name": "Theo Owens",
+        "roles": ["to_manager"],
+        "permissions": ["resource:step-5-script:read", "resource:pricing-guide:read", "resource:finance-worksheet:read"],
+        "team_id": "team_demo",
+        "role_label": "T.O. Manager",
+        "description": "Access leadership review tools, pricing resources and T.O. workflows.",
+    },
+    {
+        "id": "user_demo_admin",
+        "email": "admin@vcsa.local",
+        "display_name": "Admin Demo",
+        "roles": ["admin"],
+        "permissions": ["resource:step-5-script:read", "resource:pricing-guide:read", "resource:finance-worksheet:read", "resource:fee-disclosure-policy:read"],
+        "team_id": "team_demo",
+        "role_label": "Admin",
+        "description": "Administer users, resources, audit visibility and full launch controls.",
+    },
+]
+
+
 def connect() -> sqlite3.Connection:
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     connection = sqlite3.connect(DB_PATH)
@@ -225,27 +300,15 @@ def upsert_seed_user(
 
 def seed_demo_data() -> None:
     now = datetime.utcnow().isoformat()
-    upsert_seed_user(
-        "user_demo_rep",
-        "rep@vcsa.local",
-        "Chris Rivera",
-        ["sales_rep"],
-        ["resource:step-5-script:read"],
-    )
-    upsert_seed_user(
-        "user_demo_manager",
-        "manager@vcsa.local",
-        "Maya Torres",
-        ["manager", "trainer"],
-        ["resource:step-5-script:read", "resource:pricing-guide:read"],
-    )
-    upsert_seed_user(
-        "user_demo_admin",
-        "admin@vcsa.local",
-        "Admin Demo",
-        ["admin"],
-        ["resource:step-5-script:read", "resource:pricing-guide:read", "resource:finance-worksheet:read"],
-    )
+    for demo_user in DEMO_USERS:
+        upsert_seed_user(
+            demo_user["id"],
+            demo_user["email"],
+            demo_user["display_name"],
+            demo_user["roles"],
+            demo_user["permissions"],
+            demo_user["team_id"],
+        )
     with connect() as db:
         db.execute(
             """

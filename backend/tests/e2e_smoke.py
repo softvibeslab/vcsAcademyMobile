@@ -31,6 +31,13 @@ def main():
     unauthenticated = client.get("/api/mobile/me")
     assert unauthenticated.status_code == 401
 
+    demo_users = assert_success(client.get("/api/auth/demo-users"))["users"]
+    demo_roles = {item["primary_role"] for item in demo_users}
+    assert {"visitor", "sales_rep", "trainer", "coach", "manager", "to_manager", "admin"}.issubset(demo_roles)
+    for demo_user in demo_users:
+        login_response = assert_success(client.post("/api/auth/login", json={"email": demo_user["email"], "password": demo_user["password"]}))
+        assert demo_user["primary_role"] in login_response["user"]["roles"]
+
     rep_login = assert_success(client.post("/api/auth/login", json={"email": "rep@vcsa.local", "password": "demo123"}))
     auth_headers["Authorization"] = f"Bearer {rep_login['token']}"
     manager_login = assert_success(client.post("/api/auth/login", json={"email": "manager@vcsa.local", "password": "demo123"}))
@@ -123,6 +130,7 @@ def main():
     assert any(item["id"] == "agenda-control-guide" and item["has_access"] is True for item in resources)
     admin_users = assert_success(client.get("/api/admin/users", headers=admin_headers))["users"]
     assert any(item["email"] == "rep@vcsa.local" for item in admin_users)
+    assert len(admin_users) >= 7
     invited = assert_success(
         client.post(
             "/api/admin/users/invite",

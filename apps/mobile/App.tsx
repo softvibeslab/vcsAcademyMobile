@@ -41,6 +41,8 @@ type User = {
   email: string;
   display_name: string;
   roles: string[];
+  permissions?: string[];
+  team_id?: string;
   status: string;
 };
 
@@ -53,17 +55,19 @@ type Step = {
   progress_percent: number;
 };
 
+type Metrics = {
+  closing_percent: number;
+  vpg: number;
+  qualified_tours?: number;
+  sales_count?: number;
+  volume?: number;
+};
+
 type Dashboard = {
   greeting: string;
   blueprint_progress: number;
   certification_status: string;
-  metrics: {
-    closing_percent: number;
-    vpg: number;
-    qualified_tours?: number;
-    sales_count?: number;
-    volume?: number;
-  };
+  metrics: Metrics;
 };
 
 type Resource = {
@@ -104,6 +108,47 @@ type GoalSheetEntry = {
   number_of_sales: number;
 };
 
+type DemoUser = {
+  id: string;
+  email: string;
+  display_name: string;
+  roles: string[];
+  primary_role: string;
+  role_label: string;
+  description: string;
+  password: string;
+};
+
+type ManagerDashboard = {
+  team_id: string;
+  summary: {
+    active_reps: number;
+    pending_reviews: number;
+    team_metrics: Metrics;
+  };
+  reps: Array<{
+    user: User;
+    blueprint_progress: number;
+    reviewed_roleplays: number;
+  }>;
+  pending_submissions: Submission[];
+};
+
+type AdminResource = Resource & {
+  status: string;
+  requires_access_grant: boolean;
+};
+
+type AuditEvent = {
+  id: string;
+  actor_user_id: string;
+  action: string;
+  target_type: string;
+  target_id: string;
+  outcome: string;
+  created_at: string;
+};
+
 const tabs: Array<{ key: TabKey; label: string; icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }> }> = [
   { key: 'home', label: 'Home', icon: Home },
   { key: 'roadmap', label: 'Roadmap', icon: Target },
@@ -127,6 +172,29 @@ const blueprintAliases: Record<number, string> = {
   11: 'T.O. Pricing'
 };
 
+const fallbackDemoUsers: DemoUser[] = [
+  { id: 'user_demo_visitor', email: 'visitor@vcsa.local', display_name: 'Visitor Demo', roles: ['visitor'], primary_role: 'visitor', role_label: 'Visitor', description: 'Preview basic academy access.', password: 'demo123' },
+  { id: 'user_demo_rep', email: 'rep@vcsa.local', display_name: 'Chris Rivera', roles: ['sales_rep'], primary_role: 'sales_rep', role_label: 'Sales Rep', description: 'Roadmap, GoalSheet, resources and roleplay.', password: 'demo123' },
+  { id: 'user_demo_trainer', email: 'trainer@vcsa.local', display_name: 'Tara Brooks', roles: ['trainer'], primary_role: 'trainer', role_label: 'Trainer', description: 'Team readiness and coaching tools.', password: 'demo123' },
+  { id: 'user_demo_coach', email: 'coach@vcsa.local', display_name: 'Cole Bennett', roles: ['coach'], primary_role: 'coach', role_label: 'Coach', description: 'Roleplay coaching and feedback.', password: 'demo123' },
+  { id: 'user_demo_manager', email: 'manager@vcsa.local', display_name: 'Maya Torres', roles: ['manager'], primary_role: 'manager', role_label: 'Manager', description: 'Team dashboard and certifications.', password: 'demo123' },
+  { id: 'user_demo_to_manager', email: 'to-manager@vcsa.local', display_name: 'Theo Owens', roles: ['to_manager'], primary_role: 'to_manager', role_label: 'T.O. Manager', description: 'T.O. workflows and pricing resources.', password: 'demo123' },
+  { id: 'user_demo_admin', email: 'admin@vcsa.local', display_name: 'Admin Demo', roles: ['admin'], primary_role: 'admin', role_label: 'Admin', description: 'Users, resources and audit visibility.', password: 'demo123' }
+];
+
+const leadershipRoles = new Set(['manager', 'to_manager', 'trainer', 'coach', 'admin']);
+
+function hasAnyRole(user: User | null, roles: string[]) {
+  return Boolean(user?.roles.some((role) => roles.includes(role)));
+}
+
+function roleLabel(role: string) {
+  return role
+    .replace('sales_rep', 'Sales Rep')
+    .replace('to_manager', 'T.O. Manager')
+    .replace(/^./, (value) => value.toUpperCase());
+}
+
 function formatCurrency(value?: number | string) {
   const amount = Number(value) || 0;
   return `$${amount.toLocaleString('en-US')}`;
@@ -136,6 +204,7 @@ export default function App() {
   const [token, setToken] = useState('');
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [demoUsers, setDemoUsers] = useState<DemoUser[]>(fallbackDemoUsers);
   const [email, setEmail] = useState('rep@vcsa.local');
   const [password, setPassword] = useState('demo123');
   const [activeTab, setActiveTab] = useState<TabKey>('home');
@@ -146,7 +215,11 @@ export default function App() {
   const [certifications, setCertifications] = useState<Certification[]>([]);
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [goalHistory, setGoalHistory] = useState<GoalSheetEntry[]>([]);
-  const [goalMetrics, setGoalMetrics] = useState<Dashboard['metrics'] | null>(null);
+  const [goalMetrics, setGoalMetrics] = useState<Metrics | null>(null);
+  const [managerDashboard, setManagerDashboard] = useState<ManagerDashboard | null>(null);
+  const [adminUsers, setAdminUsers] = useState<User[]>([]);
+  const [adminResources, setAdminResources] = useState<AdminResource[]>([]);
+  const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
   const [selectedStepId, setSelectedStepId] = useState('step_5');
   const [showStepDetail, setShowStepDetail] = useState(false);
   const [agentPrompt, setAgentPrompt] = useState('Help me practice Step 5');
@@ -166,6 +239,9 @@ export default function App() {
   const currentStep = steps.find((step) => step.status === 'current') || steps.find((step) => step.status !== 'completed') || steps[0];
   const firstName = user?.display_name?.split(' ')[0] || 'Chris';
   const roadmapPercent = Math.max(dashboard?.blueprint_progress ?? 0, completedCount ? Math.round((completedCount / 11) * 100) : 0);
+  const canUseLeadershipWorkspace = hasAnyRole(user, Array.from(leadershipRoles));
+  const canUseAdminWorkspace = hasAnyRole(user, ['admin']);
+  const selectedDemoUser = demoUsers.find((demoUser) => demoUser.email === email);
 
   async function saveStoredToken(nextToken: string) {
     if (Platform.OS === 'web') {
@@ -200,6 +276,10 @@ export default function App() {
     setScenarios([]);
     setGoalHistory([]);
     setGoalMetrics(null);
+    setManagerDashboard(null);
+    setAdminUsers([]);
+    setAdminResources([]);
+    setAuditEvents([]);
     setAgentResponse('');
     setScreenMessage('');
     setActiveTab('home');
@@ -249,12 +329,39 @@ export default function App() {
       setGoalHistory(historyData.entries);
       setGoalMetrics(metricsData.metrics);
       if (!stepsData.steps.find((step: Step) => step.id === selectedStepId)) setSelectedStepId(stepsData.steps[4]?.id || stepsData.steps[0]?.id || 'step_5');
+      const roles = meData.user.roles || [];
+      if (roles.some((role: string) => leadershipRoles.has(role))) {
+        const managerData = await api('/api/manager/team-dashboard', {}, sessionToken);
+        setManagerDashboard(managerData);
+      } else {
+        setManagerDashboard(null);
+      }
+      if (roles.includes('admin')) {
+        const [usersData, resourcesData, auditData] = await Promise.all([
+          api('/api/admin/users', {}, sessionToken),
+          api('/api/admin/resources', {}, sessionToken),
+          api('/api/admin/audit-events', {}, sessionToken)
+        ]);
+        setAdminUsers(usersData.users);
+        setAdminResources(resourcesData.resources);
+        setAuditEvents(auditData.events);
+      } else {
+        setAdminUsers([]);
+        setAdminResources([]);
+        setAuditEvents([]);
+      }
     } finally {
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
+    fetch(`${API_BASE}/api/auth/demo-users`)
+      .then((response) => response.json())
+      .then((payload) => {
+        if (payload?.data?.users?.length) setDemoUsers(payload.data.users);
+      })
+      .catch(() => setDemoUsers(fallbackDemoUsers));
     readStoredToken()
       .then((storedToken) => {
         if (storedToken) setToken(storedToken);
@@ -299,6 +406,12 @@ export default function App() {
     } finally {
       clearSession();
     }
+  }
+
+  function selectDemoUser(demoUser: DemoUser) {
+    setEmail(demoUser.email);
+    setPassword(demoUser.password);
+    setAuthError('');
   }
 
   async function askAgent(message = agentPrompt) {
@@ -436,8 +549,31 @@ export default function App() {
           </View>
           <Text style={styles.title}>Welcome to Sales <Text style={styles.goldText}>Academy</Text></Text>
           <Text style={styles.subtitle}>Your AI-powered partner to train, practice and master every step of the sales process.</Text>
+          <GlassCard accent>
+            <View style={styles.rowBetween}>
+              <View style={styles.stepTextBlock}>
+                <Text style={styles.cardTitle}>Demo role access</Text>
+                <Text style={styles.muted}>Choose a role to enter its workspace. All demo profiles use password demo123.</Text>
+              </View>
+              <Lock color={gold} size={27} />
+            </View>
+            <View style={styles.demoGrid}>
+              {demoUsers.map((demoUser) => (
+                <TouchableOpacity
+                  key={demoUser.id}
+                  style={[styles.demoRoleCard, selectedDemoUser?.id === demoUser.id && styles.demoRoleCardActive]}
+                  onPress={() => selectDemoUser(demoUser)}
+                >
+                  <Text style={[styles.demoRoleTitle, selectedDemoUser?.id === demoUser.id && styles.goldText]}>{demoUser.role_label}</Text>
+                  <Text style={styles.demoRoleEmail}>{demoUser.email}</Text>
+                  <Text style={styles.demoRoleCopy}>{demoUser.description}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </GlassCard>
           <GlassCard>
             <Text style={styles.cardTitle}>Secure access</Text>
+            {selectedDemoUser ? <Text style={styles.roleHint}>Selected: {selectedDemoUser.role_label} workspace</Text> : null}
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput autoCapitalize="none" autoComplete="email" keyboardType="email-address" onChangeText={setEmail} placeholder="rep@vcsa.local" placeholderTextColor="#6f7780" style={styles.input} value={email} />
             <Text style={styles.inputLabel}>Password</Text>
@@ -455,6 +591,30 @@ export default function App() {
       <>
         <Text style={styles.homeTitle}>Good morning, <Text style={styles.goldText}>{firstName}</Text></Text>
         <Text style={styles.subtitle}>Your Smart Agent is ready to provide valuable resources.</Text>
+        <View style={styles.roleChipRow}>
+          {(user?.roles || []).map((role) => (
+            <Text key={role} style={styles.roleChip}>{roleLabel(role)}</Text>
+          ))}
+        </View>
+        {(canUseLeadershipWorkspace || canUseAdminWorkspace) ? (
+          <GlassCard accent>
+            <View style={styles.rowBetween}>
+              <View style={styles.stepTextBlock}>
+                <Text style={styles.goldCaps}>ROLE WORKSPACE</Text>
+                <Text style={styles.cardTitle}>{canUseAdminWorkspace ? 'Admin Control Center' : 'Leadership Dashboard'}</Text>
+                <Text style={styles.bodyText}>
+                  {canUseAdminWorkspace
+                    ? `${adminUsers.length || 0} users, ${adminResources.length || 0} resources and ${auditEvents.length || 0} audit events available.`
+                    : `${managerDashboard?.summary.active_reps || 0} reps and ${managerDashboard?.summary.pending_reviews || 0} pending reviews in your team.`}
+                </Text>
+              </View>
+              <TouchableOpacity style={styles.smallGoldAction} onPress={() => setActiveTab('support')}>
+                <Users color={ink} size={20} />
+                <Text style={styles.smallGoldActionText}>Open</Text>
+              </TouchableOpacity>
+            </View>
+          </GlassCard>
+        ) : null}
         <GlassCard accent>
           <View style={styles.smartAgentCard}>
             <Pill label="SMART AGENT" icon={Sparkles} />
@@ -743,10 +903,77 @@ export default function App() {
     );
   }
 
+  function renderLeadershipWorkspace() {
+    if (!canUseLeadershipWorkspace) return null;
+    return (
+      <GlassCard accent>
+        <Text style={styles.goldCaps}>LEADERSHIP WORKSPACE</Text>
+        <Text style={styles.cardTitle}>Team Coaching Manager</Text>
+        <View style={styles.roleStatsGrid}>
+          <RoleStat label="Active reps" value={`${managerDashboard?.summary.active_reps || 0}`} />
+          <RoleStat label="Pending reviews" value={`${managerDashboard?.summary.pending_reviews || 0}`} />
+          <RoleStat label="Team VPG" value={formatCurrency(managerDashboard?.summary.team_metrics?.vpg || 0)} />
+        </View>
+        {managerDashboard?.reps.slice(0, 4).map((rep) => (
+          <View style={styles.roleListRow} key={rep.user.id}>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.rowTitle}>{rep.user.display_name}</Text>
+              <Text style={styles.muted}>{rep.blueprint_progress}% roadmap · {rep.reviewed_roleplays} reviewed roleplays</Text>
+            </View>
+            <Text style={[styles.badge, styles.completed]}>team</Text>
+          </View>
+        ))}
+        {managerDashboard?.pending_submissions.slice(0, 3).map((submission) => (
+          <View style={styles.roleListRow} key={submission.id}>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.rowTitle}>Pending Review</Text>
+              <Text style={styles.muted}>{submission.id} · {submission.status}</Text>
+            </View>
+            <Text style={[styles.badge, styles.locked]}>review</Text>
+          </View>
+        ))}
+      </GlassCard>
+    );
+  }
+
+  function renderAdminWorkspace() {
+    if (!canUseAdminWorkspace) return null;
+    return (
+      <GlassCard accent>
+        <Text style={styles.goldCaps}>ADMIN WORKSPACE</Text>
+        <Text style={styles.cardTitle}>Users, Resources & Audit</Text>
+        <View style={styles.roleStatsGrid}>
+          <RoleStat label="Users" value={`${adminUsers.length}`} />
+          <RoleStat label="Resources" value={`${adminResources.length}`} />
+          <RoleStat label="Audit events" value={`${auditEvents.length}`} />
+        </View>
+        {adminUsers.slice(0, 5).map((item) => (
+          <View style={styles.roleListRow} key={item.id}>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.rowTitle}>{item.display_name}</Text>
+              <Text style={styles.muted}>{item.email} · {item.roles.map(roleLabel).join(', ')}</Text>
+            </View>
+            <Text style={[styles.badge, item.status === 'active' ? styles.completed : styles.locked]}>{item.status}</Text>
+          </View>
+        ))}
+        {auditEvents.slice(0, 3).map((event) => (
+          <View style={styles.roleListRow} key={event.id}>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.rowTitle}>{event.action}</Text>
+              <Text style={styles.muted}>{event.outcome} · {event.target_type}:{event.target_id}</Text>
+            </View>
+          </View>
+        ))}
+      </GlassCard>
+    );
+  }
+
   function renderSupport() {
     return (
       <>
         <HeaderLine title="Support" subtitle="Access, profile, certification and launch readiness." />
+        {renderLeadershipWorkspace()}
+        {renderAdminWorkspace()}
         <GlassCard>
           <Text style={styles.cardTitle}>{user?.display_name}</Text>
           <Text style={styles.bodyText}>{user?.email}</Text>
@@ -1003,6 +1230,15 @@ function ProgressTile({ icon: Icon, label, value, trend }: { icon: React.Compone
       <Text style={styles.muted}>{label}</Text>
       <Text adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1} style={styles.metricBig}>{value}</Text>
       <Text style={styles.goodTrend}>{trend}</Text>
+    </View>
+  );
+}
+
+function RoleStat({ label, value }: { label: string; value: string }) {
+  return (
+    <View style={styles.roleStat}>
+      <Text adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1} style={styles.metricBig}>{value}</Text>
+      <Text style={styles.muted}>{label}</Text>
     </View>
   );
 }
@@ -1400,6 +1636,47 @@ const styles = StyleSheet.create({
     minHeight: 52,
     paddingHorizontal: 14
   },
+  demoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginTop: 14
+  },
+  demoRoleCard: {
+    backgroundColor: 'rgba(5,11,14,0.72)',
+    borderColor: 'rgba(255,255,255,0.14)',
+    borderRadius: 8,
+    borderWidth: 1,
+    minHeight: 132,
+    padding: 12,
+    width: '48%'
+  },
+  demoRoleCardActive: {
+    borderColor: gold,
+    backgroundColor: 'rgba(255,194,26,0.1)'
+  },
+  demoRoleTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '900',
+    marginBottom: 6
+  },
+  demoRoleEmail: {
+    color: '#dce3ea',
+    fontSize: 12,
+    marginBottom: 8
+  },
+  demoRoleCopy: {
+    color: '#aeb8c2',
+    fontSize: 12,
+    lineHeight: 17
+  },
+  roleHint: {
+    color: gold2,
+    fontSize: 14,
+    fontWeight: '800',
+    marginTop: 6
+  },
   noteInput: {
     minHeight: 78,
     paddingTop: 12,
@@ -1439,6 +1716,23 @@ const styles = StyleSheet.create({
   },
   smartAgentCard: {
     alignItems: 'center'
+  },
+  roleChipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 14
+  },
+  roleChip: {
+    borderColor: 'rgba(255,194,26,0.58)',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: gold,
+    fontSize: 13,
+    fontWeight: '900',
+    overflow: 'hidden',
+    paddingHorizontal: 10,
+    paddingVertical: 7
   },
   centerTitle: {
     color: '#fff',
@@ -1515,6 +1809,32 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 128,
     padding: 6
+  },
+  roleStatsGrid: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 14
+  },
+  roleStat: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.14)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flex: 1,
+    minHeight: 86,
+    justifyContent: 'center',
+    padding: 8
+  },
+  roleListRow: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,255,255,0.12)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 10,
+    minHeight: 70,
+    padding: 12
   },
   metricBig: {
     color: '#fff',

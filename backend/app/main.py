@@ -214,6 +214,22 @@ def require_admin(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any
     return user
 
 
+def demo_user_catalog() -> list[dict[str, Any]]:
+    return [
+        {
+            "id": item["id"],
+            "email": item["email"],
+            "display_name": item["display_name"],
+            "roles": item["roles"],
+            "primary_role": item["roles"][0],
+            "role_label": item["role_label"],
+            "description": item["description"],
+            "password": persistence.DEMO_PASSWORD,
+        }
+        for item in persistence.DEMO_USERS
+    ]
+
+
 def has_resource_access(resource: dict[str, Any], user: dict[str, Any]) -> bool:
     return (
         not resource["requires_access_grant"]
@@ -365,6 +381,11 @@ def login(payload: LoginIn, response: Response) -> dict[str, Any]:
     )
     audit(user, "auth_login", "user", user["id"], "success")
     return envelope({"user": user, "token": session["token"], "expires_at": session["expires_at"]})
+
+
+@app.get("/api/auth/demo-users")
+def demo_users() -> dict[str, Any]:
+    return envelope({"users": demo_user_catalog()})
 
 
 @app.post("/api/auth/change-password")
