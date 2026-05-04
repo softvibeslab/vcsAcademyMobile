@@ -55,6 +55,13 @@ type Step = {
   progress_percent: number;
 };
 
+type StepDetail = Step & {
+  purpose: string;
+  media: Array<{ type: string; title: string; duration: string }>;
+  scripts: Array<{ id: string; title: string; script_type: string; body: string; compliance_note: string }>;
+  checklist: string[];
+};
+
 type Metrics = {
   closing_percent: number;
   vpg: number;
@@ -76,15 +83,29 @@ type Resource = {
   resource_type: string;
   sensitivity: string;
   has_access: boolean;
+  body?: string;
+  tags?: string[];
 };
 
 type Submission = {
   id: string;
+  user_id?: string;
+  session_id?: string;
   status: string;
+  transcript?: string;
   manager_feedback?: {
+    score?: number;
     recommendation?: string;
     comments?: string;
   };
+};
+
+type RoleplaySession = {
+  id: string;
+  scenario_id: string;
+  blueprint_step_id: string;
+  status: string;
+  summary?: string;
 };
 
 type Certification = {
@@ -106,6 +127,8 @@ type GoalSheetEntry = {
   date: string;
   sales_volume: number;
   number_of_sales: number;
+  notes?: string;
+  smart_agent_insight?: string;
 };
 
 type DemoUser = {
@@ -147,6 +170,12 @@ type AuditEvent = {
   target_id: string;
   outcome: string;
   created_at: string;
+};
+
+type CertificationReadiness = {
+  user_id: string;
+  status: string;
+  requirements: Record<string, boolean>;
 };
 
 const tabs: Array<{ key: TabKey; label: string; icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }> }> = [
@@ -221,13 +250,23 @@ export default function App() {
   const [adminResources, setAdminResources] = useState<AdminResource[]>([]);
   const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
   const [selectedStepId, setSelectedStepId] = useState('step_5');
+  const [selectedStepDetail, setSelectedStepDetail] = useState<StepDetail | null>(null);
   const [showStepDetail, setShowStepDetail] = useState(false);
   const [agentPrompt, setAgentPrompt] = useState('Help me practice Step 5');
   const [agentResponse, setAgentResponse] = useState('');
+  const [selectedTourOutcome, setSelectedTourOutcome] = useState('qualified');
+  const [salesOutcome, setSalesOutcome] = useState('sold');
+  const [noSaleReason, setNoSaleReason] = useState('Price was too high');
+  const [showGoalHistory, setShowGoalHistory] = useState(false);
   const [goalVolume, setGoalVolume] = useState('8450');
   const [goalSales, setGoalSales] = useState('1');
   const [goalNotes, setGoalNotes] = useState('');
+  const [selectedScenarioId, setSelectedScenarioId] = useState('');
+  const [activeRoleplaySession, setActiveRoleplaySession] = useState<RoleplaySession | null>(null);
   const [roleplayTranscript, setRoleplayTranscript] = useState('Practice transcript with a clear Step 5 commitment check.');
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
+  const [certificationReadiness, setCertificationReadiness] = useState<CertificationReadiness | null>(null);
+  const [adminInviteEmail, setAdminInviteEmail] = useState('new-rep@vcsa.local');
   const [authError, setAuthError] = useState('');
   const [screenMessage, setScreenMessage] = useState('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -237,6 +276,7 @@ export default function App() {
   const completedCount = useMemo(() => steps.filter((step) => step.status === 'completed').length, [steps]);
   const selectedStep = steps.find((step) => step.id === selectedStepId) || steps.find((step) => step.step_number === 5) || steps[0];
   const currentStep = steps.find((step) => step.status === 'current') || steps.find((step) => step.status !== 'completed') || steps[0];
+  const selectedScenario = scenarios.find((scenario) => scenario.id === selectedScenarioId) || scenarios[0];
   const firstName = user?.display_name?.split(' ')[0] || 'Chris';
   const roadmapPercent = Math.max(dashboard?.blueprint_progress ?? 0, completedCount ? Math.round((completedCount / 11) * 100) : 0);
   const canUseLeadershipWorkspace = hasAnyRole(user, Array.from(leadershipRoles));
@@ -280,6 +320,10 @@ export default function App() {
     setAdminUsers([]);
     setAdminResources([]);
     setAuditEvents([]);
+    setSelectedStepDetail(null);
+    setActiveRoleplaySession(null);
+    setSelectedResource(null);
+    setCertificationReadiness(null);
     setAgentResponse('');
     setScreenMessage('');
     setActiveTab('home');
@@ -308,7 +352,7 @@ export default function App() {
     if (!sessionToken) return;
     setIsLoading(true);
     try {
-      const [meData, dashboardData, stepsData, resourcesData, feedbackData, certificationData, scenariosData, historyData, metricsData] = await Promise.all([
+      const [meData, dashboardData, stepsData, resourcesData, feedbackData, certificationData, scenariosData, todayData, historyData, metricsData] = await Promise.all([
         api('/api/mobile/me', {}, sessionToken),
         api('/api/dashboard/rep', {}, sessionToken),
         api('/api/blueprint/steps', {}, sessionToken),
@@ -316,6 +360,7 @@ export default function App() {
         api('/api/roleplay/submissions/mine', {}, sessionToken),
         api('/api/certifications/mine', {}, sessionToken),
         api('/api/roleplay/scenarios', {}, sessionToken),
+        api('/api/goalsheet/today', {}, sessionToken),
         api('/api/goalsheet/history', {}, sessionToken),
         api('/api/goalsheet/metrics', {}, sessionToken)
       ]);
@@ -326,6 +371,14 @@ export default function App() {
       setFeedback(feedbackData.submissions);
       setCertifications(certificationData.decisions);
       setScenarios(scenariosData.scenarios);
+      if (!selectedScenarioId && scenariosData.scenarios[0]) setSelectedScenarioId(scenariosData.scenarios[0].id);
+      if (todayData.entry) {
+        setSelectedTourOutcome(todayData.entry.tour_outcome || 'qualified');
+        setSalesOutcome(todayData.entry.sales_outcome || 'no_sale');
+        setGoalVolume(String(todayData.entry.sales_volume || 0));
+        setGoalSales(String(todayData.entry.number_of_sales || 0));
+        setGoalNotes(todayData.entry.notes || '');
+      }
       setGoalHistory(historyData.entries);
       setGoalMetrics(metricsData.metrics);
       if (!stepsData.steps.find((step: Step) => step.id === selectedStepId)) setSelectedStepId(stepsData.steps[4]?.id || stepsData.steps[0]?.id || 'step_5');
@@ -415,57 +468,229 @@ export default function App() {
   }
 
   async function askAgent(message = agentPrompt) {
-    const data = await api('/api/smart-agent/chat', {
-      method: 'POST',
-      body: JSON.stringify({ message, mode: 'blueprint_step' })
-    });
-    setAgentResponse(data.response);
-    setScreenMessage(data.risk_flags?.length ? `Guardrail: ${data.risk_flags.join(', ')}` : 'Smart Agent response ready.');
+    setScreenMessage('Smart Agent is thinking...');
+    try {
+      const data = await api('/api/smart-agent/chat', {
+        method: 'POST',
+        body: JSON.stringify({ message, mode: activeTab === 'goalsheet' ? 'goalsheet_review' : 'blueprint_step' })
+      });
+      setAgentResponse(data.response);
+      setScreenMessage(data.risk_flags?.length ? `Guardrail: ${data.risk_flags.join(', ')}` : 'Smart Agent response ready.');
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Smart Agent request failed.');
+    }
   }
 
   async function saveGoalSheet() {
     const salesCount = Number(goalSales) || 0;
-    const data = await api('/api/goalsheet', {
-      method: 'POST',
-      body: JSON.stringify({
-        date: new Date().toISOString().slice(0, 10),
-        tour_outcome: 'qualified',
-        sales_outcome: salesCount > 0 ? 'sold' : 'no_sale',
-        sales_volume: Number(goalVolume) || 0,
-        number_of_sales: salesCount,
-        follow_ups: [
-          { follow_up_date: '2026-05-18', note: 'Send brochure and pricing details' },
-          { follow_up_date: '2026-05-21', note: 'Check availability and offer' },
-          { follow_up_date: '2026-05-24', note: 'Final follow up / close attempt' }
-        ],
-        notes: goalNotes
-      })
-    });
-    setScreenMessage(data.entry.smart_agent_insight);
-    await load();
+    try {
+      const data = await api('/api/goalsheet', {
+        method: 'POST',
+        body: JSON.stringify({
+          date: new Date().toISOString().slice(0, 10),
+          tour_outcome: selectedTourOutcome,
+          sales_outcome: salesOutcome,
+          sales_volume: Number(goalVolume) || 0,
+          number_of_sales: salesCount,
+          follow_ups: [
+            { follow_up_date: '2026-05-18', note: 'Send brochure and pricing details' },
+            { follow_up_date: '2026-05-21', note: 'Check availability and offer' },
+            { follow_up_date: '2026-05-24', note: 'Final follow up / close attempt' }
+          ],
+          notes: salesOutcome === 'no_sale' ? `${noSaleReason}. ${goalNotes}`.trim() : goalNotes
+        })
+      });
+      setScreenMessage(data.entry.smart_agent_insight);
+      await load();
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'GoalSheet save failed.');
+    }
   }
 
   async function completeStep(stepId = selectedStep?.id) {
     if (!stepId) return;
-    await api(`/api/blueprint/steps/${stepId}/complete`, { method: 'POST' });
-    setScreenMessage('Blueprint step completed.');
-    await load();
+    try {
+      await api(`/api/blueprint/steps/${stepId}/complete`, { method: 'POST' });
+      setScreenMessage('Blueprint step completed.');
+      await load();
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Blueprint update failed.');
+    }
+  }
+
+  async function openStepDetail(step: Step) {
+    setSelectedStepId(step.id);
+    setShowStepDetail(true);
+    setSelectedStepDetail(null);
+    try {
+      const data = await api(`/api/blueprint/steps/${step.id}`);
+      setSelectedStepDetail(data.step);
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Step detail failed to load.');
+    }
+  }
+
+  async function startRoleplay() {
+    const scenario = selectedScenario;
+    if (!scenario) return;
+    try {
+      const sessionData = await api('/api/roleplay/sessions', {
+        method: 'POST',
+        body: JSON.stringify({ scenario_id: scenario.id, blueprint_step_id: scenario.blueprint_step_id })
+      });
+      setActiveRoleplaySession(sessionData.session);
+      setScreenMessage('Roleplay session started.');
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Roleplay start failed.');
+    }
+  }
+
+  async function completeRoleplaySession() {
+    if (!activeRoleplaySession) {
+      await startRoleplay();
+      return;
+    }
+    try {
+      const data = await api(`/api/roleplay/sessions/${activeRoleplaySession.id}/complete`, { method: 'POST' });
+      setActiveRoleplaySession(data.session);
+      setScreenMessage(data.session.summary || 'Roleplay session completed.');
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Roleplay completion failed.');
+    }
   }
 
   async function submitRoleplay() {
-    const scenario = scenarios[0];
+    const scenario = selectedScenario;
     if (!scenario) return;
-    const sessionData = await api('/api/roleplay/sessions', {
-      method: 'POST',
-      body: JSON.stringify({ scenario_id: scenario.id, blueprint_step_id: scenario.blueprint_step_id })
-    });
-    await api(`/api/roleplay/sessions/${sessionData.session.id}/complete`, { method: 'POST' });
-    await api('/api/roleplay/submissions', {
-      method: 'POST',
-      body: JSON.stringify({ session_id: sessionData.session.id, transcript: roleplayTranscript })
-    });
-    setScreenMessage('Roleplay submitted for manager review.');
-    await load();
+    try {
+      let session = activeRoleplaySession;
+      if (!session) {
+        const sessionData = await api('/api/roleplay/sessions', {
+          method: 'POST',
+          body: JSON.stringify({ scenario_id: scenario.id, blueprint_step_id: scenario.blueprint_step_id })
+        });
+        session = sessionData.session;
+      }
+      if (session.status !== 'completed') {
+        const completed = await api(`/api/roleplay/sessions/${session.id}/complete`, { method: 'POST' });
+        session = completed.session;
+      }
+      await api('/api/roleplay/submissions', {
+        method: 'POST',
+        body: JSON.stringify({ session_id: session.id, transcript: roleplayTranscript })
+      });
+      setActiveRoleplaySession(null);
+      setScreenMessage('Roleplay submitted for manager review.');
+      await load();
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Roleplay submission failed.');
+    }
+  }
+
+  async function openResource(resource: Resource) {
+    setSelectedResource(null);
+    if (!resource.has_access) {
+      setScreenMessage(`${resource.title} is restricted. Ask an admin to grant access.`);
+      return;
+    }
+    try {
+      const data = await api(`/api/resources/${resource.id}`);
+      setSelectedResource(data.resource);
+      setScreenMessage(`${resource.title} opened.`);
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Resource failed to open.');
+    }
+  }
+
+  async function reviewSubmission(submissionId: string) {
+    try {
+      await api(`/api/roleplay/submissions/${submissionId}/review`, {
+        method: 'POST',
+        body: JSON.stringify({
+          score: 88,
+          rubric_scores: { professional_tone: 5, step_alignment: 4, compliance_awareness: 5 },
+          comments: 'Demo review: strong tone. Keep tightening the transition and ask one clear commitment question.',
+          recommendation: 'continue_practice'
+        })
+      });
+      setScreenMessage('Roleplay reviewed and sent back to the rep.');
+      await load();
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Review failed.');
+    }
+  }
+
+  async function loadCertificationReadiness(userId: string) {
+    try {
+      const data = await api(`/api/certifications/readiness/${userId}`);
+      setCertificationReadiness(data);
+      setScreenMessage(`Certification status: ${data.status}`);
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Readiness check failed.');
+    }
+  }
+
+  async function decideCertification(userId: string, status: 'approved' | 'denied' | 'needs_practice') {
+    try {
+      await api(`/api/certifications/${userId}/decision`, {
+        method: 'POST',
+        body: JSON.stringify({ status, notes: status === 'approved' ? 'Approved from demo manager workflow.' : 'Needs additional practice before approval.' })
+      });
+      setScreenMessage(`Certification decision saved: ${status}.`);
+      await load();
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Certification decision failed.');
+    }
+  }
+
+  async function toggleUserStatus(target: User) {
+    try {
+      const nextStatus = target.status === 'active' ? 'inactive' : 'active';
+      await api(`/api/admin/users/${target.id}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status: nextStatus })
+      });
+      setScreenMessage(`${target.display_name} set to ${nextStatus}.`);
+      await load();
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'User status update failed.');
+    }
+  }
+
+  async function grantPricingAccess(target: User) {
+    try {
+      await api(`/api/admin/users/${target.id}/permissions`, {
+        method: 'POST',
+        body: JSON.stringify({ permission: 'resource:pricing-guide:read', action: 'grant' })
+      });
+      setScreenMessage(`Pricing access granted to ${target.display_name}.`);
+      await load();
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Permission update failed.');
+    }
+  }
+
+  async function inviteDemoUser() {
+    const safeId = `user_demo_${Date.now()}`;
+    try {
+      const data = await api('/api/admin/users/invite', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: safeId,
+          email: adminInviteEmail,
+          display_name: adminInviteEmail.split('@')[0].replace(/[._-]/g, ' '),
+          roles: ['sales_rep'],
+          team_id: 'team_demo',
+          permissions: ['resource:step-5-script:read'],
+          status: 'active',
+          password: 'demo123'
+        })
+      });
+      setScreenMessage(`Demo user invited: ${data.user.email} / demo123`);
+      await load();
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Invite failed.');
+    }
   }
 
   if (isRestoringSession) return <CenteredStatus text="Restoring secure session..." />;
@@ -696,10 +921,7 @@ export default function App() {
           <TouchableOpacity
             key={step.id}
             style={[styles.roadmapRow, step.status === 'current' && styles.roadmapRowActive]}
-            onPress={() => {
-              setSelectedStepId(step.id);
-              setShowStepDetail(true);
-            }}
+            onPress={() => openStepDetail(step)}
           >
             <View style={[styles.stepIconCircle, step.status === 'completed' && styles.stepDone]}>
               {step.status === 'completed' ? <Check color={ink} size={24} /> : <Text style={styles.stepIconText}>{step.step_number}</Text>}
@@ -729,7 +951,9 @@ export default function App() {
   }
 
   function renderStepDetail() {
-    const step = selectedStep;
+    const step = selectedStepDetail || selectedStep;
+    const script = selectedStepDetail?.scripts?.[0];
+    const media = selectedStepDetail?.media?.[0];
     return (
       <>
         <TouchableOpacity style={styles.backLink} onPress={() => setShowStepDetail(false)}>
@@ -739,27 +963,37 @@ export default function App() {
         <View style={styles.rowBetween}>
           <View>
             <Text style={styles.goldCaps}>STEP {step?.step_number || 5} OF 11</Text>
-            <Text style={styles.stepDetailTitle}>Remake the Pact{'\n'}<Text style={styles.goldText}>(YES / NO TODAY)</Text></Text>
+            <Text style={styles.stepDetailTitle}>{blueprintAliases[step?.step_number || 5] || step?.title || 'Remake the Pact'}</Text>
           </View>
           <HelpPill />
         </View>
         <Pill label="High Impact Step" icon={Sparkles} />
+        <Text style={styles.bodyText}>{selectedStepDetail?.purpose || step?.description || 'Train this step with approved coaching and roleplay.'}</Text>
         <GlassCard>
           <SectionLabel icon={Video} label="WATCH" />
-          <Text style={styles.cardTitle}>How Top Producers Do It</Text>
+          <Text style={styles.cardTitle}>{media?.title || 'How Top Producers Do It'}</Text>
           <View style={styles.videoMock}>
             <View style={styles.playCircle}><Play color="#fff" size={42} fill="#fff" /></View>
-            <Text style={styles.videoTime}>7:24</Text>
+            <Text style={styles.videoTime}>{media?.duration || '7:24'}</Text>
           </View>
         </GlassCard>
         <GlassCard>
           <SectionLabel icon={FileText} label="SCRIPT" />
-          <Text style={styles.cardTitle}>Exact Words That Close</Text>
+          <Text style={styles.cardTitle}>{script?.title || 'Exact Words That Close'}</Text>
           <View style={styles.quoteBox}>
             <Text style={styles.quoteMark}>“</Text>
-            <Text style={styles.quoteText}>If you like what you see, it makes sense, and if it is 100% affordable, would you feel comfortable giving me a simple <Text style={styles.goldText}>YES today?</Text></Text>
+            <Text style={styles.quoteText}>{script?.body || 'If you like what you see, it makes sense, and if it is 100% affordable, would you feel comfortable giving me a simple YES today?'}</Text>
           </View>
-          <Text style={styles.centerLink}>View Full Script</Text>
+          <Text style={styles.centerLink}>{script?.compliance_note || 'View Full Script'}</Text>
+        </GlassCard>
+        <GlassCard>
+          <SectionLabel icon={ClipboardCheck} label="CHECKLIST" />
+          {(selectedStepDetail?.checklist || ['Know the purpose', 'Practice with Smart Agent', 'Run a roleplay']).map((item) => (
+            <View style={styles.followRow} key={item}>
+              <Check color={gold} size={18} />
+              <Text style={styles.bodyText}>{item}</Text>
+            </View>
+          ))}
         </GlassCard>
         <GlassCard>
           <SectionLabel icon={Headphones} label="AUDIO" />
@@ -771,7 +1005,13 @@ export default function App() {
           </View>
         </GlassCard>
         <Text style={styles.bodyText}>Use <Text style={styles.goldText}>after discovery</Text>, before showing pricing.</Text>
-        <GoldButton label="Run Step" onPress={() => setActiveTab('roleplay')} icon={Rocket} />
+        <GoldButton label="Run Step" onPress={() => {
+          setSelectedScenarioId(scenarios.find((scenario) => scenario.blueprint_step_id === step?.id)?.id || selectedScenarioId);
+          setActiveTab('roleplay');
+        }} icon={Rocket} />
+        <TouchableOpacity style={styles.secondaryAction} onPress={() => completeStep(step?.id)}>
+          <Text style={styles.secondaryActionText}>Mark Step Complete</Text>
+        </TouchableOpacity>
       </>
     );
   }
@@ -785,22 +1025,35 @@ export default function App() {
             <CalendarDays color={gold} size={18} />
             <Text style={styles.goldText}>Today, May 16, 2025</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.historyButton}>
+          <TouchableOpacity style={styles.historyButton} onPress={() => setShowGoalHistory((value) => !value)}>
             <BarChart3 color={gold} size={18} />
             <Text style={styles.goldText}>View History</Text>
           </TouchableOpacity>
         </View>
         <GoalSection number="1" title="TOUR" icon={Target} subtitle="What type of guest did you take today?">
           <View style={styles.optionGrid}>
-            {['Q\nQualified', 'CT\nClose Today', 'NQ\nNot Qualified', 'No Tour\nDidn’t take any'].map((item, index) => (
-              <OptionCard key={item} selected={index === 1 || index === 0} text={item} />
+            {[
+              ['qualified', 'Q\nQualified'],
+              ['close_today', 'CT\nClose Today'],
+              ['not_qualified', 'NQ\nNot Qualified'],
+              ['no_tour', 'No Tour\nDidn’t take any']
+            ].map(([value, item]) => (
+              <OptionCard key={item} selected={selectedTourOutcome === value} text={item} onPress={() => setSelectedTourOutcome(value)} />
             ))}
           </View>
         </GoalSection>
         <GoalSection number="2" title="SALES" icon={BarChart3} subtitle="Did you close any sales today?">
           <View style={styles.twoCol}>
-            <OptionCard selected text="Yes, I Sold\nRecord your volume" />
-            <OptionCard text="No, I Didn’t Sell\nTell us why" />
+            <OptionCard selected={salesOutcome === 'sold'} text="Yes, I Sold\nRecord your volume" onPress={() => {
+              setSalesOutcome('sold');
+              if (Number(goalSales) <= 0) setGoalSales('1');
+              if (Number(goalVolume) <= 0) setGoalVolume('8450');
+            }} />
+            <OptionCard selected={salesOutcome === 'no_sale'} text="No, I Didn’t Sell\nTell us why" onPress={() => {
+              setSalesOutcome('no_sale');
+              setGoalSales('0');
+              setGoalVolume('0');
+            }} />
           </View>
           <View style={styles.twoCol}>
             <InputBlock label="Sales Volume (USD)" value={formatCurrency(goalVolume)} onChangeText={(value) => setGoalVolume(value.replace(/[^0-9]/g, ''))} />
@@ -808,7 +1061,12 @@ export default function App() {
           </View>
         </GoalSection>
         <GoalSection number="3" title="IF NO SALE, WHY?" icon={CircleHelp} subtitle="Select the main reason">
-          <View style={styles.selectMock}><Text style={styles.bodyText}>Price was too high</Text><ChevronRight color="#fff" size={18} /></View>
+          {['Price was too high', 'Needed to think about it', 'Spouse not present'].map((reason) => (
+            <TouchableOpacity style={styles.selectMock} key={reason} onPress={() => setNoSaleReason(reason)}>
+              <Text style={reason === noSaleReason ? styles.goldText : styles.bodyText}>{reason}</Text>
+              {reason === noSaleReason ? <Check color={gold} size={18} /> : <ChevronRight color="#fff" size={18} />}
+            </TouchableOpacity>
+          ))}
         </GoalSection>
         <GoalSection number="4" title="YOUR METRICS" icon={BarChart3} subtitle="Track your key performance metrics">
           <View style={styles.metricCards}>
@@ -837,12 +1095,26 @@ export default function App() {
           <ChevronRight color={gold} size={24} />
         </TouchableOpacity>
         <GoldButton label="Save My Entry" onPress={saveGoalSheet} icon={ClipboardCheck} />
+        {showGoalHistory ? (
+          <GlassCard>
+            <Text style={styles.cardTitle}>Saved GoalSheet History</Text>
+            {goalHistory.slice(0, 5).map((entry) => (
+              <View style={styles.roleListRow} key={entry.date}>
+                <View style={styles.stepTextBlock}>
+                  <Text style={styles.rowTitle}>{entry.date}</Text>
+                  <Text style={styles.muted}>{formatCurrency(entry.sales_volume)} · {entry.number_of_sales} sales</Text>
+                </View>
+                <Text style={[styles.badge, styles.completed]}>saved</Text>
+              </View>
+            ))}
+          </GlassCard>
+        ) : null}
       </>
     );
   }
 
   function renderRoleplay() {
-    const scenario = scenarios[0];
+    const scenario = selectedScenario;
     return (
       <>
         <View style={styles.roleplayHeader}>
@@ -858,10 +1130,25 @@ export default function App() {
         </View>
         <GlassCard>
           <View style={styles.roleplayStats}>
-            <StatBlock icon={Target} label="Scenario" value={scenario?.title || 'Objection Handling'} caption="Step 4: Remake the Pact" />
+            <StatBlock icon={Target} label="Scenario" value={scenario?.title || 'Objection Handling'} caption={scenario?.difficulty || 'medium'} />
             <StatBlock icon={CalendarDays} label="Time Elapsed" value="08:42" />
-            <StatBlock icon={Mic} label="Your Role" value="Agent" caption="Speaking Now" green />
+            <StatBlock icon={Mic} label="Session" value={activeRoleplaySession?.status || 'ready'} caption={activeRoleplaySession?.id || 'Start practice'} green />
           </View>
+        </GlassCard>
+        <GlassCard>
+          <Text style={styles.cardTitle}>Choose Scenario</Text>
+          {scenarios.map((item) => (
+            <TouchableOpacity key={item.id} style={[styles.roleListRow, item.id === scenario?.id && styles.roadmapRowActive]} onPress={() => {
+              setSelectedScenarioId(item.id);
+              setActiveRoleplaySession(null);
+            }}>
+              <View style={styles.stepTextBlock}>
+                <Text style={styles.rowTitle}>{item.title}</Text>
+                <Text style={styles.muted}>{item.objective}</Text>
+              </View>
+              <Text style={[styles.badge, item.id === scenario?.id ? styles.completed : styles.locked]}>{item.difficulty}</Text>
+            </TouchableOpacity>
+          ))}
         </GlassCard>
         <View style={styles.videoPanels}>
           <ParticipantCard label="Coach" />
@@ -878,10 +1165,28 @@ export default function App() {
         </GlassCard>
         <View style={styles.tipCard}>
           <Sparkles color={gold} size={28} />
-          <Text style={styles.tipText}><Text style={styles.goldText}>Tip:</Text> Listen carefully, address the real concern and guide the buyer to a decision.</Text>
+          <Text style={styles.tipText}><Text style={styles.goldText}>Tip:</Text> {scenario?.buyer_context || 'Listen carefully, address the real concern and guide the buyer to a decision.'}</Text>
         </View>
         <TextInput multiline onChangeText={setRoleplayTranscript} placeholder="Roleplay transcript..." placeholderTextColor="#6f7780" style={[styles.input, styles.textArea]} value={roleplayTranscript} />
+        <View style={styles.twoCol}>
+          <TouchableOpacity style={styles.secondaryAction} onPress={startRoleplay}><Text style={styles.secondaryActionText}>Start Session</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.secondaryAction} onPress={completeRoleplaySession}><Text style={styles.secondaryActionText}>Complete</Text></TouchableOpacity>
+        </View>
         <GoldButton label="Submit for Review" onPress={submitRoleplay} icon={Send} />
+        {feedback.length ? (
+          <GlassCard>
+            <Text style={styles.cardTitle}>My Submissions</Text>
+            {feedback.slice(0, 4).map((item) => (
+              <View style={styles.roleListRow} key={item.id}>
+                <View style={styles.stepTextBlock}>
+                  <Text style={styles.rowTitle}>{item.status}</Text>
+                  <Text style={styles.muted}>{item.manager_feedback?.comments || item.transcript || 'Awaiting manager review'}</Text>
+                </View>
+                <Text style={[styles.badge, item.status === 'reviewed' ? styles.completed : styles.locked]}>{item.status}</Text>
+              </View>
+            ))}
+          </GlassCard>
+        ) : null}
       </>
     );
   }
@@ -890,8 +1195,20 @@ export default function App() {
     return (
       <>
         <HeaderLine title="Resources" subtitle="Approved training, scripts, checklists and sensitive-access content." />
+        {selectedResource ? (
+          <GlassCard accent>
+            <Text style={styles.goldCaps}>OPEN RESOURCE</Text>
+            <Text style={styles.cardTitle}>{selectedResource.title}</Text>
+            <Text style={styles.muted}>{selectedResource.resource_type} · {selectedResource.sensitivity}</Text>
+            <Text style={styles.bodyText}>{selectedResource.body || 'Resource opened successfully.'}</Text>
+            <TouchableOpacity style={styles.secondaryAction} onPress={() => setSelectedResource(null)}>
+              <Text style={styles.secondaryActionText}>Close Resource</Text>
+            </TouchableOpacity>
+          </GlassCard>
+        ) : null}
         {resources.map((resource) => (
-          <GlassCard key={resource.id}>
+          <TouchableOpacity key={resource.id} onPress={() => openResource(resource)}>
+          <GlassCard>
             <View style={styles.rowBetween}>
               <View style={styles.stepTextBlock}>
                 <Text style={styles.cardTitle}>{resource.title}</Text>
@@ -900,6 +1217,7 @@ export default function App() {
               <Text style={[styles.badge, resource.has_access ? styles.completed : styles.locked]}>{resource.has_access ? 'available' : 'restricted'}</Text>
             </View>
           </GlassCard>
+          </TouchableOpacity>
         ))}
       </>
     );
@@ -922,16 +1240,33 @@ export default function App() {
               <Text style={styles.rowTitle}>{rep.user.display_name}</Text>
               <Text style={styles.muted}>{rep.blueprint_progress}% roadmap · {rep.reviewed_roleplays} reviewed roleplays</Text>
             </View>
-            <Text style={[styles.badge, styles.completed]}>team</Text>
+            <TouchableOpacity onPress={() => loadCertificationReadiness(rep.user.id)}>
+              <Text style={[styles.badge, styles.completed]}>readiness</Text>
+            </TouchableOpacity>
           </View>
         ))}
+        {certificationReadiness ? (
+          <View style={styles.roleListRow}>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.rowTitle}>Certification: {certificationReadiness.status}</Text>
+              <Text style={styles.muted}>
+                Steps {certificationReadiness.requirements.required_blueprint_steps_complete ? 'done' : 'pending'} · Roleplays {certificationReadiness.requirements.required_roleplays_reviewed ? 'done' : 'pending'}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={() => decideCertification(certificationReadiness.user_id, 'needs_practice')}>
+              <Text style={[styles.badge, styles.locked]}>needs practice</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
         {managerDashboard?.pending_submissions.slice(0, 3).map((submission) => (
           <View style={styles.roleListRow} key={submission.id}>
             <View style={styles.stepTextBlock}>
               <Text style={styles.rowTitle}>Pending Review</Text>
               <Text style={styles.muted}>{submission.id} · {submission.status}</Text>
             </View>
-            <Text style={[styles.badge, styles.locked]}>review</Text>
+            <TouchableOpacity onPress={() => reviewSubmission(submission.id)}>
+              <Text style={[styles.badge, styles.locked]}>review</Text>
+            </TouchableOpacity>
           </View>
         ))}
       </GlassCard>
@@ -949,13 +1284,36 @@ export default function App() {
           <RoleStat label="Resources" value={`${adminResources.length}`} />
           <RoleStat label="Audit events" value={`${auditEvents.length}`} />
         </View>
+        <View style={styles.roleListRow}>
+          <View style={styles.stepTextBlock}>
+            <Text style={styles.rowTitle}>Invite Demo Rep</Text>
+            <TextInput autoCapitalize="none" onChangeText={setAdminInviteEmail} placeholder="new-rep@vcsa.local" placeholderTextColor="#6f7780" style={styles.input} value={adminInviteEmail} />
+          </View>
+          <TouchableOpacity onPress={inviteDemoUser}>
+            <Text style={[styles.badge, styles.completed]}>invite</Text>
+          </TouchableOpacity>
+        </View>
         {adminUsers.slice(0, 5).map((item) => (
           <View style={styles.roleListRow} key={item.id}>
             <View style={styles.stepTextBlock}>
               <Text style={styles.rowTitle}>{item.display_name}</Text>
               <Text style={styles.muted}>{item.email} · {item.roles.map(roleLabel).join(', ')}</Text>
             </View>
-            <Text style={[styles.badge, item.status === 'active' ? styles.completed : styles.locked]}>{item.status}</Text>
+            <TouchableOpacity onPress={() => toggleUserStatus(item)}>
+              <Text style={[styles.badge, item.status === 'active' ? styles.completed : styles.locked]}>{item.status}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => grantPricingAccess(item)}>
+              <Text style={[styles.badge, styles.locked]}>grant</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+        {adminResources.slice(0, 3).map((resource) => (
+          <View style={styles.roleListRow} key={resource.id}>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.rowTitle}>{resource.title}</Text>
+              <Text style={styles.muted}>{resource.status} · {resource.requires_access_grant ? 'restricted' : 'open'}</Text>
+            </View>
+            <Text style={[styles.badge, resource.status === 'published' ? styles.completed : styles.locked]}>{resource.resource_type}</Text>
           </View>
         ))}
         {auditEvents.slice(0, 3).map((event) => (
@@ -1141,14 +1499,15 @@ function GoalSection({ number, title, subtitle, icon: Icon, children }: { number
   );
 }
 
-function OptionCard({ text, selected }: { text: string; selected?: boolean }) {
+function OptionCard({ text, selected, onPress }: { text: string; selected?: boolean; onPress?: () => void }) {
   const [lead, ...rest] = text.split(/\\n|\n/);
+  const Wrapper = onPress ? TouchableOpacity : View;
   return (
-    <View style={[styles.optionCard, selected && styles.optionSelected]}>
+    <Wrapper style={[styles.optionCard, selected && styles.optionSelected]} onPress={onPress}>
       <Text style={[styles.optionLead, selected && styles.goldText]}>{lead}</Text>
       {rest.length ? <Text style={styles.muted}>{rest.join(' ')}</Text> : null}
       {selected ? <View style={styles.optionCheck}><Check color={ink} size={14} /></View> : <View style={styles.optionEmpty} />}
-    </View>
+    </Wrapper>
   );
 }
 
