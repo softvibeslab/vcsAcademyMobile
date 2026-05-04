@@ -75,6 +75,8 @@ def main():
         )
     )["entry"]
     assert "smart_agent_insight" in saved
+    reminders = assert_success(client.get("/api/reminders/upcoming", headers=auth_headers))["reminders"]
+    assert any(item["note"] == "Send approved brochure." for item in reminders)
 
     chat = assert_success(client.post("/api/smart-agent/chat", headers=auth_headers, json={"message": "Help me practice Step 5", "mode": "blueprint_step"}))
     assert chat["recommended_actions"][0]["route"] == "RoleplayLive"
@@ -89,8 +91,17 @@ def main():
     assert len(scenarios) >= 3
     scenario = scenarios[0]
     session = assert_success(client.post("/api/roleplay/sessions", headers=auth_headers, json={"scenario_id": scenario["id"], "blueprint_step_id": "step_5"}))["session"]
+    turn = assert_success(
+        client.post(
+            f"/api/roleplay/sessions/{session['id']}/turn",
+            headers=auth_headers,
+            json={"message": "If this makes sense and is affordable, could you make a yes or no decision today?"},
+        )
+    )
+    assert turn["turn"]["buyer"]
+    assert turn["ai_score"]["score"] >= 70
     assert_success(client.post(f"/api/roleplay/sessions/{session['id']}/complete", headers=auth_headers))
-    submission = assert_success(client.post("/api/roleplay/submissions", headers=auth_headers, json={"session_id": session["id"], "transcript": "Practice transcript"}))["submission"]
+    submission = assert_success(client.post("/api/roleplay/submissions", headers=auth_headers, json={"session_id": session["id"], "transcript": turn["session"]["transcript"]}))["submission"]
     rep_forbidden = client.get("/api/roleplay/submissions/pending", headers=auth_headers)
     assert rep_forbidden.status_code == 403
     pending = assert_success(client.get("/api/roleplay/submissions/pending", headers=manager_headers))["submissions"]
@@ -117,6 +128,12 @@ def main():
 
     readiness = assert_success(client.get("/api/certifications/readiness/user_demo_rep", headers=manager_headers))
     assert readiness["requirements"]["required_roleplays_reviewed"] is True
+    blocked_approval = client.post(
+        "/api/certifications/user_demo_visitor/decision",
+        headers=manager_headers,
+        json={"status": "approved", "notes": "Attempt approval before all Blueprint requirements."},
+    )
+    assert blocked_approval.status_code == 400
     decision = assert_success(
         client.post(
             "/api/certifications/user_demo_rep/decision",

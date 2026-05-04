@@ -107,6 +107,23 @@ type RoleplaySession = {
   blueprint_step_id: string;
   status: string;
   summary?: string;
+  transcript?: string;
+  turns?: RoleplayTurn[];
+  ai_score?: RoleplayScore;
+};
+
+type RoleplayTurn = {
+  rep: string;
+  buyer: string;
+  coach_tip: string;
+  created_at: string;
+};
+
+type RoleplayScore = {
+  score: number;
+  rubric_scores: Record<string, number>;
+  summary: string;
+  recommendation: string;
 };
 
 type Certification = {
@@ -151,6 +168,15 @@ type GoalSheetEntry = {
   number_of_sales: number;
   notes?: string;
   smart_agent_insight?: string;
+};
+
+type Reminder = {
+  id: string;
+  source: string;
+  entry_date: string;
+  follow_up_date: string;
+  note: string;
+  status: string;
 };
 
 type DemoUser = {
@@ -267,6 +293,7 @@ export default function App() {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [goalHistory, setGoalHistory] = useState<GoalSheetEntry[]>([]);
   const [goalMetrics, setGoalMetrics] = useState<Metrics | null>(null);
+  const [reminders, setReminders] = useState<Reminder[]>([]);
   const [managerDashboard, setManagerDashboard] = useState<ManagerDashboard | null>(null);
   const [adminUsers, setAdminUsers] = useState<User[]>([]);
   const [adminResources, setAdminResources] = useState<AdminResource[]>([]);
@@ -293,6 +320,8 @@ export default function App() {
   const [selectedScenarioId, setSelectedScenarioId] = useState('');
   const [activeRoleplaySession, setActiveRoleplaySession] = useState<RoleplaySession | null>(null);
   const [roleplayTranscript, setRoleplayTranscript] = useState('Practice transcript with a clear Step 5 commitment check.');
+  const [roleplayMessage, setRoleplayMessage] = useState('If the program makes sense and is affordable, could you make a yes or no decision today?');
+  const [roleplayScore, setRoleplayScore] = useState<RoleplayScore | null>(null);
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [certificationReadiness, setCertificationReadiness] = useState<CertificationReadiness | null>(null);
   const [adminInviteEmail, setAdminInviteEmail] = useState('new-rep@vcsa.local');
@@ -345,12 +374,14 @@ export default function App() {
     setScenarios([]);
     setGoalHistory([]);
     setGoalMetrics(null);
+    setReminders([]);
     setManagerDashboard(null);
     setAdminUsers([]);
     setAdminResources([]);
     setAuditEvents([]);
     setSelectedStepDetail(null);
     setActiveRoleplaySession(null);
+    setRoleplayScore(null);
     setSelectedResource(null);
     setCertificationReadiness(null);
     setAgentResponse('');
@@ -385,7 +416,7 @@ export default function App() {
     if (!sessionToken) return;
     setIsLoading(true);
     try {
-      const [meData, dashboardData, stepsData, resourcesData, feedbackData, certificationData, scenariosData, todayData, historyData, metricsData] = await Promise.all([
+      const [meData, dashboardData, stepsData, resourcesData, feedbackData, certificationData, scenariosData, todayData, historyData, metricsData, remindersData] = await Promise.all([
         api('/api/mobile/me', {}, sessionToken),
         api('/api/dashboard/rep', {}, sessionToken),
         api('/api/blueprint/steps', {}, sessionToken),
@@ -395,7 +426,8 @@ export default function App() {
         api('/api/roleplay/scenarios', {}, sessionToken),
         api('/api/goalsheet/today', {}, sessionToken),
         api('/api/goalsheet/history', {}, sessionToken),
-        api('/api/goalsheet/metrics', {}, sessionToken)
+        api('/api/goalsheet/metrics', {}, sessionToken),
+        api('/api/reminders/upcoming', {}, sessionToken)
       ]);
       setUser(meData.user);
       setDashboard(dashboardData);
@@ -414,6 +446,7 @@ export default function App() {
       }
       setGoalHistory(historyData.entries);
       setGoalMetrics(metricsData.metrics);
+      setReminders(remindersData.reminders || []);
       if (!stepsData.steps.find((step: Step) => step.id === selectedStepId)) setSelectedStepId(stepsData.steps[4]?.id || stepsData.steps[0]?.id || 'step_5');
       const roles = meData.user.roles || [];
       if (roles.some((role: string) => leadershipRoles.has(role))) {
@@ -746,9 +779,39 @@ export default function App() {
         body: JSON.stringify({ scenario_id: scenario.id, blueprint_step_id: scenario.blueprint_step_id })
       });
       setActiveRoleplaySession(sessionData.session);
+      setRoleplayTranscript('');
+      setRoleplayScore(null);
       setScreenMessage('Roleplay session started.');
     } catch (error) {
       setScreenMessage(error instanceof Error ? error.message : 'Roleplay start failed.');
+    }
+  }
+
+  async function sendRoleplayTurn() {
+    const message = roleplayMessage.trim();
+    if (!message) return;
+    try {
+      let session = activeRoleplaySession;
+      if (!session) {
+        const scenario = selectedScenario;
+        if (!scenario) return;
+        const sessionData = await api('/api/roleplay/sessions', {
+          method: 'POST',
+          body: JSON.stringify({ scenario_id: scenario.id, blueprint_step_id: scenario.blueprint_step_id })
+        });
+        session = sessionData.session;
+      }
+      const data = await api(`/api/roleplay/sessions/${session.id}/turn`, {
+        method: 'POST',
+        body: JSON.stringify({ message })
+      });
+      setActiveRoleplaySession(data.session);
+      setRoleplayScore(data.ai_score);
+      setRoleplayTranscript(data.session.transcript || `${roleplayTranscript}\nRep: ${message}\nBuyer: ${data.turn.buyer}`.trim());
+      setRoleplayMessage('');
+      setScreenMessage(`AI buyer replied. Score: ${data.ai_score.score}/100.`);
+    } catch (error) {
+      setScreenMessage(error instanceof Error ? error.message : 'Roleplay AI turn failed.');
     }
   }
 
@@ -784,7 +847,7 @@ export default function App() {
       }
       await api('/api/roleplay/submissions', {
         method: 'POST',
-        body: JSON.stringify({ session_id: session.id, transcript: roleplayTranscript })
+        body: JSON.stringify({ session_id: session.id, transcript: session.transcript || roleplayTranscript })
       });
       setActiveRoleplaySession(null);
       setScreenMessage('Roleplay submitted for manager review.');
@@ -1365,8 +1428,8 @@ export default function App() {
           </View>
         </GoalSection>
         <GoalSection number="5" title="FOLLOW UP REMINDER" icon={CalendarDays} subtitle="Plan your follow ups">
-          {['May 18, 2025 · Send brochure and pricing details', 'May 21, 2025 · Check availability and offer', 'May 24, 2025 · Final follow up / Close attempt'].map((line, index) => (
-            <View style={styles.followRow} key={line}>
+          {(reminders.length ? reminders.slice(0, 3).map((reminder) => `${reminder.follow_up_date} · ${reminder.note}`) : ['2026-05-18 · Send brochure and pricing details', '2026-05-21 · Check availability and offer', '2026-05-24 · Final follow up / Close attempt']).map((line, index) => (
+            <View style={styles.followRow} key={`${line}-${index}`}>
               <Text style={styles.goldText}>#{index + 1}</Text>
               <Text style={styles.bodyText}>{line}</Text>
             </View>
@@ -1456,6 +1519,29 @@ export default function App() {
           <Sparkles color={gold} size={28} />
           <Text style={styles.tipText}><Text style={styles.goldText}>Tip:</Text> {scenario?.buyer_context || 'Listen carefully, address the real concern and guide the buyer to a decision.'}</Text>
         </View>
+        <GlassCard accent>
+          <SectionLabel icon={Bot} label="AI BUYER PRACTICE" />
+          <Text style={styles.bodyText}>Talk to the buyer. Your coach will score the session before manager review.</Text>
+          {(activeRoleplaySession?.turns || []).map((turn, index) => (
+            <View style={styles.roleplayTurn} key={`${turn.created_at}-${index}`}>
+              <Text style={styles.goldText}>You: {turn.rep}</Text>
+              <Text style={styles.bodyText}>Buyer: {turn.buyer}</Text>
+              <Text style={styles.muted}>Coach: {turn.coach_tip}</Text>
+            </View>
+          ))}
+          <View style={styles.promptBar}>
+            <TextInput onChangeText={setRoleplayMessage} placeholder="Say your next line..." placeholderTextColor="#aeb8c2" style={styles.promptInput} value={roleplayMessage} />
+            <TouchableOpacity style={styles.sendButton} onPress={sendRoleplayTurn}>
+              <Send color={ink} size={22} />
+            </TouchableOpacity>
+          </View>
+          {roleplayScore ? (
+            <View style={styles.scoreCard}>
+              <Text style={styles.cardTitle}>{roleplayScore.score}/100</Text>
+              <Text style={styles.bodyText}>{roleplayScore.recommendation}</Text>
+            </View>
+          ) : null}
+        </GlassCard>
         <TextInput multiline onChangeText={setRoleplayTranscript} placeholder="Roleplay transcript..." placeholderTextColor="#6f7780" style={[styles.input, styles.textArea]} value={roleplayTranscript} />
         <View style={styles.twoCol}>
           <TouchableOpacity style={styles.secondaryAction} onPress={startRoleplay}><Text style={styles.secondaryActionText}>Start Session</Text></TouchableOpacity>
@@ -3191,6 +3277,21 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     lineHeight: 27
+  },
+  roleplayTurn: {
+    borderColor: 'rgba(255,255,255,0.12)',
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: 6,
+    marginVertical: 8,
+    padding: 12
+  },
+  scoreCard: {
+    borderColor: 'rgba(41,227,95,0.35)',
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: 12,
+    padding: 12
   },
   secondaryAction: {
     alignItems: 'center',

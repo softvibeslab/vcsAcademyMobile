@@ -150,6 +150,10 @@ class RoleplaySubmissionIn(BaseModel):
     submission_type: str = "text"
 
 
+class RoleplayTurnIn(BaseModel):
+    message: str
+
+
 class RoleplayReviewIn(BaseModel):
     score: int
     rubric_scores: dict[str, int]
@@ -330,6 +334,94 @@ def create_goalsheet_insight(entry: dict[str, Any]) -> str:
     else:
         lead = "Good job logging the day honestly."
     return f"{lead} Your current closing rate is {metrics['closing_percent']}%. Next: practice one roleplay tied to the biggest no-sale reason."
+
+
+def upcoming_followups(user_id: str) -> list[dict[str, Any]]:
+    reminders: list[dict[str, Any]] = []
+    for entry in persistence.list_goalsheets(user_id):
+        for index, follow_up in enumerate(entry.get("follow_ups", [])):
+            reminders.append(
+                {
+                    "id": f"{entry['id']}_followup_{index + 1}",
+                    "source": "goalsheet",
+                    "entry_date": entry.get("date"),
+                    "follow_up_date": follow_up.get("follow_up_date") or follow_up.get("date"),
+                    "note": follow_up.get("note", ""),
+                    "status": "scheduled",
+                }
+            )
+    return sorted(reminders, key=lambda item: item.get("follow_up_date") or "")
+
+
+def roleplay_ai_turn(session: dict[str, Any], message: str) -> dict[str, Any]:
+    text = message.lower()
+    turns = session.get("turns", [])
+    if "price" in text or "cost" in text or "fee" in text:
+        buyer = "I understand, but I need you to be clear with me. What fees or conditions should I know before I decide?"
+        coaching = "Good moment for disclosure awareness. Do not invent numbers. Redirect to approved materials and manager/T.O. support."
+    elif "today" in text or "yes" in text or "commit" in text:
+        buyer = "If it truly fits and is affordable, I could make a decision today. I just do not want to feel pushed."
+        coaching = "Strong Step 5 setup. Keep it calm, respectful, and framed as a clear yes/no decision."
+    elif "vacation" in text or "family" in text or "why" in text:
+        buyer = "We usually travel with family, but we have not been consistent. I want something that makes trips easier."
+        coaching = "Good discovery path. Summarize motivation before moving to the next Blueprint step."
+    else:
+        buyer = "That makes sense, but I still need help connecting this to how we actually vacation."
+        coaching = "Ask one open question, summarize the answer, then tie the response to the active Blueprint step."
+    turn = {
+        "rep": message,
+        "buyer": buyer,
+        "coach_tip": coaching,
+        "created_at": datetime.utcnow().isoformat(),
+    }
+    session["turns"] = [*turns, turn][-8:]
+    session["transcript"] = "\n".join(
+        f"Rep: {item['rep']}\nBuyer: {item['buyer']}\nCoach: {item['coach_tip']}"
+        for item in session["turns"]
+    )
+    return turn
+
+
+def score_roleplay_transcript(transcript: str) -> dict[str, Any]:
+    text = transcript.lower()
+    score = 72
+    rubric = {
+        "step_alignment": 3,
+        "professional_tone": 4,
+        "discovery_quality": 3,
+        "compliance_awareness": 3,
+    }
+    if "yes" in text or "decision today" in text:
+        score += 6
+        rubric["step_alignment"] = 4
+    if "family" in text or "vacation" in text or "why" in text:
+        score += 5
+        rubric["discovery_quality"] = 4
+    if "fee" in text or "approved" in text or "manager" in text:
+        score += 7
+        rubric["compliance_awareness"] = 5
+    if "hide" in text or "skip the fee" in text:
+        score -= 10
+        rubric["professional_tone"] = 2
+    return {
+        "score": max(0, min(100, score)),
+        "rubric_scores": rubric,
+        "summary": "AI coach scored the practice against Blueprint alignment, tone, discovery quality, and compliance awareness.",
+        "recommendation": "Submit for manager review after one more focused repetition." if score < 85 else "Ready for manager review.",
+    }
+
+
+def certification_requirements(user_id: str) -> dict[str, bool]:
+    required_complete = len(persistence.get_completed_step_ids(user_id)) >= 11
+    reviewed_roleplays = [
+        item
+        for item in persistence.list_roleplay_submissions()
+        if item.get("user_id") == user_id and item.get("status") == "reviewed"
+    ]
+    return {
+        "required_blueprint_steps_complete": required_complete,
+        "required_roleplays_reviewed": bool(reviewed_roleplays),
+    }
 
 
 def audit(user: dict[str, Any], action: str, target_type: str, target_id: str, outcome: str, metadata: dict[str, Any] | None = None) -> None:
@@ -569,6 +661,11 @@ def goalsheet_metrics(user: dict[str, Any] = Depends(require_user)) -> dict[str,
     return envelope({"metrics": calculate_metrics(persistence.list_goalsheets(user["id"]))})
 
 
+@app.get("/api/reminders/upcoming")
+def reminders_upcoming(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+    return envelope({"reminders": upcoming_followups(user["id"])})
+
+
 @app.post("/api/smart-agent/chat")
 def smart_agent_chat(payload: ChatIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
     provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
@@ -678,6 +775,23 @@ def complete_roleplay_session(session_id: str, user: dict[str, Any] = Depends(re
     return envelope({"session": persistence.save_roleplay_session(session)})
 
 
+@app.post("/api/roleplay/sessions/{session_id}/turn")
+def roleplay_session_turn(session_id: str, payload: RoleplayTurnIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+    session = persistence.get_roleplay_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Roleplay session not found")
+    if session["user_id"] != user["id"] and "admin" not in user["roles"]:
+        raise HTTPException(status_code=403, detail="You do not have access to this roleplay session")
+    if session.get("status") != "active":
+        raise HTTPException(status_code=400, detail="Roleplay session is not active")
+    turn = roleplay_ai_turn(session, payload.message)
+    scored = score_roleplay_transcript(session.get("transcript", ""))
+    session["ai_score"] = scored
+    saved = persistence.save_roleplay_session(session)
+    audit(user, "roleplay_ai_turn", "roleplay_session", session_id, "success", {"score": scored["score"]})
+    return envelope({"turn": turn, "session": saved, "ai_score": scored})
+
+
 @app.post("/api/roleplay/submissions")
 def create_roleplay_submission(payload: RoleplaySubmissionIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
     session = persistence.get_roleplay_session(payload.session_id)
@@ -744,16 +858,15 @@ def get_resource(resource_id: str, user: dict[str, Any] = Depends(require_user))
 
 @app.get("/api/certifications/readiness/{user_id}")
 def certification_readiness(user_id: str, user: dict[str, Any] = Depends(require_manager)) -> dict[str, Any]:
-    required_complete = len(persistence.get_completed_step_ids(user_id)) >= 11
-    reviewed_roleplays = [item for item in persistence.list_roleplay_submissions() if item.get("user_id") == user_id and item.get("status") == "reviewed"]
+    requirements = certification_requirements(user_id)
     latest_decision = next(iter(persistence.list_certification_decisions(user_id)), None)
+    ready_for_review = all(requirements.values())
     return envelope(
         {
             "user_id": user_id,
-            "status": latest_decision["status"] if latest_decision else ("ready_for_review" if required_complete and reviewed_roleplays else "in_progress"),
+            "status": latest_decision["status"] if latest_decision else ("ready_for_review" if ready_for_review else "in_progress"),
             "requirements": {
-                "required_blueprint_steps_complete": required_complete,
-                "required_roleplays_reviewed": bool(reviewed_roleplays),
+                **requirements,
                 "manager_approval_complete": bool(latest_decision and latest_decision["status"] == "approved"),
             },
             "latest_decision": latest_decision,
@@ -770,6 +883,10 @@ def my_certifications(user: dict[str, Any] = Depends(require_user)) -> dict[str,
 def certification_decision(user_id: str, payload: CertificationDecisionIn, user: dict[str, Any] = Depends(require_manager)) -> dict[str, Any]:
     if not persistence.get_user(user_id):
         raise HTTPException(status_code=404, detail="User not found")
+    requirements = certification_requirements(user_id)
+    if payload.status == "approved" and not all(requirements.values()):
+        audit(user, "certification_decision", "user", user_id, "blocked", {"status": payload.status, "requirements": requirements})
+        raise HTTPException(status_code=400, detail="Certification approval is blocked until all requirements are complete")
     decision = persistence.save_certification_decision(
         {
             "user_id": user_id,
