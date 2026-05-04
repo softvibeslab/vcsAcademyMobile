@@ -202,7 +202,7 @@ function formatCurrency(value?: number | string) {
 
 export default function App() {
   const [token, setToken] = useState('');
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [demoUsers, setDemoUsers] = useState<DemoUser[]>(fallbackDemoUsers);
   const [email, setEmail] = useState('rep@vcsa.local');
@@ -494,42 +494,44 @@ export default function App() {
   function renderWelcome() {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <LinearGradient colors={['#03080b', '#010202']} style={styles.welcome}>
-          <View style={styles.statusSpacer} />
-          <BrandMark stacked />
-          <View style={styles.agentHaloLarge}>
-            <View style={styles.orbitOuter} />
-            <View style={styles.orbitMiddle} />
-            <View style={styles.orbitCore}>
-              <Bot color={gold2} size={64} strokeWidth={1.6} />
+        <LinearGradient colors={['#03080b', '#010202']} style={styles.welcomeGradient}>
+          <ScrollView contentContainerStyle={styles.welcome} showsVerticalScrollIndicator={false}>
+            <View style={styles.statusSpacer} />
+            <BrandMark stacked />
+            <View style={styles.agentHaloLarge}>
+              <View style={styles.orbitOuter} />
+              <View style={styles.orbitMiddle} />
+              <View style={styles.orbitCore}>
+                <Bot color={gold2} size={64} strokeWidth={1.6} />
+              </View>
+              <FeatureCallout label="Analyze" caption="Every Conversation" style={styles.calloutLeftTop} icon={BarChart3} />
+              <FeatureCallout label="Guide" caption="Every Step" style={styles.calloutRightTop} icon={Rocket} />
+              <FeatureCallout label="Coach" caption="In Real-Time" style={styles.calloutLeftBottom} icon={Bot} />
+              <FeatureCallout label="Elevate" caption="Every Result" style={styles.calloutRightBottom} icon={Target} />
             </View>
-            <FeatureCallout label="Analyze" caption="Every Conversation" style={styles.calloutLeftTop} icon={BarChart3} />
-            <FeatureCallout label="Guide" caption="Every Step" style={styles.calloutRightTop} icon={Rocket} />
-            <FeatureCallout label="Coach" caption="In Real-Time" style={styles.calloutLeftBottom} icon={Bot} />
-            <FeatureCallout label="Elevate" caption="Every Result" style={styles.calloutRightBottom} icon={Target} />
-          </View>
-          <Text style={styles.welcomeEyebrow}>AI-POWERED SALES INTELLIGENCE</Text>
-          <Text style={styles.welcomeTitle}>SMART AGENT</Text>
-          <Text style={styles.welcomeCopy}>Your AI-powered partner that listens, analyzes, and coaches you to close more deals.</Text>
-          <View style={styles.featureGrid}>
-            <MiniFeature icon={Bot} title="AI Analysis" copy="Deep insights from every interaction." />
-            <MiniFeature icon={Users} title="Real-Time Coaching" copy="Personalized guidance when you need it." />
-            <MiniFeature icon={BarChart3} title="Performance Boost" copy="Track progress and close at a higher level." />
-          </View>
-          <View style={styles.coachCard}>
-            <View>
-              <Text style={styles.goldCaps}>YOUR AI COACH</Text>
-              <Text style={styles.coachTitle}>Smart Agent</Text>
-              <Text style={styles.bodyText}>Always with you. Always leveling you up.</Text>
+            <Text style={styles.welcomeEyebrow}>AI-POWERED SALES INTELLIGENCE</Text>
+            <Text style={styles.welcomeTitle}>SMART AGENT</Text>
+            <Text style={styles.welcomeCopy}>Your AI-powered partner that listens, analyzes, and coaches you to close more deals.</Text>
+            <View style={styles.featureGrid}>
+              <MiniFeature icon={Bot} title="AI Analysis" copy="Deep insights from every interaction." />
+              <MiniFeature icon={Users} title="Real-Time Coaching" copy="Personalized guidance when you need it." />
+              <MiniFeature icon={BarChart3} title="Performance Boost" copy="Track progress and close at a higher level." />
             </View>
-            <View style={styles.eyeBadge}>
-              <Bot color={gold2} size={36} />
+            <View style={styles.coachCard}>
+              <View>
+                <Text style={styles.goldCaps}>YOUR AI COACH</Text>
+                <Text style={styles.coachTitle}>Smart Agent</Text>
+                <Text style={styles.bodyText}>Always with you. Always leveling you up.</Text>
+              </View>
+              <View style={styles.eyeBadge}>
+                <Bot color={gold2} size={36} />
+              </View>
             </View>
-          </View>
-          <GoldButton label="Get Started" onPress={() => setShowLogin(true)} icon={ChevronRight} />
-          <TouchableOpacity onPress={() => setShowLogin(true)}>
-            <Text style={styles.accountLink}>I already have an account</Text>
-          </TouchableOpacity>
+            <GoldButton label="Get Started" onPress={() => setShowLogin(true)} icon={ChevronRight} />
+            <TouchableOpacity onPress={() => setShowLogin(true)}>
+              <Text style={styles.accountLink}>I already have an account</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </LinearGradient>
       </SafeAreaView>
     );
@@ -1282,8 +1284,10 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 116
   },
-  welcome: {
+  welcomeGradient: {
     flex: 1,
+  },
+  welcome: {
     padding: 24
   },
   statusSpacer: {
