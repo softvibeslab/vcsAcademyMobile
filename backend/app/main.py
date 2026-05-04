@@ -585,6 +585,31 @@ def smart_agent_chat(payload: ChatIn, user: dict[str, Any] = Depends(require_use
     )
 
 
+@app.post("/api/smart-agent/public-chat")
+def public_smart_agent_chat(payload: ChatIn) -> dict[str, Any]:
+    anonymous_user = {
+        "id": "public_welcome_agent",
+        "email": "visitor@vcsa.local",
+        "display_name": "Welcome Visitor",
+        "roles": ["visitor"],
+        "team_id": "team_demo",
+        "permissions": [],
+        "status": "active",
+    }
+    provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
+    result = provider.answer(payload.message, "welcome_intake", anonymous_user, smart_agent_knowledge(anonymous_user))
+    return envelope(
+        {
+            "response": result.response,
+            "citations": result.citations,
+            "recommended_actions": result.recommended_actions,
+            "risk_flags": result.risk_flags,
+            "confidence": result.confidence,
+            "requires_login": True,
+        }
+    )
+
+
 @app.post("/api/smart-agent/insights/goalsheet")
 def goalsheet_insight(entry: GoalSheetEntryIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
     return envelope({"insight": create_goalsheet_insight(entry.model_dump())})

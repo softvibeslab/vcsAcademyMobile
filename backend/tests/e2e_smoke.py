@@ -34,6 +34,9 @@ def main():
     demo_users = assert_success(client.get("/api/auth/demo-users"))["users"]
     demo_roles = {item["primary_role"] for item in demo_users}
     assert {"visitor", "sales_rep", "trainer", "coach", "manager", "to_manager", "admin"}.issubset(demo_roles)
+    public_agent = assert_success(client.post("/api/smart-agent/public-chat", json={"message": "I want to practice objections from the welcome eye"}))
+    assert public_agent["requires_login"] is True
+    assert public_agent["response"]
     for demo_user in demo_users:
         login_response = assert_success(client.post("/api/auth/login", json={"email": demo_user["email"], "password": demo_user["password"]}))
         assert demo_user["primary_role"] in login_response["user"]["roles"]

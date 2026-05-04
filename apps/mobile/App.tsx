@@ -12,6 +12,7 @@ import {
   ChevronRight,
   CircleHelp,
   ClipboardCheck,
+  Eye,
   FileText,
   Headphones,
   Home,
@@ -231,7 +232,7 @@ function formatCurrency(value?: number | string) {
 
 export default function App() {
   const [token, setToken] = useState('');
-  const [showLogin, setShowLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [demoUsers, setDemoUsers] = useState<DemoUser[]>(fallbackDemoUsers);
   const [email, setEmail] = useState('rep@vcsa.local');
@@ -252,6 +253,9 @@ export default function App() {
   const [selectedStepId, setSelectedStepId] = useState('step_5');
   const [selectedStepDetail, setSelectedStepDetail] = useState<StepDetail | null>(null);
   const [showStepDetail, setShowStepDetail] = useState(false);
+  const [welcomeAgentState, setWelcomeAgentState] = useState<'idle' | 'listening' | 'thinking' | 'answered'>('idle');
+  const [welcomeInstruction, setWelcomeInstruction] = useState('I want to practice objection handling');
+  const [welcomeAgentResponse, setWelcomeAgentResponse] = useState('');
   const [agentPrompt, setAgentPrompt] = useState('Help me practice Step 5');
   const [agentResponse, setAgentResponse] = useState('');
   const [selectedTourOutcome, setSelectedTourOutcome] = useState('qualified');
@@ -465,6 +469,44 @@ export default function App() {
     setEmail(demoUser.email);
     setPassword(demoUser.password);
     setAuthError('');
+  }
+
+  function startWelcomeAgent(instruction?: string) {
+    if (instruction) setWelcomeInstruction(instruction);
+    setWelcomeAgentState('listening');
+    setWelcomeAgentResponse('');
+  }
+
+  async function sendWelcomeAgent(instruction = welcomeInstruction) {
+    const message = instruction.trim();
+    if (!message) {
+      setWelcomeAgentState('listening');
+      setWelcomeAgentResponse('Tell your Agent what you want to practice, improve, or review.');
+      return;
+    }
+    setWelcomeInstruction(message);
+    setAgentPrompt(message);
+    setWelcomeAgentState('thinking');
+    setWelcomeAgentResponse('');
+    try {
+      const response = await fetch(`${API_BASE}/api/smart-agent/public-chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, mode: 'welcome_intake', module_area: 'welcome_agent' })
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.detail || payload.error?.message || 'Smart Agent request failed');
+      setWelcomeAgentResponse(payload.data.response);
+      setWelcomeAgentState('answered');
+    } catch (error) {
+      setWelcomeAgentResponse(error instanceof Error ? error.message : 'Smart Agent request failed.');
+      setWelcomeAgentState('answered');
+    }
+  }
+
+  function continueFromWelcomeAgent() {
+    setAgentPrompt(welcomeInstruction);
+    setShowLogin(true);
   }
 
   async function askAgent(message = agentPrompt) {
@@ -726,9 +768,11 @@ export default function App() {
             <View style={styles.agentHaloLarge}>
               <View style={styles.orbitOuter} />
               <View style={styles.orbitMiddle} />
-              <View style={styles.orbitCore}>
-                <Bot color={gold2} size={64} strokeWidth={1.6} />
-              </View>
+              <View style={[styles.listenRing, welcomeAgentState !== 'idle' && styles.listenRingActive]} />
+              <TouchableOpacity style={[styles.orbitCore, styles.agentEyeButton]} onPress={() => startWelcomeAgent()} activeOpacity={0.82}>
+                <Eye color={gold2} size={72} strokeWidth={1.6} />
+                <View style={styles.eyeCenterDot} />
+              </TouchableOpacity>
               <FeatureCallout label="Analyze" caption="Every Conversation" style={styles.calloutLeftTop} icon={BarChart3} />
               <FeatureCallout label="Guide" caption="Every Step" style={styles.calloutRightTop} icon={Rocket} />
               <FeatureCallout label="Coach" caption="In Real-Time" style={styles.calloutLeftBottom} icon={Bot} />
@@ -736,7 +780,51 @@ export default function App() {
             </View>
             <Text style={styles.welcomeEyebrow}>AI-POWERED SALES INTELLIGENCE</Text>
             <Text style={styles.welcomeTitle}>SMART AGENT</Text>
-            <Text style={styles.welcomeCopy}>Your AI-powered partner that listens, analyzes, and coaches you to close more deals.</Text>
+            <Text style={styles.welcomeCopy}>Tap the Eye. Tell your Agent what you need.</Text>
+            <GlassCard accent>
+              <View style={styles.rowBetween}>
+                <View style={styles.stepTextBlock}>
+                  <Text style={styles.goldCaps}>{welcomeAgentState === 'thinking' ? 'ANALYZING' : welcomeAgentState === 'idle' ? 'TAP TO START' : 'LISTENING MODE'}</Text>
+                  <Text style={styles.cardTitle}>Smart Agent Eye</Text>
+                  <Text style={styles.muted}>Like Shazam for sales coaching: tap, give an instruction, get a next step.</Text>
+                </View>
+                <TouchableOpacity style={styles.eyeMiniButton} onPress={() => sendWelcomeAgent()}>
+                  {welcomeAgentState === 'thinking' ? <Sparkles color={ink} size={24} /> : <Mic color={ink} size={24} />}
+                </TouchableOpacity>
+              </View>
+              {welcomeAgentState !== 'idle' ? (
+                <>
+                  <View style={styles.promptBar}>
+                    <TextInput
+                      onChangeText={setWelcomeInstruction}
+                      placeholder="Tell your Agent what you need..."
+                      placeholderTextColor="#aeb8c2"
+                      style={styles.promptInput}
+                      value={welcomeInstruction}
+                    />
+                    <TouchableOpacity style={styles.sendButton} onPress={() => sendWelcomeAgent()}>
+                      <Send color={ink} size={22} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.quickChips}>
+                    <Chip label="Objections" icon={Bot} onPress={() => sendWelcomeAgent('Help me practice objection handling')} />
+                    <Chip label="Roadmap" icon={Target} onPress={() => sendWelcomeAgent('Show me what step I should train first')} />
+                  </View>
+                  <View style={styles.quickChips}>
+                    <Chip label="Closing" icon={BarChart3} onPress={() => sendWelcomeAgent('Help me improve my closing percentage')} />
+                    <Chip label="Roleplay" icon={Users} onPress={() => sendWelcomeAgent('Start a realistic roleplay practice')} />
+                  </View>
+                  {welcomeAgentResponse ? <Text style={styles.insight}>{welcomeAgentResponse}</Text> : null}
+                  <TouchableOpacity style={styles.secondaryAction} onPress={continueFromWelcomeAgent}>
+                    <Text style={styles.secondaryActionText}>Continue with this instruction</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <TouchableOpacity style={styles.secondaryAction} onPress={() => startWelcomeAgent()}>
+                  <Text style={styles.secondaryActionText}>Tap Eye to Give Instructions</Text>
+                </TouchableOpacity>
+              )}
+            </GlassCard>
             <View style={styles.featureGrid}>
               <MiniFeature icon={Bot} title="AI Analysis" copy="Deep insights from every interaction." />
               <MiniFeature icon={Users} title="Real-Time Coaching" copy="Personalized guidance when you need it." />
@@ -1854,6 +1942,40 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.7,
     shadowRadius: 22,
     width: 140
+  },
+  listenRing: {
+    borderColor: 'rgba(255,229,138,0.2)',
+    borderRadius: 92,
+    borderWidth: 2,
+    height: 184,
+    position: 'absolute',
+    width: 184
+  },
+  listenRingActive: {
+    backgroundColor: 'rgba(255,194,26,0.06)',
+    borderColor: gold2,
+    shadowColor: gold,
+    shadowOpacity: 0.9,
+    shadowRadius: 28
+  },
+  agentEyeButton: {
+    position: 'relative'
+  },
+  eyeCenterDot: {
+    backgroundColor: gold,
+    borderRadius: 8,
+    height: 16,
+    position: 'absolute',
+    width: 16
+  },
+  eyeMiniButton: {
+    alignItems: 'center',
+    backgroundColor: gold,
+    borderRadius: 30,
+    height: 60,
+    justifyContent: 'center',
+    marginLeft: 12,
+    width: 60
   },
   featureCallout: {
     alignItems: 'center',
