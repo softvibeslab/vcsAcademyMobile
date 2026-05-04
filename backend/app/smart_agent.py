@@ -59,12 +59,34 @@ class LocalKnowledgeProvider(SmartAgentProvider):
                 confidence=0.88,
             )
 
-        if "step 5" in text or "pact" in text or "commit" in text:
+        if mode == "manager_assist" or "team" in text or "manager" in text:
+            response = (
+                "Open the leadership workspace, review pending roleplays first, then check readiness for the rep with the biggest coaching gap. "
+                "Use rubric comments that are specific, observable, and tied to the Blueprint."
+            )
+            action = {"label": "Open Leadership Workspace", "route": "ManagerWorkspace", "params": {}}
+        elif mode == "admin_content_assist" or "admin" in text or "audit" in text:
+            response = (
+                "Start with users, permissions, and sensitive resources. Keep pricing, fee, and finance content restricted, published only when approved, "
+                "and verify audit events after each access change."
+            )
+            action = {"label": "Open Admin Workspace", "route": "AdminWorkspace", "params": {}}
+        elif mode == "resource_search" or "resource" in text or "script" in text or "material" in text:
+            response = (
+                "Use approved resources only. Open the library, filter mentally by Blueprint step and sensitivity, and request access for restricted pricing or fee material."
+            )
+            action = {"label": "Open Resources", "route": "Resources", "params": {}}
+        elif "step 5" in text or "pact" in text or "commit" in text:
             response = (
                 "Step 5 is a commitment-setting moment, not pressure. Confirm that if the program makes sense and is affordable, "
                 "the guest can make a clear yes/no decision today. Keep your tone calm and ask one clean confirmation question."
             )
             action = {"label": "Run Step 5 Roleplay", "route": "RoleplayLive", "params": {"blueprint_step": 5}}
+        elif "roadmap" in text or "train first" in text or "next step" in text or "blueprint" in text:
+            response = (
+                "Open the Roadmap and work the current unlocked Blueprint step. Keep the sequence intact, finish the checklist, then run one roleplay tied to that step."
+            )
+            action = {"label": "Open Roadmap", "route": "Roadmap", "params": {}}
         elif "goal" in text or "goalsheet" in text or "closing" in text:
             response = (
                 "Use the GoalSheet as an honest coaching record. Log tour outcome, sales outcome, volume, follow-ups, and one note "

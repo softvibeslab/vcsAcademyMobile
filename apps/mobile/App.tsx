@@ -124,6 +124,27 @@ type Scenario = {
   buyer_context: string;
 };
 
+type AgentAction = {
+  label: string;
+  route?: string;
+  type?: string;
+  params?: Record<string, string | number | boolean>;
+};
+
+type AgentReply = {
+  response: string;
+  citations?: string[];
+  recommended_actions?: AgentAction[];
+  risk_flags?: string[];
+  confidence?: number;
+};
+
+type AgentTurn = {
+  prompt: string;
+  response: string;
+  actions: AgentAction[];
+};
+
 type GoalSheetEntry = {
   date: string;
   sales_volume: number;
@@ -256,8 +277,12 @@ export default function App() {
   const [welcomeAgentState, setWelcomeAgentState] = useState<'idle' | 'listening' | 'thinking' | 'answered'>('idle');
   const [welcomeInstruction, setWelcomeInstruction] = useState('I want to practice objection handling');
   const [welcomeAgentResponse, setWelcomeAgentResponse] = useState('');
+  const [welcomeAgentActions, setWelcomeAgentActions] = useState<AgentAction[]>([]);
   const [agentPrompt, setAgentPrompt] = useState('Help me practice Step 5');
   const [agentResponse, setAgentResponse] = useState('');
+  const [agentActions, setAgentActions] = useState<AgentAction[]>([]);
+  const [agentTurns, setAgentTurns] = useState<AgentTurn[]>([]);
+  const [pendingAgentAction, setPendingAgentAction] = useState<AgentAction | null>(null);
   const [selectedTourOutcome, setSelectedTourOutcome] = useState('qualified');
   const [salesOutcome, setSalesOutcome] = useState('sold');
   const [noSaleReason, setNoSaleReason] = useState('Price was too high');
@@ -329,6 +354,10 @@ export default function App() {
     setSelectedResource(null);
     setCertificationReadiness(null);
     setAgentResponse('');
+    setAgentActions([]);
+    setAgentTurns([]);
+    setWelcomeAgentActions([]);
+    setPendingAgentAction(null);
     setScreenMessage('');
     setActiveTab('home');
     setShowStepDetail(false);
@@ -448,6 +477,10 @@ export default function App() {
       await saveStoredToken(payload.data.token);
       setToken(payload.data.token);
       await load(payload.data.token);
+      if (pendingAgentAction) {
+        runAgentAction(pendingAgentAction, true);
+        setPendingAgentAction(null);
+      }
     } catch (error) {
       clearSession();
       setShowLogin(true);
@@ -475,6 +508,69 @@ export default function App() {
     if (instruction) setWelcomeInstruction(instruction);
     setWelcomeAgentState('listening');
     setWelcomeAgentResponse('');
+    setWelcomeAgentActions([]);
+  }
+
+  function agentModeForCurrentTab() {
+    if (activeTab === 'goalsheet') return 'goalsheet_insight';
+    if (activeTab === 'roleplay') return 'roleplay';
+    if (activeTab === 'resources') return 'resource_search';
+    if (activeTab === 'support' && canUseAdminWorkspace) return 'admin_content_assist';
+    if (activeTab === 'support' && canUseLeadershipWorkspace) return 'manager_assist';
+    return 'blueprint_step';
+  }
+
+  function getSpeechRecognition() {
+    if (Platform.OS !== 'web') return null;
+    const host = globalThis as typeof globalThis & {
+      SpeechRecognition?: new () => any;
+      webkitSpeechRecognition?: new () => any;
+    };
+    return host.SpeechRecognition || host.webkitSpeechRecognition || null;
+  }
+
+  function startAgentListening(target: 'welcome' | 'home') {
+    const Recognition = getSpeechRecognition();
+    if (!Recognition) {
+      if (target === 'welcome') {
+        startWelcomeAgent();
+        setWelcomeAgentResponse('Listening mode is ready. Type your instruction or tap a quick action.');
+      } else {
+        setScreenMessage('Listening mode is ready. Type your instruction or tap a quick action.');
+      }
+      return;
+    }
+
+    const recognition = new Recognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    if (target === 'welcome') {
+      setWelcomeAgentState('listening');
+      setWelcomeAgentResponse('Listening...');
+    } else {
+      setScreenMessage('Listening...');
+    }
+    recognition.onresult = (event: any) => {
+      const spokenText = event.results?.[0]?.[0]?.transcript || '';
+      if (target === 'welcome') {
+        setWelcomeInstruction(spokenText);
+        void sendWelcomeAgent(spokenText);
+      } else {
+        setAgentPrompt(spokenText);
+        void askAgent(spokenText);
+      }
+    };
+    recognition.onerror = () => {
+      const fallback = 'I could not hear that clearly. Type the instruction and send it again.';
+      if (target === 'welcome') {
+        setWelcomeAgentState('listening');
+        setWelcomeAgentResponse(fallback);
+      } else {
+        setScreenMessage(fallback);
+      }
+    };
+    recognition.start();
   }
 
   async function sendWelcomeAgent(instruction = welcomeInstruction) {
@@ -496,16 +592,20 @@ export default function App() {
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.detail || payload.error?.message || 'Smart Agent request failed');
-      setWelcomeAgentResponse(payload.data.response);
+      const data = payload.data as AgentReply;
+      setWelcomeAgentResponse(data.response);
+      setWelcomeAgentActions(data.recommended_actions || []);
       setWelcomeAgentState('answered');
     } catch (error) {
       setWelcomeAgentResponse(error instanceof Error ? error.message : 'Smart Agent request failed.');
+      setWelcomeAgentActions([]);
       setWelcomeAgentState('answered');
     }
   }
 
-  function continueFromWelcomeAgent() {
+  function continueFromWelcomeAgent(action?: AgentAction) {
     setAgentPrompt(welcomeInstruction);
+    if (action) setPendingAgentAction(action);
     setShowLogin(true);
   }
 
@@ -514,13 +614,78 @@ export default function App() {
     try {
       const data = await api('/api/smart-agent/chat', {
         method: 'POST',
-        body: JSON.stringify({ message, mode: activeTab === 'goalsheet' ? 'goalsheet_review' : 'blueprint_step' })
-      });
+        body: JSON.stringify({
+          message,
+          mode: agentModeForCurrentTab(),
+          conversation_history: agentTurns.slice(-4).map((turn) => ({ user: turn.prompt, assistant: turn.response }))
+        })
+      }) as AgentReply;
       setAgentResponse(data.response);
+      setAgentActions(data.recommended_actions || []);
+      setAgentTurns((turns) => [{ prompt: message, response: data.response, actions: data.recommended_actions || [] }, ...turns].slice(0, 5));
       setScreenMessage(data.risk_flags?.length ? `Guardrail: ${data.risk_flags.join(', ')}` : 'Smart Agent response ready.');
     } catch (error) {
+      setAgentActions([]);
       setScreenMessage(error instanceof Error ? error.message : 'Smart Agent request failed.');
     }
+  }
+
+  function runAgentAction(action: AgentAction, forceAuthenticated = false) {
+    if (!token && !forceAuthenticated) {
+      setPendingAgentAction(action);
+      continueFromWelcomeAgent(action);
+      return;
+    }
+
+    const route = String(action.route || action.type || '').toLowerCase();
+    const params = action.params || {};
+    const stepNumber = Number(params.step || params.blueprint_step || 0);
+    const stepId = String(params.step_id || (stepNumber ? `step_${stepNumber}` : ''));
+
+    if (route.includes('goal')) {
+      setActiveTab('goalsheet');
+      setScreenMessage('Smart Agent opened GoalSheet for your next action.');
+      return;
+    }
+
+    if (route.includes('roleplay')) {
+      if (stepNumber) {
+        const scenarioForStep = scenarios.find((scenario) => scenario.blueprint_step_id === `step_${stepNumber}`);
+        if (scenarioForStep) setSelectedScenarioId(scenarioForStep.id);
+      }
+      setActiveTab('roleplay');
+      setScreenMessage('Smart Agent opened Roleplay Live.');
+      return;
+    }
+
+    if (route.includes('resource')) {
+      setActiveTab('resources');
+      setScreenMessage('Smart Agent opened approved resources.');
+      return;
+    }
+
+    if (route.includes('manager') || route.includes('admin') || route.includes('support')) {
+      setActiveTab('support');
+      setScreenMessage('Smart Agent opened your role workspace.');
+      return;
+    }
+
+    if (route.includes('blueprintstep') || route.includes('roadmap') || route.includes('blueprint')) {
+      setActiveTab('roadmap');
+      if (stepId) {
+        setSelectedStepId(stepId);
+        const step = steps.find((item) => item.id === stepId);
+        if (step) {
+          void openStepDetail(step);
+        } else {
+          setShowStepDetail(true);
+        }
+      }
+      setScreenMessage(stepNumber ? `Smart Agent opened Blueprint Step ${stepNumber}.` : 'Smart Agent opened Roadmap.');
+      return;
+    }
+
+    setScreenMessage(`Smart Agent action ready: ${action.label}`);
   }
 
   async function saveGoalSheet() {
@@ -769,7 +934,7 @@ export default function App() {
               <View style={styles.orbitOuter} />
               <View style={styles.orbitMiddle} />
               <View style={[styles.listenRing, welcomeAgentState !== 'idle' && styles.listenRingActive]} />
-              <TouchableOpacity style={[styles.orbitCore, styles.agentEyeButton]} onPress={() => startWelcomeAgent()} activeOpacity={0.82}>
+              <TouchableOpacity style={[styles.orbitCore, styles.agentEyeButton]} onPress={() => startAgentListening('welcome')} activeOpacity={0.82}>
                 <Eye color={gold2} size={72} strokeWidth={1.6} />
                 <View style={styles.eyeCenterDot} />
               </TouchableOpacity>
@@ -788,7 +953,7 @@ export default function App() {
                   <Text style={styles.cardTitle}>Smart Agent Eye</Text>
                   <Text style={styles.muted}>Like Shazam for sales coaching: tap, give an instruction, get a next step.</Text>
                 </View>
-                <TouchableOpacity style={styles.eyeMiniButton} onPress={() => sendWelcomeAgent()}>
+                <TouchableOpacity style={styles.eyeMiniButton} onPress={() => startAgentListening('welcome')}>
                   {welcomeAgentState === 'thinking' ? <Sparkles color={ink} size={24} /> : <Mic color={ink} size={24} />}
                 </TouchableOpacity>
               </View>
@@ -815,7 +980,18 @@ export default function App() {
                     <Chip label="Roleplay" icon={Users} onPress={() => sendWelcomeAgent('Start a realistic roleplay practice')} />
                   </View>
                   {welcomeAgentResponse ? <Text style={styles.insight}>{welcomeAgentResponse}</Text> : null}
-                  <TouchableOpacity style={styles.secondaryAction} onPress={continueFromWelcomeAgent}>
+                  {welcomeAgentActions.length ? (
+                    <View style={styles.agentActionStack}>
+                      {welcomeAgentActions.map((action) => (
+                        <TouchableOpacity key={`${action.label}-${action.route}`} style={styles.agentActionButton} onPress={() => continueFromWelcomeAgent(action)}>
+                          <Sparkles color={gold} size={18} />
+                          <Text style={styles.agentActionText}>{action.label}</Text>
+                          <ChevronRight color={gold} size={18} />
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  ) : null}
+                  <TouchableOpacity style={styles.secondaryAction} onPress={() => continueFromWelcomeAgent()}>
                     <Text style={styles.secondaryActionText}>Continue with this instruction</Text>
                   </TouchableOpacity>
                 </>
@@ -860,7 +1036,8 @@ export default function App() {
           </TouchableOpacity>
           <BrandMark />
           <View style={styles.agentEyeHero}>
-            <Bot color={gold2} size={76} strokeWidth={1.4} />
+            <Eye color={gold2} size={76} strokeWidth={1.4} />
+            <View style={styles.eyeCenterDotLarge} />
           </View>
           <Text style={styles.title}>Welcome to Sales <Text style={styles.goldText}>Academy</Text></Text>
           <Text style={styles.subtitle}>Your AI-powered partner to train, practice and master every step of the sales process.</Text>
@@ -934,10 +1111,15 @@ export default function App() {
           <View style={styles.smartAgentCard}>
             <Pill label="SMART AGENT" icon={Sparkles} />
             <View style={styles.agentEyeHero}>
-              <Bot color={gold2} size={76} strokeWidth={1.4} />
+              <Eye color={gold2} size={76} strokeWidth={1.4} />
+              <View style={styles.eyeCenterDotLarge} />
             </View>
             <Text style={styles.centerTitle}>Your Smart Agent</Text>
             <Text style={styles.centerCopy}>Ask anything. Get real-time guidance.</Text>
+            <TouchableOpacity style={styles.listenAction} onPress={() => startAgentListening('home')}>
+              <Mic color={ink} size={22} />
+              <Text style={styles.listenActionText}>Tap to speak</Text>
+            </TouchableOpacity>
             <View style={styles.promptBar}>
               <TextInput onChangeText={setAgentPrompt} placeholder="Ask your agent anything..." placeholderTextColor="#aeb8c2" style={styles.promptInput} value={agentPrompt} />
               <TouchableOpacity style={styles.sendButton} onPress={() => askAgent()}>
@@ -949,6 +1131,25 @@ export default function App() {
               <Chip label="Deal strategy" icon={Target} onPress={() => askAgent('Give me a deal strategy for today')} />
             </View>
             {agentResponse ? <Text style={styles.insight}>{agentResponse}</Text> : null}
+            {agentActions.length ? (
+              <View style={styles.agentActionStack}>
+                {agentActions.map((action) => (
+                  <TouchableOpacity key={`${action.label}-${action.route}`} style={styles.agentActionButton} onPress={() => runAgentAction(action)}>
+                    <Sparkles color={gold} size={18} />
+                    <Text style={styles.agentActionText}>{action.label}</Text>
+                    <ChevronRight color={gold} size={18} />
+                  </TouchableOpacity>
+                ))}
+              </View>
+            ) : null}
+            {agentTurns.length > 1 ? (
+              <View style={styles.agentHistory}>
+                <Text style={styles.goldCaps}>RECENT COACHING</Text>
+                {agentTurns.slice(1, 3).map((turn) => (
+                  <Text key={`${turn.prompt}-${turn.response.slice(0, 12)}`} style={styles.muted}>- {turn.prompt}</Text>
+                ))}
+              </View>
+            ) : null}
           </View>
         </GlassCard>
         <GlassCard accent>
@@ -1968,6 +2169,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 16
   },
+  eyeCenterDotLarge: {
+    backgroundColor: gold,
+    borderRadius: 10,
+    height: 20,
+    position: 'absolute',
+    width: 20
+  },
   eyeMiniButton: {
     alignItems: 'center',
     backgroundColor: gold,
@@ -2254,6 +2462,21 @@ const styles = StyleSheet.create({
     height: 46,
     justifyContent: 'center',
     width: 46
+  },
+  listenAction: {
+    alignItems: 'center',
+    backgroundColor: gold,
+    borderRadius: 8,
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 12,
+    minHeight: 46,
+    paddingHorizontal: 18
+  },
+  listenActionText: {
+    color: ink,
+    fontSize: 16,
+    fontWeight: '900'
   },
   quickChips: {
     flexDirection: 'row',
@@ -2991,5 +3214,34 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     marginTop: 12,
     padding: 12
+  },
+  agentActionStack: {
+    gap: 8,
+    marginTop: 12,
+    width: '100%'
+  },
+  agentActionButton: {
+    alignItems: 'center',
+    borderColor: 'rgba(255,194,26,0.48)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 10,
+    minHeight: 48,
+    paddingHorizontal: 12
+  },
+  agentActionText: {
+    color: '#fff',
+    flex: 1,
+    fontSize: 15,
+    fontWeight: '900'
+  },
+  agentHistory: {
+    borderColor: 'rgba(255,255,255,0.12)',
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: 12,
+    padding: 12,
+    width: '100%'
   }
 });
