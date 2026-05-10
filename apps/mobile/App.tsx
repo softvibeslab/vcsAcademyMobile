@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as SecureStore from 'expo-secure-store';
 import {
@@ -28,14 +28,21 @@ import {
   Video
 } from 'lucide-react-native';
 import { Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Theme from './src/constants/theme';
+import { AgentEye, BottomTabBar, PremiumCard } from './src/components/features/shared';
 
 const API_BASE = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8001';
 const SESSION_KEY = 'vcsa_token';
-const gold = '#ffc21a';
-const gold2 = '#ffe58a';
-const ink = '#020506';
+const gold = Theme.colors.primary.gold;
+const gold2 = Theme.colors.primary.goldLight;
+const ink = '#110e07';
+const surfaceBg = Theme.colors.surface.background;
+const textPrimary = Theme.colors.text.primary;
+const textMuted = Theme.colors.text.secondary;
+const borderGhost = Theme.colors.border.medium;
 
 type TabKey = 'home' | 'roadmap' | 'goalsheet' | 'roleplay' | 'resources' | 'support';
+type HomeMode = 'coach' | 'train' | 'execute';
 
 type User = {
   id: string;
@@ -230,7 +237,7 @@ const tabs: Array<{ key: TabKey; label: string; icon: React.ComponentType<{ colo
   { key: 'home', label: 'Home', icon: Home },
   { key: 'roadmap', label: 'Roadmap', icon: Target },
   { key: 'goalsheet', label: 'GoalSheet', icon: ClipboardCheck },
-  { key: 'roleplay', label: 'Roleplay Live', icon: Users },
+  { key: 'roleplay', label: 'Roleplay', icon: Users },
   { key: 'resources', label: 'Resources', icon: BookOpen },
   { key: 'support', label: 'Support', icon: Headphones }
 ];
@@ -260,6 +267,36 @@ const fallbackDemoUsers: DemoUser[] = [
 ];
 
 const leadershipRoles = new Set(['manager', 'to_manager', 'trainer', 'coach', 'admin']);
+
+const homeFocusModes: Array<{
+  key: HomeMode;
+  label: string;
+  title: string;
+  copy: string;
+  prompt: string;
+}> = [
+  {
+    key: 'coach',
+    label: 'Coach',
+    title: 'Sharpen today',
+    copy: 'Ask the Agent for one practical move before your next conversation.',
+    prompt: 'Give me one coaching move for my next tour.'
+  },
+  {
+    key: 'train',
+    label: 'Train',
+    title: 'Practice the blueprint',
+    copy: 'Continue your current step and keep the sequence clean.',
+    prompt: 'What should I train next in the Blueprint?'
+  },
+  {
+    key: 'execute',
+    label: 'Execute',
+    title: 'Log and improve',
+    copy: 'Capture today, review the numbers, and turn it into a follow-up.',
+    prompt: 'Analyze my day and tell me the next best action.'
+  }
+];
 
 function hasAnyRole(user: User | null, roles: string[]) {
   return Boolean(user?.roles.some((role) => roles.includes(role)));
@@ -309,6 +346,7 @@ export default function App() {
   const [agentResponse, setAgentResponse] = useState('');
   const [agentActions, setAgentActions] = useState<AgentAction[]>([]);
   const [agentTurns, setAgentTurns] = useState<AgentTurn[]>([]);
+  const [activeHomeMode, setActiveHomeMode] = useState<HomeMode>('coach');
   const [pendingAgentAction, setPendingAgentAction] = useState<AgentAction | null>(null);
   const [selectedTourOutcome, setSelectedTourOutcome] = useState('qualified');
   const [salesOutcome, setSalesOutcome] = useState('sold');
@@ -323,6 +361,7 @@ export default function App() {
   const [roleplayMessage, setRoleplayMessage] = useState('If the program makes sense and is affordable, could you make a yes or no decision today?');
   const [roleplayScore, setRoleplayScore] = useState<RoleplayScore | null>(null);
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
+  const [resourceQuery, setResourceQuery] = useState('');
   const [certificationReadiness, setCertificationReadiness] = useState<CertificationReadiness | null>(null);
   const [adminInviteEmail, setAdminInviteEmail] = useState('new-rep@vcsa.local');
   const [authError, setAuthError] = useState('');
@@ -330,6 +369,7 @@ export default function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isRestoringSession, setIsRestoringSession] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const mainScrollRef = useRef<ScrollView | null>(null);
 
   const completedCount = useMemo(() => steps.filter((step) => step.status === 'completed').length, [steps]);
   const selectedStep = steps.find((step) => step.id === selectedStepId) || steps.find((step) => step.step_number === 5) || steps[0];
@@ -340,6 +380,11 @@ export default function App() {
   const canUseLeadershipWorkspace = hasAnyRole(user, Array.from(leadershipRoles));
   const canUseAdminWorkspace = hasAnyRole(user, ['admin']);
   const selectedDemoUser = demoUsers.find((demoUser) => demoUser.email === email);
+  const activeHomeFocus = homeFocusModes.find((mode) => mode.key === activeHomeMode) || homeFocusModes[0];
+
+  useEffect(() => {
+    mainScrollRef.current?.scrollTo({ y: 0, animated: false });
+  }, [activeTab, showStepDetail]);
 
   async function saveStoredToken(nextToken: string) {
     if (Platform.OS === 'web') {
@@ -553,57 +598,13 @@ export default function App() {
     return 'blueprint_step';
   }
 
-  function getSpeechRecognition() {
-    if (Platform.OS !== 'web') return null;
-    const host = globalThis as typeof globalThis & {
-      SpeechRecognition?: new () => any;
-      webkitSpeechRecognition?: new () => any;
-    };
-    return host.SpeechRecognition || host.webkitSpeechRecognition || null;
-  }
-
-  function startAgentListening(target: 'welcome' | 'home') {
-    const Recognition = getSpeechRecognition();
-    if (!Recognition) {
-      if (target === 'welcome') {
-        startWelcomeAgent();
-        setWelcomeAgentResponse('Listening mode is ready. Type your instruction or tap a quick action.');
-      } else {
-        setScreenMessage('Listening mode is ready. Type your instruction or tap a quick action.');
-      }
-      return;
-    }
-
-    const recognition = new Recognition();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
+  function openAgentTextInput(target: 'welcome' | 'home') {
     if (target === 'welcome') {
-      setWelcomeAgentState('listening');
-      setWelcomeAgentResponse('Listening...');
+      startWelcomeAgent();
+      setWelcomeAgentResponse('Voice mode is off for Expo Go. Type your instruction or choose a quick action.');
     } else {
-      setScreenMessage('Listening...');
+      setScreenMessage('Voice mode is off for Expo Go. Type your instruction or choose a quick action.');
     }
-    recognition.onresult = (event: any) => {
-      const spokenText = event.results?.[0]?.[0]?.transcript || '';
-      if (target === 'welcome') {
-        setWelcomeInstruction(spokenText);
-        void sendWelcomeAgent(spokenText);
-      } else {
-        setAgentPrompt(spokenText);
-        void askAgent(spokenText);
-      }
-    };
-    recognition.onerror = () => {
-      const fallback = 'I could not hear that clearly. Type the instruction and send it again.';
-      if (target === 'welcome') {
-        setWelcomeAgentState('listening');
-        setWelcomeAgentResponse(fallback);
-      } else {
-        setScreenMessage(fallback);
-      }
-    };
-    recognition.start();
   }
 
   async function sendWelcomeAgent(instruction = welcomeInstruction) {
@@ -970,7 +971,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.appShell}>
-        <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+        <ScrollView ref={mainScrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
           {activeTab === 'home' && <LoggedInHeader />}
           {screenMessage ? <Notice text={screenMessage} /> : null}
           {isLoading ? <Text style={styles.muted}>Syncing workspace...</Text> : null}
@@ -989,97 +990,115 @@ export default function App() {
   function renderWelcome() {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <LinearGradient colors={['#03080b', '#010202']} style={styles.welcomeGradient}>
+        <LinearGradient colors={['#16130b', '#050504', '#0e0e12']} style={styles.welcomeGradient}>
           <ScrollView contentContainerStyle={styles.welcome} showsVerticalScrollIndicator={false}>
-            <View style={styles.statusSpacer} />
-            <BrandMark stacked />
+            <View style={styles.welcomeHeader}>
+              <TouchableOpacity style={styles.welcomeMenuButton} onPress={() => startWelcomeAgent()}>
+                <MoreHorizontal color={gold} size={24} />
+              </TouchableOpacity>
+              <Text style={styles.welcomeHeaderTitle}>SALES ACADEMY</Text>
+              <TouchableOpacity style={styles.welcomeAvatar} onPress={() => setShowLogin(true)}>
+                <Text style={styles.welcomeAvatarText}>AB</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.welcomeHeroBlock}>
+              <Text style={styles.welcomeTitle}>SMART AGENT</Text>
+              <Text style={styles.welcomeCopy}>
+                Your AI-powered partner that listens, analyzes, and coaches you to close more deals.
+              </Text>
+            </View>
+
             <View style={styles.agentHaloLarge}>
               <View style={styles.orbitOuter} />
               <View style={styles.orbitMiddle} />
               <View style={[styles.listenRing, welcomeAgentState !== 'idle' && styles.listenRingActive]} />
-              <TouchableOpacity style={[styles.orbitCore, styles.agentEyeButton]} onPress={() => startAgentListening('welcome')} activeOpacity={0.82}>
-                <Eye color={gold2} size={72} strokeWidth={1.6} />
+              <TouchableOpacity
+                accessibilityLabel="Open Smart Agent text input"
+                accessibilityRole="button"
+                style={[styles.orbitCore, styles.agentEyeButton]}
+                onPress={() => openAgentTextInput('welcome')}
+                activeOpacity={0.82}
+              >
+                {welcomeAgentState === 'thinking' ? <Sparkles color={gold2} size={58} strokeWidth={1.6} /> : <Eye color={gold2} size={78} strokeWidth={1.6} />}
                 <View style={styles.eyeCenterDot} />
               </TouchableOpacity>
               <FeatureCallout label="Analyze" caption="Every Conversation" style={styles.calloutLeftTop} icon={BarChart3} />
               <FeatureCallout label="Guide" caption="Every Step" style={styles.calloutRightTop} icon={Rocket} />
-              <FeatureCallout label="Coach" caption="In Real-Time" style={styles.calloutLeftBottom} icon={Bot} />
+              <FeatureCallout label="Coach" caption="In Real-Time" style={styles.calloutLeftBottom} icon={Headphones} />
               <FeatureCallout label="Elevate" caption="Every Result" style={styles.calloutRightBottom} icon={Target} />
             </View>
-            <Text style={styles.welcomeEyebrow}>AI-POWERED SALES INTELLIGENCE</Text>
-            <Text style={styles.welcomeTitle}>SMART AGENT</Text>
-            <Text style={styles.welcomeCopy}>Tap the Eye. Tell your Agent what you need.</Text>
-            <GlassCard accent>
-              <View style={styles.rowBetween}>
-                <View style={styles.stepTextBlock}>
-                  <Text style={styles.goldCaps}>{welcomeAgentState === 'thinking' ? 'ANALYZING' : welcomeAgentState === 'idle' ? 'TAP TO START' : 'LISTENING MODE'}</Text>
-                  <Text style={styles.cardTitle}>Smart Agent Eye</Text>
-                  <Text style={styles.muted}>Like Shazam for sales coaching: tap, give an instruction, get a next step.</Text>
-                </View>
-                <TouchableOpacity style={styles.eyeMiniButton} onPress={() => startAgentListening('welcome')}>
-                  {welcomeAgentState === 'thinking' ? <Sparkles color={ink} size={24} /> : <Mic color={ink} size={24} />}
-                </TouchableOpacity>
-              </View>
-              {welcomeAgentState !== 'idle' ? (
-                <>
-                  <View style={styles.promptBar}>
-                    <TextInput
-                      onChangeText={setWelcomeInstruction}
-                      placeholder="Tell your Agent what you need..."
-                      placeholderTextColor="#aeb8c2"
-                      style={styles.promptInput}
-                      value={welcomeInstruction}
-                    />
-                    <TouchableOpacity style={styles.sendButton} onPress={() => sendWelcomeAgent()}>
-                      <Send color={ink} size={22} />
-                    </TouchableOpacity>
+
+            {welcomeAgentState !== 'idle' ? (
+              <GlassCard accent>
+                <View style={styles.rowBetween}>
+                  <View style={styles.stepTextBlock}>
+                    <Text style={styles.goldCaps}>{welcomeAgentState === 'thinking' ? 'ANALYZING' : welcomeAgentState === 'answered' ? 'COACHING READY' : 'LISTENING MODE'}</Text>
+                    <Text style={styles.cardTitle}>Tap. Ask. Act.</Text>
+                    <Text style={styles.muted}>Like Shazam for sales coaching: give your Agent an instruction and get the next move.</Text>
                   </View>
-                  <View style={styles.quickChips}>
-                    <Chip label="Objections" icon={Bot} onPress={() => sendWelcomeAgent('Help me practice objection handling')} />
-                    <Chip label="Roadmap" icon={Target} onPress={() => sendWelcomeAgent('Show me what step I should train first')} />
-                  </View>
-                  <View style={styles.quickChips}>
-                    <Chip label="Closing" icon={BarChart3} onPress={() => sendWelcomeAgent('Help me improve my closing percentage')} />
-                    <Chip label="Roleplay" icon={Users} onPress={() => sendWelcomeAgent('Start a realistic roleplay practice')} />
-                  </View>
-                  {welcomeAgentResponse ? <Text style={styles.insight}>{welcomeAgentResponse}</Text> : null}
-                  {welcomeAgentActions.length ? (
-                    <View style={styles.agentActionStack}>
-                      {welcomeAgentActions.map((action) => (
-                        <TouchableOpacity key={`${action.label}-${action.route}`} style={styles.agentActionButton} onPress={() => continueFromWelcomeAgent(action)}>
-                          <Sparkles color={gold} size={18} />
-                          <Text style={styles.agentActionText}>{action.label}</Text>
-                          <ChevronRight color={gold} size={18} />
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  ) : null}
-                  <TouchableOpacity style={styles.secondaryAction} onPress={() => continueFromWelcomeAgent()}>
-                    <Text style={styles.secondaryActionText}>Continue with this instruction</Text>
+                  <TouchableOpacity
+                    accessibilityLabel="Open Smart Agent text input"
+                    accessibilityRole="button"
+                    style={styles.eyeMiniButton}
+                    onPress={() => openAgentTextInput('welcome')}
+                  >
+                    {welcomeAgentState === 'thinking' ? <Sparkles color={ink} size={24} /> : <Mic color={ink} size={24} />}
                   </TouchableOpacity>
-                </>
-              ) : (
-                <TouchableOpacity style={styles.secondaryAction} onPress={() => startWelcomeAgent()}>
-                  <Text style={styles.secondaryActionText}>Tap Eye to Give Instructions</Text>
+                </View>
+                <View style={styles.promptBar}>
+                  <TextInput
+                    onChangeText={setWelcomeInstruction}
+                    placeholder="Tell your Agent what you need..."
+                    placeholderTextColor="#aeb8c2"
+                    style={styles.promptInput}
+                    value={welcomeInstruction}
+                  />
+                  <TouchableOpacity style={styles.sendButton} onPress={() => sendWelcomeAgent()}>
+                    <Send color={ink} size={22} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.quickChips}>
+                  <Chip label="Objections" icon={Bot} onPress={() => sendWelcomeAgent('Help me practice objection handling')} />
+                  <Chip label="Roadmap" icon={Target} onPress={() => sendWelcomeAgent('Show me what step I should train first')} />
+                </View>
+                <View style={styles.quickChips}>
+                  <Chip label="Closing" icon={BarChart3} onPress={() => sendWelcomeAgent('Help me improve my closing percentage')} />
+                  <Chip label="Roleplay" icon={Users} onPress={() => sendWelcomeAgent('Start a realistic roleplay practice')} />
+                </View>
+                {welcomeAgentResponse ? <Text style={styles.insight}>{welcomeAgentResponse}</Text> : null}
+                {welcomeAgentActions.length ? (
+                  <View style={styles.agentActionStack}>
+                    {welcomeAgentActions.map((action) => (
+                      <TouchableOpacity key={`${action.label}-${action.route}`} style={styles.agentActionButton} onPress={() => continueFromWelcomeAgent(action)}>
+                        <Sparkles color={gold} size={18} />
+                        <Text style={styles.agentActionText}>{action.label}</Text>
+                        <ChevronRight color={gold} size={18} />
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                ) : null}
+                <TouchableOpacity style={styles.secondaryAction} onPress={() => continueFromWelcomeAgent()}>
+                  <Text style={styles.secondaryActionText}>Continue with this instruction</Text>
                 </TouchableOpacity>
-              )}
-            </GlassCard>
+              </GlassCard>
+            ) : (
+              <TouchableOpacity style={styles.tapHint} onPress={() => openAgentTextInput('welcome')}>
+                <Mic color={gold} size={18} />
+                <Text style={styles.tapHintText}>Tap the Eye. Type what you need.</Text>
+              </TouchableOpacity>
+            )}
+
             <View style={styles.featureGrid}>
-              <MiniFeature icon={Bot} title="AI Analysis" copy="Deep insights from every interaction." />
-              <MiniFeature icon={Users} title="Real-Time Coaching" copy="Personalized guidance when you need it." />
-              <MiniFeature icon={BarChart3} title="Performance Boost" copy="Track progress and close at a higher level." />
+              <MiniFeature icon={Eye} title="AI Analysis" copy="Deep dive into your calls to uncover hidden objections and buying signals." />
+              <MiniFeature icon={Headphones} title="Real-Time Coaching" copy="Live prompts and dynamic scripting suggestions during your active pitches." />
+              <MiniFeature icon={Rocket} title="Performance Boost" copy="Continuous learning tailored to increase your specific close rate." />
             </View>
-            <View style={styles.coachCard}>
-              <View>
-                <Text style={styles.goldCaps}>YOUR AI COACH</Text>
-                <Text style={styles.coachTitle}>Smart Agent</Text>
-                <Text style={styles.bodyText}>Always with you. Always leveling you up.</Text>
-              </View>
-              <View style={styles.eyeBadge}>
-                <Bot color={gold2} size={36} />
-              </View>
-            </View>
-            <GoldButton label="Get Started" onPress={() => setShowLogin(true)} icon={ChevronRight} />
+
+            <TouchableOpacity style={styles.welcomePrimaryAction} onPress={() => setShowLogin(true)} activeOpacity={0.88}>
+              <Text style={styles.welcomePrimaryActionText}>Get Started</Text>
+              <ChevronRight color="#3d2f00" size={28} strokeWidth={2.5} />
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => setShowLogin(true)}>
               <Text style={styles.accountLink}>I already have an account</Text>
             </TouchableOpacity>
@@ -1144,13 +1163,47 @@ export default function App() {
   function renderHome() {
     return (
       <>
-        <Text style={styles.homeTitle}>Good morning, <Text style={styles.goldText}>{firstName}</Text></Text>
-        <Text style={styles.subtitle}>Your Smart Agent is ready to provide valuable resources.</Text>
+        <View style={styles.homeIntro}>
+          <Text style={styles.homeTitle}>Good morning, <Text style={styles.goldText}>{firstName}</Text></Text>
+          <Text style={styles.subtitle}>Choose a focus, ask the Agent, and keep the day moving.</Text>
+        </View>
         <View style={styles.roleChipRow}>
           {(user?.roles || []).map((role) => (
             <Text key={role} style={styles.roleChip}>{roleLabel(role)}</Text>
           ))}
         </View>
+        <GlassCard accent>
+          <View style={styles.focusHeader}>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.goldCaps}>TODAY'S MODE</Text>
+              <Text style={styles.cardTitle}>{activeHomeFocus.title}</Text>
+              <Text style={styles.muted}>{activeHomeFocus.copy}</Text>
+            </View>
+            <View style={styles.focusScorePill}>
+              <Text style={styles.focusScore}>{roadmapPercent}%</Text>
+              <Text style={styles.focusScoreLabel}>ready</Text>
+            </View>
+          </View>
+          <View style={styles.segmentedControl}>
+            {homeFocusModes.map((mode) => (
+              <TouchableOpacity
+                key={mode.key}
+                style={[styles.segmentOption, activeHomeMode === mode.key && styles.segmentOptionActive]}
+                onPress={() => {
+                  setActiveHomeMode(mode.key);
+                  setAgentPrompt(mode.prompt);
+                }}
+              >
+                <Text style={[styles.segmentText, activeHomeMode === mode.key && styles.segmentTextActive]}>{mode.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View style={styles.homeActionGrid}>
+            <HomeAction icon={Target} label="Roadmap" caption={currentStep?.title || 'Current step'} onPress={() => setActiveTab('roadmap')} />
+            <HomeAction icon={ClipboardCheck} label="GoalSheet" caption="Capture today" onPress={() => setActiveTab('goalsheet')} />
+            <HomeAction icon={Users} label="Roleplay" caption="Practice with AI" onPress={() => setActiveTab('roleplay')} />
+          </View>
+        </GlassCard>
         {(canUseLeadershipWorkspace || canUseAdminWorkspace) ? (
           <GlassCard accent>
             <View style={styles.rowBetween}>
@@ -1172,17 +1225,17 @@ export default function App() {
         ) : null}
         <GlassCard accent>
           <View style={styles.smartAgentCard}>
-            <Pill label="SMART AGENT" icon={Sparkles} />
-            <View style={styles.agentEyeHero}>
-              <Eye color={gold2} size={76} strokeWidth={1.4} />
-              <View style={styles.eyeCenterDotLarge} />
+            <View style={styles.agentHeroRow}>
+              <View style={styles.agentEyeHero}>
+                <Eye color={gold2} size={48} strokeWidth={1.5} />
+                <View style={styles.eyeCenterDotLarge} />
+              </View>
+              <View style={styles.agentHeroCopy}>
+                <Pill label="SMART AGENT" icon={Sparkles} />
+                <Text style={styles.centerTitle}>Ask for the next move</Text>
+                <Text style={styles.centerCopy}>Short coaching, routed actions, and safe guardrails.</Text>
+              </View>
             </View>
-            <Text style={styles.centerTitle}>Your Smart Agent</Text>
-            <Text style={styles.centerCopy}>Ask anything. Get real-time guidance.</Text>
-            <TouchableOpacity style={styles.listenAction} onPress={() => startAgentListening('home')}>
-              <Mic color={ink} size={22} />
-              <Text style={styles.listenActionText}>Tap to speak</Text>
-            </TouchableOpacity>
             <View style={styles.promptBar}>
               <TextInput onChangeText={setAgentPrompt} placeholder="Ask your agent anything..." placeholderTextColor="#aeb8c2" style={styles.promptInput} value={agentPrompt} />
               <TouchableOpacity style={styles.sendButton} onPress={() => askAgent()}>
@@ -1218,7 +1271,9 @@ export default function App() {
         <GlassCard accent>
           <View style={styles.rowBetween}>
             <Text style={styles.cardTitle}>Today's Progress</Text>
-            <Text style={styles.goldText}>View Insights</Text>
+            <TouchableOpacity onPress={() => askAgent('Give me a quick insight on my progress today')}>
+              <Text style={styles.goldText}>Ask Agent</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.progressGrid}>
             <ProgressTile icon={Target} label="Goal Progress" value={`${roadmapPercent}%`} trend="On track" />
@@ -1252,7 +1307,7 @@ export default function App() {
     return (
       <>
         <View style={styles.titleBar}>
-          <Text style={styles.screenTitle}>Top Producer Roadmap</Text>
+          <Text style={styles.roadmapTitle}>Top Producer Roadmap</Text>
           <HelpPill />
         </View>
         <Text style={styles.subtitle}>Master the blueprint. Execute the perfect sale.</Text>
@@ -1279,7 +1334,7 @@ export default function App() {
               {step.status === 'completed' ? <Check color={ink} size={24} /> : <Text style={styles.stepIconText}>{step.step_number}</Text>}
             </View>
             <View style={styles.stepTextBlock}>
-              <Text style={styles.rowTitle}>{step.step_number}. {blueprintAliases[step.step_number] || step.title}</Text>
+              <Text style={styles.roadmapRowTitle}>{step.step_number}. {blueprintAliases[step.step_number] || step.title}</Text>
               <Text style={styles.muted}>{step.description}</Text>
             </View>
             {step.status === 'current' ? <GoldSmallButton label="Continue" /> : <Text style={[styles.badge, step.status === 'completed' ? styles.completed : styles.locked]}>{step.status === 'completed' ? 'Completed' : `${step.progress_percent}%`}</Text>}
@@ -1312,13 +1367,11 @@ export default function App() {
           <ChevronLeft color={gold} size={24} />
           <Text style={styles.goldText}>Back to Roadmap</Text>
         </TouchableOpacity>
-        <View style={styles.rowBetween}>
-          <View>
-            <Text style={styles.goldCaps}>STEP {step?.step_number || 5} OF 11</Text>
-            <Text style={styles.stepDetailTitle}>{blueprintAliases[step?.step_number || 5] || step?.title || 'Remake the Pact'}</Text>
-          </View>
+        <View style={styles.stepDetailMetaRow}>
+          <Text style={styles.goldCaps}>STEP {step?.step_number || 5} OF 11</Text>
           <HelpPill />
         </View>
+        <Text adjustsFontSizeToFit minimumFontScale={0.82} numberOfLines={3} style={styles.stepDetailTitle}>{blueprintAliases[step?.step_number || 5] || step?.title || 'Remake the Pact'}</Text>
         <Pill label="High Impact Step" icon={Sparkles} />
         <Text style={styles.bodyText}>{selectedStepDetail?.purpose || step?.description || 'Train this step with approved coaching and roleplay.'}</Text>
         <GlassCard>
@@ -1336,7 +1389,17 @@ export default function App() {
             <Text style={styles.quoteMark}>“</Text>
             <Text style={styles.quoteText}>{script?.body || 'If you like what you see, it makes sense, and if it is 100% affordable, would you feel comfortable giving me a simple YES today?'}</Text>
           </View>
-          <Text style={styles.centerLink}>{script?.compliance_note || 'View Full Script'}</Text>
+          <Text style={styles.centerLink}>View Full Script</Text>
+          <Text style={styles.complianceNote}>{script?.compliance_note || 'Training language only. Do not invent pricing, terms, or hide fees.'}</Text>
+        </GlassCard>
+        <GlassCard>
+          <SectionLabel icon={CircleHelp} label="COMMON MISTAKES" />
+          {['Pressuring the guest', 'Inventing terms', 'Skipping disclosure'].map((item) => (
+            <View style={styles.followRow} key={item}>
+              <CircleHelp color={gold} size={18} />
+              <Text style={styles.bodyText}>{item}</Text>
+            </View>
+          ))}
         </GlassCard>
         <GlassCard>
           <SectionLabel icon={ClipboardCheck} label="CHECKLIST" />
@@ -1371,15 +1434,15 @@ export default function App() {
   function renderGoalSheet() {
     return (
       <>
-        <HeaderLine title="Smart GoalSheet" subtitle="Log your day. Your Agent turns data into results." />
+        <HeaderLine compact title="Smart GoalSheet" subtitle="Log your day. Your Agent turns data into results." />
         <View style={styles.goalHeaderActions}>
           <TouchableOpacity style={styles.dateButton}>
             <CalendarDays color={gold} size={18} />
-            <Text style={styles.goldText}>Today, May 16, 2025</Text>
+            <Text adjustsFontSizeToFit minimumFontScale={0.78} numberOfLines={1} style={[styles.goldText, styles.actionButtonText]}>Today, May 16, 2025</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.historyButton} onPress={() => setShowGoalHistory((value) => !value)}>
             <BarChart3 color={gold} size={18} />
-            <Text style={styles.goldText}>View History</Text>
+            <Text adjustsFontSizeToFit minimumFontScale={0.78} numberOfLines={1} style={[styles.goldText, styles.actionButtonText]}>View History</Text>
           </TouchableOpacity>
         </View>
         <GoalSection number="1" title="TOUR" icon={Target} subtitle="What type of guest did you take today?">
@@ -1467,6 +1530,10 @@ export default function App() {
 
   function renderRoleplay() {
     const scenario = selectedScenario;
+    const scenarioStatTitle = scenario?.title.match(/^Step\s+\d+/i)?.[0] || scenario?.title || 'Objection';
+    const scenarioStatCaption = scenario?.title.match(/^Step\s+\d+/i)
+      ? `${scenario.title.replace(/^Step\s+\d+\s*/i, '').trim()} · ${scenario.difficulty}`
+      : scenario?.difficulty || 'medium';
     return (
       <>
         <View style={styles.roleplayHeader}>
@@ -1474,15 +1541,15 @@ export default function App() {
             <ChevronLeft color={gold} size={26} />
             <BrandCompact />
           </View>
-          <View style={styles.roleplayTitleBlock}>
-            <Text style={styles.cardTitle}>Roleplay Live</Text>
-            <Text style={styles.liveText}>● Live</Text>
-          </View>
           <TouchableOpacity style={styles.endButton}><Text style={styles.endText}>End</Text></TouchableOpacity>
+        </View>
+        <View style={styles.roleplayLiveLine}>
+          <Text style={styles.screenTitle}>Roleplay Live</Text>
+          <Text style={styles.liveText}>● Live</Text>
         </View>
         <GlassCard>
           <View style={styles.roleplayStats}>
-            <StatBlock icon={Target} label="Scenario" value={scenario?.title || 'Objection Handling'} caption={scenario?.difficulty || 'medium'} />
+            <StatBlock icon={Target} label="Scenario" value={scenarioStatTitle} caption={scenarioStatCaption} />
             <StatBlock icon={CalendarDays} label="Time Elapsed" value="08:42" />
             <StatBlock icon={Mic} label="Session" value={activeRoleplaySession?.status || 'ready'} caption={activeRoleplaySession?.id || 'Start practice'} green />
           </View>
@@ -1492,10 +1559,10 @@ export default function App() {
           {scenarios.map((item) => (
             <TouchableOpacity key={item.id} style={[styles.roleListRow, item.id === scenario?.id && styles.roadmapRowActive]} onPress={() => {
               setSelectedScenarioId(item.id);
-              setActiveRoleplaySession(null);
+                setActiveRoleplaySession(null);
             }}>
               <View style={styles.stepTextBlock}>
-                <Text style={styles.rowTitle}>{item.title}</Text>
+                <Text style={styles.scenarioTitle}>{item.title}</Text>
                 <Text style={styles.muted}>{item.objective}</Text>
               </View>
               <Text style={[styles.badge, item.id === scenario?.id ? styles.completed : styles.locked]}>{item.difficulty}</Text>
@@ -1567,9 +1634,48 @@ export default function App() {
   }
 
   function renderResources() {
+    const visibleResources = resources.filter((resource) => {
+      if (!resourceQuery.trim()) return true;
+      return resource.title.toLowerCase().includes(resourceQuery.trim().toLowerCase());
+    });
+    const featuredResource = visibleResources.find((resource) => resource.has_access) || visibleResources[0];
+    const restrictedResource = visibleResources.find((resource) => !resource.has_access);
     return (
       <>
         <HeaderLine title="Resources" subtitle="Approved training, scripts, checklists and sensitive-access content." />
+        <View style={styles.searchBar}>
+          <BookOpen color={gold} size={20} />
+          <TextInput
+            onChangeText={setResourceQuery}
+            placeholder="Search scripts, videos, worksheets..."
+            placeholderTextColor="#8f8777"
+            style={styles.searchInput}
+            value={resourceQuery}
+          />
+        </View>
+        <View style={styles.filterRow}>
+          {['Blueprint Step', 'Role', 'Type', 'Sensitivity', 'Available only'].map((filter) => (
+            <Text key={filter} style={styles.filterChip}>{filter}</Text>
+          ))}
+        </View>
+        {featuredResource ? (
+          <TouchableOpacity onPress={() => openResource(featuredResource)}>
+            <GlassCard accent>
+              <Text style={styles.goldCaps}>FEATURED APPROVED RESOURCE</Text>
+              <Text style={styles.cardTitle}>{featuredResource.title}</Text>
+              <Text style={styles.muted}>{featuredResource.resource_type} · {featuredResource.sensitivity}</Text>
+              <View style={styles.tagRow}>
+                {(featuredResource.tags?.length ? featuredResource.tags : ['Step 5', 'Closing', 'Pact']).slice(0, 3).map((tag) => (
+                  <Text key={tag} style={styles.tagChip}>{tag}</Text>
+                ))}
+              </View>
+              <View style={styles.rowBetween}>
+                <Text style={[styles.badge, featuredResource.has_access ? styles.completed : styles.locked]}>{featuredResource.has_access ? 'Available' : 'Restricted'}</Text>
+                <Text style={styles.goldText}>Open Resource</Text>
+              </View>
+            </GlassCard>
+          </TouchableOpacity>
+        ) : null}
         {selectedResource ? (
           <GlassCard accent>
             <Text style={styles.goldCaps}>OPEN RESOURCE</Text>
@@ -1581,7 +1687,21 @@ export default function App() {
             </TouchableOpacity>
           </GlassCard>
         ) : null}
-        {resources.map((resource) => (
+        {restrictedResource ? (
+          <GlassCard>
+            <View style={styles.rowBetween}>
+              <View style={styles.stepTextBlock}>
+                <Text style={styles.cardTitle}>Restricted Access</Text>
+                <Text style={styles.muted}>Ask an admin to grant access to {restrictedResource.title}.</Text>
+              </View>
+              <Lock color={gold} size={30} />
+            </View>
+            <TouchableOpacity style={styles.secondaryAction}>
+              <Text style={styles.secondaryActionText}>Request access</Text>
+            </TouchableOpacity>
+          </GlassCard>
+        ) : null}
+        {visibleResources.map((resource) => (
           <TouchableOpacity key={resource.id} onPress={() => openResource(resource)}>
           <GlassCard>
             <View style={styles.rowBetween}>
@@ -1589,11 +1709,22 @@ export default function App() {
                 <Text style={styles.cardTitle}>{resource.title}</Text>
                 <Text style={styles.muted}>{resource.resource_type} · {resource.sensitivity}</Text>
               </View>
-              <Text style={[styles.badge, resource.has_access ? styles.completed : styles.locked]}>{resource.has_access ? 'available' : 'restricted'}</Text>
+              <View style={styles.rowCenter}>
+                {!resource.has_access ? <Lock color={gold} size={18} /> : null}
+                <Text style={[styles.badge, resource.has_access ? styles.completed : styles.locked]}>{resource.has_access ? 'available' : 'restricted'}</Text>
+              </View>
             </View>
           </GlassCard>
           </TouchableOpacity>
         ))}
+        <TouchableOpacity style={styles.agentInsight} onPress={() => askAgent('What resource should I review before my next roleplay?')}>
+          <Eye color={gold} size={34} />
+          <View style={styles.stepTextBlock}>
+            <Text style={styles.goldCaps}>SMART AGENT RECOMMENDS</Text>
+            <Text style={styles.bodyText}>Review Step 5 before your next roleplay.</Text>
+          </View>
+          <ChevronRight color={gold} size={22} />
+        </TouchableOpacity>
       </>
     );
   }
@@ -1602,12 +1733,23 @@ export default function App() {
     if (!canUseLeadershipWorkspace) return null;
     return (
       <GlassCard accent>
-        <Text style={styles.goldCaps}>LEADERSHIP WORKSPACE</Text>
-        <Text style={styles.cardTitle}>Team Coaching Manager</Text>
+        <View style={styles.rowBetween}>
+          <View style={styles.stepTextBlock}>
+            <Text style={styles.goldCaps}>LEADERSHIP WORKSPACE</Text>
+            <Text style={styles.cardTitle}>Team Coaching Manager</Text>
+            <Text style={styles.muted}>Review team performance, coaching tasks and certification readiness.</Text>
+          </View>
+          <Users color={gold} size={30} />
+        </View>
         <View style={styles.roleStatsGrid}>
           <RoleStat label="Active reps" value={`${managerDashboard?.summary.active_reps || 0}`} />
           <RoleStat label="Pending reviews" value={`${managerDashboard?.summary.pending_reviews || 0}`} />
           <RoleStat label="Team VPG" value={formatCurrency(managerDashboard?.summary.team_metrics?.vpg || 0)} />
+        </View>
+        <View style={styles.filterRow}>
+          {['Reps', 'Reviews', 'Readiness', 'Coaching'].map((tab, index) => (
+            <Text key={tab} style={[styles.filterChip, index === 0 && styles.filterChipActive]}>{tab}</Text>
+          ))}
         </View>
         {managerDashboard?.reps.slice(0, 4).map((rep) => (
           <View style={styles.roleListRow} key={rep.user.id}>
@@ -1644,6 +1786,19 @@ export default function App() {
             </TouchableOpacity>
           </View>
         ))}
+        <View style={styles.scoreCard}>
+          <Text style={styles.goldCaps}>SCORE ROLEPLAY</Text>
+          <Text style={styles.cardTitle}>85</Text>
+          <View style={styles.tagRow}>
+            {['Discovery', 'Objection', 'Commitment', 'Compliance'].map((rubric) => (
+              <Text key={rubric} style={styles.tagChip}>{rubric}</Text>
+            ))}
+          </View>
+          <Text style={styles.muted}>Recommendation: Needs Practice</Text>
+          <TouchableOpacity style={styles.secondaryAction}>
+            <Text style={styles.secondaryActionText}>Submit Review</Text>
+          </TouchableOpacity>
+        </View>
       </GlassCard>
     );
   }
@@ -1652,12 +1807,23 @@ export default function App() {
     if (!canUseAdminWorkspace) return null;
     return (
       <GlassCard accent>
-        <Text style={styles.goldCaps}>ADMIN WORKSPACE</Text>
-        <Text style={styles.cardTitle}>Users, Resources & Audit</Text>
+        <View style={styles.rowBetween}>
+          <View style={styles.stepTextBlock}>
+            <Text style={styles.goldCaps}>ADMIN WORKSPACE</Text>
+            <Text style={styles.cardTitle}>Users, Resources & Audit</Text>
+            <Text style={styles.muted}>Manage users, resources, permissions and audit events.</Text>
+          </View>
+          <Lock color={gold} size={30} />
+        </View>
         <View style={styles.roleStatsGrid}>
           <RoleStat label="Users" value={`${adminUsers.length}`} />
           <RoleStat label="Resources" value={`${adminResources.length}`} />
           <RoleStat label="Audit events" value={`${auditEvents.length}`} />
+        </View>
+        <View style={styles.filterRow}>
+          {['Users', 'Resources', 'Audit', 'Access'].map((tab, index) => (
+            <Text key={tab} style={[styles.filterChip, index === 0 && styles.filterChipActive]}>{tab}</Text>
+          ))}
         </View>
         <View style={styles.roleListRow}>
           <View style={styles.stepTextBlock}>
@@ -1699,6 +1865,61 @@ export default function App() {
             </View>
           </View>
         ))}
+        <View style={styles.tagRow}>
+          {['Courses', 'Modules', 'Lessons', 'Scripts', 'Quizzes', 'Rubrics', 'Certifications'].map((item) => (
+            <Text key={item} style={styles.tagChip}>{item}</Text>
+          ))}
+        </View>
+        <Text style={styles.complianceNote}>Admin actions are logged and visible in audit events.</Text>
+      </GlassCard>
+    );
+  }
+
+  function renderRemindersCenter() {
+    const followups = reminders.length ? reminders.slice(0, 4) : [
+      { id: 'demo_follow_1', source: 'GoalSheet', entry_date: '2026-05-16', follow_up_date: '2026-05-18', note: 'Send brochure and pricing details', status: 'scheduled' },
+      { id: 'demo_follow_2', source: 'GoalSheet', entry_date: '2026-05-16', follow_up_date: 'Today', note: 'Check availability and offer', status: 'due_today' },
+      { id: 'demo_follow_3', source: 'GoalSheet', entry_date: '2026-05-16', follow_up_date: 'Overdue', note: 'Final follow up / Close attempt', status: 'overdue' }
+    ];
+    return (
+      <GlassCard accent>
+        <View style={styles.rowBetween}>
+          <View>
+            <Text style={styles.goldCaps}>REMINDERS</Text>
+            <Text style={styles.cardTitle}>Follow-ups, reviews and training</Text>
+          </View>
+          <Bell color={gold} size={30} />
+        </View>
+        <View style={styles.roleStatsGrid}>
+          <RoleStat label="Due Today" value="3" />
+          <RoleStat label="Overdue" value="1" />
+          <RoleStat label="Reviews" value="2" />
+        </View>
+        <View style={styles.filterRow}>
+          {['Follow Ups', 'Reviews', 'Training', 'Certification'].map((tab, index) => (
+            <Text key={tab} style={[styles.filterChip, index === 0 && styles.filterChipActive]}>{tab}</Text>
+          ))}
+        </View>
+        {followups.map((reminder) => (
+          <View style={styles.roleListRow} key={reminder.id}>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.rowTitle}>{reminder.follow_up_date}</Text>
+              <Text style={styles.muted}>{reminder.note} · {reminder.source}</Text>
+            </View>
+            <Text style={[styles.badge, reminder.status === 'overdue' ? styles.badgeDanger : reminder.status === 'completed' ? styles.completed : styles.locked]}>
+              {reminder.status.replace('_', ' ')}
+            </Text>
+          </View>
+        ))}
+        <View style={styles.roleListRow}>
+          <View style={styles.stepTextBlock}>
+            <Text style={styles.rowTitle}>Assigned Blueprint Step 5</Text>
+            <Text style={styles.muted}>Due today · Practice with AI</Text>
+          </View>
+          <TouchableOpacity onPress={() => setActiveTab('roadmap')}>
+            <Text style={styles.goldSmallButton}>Run Step</Text>
+          </TouchableOpacity>
+        </View>
       </GlassCard>
     );
   }
@@ -1707,15 +1928,32 @@ export default function App() {
     return (
       <>
         <HeaderLine title="Support" subtitle="Access, profile, certification and launch readiness." />
-        {renderLeadershipWorkspace()}
-        {renderAdminWorkspace()}
-        <GlassCard>
-          <Text style={styles.cardTitle}>{user?.display_name}</Text>
-          <Text style={styles.bodyText}>{user?.email}</Text>
-          <Text style={styles.bodyText}>Roles: {user?.roles.join(', ')}</Text>
-          <Text style={styles.bodyText}>Certification: {certifications[0]?.status || dashboard?.certification_status || 'in_progress'}</Text>
+        <GlassCard accent>
+          <View style={styles.rowBetween}>
+            <View style={styles.profileAvatar}><Text style={styles.avatarText}>AB</Text></View>
+            <View style={styles.stepTextBlock}>
+              <Text style={styles.cardTitle}>{user?.display_name}</Text>
+              <Text style={styles.bodyText}>{user?.email}</Text>
+              <View style={styles.tagRow}>
+                {(user?.roles || []).map((role) => <Text key={role} style={styles.tagChip}>{roleLabel(role)}</Text>)}
+              </View>
+            </View>
+          </View>
+          <Text style={styles.roleHint}>Certification: {certifications[0]?.status || dashboard?.certification_status || 'in_progress'}</Text>
           <Text style={styles.insight}>Auth, RBAC, Smart Agent, GoalSheet, Roleplay, Resources and Manager/Admin APIs are wired for launch-demo validation.</Text>
           <TouchableOpacity style={styles.secondaryAction} onPress={logout}><Text style={styles.secondaryActionText}>Sign out</Text></TouchableOpacity>
+        </GlassCard>
+        <GlassCard>
+          <Text style={styles.cardTitle}>Certification Progress</Text>
+          <Text style={styles.metricBig}>82%</Text>
+          <View style={styles.progressBar}><View style={[styles.progressFill, { width: '82%' }]} /></View>
+          {['Blueprint steps complete: 8/11', 'Roleplays reviewed: 3/5', 'Manager approval: Pending'].map((item) => (
+            <View style={styles.followRow} key={item}>
+              <Check color={gold} size={18} />
+              <Text style={styles.bodyText}>{item}</Text>
+            </View>
+          ))}
+          <Text style={[styles.badge, styles.locked]}>Needs Practice</Text>
         </GlassCard>
         {feedback.length ? feedback.slice(0, 4).map((item) => (
           <GlassCard key={item.id}>
@@ -1723,6 +1961,27 @@ export default function App() {
             <Text style={styles.bodyText}>{item.status}: {item.manager_feedback?.comments || item.manager_feedback?.recommendation || 'Awaiting review'}</Text>
           </GlassCard>
         )) : null}
+        <GlassCard>
+          <Text style={styles.cardTitle}>Support Contact</Text>
+          {['Help Center', 'Contact Manager / Trainer', 'Technical Support'].map((item) => (
+            <View style={styles.followRow} key={item}>
+              <Headphones color={gold} size={18} />
+              <Text style={styles.bodyText}>{item}</Text>
+            </View>
+          ))}
+          <Text style={styles.muted}>Usually responds within 1 business day.</Text>
+        </GlassCard>
+        {renderRemindersCenter()}
+        {renderLeadershipWorkspace()}
+        {renderAdminWorkspace()}
+        <TouchableOpacity style={styles.agentInsight} onPress={() => askAgent('What should I practice next?')}>
+          <Eye color={gold} size={34} />
+          <View style={styles.stepTextBlock}>
+            <Text style={styles.goldCaps}>SMART AGENT SUPPORT</Text>
+            <Text style={styles.bodyText}>Ask your Agent what to practice next.</Text>
+          </View>
+          <ChevronRight color={gold} size={22} />
+        </TouchableOpacity>
       </>
     );
   }
@@ -1783,9 +2042,9 @@ function BrandCompact() {
 
 function GlassCard({ children, accent }: { children: React.ReactNode; accent?: boolean }) {
   return (
-    <LinearGradient colors={accent ? ['rgba(10,22,28,0.95)', 'rgba(3,8,10,0.96)'] : ['rgba(12,19,24,0.94)', 'rgba(3,8,10,0.94)']} style={[styles.card, accent && styles.cardAccent]}>
+    <PremiumCard accent={accent}>
       {children}
-    </LinearGradient>
+    </PremiumCard>
   );
 }
 
@@ -1824,8 +2083,10 @@ function MiniFeature({ icon: Icon, title, copy }: { icon: React.ComponentType<{ 
   return (
     <View style={styles.miniFeature}>
       <View style={styles.iconRing}><Icon color={gold} size={28} /></View>
-      <Text style={styles.miniFeatureTitle}>{title}</Text>
-      <Text style={styles.miniFeatureCopy}>{copy}</Text>
+      <View style={styles.miniFeatureText}>
+        <Text style={styles.miniFeatureTitle}>{title}</Text>
+        <Text style={styles.miniFeatureCopy}>{copy}</Text>
+      </View>
     </View>
   );
 }
@@ -1847,14 +2108,16 @@ function GoldSmallButton({ label }: { label: string }) {
   return <Text style={styles.goldSmallButton}>{label}</Text>;
 }
 
-function HeaderLine({ title, subtitle }: { title: string; subtitle: string }) {
+function HeaderLine({ title, subtitle, compact }: { title: string; subtitle: string; compact?: boolean }) {
   return (
-    <View style={styles.headerLine}>
-      <View>
-        <Text style={styles.screenTitle}>{title}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
+    <View style={[styles.headerLine, compact && styles.headerLineCompact]}>
+      <View style={styles.headerCopy}>
+        <Text adjustsFontSizeToFit minimumFontScale={0.82} numberOfLines={compact ? 1 : undefined} style={[styles.screenTitle, compact && styles.screenTitleCompact]}>{title}</Text>
+        <Text style={[styles.subtitle, compact && styles.subtitleCompact]}>{subtitle}</Text>
       </View>
-      <View style={styles.eyeSmall}><Bot color={gold2} size={40} /></View>
+      <View style={compact ? styles.headerEyeCompact : undefined}>
+        <AgentEye size="small" />
+      </View>
     </View>
   );
 }
@@ -1879,8 +2142,8 @@ function OptionCard({ text, selected, onPress }: { text: string; selected?: bool
   const Wrapper = onPress ? TouchableOpacity : View;
   return (
     <Wrapper style={[styles.optionCard, selected && styles.optionSelected]} onPress={onPress}>
-      <Text style={[styles.optionLead, selected && styles.goldText]}>{lead}</Text>
-      {rest.length ? <Text style={styles.muted}>{rest.join(' ')}</Text> : null}
+      <Text adjustsFontSizeToFit minimumFontScale={0.72} numberOfLines={2} style={[styles.optionLead, selected && styles.goldText]}>{lead}</Text>
+      {rest.length ? <Text adjustsFontSizeToFit minimumFontScale={0.72} numberOfLines={2} style={styles.optionCaption}>{rest.join(' ')}</Text> : null}
       {selected ? <View style={styles.optionCheck}><Check color={ink} size={14} /></View> : <View style={styles.optionEmpty} />}
     </Wrapper>
   );
@@ -1898,11 +2161,11 @@ function InputBlock({ label, value, onChangeText }: { label: string; value: stri
 function GoalMetric({ label, value, goal, trend, good }: { label: string; value: string; goal: string; trend: string; good?: boolean }) {
   return (
     <View style={styles.goalMetric}>
-      <Text style={styles.bodyText}>{label}</Text>
-      <Text adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1} style={styles.metricBig}>{value}</Text>
-      <Text style={styles.muted}>{goal}</Text>
+      <Text style={styles.goalMetricLabel}>{label}</Text>
+      <Text adjustsFontSizeToFit minimumFontScale={0.74} numberOfLines={1} style={styles.goalMetricValue}>{value}</Text>
+      <Text style={styles.goalMetricGoal}>{goal}</Text>
       <View style={styles.progressBar}><View style={styles.progressFill} /></View>
-      <Text style={good ? styles.goodTrend : styles.badTrend}>{trend}</Text>
+      <Text style={good ? styles.goalMetricTrendGood : styles.goalMetricTrendBad}>{trend}</Text>
     </View>
   );
 }
@@ -1921,7 +2184,7 @@ function StatBlock({ icon: Icon, label, value, caption, green }: { icon: React.C
     <View style={styles.statBlock}>
       <Icon color={green ? '#29e35f' : gold} size={28} />
       <Text style={styles.muted}>{label}</Text>
-      <Text style={[styles.statValue, green && styles.greenText]}>{value}</Text>
+      <Text adjustsFontSizeToFit minimumFontScale={0.68} numberOfLines={2} style={[styles.statValue, green && styles.greenText]}>{value}</Text>
       {caption ? <Text style={[styles.muted, green && styles.greenText]}>{caption}</Text> : null}
     </View>
   );
@@ -1959,6 +2222,18 @@ function Chip({ label, icon: Icon, onPress }: { label: string; icon: React.Compo
   );
 }
 
+function HomeAction({ icon: Icon, label, caption, onPress }: { icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; label: string; caption: string; onPress: () => void }) {
+  return (
+    <TouchableOpacity accessibilityRole="button" style={styles.homeActionCard} onPress={onPress}>
+      <View style={styles.homeActionIcon}>
+        <Icon color={gold} size={22} strokeWidth={1.8} />
+      </View>
+      <Text numberOfLines={1} style={styles.homeActionLabel}>{label}</Text>
+      <Text numberOfLines={1} style={styles.homeActionCaption}>{caption}</Text>
+    </TouchableOpacity>
+  );
+}
+
 function ProgressTile({ icon: Icon, label, value, trend }: { icon: React.ComponentType<{ color: string; size: number; strokeWidth?: number }>; label: string; value: string; trend: string }) {
   return (
     <View style={styles.progressTile}>
@@ -1989,43 +2264,67 @@ function HelpPill() {
 }
 
 function BottomNav({ activeTab, onSelect }: { activeTab: TabKey; onSelect: (tab: TabKey) => void }) {
-  return (
-    <View style={styles.tabBar}>
-      {tabs.map((tab) => {
-        const Icon = tab.icon;
-        const isActive = activeTab === tab.key;
-        return (
-          <TouchableOpacity key={tab.key} style={styles.tabButton} onPress={() => onSelect(tab.key)}>
-            <Icon color={isActive ? gold : '#dce3ea'} size={25} strokeWidth={1.7} />
-            <Text style={[styles.tabText, isActive && styles.tabTextActive]}>{tab.label}</Text>
-            {isActive ? <View style={styles.tabIndicator} /> : null}
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
+  return <BottomTabBar activeTab={activeTab} onSelect={onSelect} tabs={tabs} />;
 }
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: ink,
+    backgroundColor: surfaceBg,
     flex: 1
   },
   appShell: {
+    backgroundColor: surfaceBg,
     flex: 1
   },
   container: {
-    padding: 20,
+    backgroundColor: surfaceBg,
+    padding: Theme.spacing.md,
     paddingBottom: 116
   },
   welcomeGradient: {
-    flex: 1,
+    flex: 1
   },
   welcome: {
-    padding: 24
+    padding: 24,
+    paddingBottom: 42
   },
   statusSpacer: {
     height: 18
+  },
+  welcomeHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 28,
+    paddingTop: 4
+  },
+  welcomeMenuButton: {
+    alignItems: 'center',
+    height: 42,
+    justifyContent: 'center',
+    width: 42
+  },
+  welcomeHeaderTitle: {
+    color: gold,
+    fontSize: 16,
+    fontWeight: '900',
+    letterSpacing: 4,
+    textAlign: 'center'
+  },
+  welcomeAvatar: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(56,52,43,0.76)',
+    borderColor: 'rgba(153,144,124,0.26)',
+    borderRadius: 21,
+    borderWidth: 1,
+    height: 42,
+    justifyContent: 'center',
+    width: 42
+  },
+  welcomeAvatarText: {
+    color: '#eae1d4',
+    fontSize: 13,
+    fontWeight: '900'
   },
   centered: {
     alignItems: 'center',
@@ -2115,35 +2414,47 @@ const styles = StyleSheet.create({
     lineHeight: 48,
     textAlign: 'center'
   },
+  homeIntro: {
+    marginBottom: 4
+  },
   homeTitle: {
     color: '#fff',
-    fontSize: 36,
+    fontSize: 31,
     fontWeight: '900',
-    lineHeight: 42,
-    marginBottom: 8
+    lineHeight: 37,
+    marginBottom: 6
   },
   screenTitle: {
-    color: '#fff',
-    fontSize: 38,
+    color: textPrimary,
+    fontSize: Theme.typography.h1.fontSize,
     fontWeight: '900',
-    lineHeight: 42
+    lineHeight: Theme.typography.h1.lineHeight
+  },
+  screenTitleCompact: {
+    fontSize: 29,
+    lineHeight: 35
   },
   subtitle: {
-    color: '#c7c7c7',
-    fontSize: 18,
-    lineHeight: 27,
+    color: textMuted,
+    fontSize: 15,
+    lineHeight: 22,
     marginBottom: 18,
-    textAlign: 'center'
+    textAlign: 'left'
+  },
+  subtitleCompact: {
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 10
   },
   bodyText: {
-    color: '#f2f2f2',
-    fontSize: 16,
-    lineHeight: 23
+    color: textPrimary,
+    fontSize: 14,
+    lineHeight: 21
   },
   muted: {
-    color: '#aeb8c2',
-    fontSize: 14,
-    lineHeight: 20
+    color: textMuted,
+    fontSize: 13,
+    lineHeight: 18
   },
   goldText: {
     color: gold
@@ -2158,20 +2469,20 @@ const styles = StyleSheet.create({
     letterSpacing: 2
   },
   card: {
-    borderColor: 'rgba(255,255,255,0.14)',
-    borderRadius: 8,
+    borderColor: borderGhost,
+    borderRadius: Theme.borderRadius.md,
     borderWidth: 1,
-    marginBottom: 16,
-    padding: 18
+    marginBottom: Theme.spacing.md,
+    padding: Theme.spacing.md
   },
   cardAccent: {
-    borderColor: 'rgba(255,194,26,0.42)'
+    borderColor: 'rgba(242,202,80,0.42)'
   },
   cardTitle: {
-    color: '#fff',
-    fontSize: 24,
+    color: textPrimary,
+    fontSize: Theme.typography.h3.fontSize,
     fontWeight: '900',
-    lineHeight: 29
+    lineHeight: Theme.typography.h3.lineHeight
   },
   welcomeEyebrow: {
     color: gold2,
@@ -2182,61 +2493,68 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   welcomeTitle: {
-    color: '#fff',
-    fontSize: 52,
+    color: gold,
+    fontSize: 46,
     fontWeight: '900',
-    letterSpacing: 3,
+    letterSpacing: 0,
+    lineHeight: 54,
     textAlign: 'center'
   },
   welcomeCopy: {
-    color: '#e5e5e5',
-    fontSize: 19,
-    lineHeight: 28,
-    marginBottom: 18,
+    color: '#d0c5af',
+    fontSize: 16,
+    lineHeight: 25,
+    marginTop: 8,
     textAlign: 'center'
+  },
+  welcomeHeroBlock: {
+    alignItems: 'center',
+    marginBottom: 18
   },
   agentHaloLarge: {
     alignItems: 'center',
-    height: 330,
+    alignSelf: 'center',
+    height: 292,
     justifyContent: 'center',
-    marginVertical: 2
+    marginBottom: 12,
+    width: '100%'
   },
   orbitOuter: {
-    borderColor: 'rgba(255,194,26,0.18)',
-    borderRadius: 145,
+    borderColor: 'rgba(242,202,80,0.16)',
+    borderRadius: 132,
     borderWidth: 1,
-    height: 290,
+    height: 264,
     position: 'absolute',
-    width: 290
+    width: 264
   },
   orbitMiddle: {
-    borderColor: 'rgba(255,194,26,0.45)',
-    borderRadius: 105,
+    borderColor: 'rgba(242,202,80,0.38)',
+    borderRadius: 96,
     borderWidth: 2,
-    height: 210,
+    height: 192,
     position: 'absolute',
-    width: 210
+    width: 192
   },
   orbitCore: {
     alignItems: 'center',
-    backgroundColor: 'rgba(255,194,26,0.1)',
-    borderColor: gold,
-    borderRadius: 70,
+    backgroundColor: 'rgba(242,202,80,0.12)',
+    borderColor: 'rgba(242,202,80,0.48)',
+    borderRadius: 76,
     borderWidth: 1.5,
-    height: 140,
+    height: 152,
     justifyContent: 'center',
     shadowColor: gold,
-    shadowOpacity: 0.7,
-    shadowRadius: 22,
-    width: 140
+    shadowOpacity: 0.35,
+    shadowRadius: 34,
+    width: 152
   },
   listenRing: {
-    borderColor: 'rgba(255,229,138,0.2)',
-    borderRadius: 92,
+    borderColor: 'rgba(255,229,138,0.16)',
+    borderRadius: 106,
     borderWidth: 2,
-    height: 184,
+    height: 212,
     position: 'absolute',
-    width: 184
+    width: 212
   },
   listenRingActive: {
     backgroundColor: 'rgba(255,194,26,0.06)',
@@ -2250,10 +2568,10 @@ const styles = StyleSheet.create({
   },
   eyeCenterDot: {
     backgroundColor: gold,
-    borderRadius: 8,
-    height: 16,
+    borderRadius: 7,
+    height: 14,
     position: 'absolute',
-    width: 16
+    width: 14
   },
   eyeCenterDotLarge: {
     backgroundColor: gold,
@@ -2273,77 +2591,105 @@ const styles = StyleSheet.create({
   },
   featureCallout: {
     alignItems: 'center',
-    backgroundColor: 'rgba(9,13,16,0.76)',
-    borderColor: 'rgba(255,194,26,0.72)',
+    backgroundColor: 'rgba(17,14,7,0.86)',
+    borderColor: 'rgba(242,202,80,0.30)',
     borderRadius: 8,
     borderWidth: 1,
     flexDirection: 'row',
     gap: 8,
-    padding: 10,
+    minHeight: 58,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
     position: 'absolute',
-    width: 142
+    shadowColor: '#000',
+    shadowOpacity: 0.45,
+    shadowRadius: 18,
+    width: 154
   },
   calloutLeftTop: {
-    left: 4,
-    top: 42
+    left: 0,
+    top: 26
   },
   calloutRightTop: {
-    right: 4,
-    top: 42
+    right: 0,
+    top: 62
   },
   calloutLeftBottom: {
-    left: 4,
-    bottom: 42
+    left: 0,
+    bottom: 62
   },
   calloutRightBottom: {
-    right: 4,
-    bottom: 42
+    right: 0,
+    bottom: 24
   },
   calloutLabel: {
     color: '#fff',
-    fontSize: 17,
-    fontWeight: '800'
+    fontSize: 14,
+    fontWeight: '900'
   },
   calloutCaption: {
-    color: '#d8d8d8',
-    fontSize: 11
+    color: '#d0c5af',
+    fontSize: 10,
+    lineHeight: 13
   },
   featureGrid: {
-    flexDirection: 'row',
-    gap: 8,
-    marginBottom: 16
+    gap: 14,
+    marginBottom: 18,
+    marginTop: 14
   },
   miniFeature: {
-    alignItems: 'center',
-    borderColor: 'rgba(255,255,255,0.18)',
-    borderRadius: 8,
+    alignItems: 'flex-start',
+    backgroundColor: 'rgba(17,14,7,0.74)',
+    borderColor: 'rgba(242,202,80,0.14)',
+    borderRadius: 12,
     borderWidth: 1,
-    flex: 1,
-    minHeight: 138,
-    padding: 12
+    flexDirection: 'row',
+    gap: 14,
+    minHeight: 104,
+    padding: 18,
+    shadowColor: gold,
+    shadowOpacity: 0.05,
+    shadowRadius: 16
   },
   iconRing: {
     alignItems: 'center',
-    borderColor: gold,
-    borderRadius: 28,
+    borderColor: 'rgba(242,202,80,0.42)',
+    borderRadius: 25,
     borderWidth: 1,
-    height: 56,
+    height: 50,
     justifyContent: 'center',
-    marginBottom: 10,
-    width: 56
+    width: 50
   },
   miniFeatureTitle: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: '900',
-    marginBottom: 6,
-    textAlign: 'center'
+    marginBottom: 4
   },
   miniFeatureCopy: {
-    color: '#d8d8d8',
-    fontSize: 12,
-    lineHeight: 17,
-    textAlign: 'center'
+    color: '#d0c5af',
+    fontSize: 13,
+    lineHeight: 19
+  },
+  miniFeatureText: {
+    flex: 1
+  },
+  tapHint: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderColor: 'rgba(242,202,80,0.30)',
+    borderRadius: 999,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10
+  },
+  tapHintText: {
+    color: gold2,
+    fontSize: 13,
+    fontWeight: '800'
   },
   coachCard: {
     alignItems: 'center',
@@ -2384,10 +2730,29 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
     shadowRadius: 18
   },
+  welcomePrimaryAction: {
+    alignItems: 'center',
+    backgroundColor: '#f2ca50',
+    borderRadius: 999,
+    flexDirection: 'row',
+    gap: 10,
+    justifyContent: 'center',
+    marginTop: 8,
+    minHeight: 64,
+    paddingHorizontal: 24,
+    shadowColor: gold,
+    shadowOpacity: 0.42,
+    shadowRadius: 26
+  },
+  welcomePrimaryActionText: {
+    color: '#3d2f00',
+    fontSize: 22,
+    fontWeight: '900'
+  },
   goldButtonText: {
     color: ink,
     flex: 1,
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '900',
     textAlign: 'center'
   },
@@ -2480,21 +2845,29 @@ const styles = StyleSheet.create({
   },
   agentEyeHero: {
     alignItems: 'center',
-    alignSelf: 'center',
     backgroundColor: 'rgba(255,194,26,0.08)',
     borderColor: 'rgba(255,194,26,0.5)',
-    borderRadius: 125,
+    borderRadius: 48,
     borderWidth: 1,
-    height: 250,
+    height: 96,
     justifyContent: 'center',
-    marginVertical: 16,
     shadowColor: gold,
     shadowOpacity: 0.55,
     shadowRadius: 26,
-    width: 250
+    width: 96
   },
   smartAgentCard: {
-    alignItems: 'center'
+    alignItems: 'stretch'
+  },
+  agentHeroRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 14,
+    marginBottom: 14
+  },
+  agentHeroCopy: {
+    alignItems: 'flex-start',
+    flex: 1
   },
   roleChipRow: {
     flexDirection: 'row',
@@ -2515,16 +2888,16 @@ const styles = StyleSheet.create({
   },
   centerTitle: {
     color: '#fff',
-    fontSize: 31,
+    fontSize: 22,
     fontWeight: '900',
-    marginTop: 6,
-    textAlign: 'center'
+    lineHeight: 27,
+    marginTop: 8
   },
   centerCopy: {
     color: '#d8d8d8',
-    fontSize: 17,
-    marginBottom: 14,
-    textAlign: 'center'
+    fontSize: 13,
+    lineHeight: 18,
+    marginTop: 3
   },
   promptBar: {
     alignItems: 'center',
@@ -2559,6 +2932,9 @@ const styles = StyleSheet.create({
     minHeight: 46,
     paddingHorizontal: 18
   },
+  listenActionActive: {
+    backgroundColor: gold2
+  },
   listenActionText: {
     color: ink,
     fontSize: 16,
@@ -2582,6 +2958,96 @@ const styles = StyleSheet.create({
     minHeight: 54,
     paddingHorizontal: 8
   },
+  focusHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 12
+  },
+  focusScorePill: {
+    alignItems: 'center',
+    borderColor: 'rgba(242,202,80,0.42)',
+    borderRadius: 999,
+    borderWidth: 1,
+    height: 72,
+    justifyContent: 'center',
+    width: 72
+  },
+  focusScore: {
+    color: gold,
+    fontSize: 20,
+    fontWeight: '900',
+    lineHeight: 24
+  },
+  focusScoreLabel: {
+    color: textMuted,
+    fontSize: 10,
+    fontWeight: '800',
+    textTransform: 'uppercase'
+  },
+  segmentedControl: {
+    backgroundColor: 'rgba(5,11,14,0.72)',
+    borderColor: 'rgba(255,255,255,0.12)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 4,
+    marginBottom: 12,
+    padding: 4
+  },
+  segmentOption: {
+    alignItems: 'center',
+    borderRadius: 6,
+    flex: 1,
+    minHeight: 38,
+    justifyContent: 'center'
+  },
+  segmentOptionActive: {
+    backgroundColor: gold
+  },
+  segmentText: {
+    color: textMuted,
+    fontSize: 12,
+    fontWeight: '900'
+  },
+  segmentTextActive: {
+    color: ink
+  },
+  homeActionGrid: {
+    flexDirection: 'row',
+    gap: 8
+  },
+  homeActionCard: {
+    backgroundColor: 'rgba(8,17,21,0.70)',
+    borderColor: 'rgba(255,255,255,0.12)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flex: 1,
+    minHeight: 96,
+    padding: 9
+  },
+  homeActionIcon: {
+    alignItems: 'center',
+    borderColor: 'rgba(242,202,80,0.32)',
+    borderRadius: 17,
+    borderWidth: 1,
+    height: 34,
+    justifyContent: 'center',
+    marginBottom: 7,
+    width: 34
+  },
+  homeActionLabel: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '900',
+    lineHeight: 16
+  },
+  homeActionCaption: {
+    color: textMuted,
+    fontSize: 10,
+    lineHeight: 14,
+    marginTop: 2
+  },
   notice: {
     backgroundColor: 'rgba(255,194,26,0.12)',
     borderColor: 'rgba(255,194,26,0.28)',
@@ -2594,15 +3060,18 @@ const styles = StyleSheet.create({
   },
   progressGrid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 8
   },
   progressTile: {
     alignItems: 'center',
-    borderRightColor: 'rgba(255,255,255,0.18)',
-    borderRightWidth: 1,
-    flex: 1,
-    minHeight: 128,
-    padding: 6
+    backgroundColor: 'rgba(8,17,21,0.58)',
+    borderColor: 'rgba(255,255,255,0.10)',
+    borderRadius: 8,
+    borderWidth: 1,
+    minHeight: 104,
+    padding: 9,
+    width: '48%'
   },
   roleStatsGrid: {
     flexDirection: 'row',
@@ -2667,7 +3136,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255,194,26,0.5)',
     borderRadius: 8,
     borderWidth: 1,
-    minHeight: 126,
+    minHeight: 104,
     padding: 10,
     width: '31.5%'
   },
@@ -2680,8 +3149,8 @@ const styles = StyleSheet.create({
   },
   quickAccessCaption: {
     color: '#fff',
-    fontSize: 11,
-    lineHeight: 15,
+    fontSize: 10,
+    lineHeight: 13,
     textAlign: 'center'
   },
   tabBar: {
@@ -2706,7 +3175,8 @@ const styles = StyleSheet.create({
   },
   tabText: {
     color: '#dce3ea',
-    fontSize: 10,
+    fontSize: 9,
+    lineHeight: 12,
     textAlign: 'center'
   },
   tabTextActive: {
@@ -2726,6 +3196,13 @@ const styles = StyleSheet.create({
     gap: 12,
     justifyContent: 'space-between'
   },
+  roadmapTitle: {
+    color: textPrimary,
+    flex: 1,
+    fontSize: 29,
+    fontWeight: '900',
+    lineHeight: 35
+  },
   helpPill: {
     alignItems: 'center',
     borderColor: 'rgba(255,255,255,0.38)',
@@ -2739,7 +3216,7 @@ const styles = StyleSheet.create({
   stageCard: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 20
+    gap: 14
   },
   stageCopy: {
     flex: 1
@@ -2748,20 +3225,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: gold,
     borderLeftColor: 'rgba(255,194,26,0.22)',
-    borderRadius: 70,
-    borderWidth: 12,
-    height: 140,
+    borderRadius: 56,
+    borderWidth: 10,
+    height: 112,
     justifyContent: 'center',
-    width: 140
+    width: 112
   },
   progressPercent: {
     color: gold,
-    fontSize: 33,
+    fontSize: 27,
     fontWeight: '900'
   },
   progressLabel: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '800',
     textAlign: 'center'
   },
@@ -2780,7 +3257,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: '#fff',
-    fontSize: 23,
+    fontSize: 21,
     fontWeight: '900',
     marginBottom: 12,
     marginTop: 18
@@ -2827,6 +3304,12 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     lineHeight: 24
   },
+  roadmapRowTitle: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: '900',
+    lineHeight: 22
+  },
   badge: {
     borderRadius: 8,
     fontSize: 13,
@@ -2842,6 +3325,10 @@ const styles = StyleSheet.create({
   locked: {
     backgroundColor: 'rgba(124,135,145,0.18)',
     color: '#b9c0c8'
+  },
+  badgeDanger: {
+    backgroundColor: 'rgba(255,65,65,0.16)',
+    color: '#ffb4ab'
   },
   goldSmallButton: {
     backgroundColor: gold,
@@ -2872,11 +3359,17 @@ const styles = StyleSheet.create({
     gap: 6,
     marginBottom: 16
   },
+  stepDetailMetaRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10
+  },
   stepDetailTitle: {
     color: '#fff',
-    fontSize: 38,
+    fontSize: 31,
     fontWeight: '900',
-    lineHeight: 44,
+    lineHeight: 37,
     marginBottom: 12
   },
   pill: {
@@ -2959,6 +3452,17 @@ const styles = StyleSheet.create({
     marginTop: 14,
     textAlign: 'center'
   },
+  complianceNote: {
+    backgroundColor: 'rgba(242,202,80,0.08)',
+    borderColor: 'rgba(242,202,80,0.18)',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: '#d0c5af',
+    fontSize: 13,
+    lineHeight: 19,
+    marginTop: 12,
+    padding: 12
+  },
   audioBar: {
     alignItems: 'center',
     borderColor: 'rgba(255,255,255,0.14)',
@@ -2985,19 +3489,36 @@ const styles = StyleSheet.create({
     letterSpacing: 1
   },
   headerLine: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16
+  },
+  headerLineCompact: {
+    alignItems: 'center',
+    marginBottom: 8
+  },
+  headerCopy: {
+    flex: 1,
+    paddingRight: 10
+  },
+  headerEyeCompact: {
+    alignItems: 'center',
+    height: 76,
+    justifyContent: 'center',
+    overflow: 'visible',
+    transform: [{ scale: 0.72 }],
+    width: 76
   },
   eyeSmall: {
     alignItems: 'center',
     borderColor: 'rgba(255,194,26,0.44)',
     borderRadius: 50,
     borderWidth: 1,
-    height: 100,
+    height: 72,
     justifyContent: 'center',
-    width: 100
+    opacity: 0.82,
+    width: 72
   },
   goalHeaderActions: {
     flexDirection: 'row',
@@ -3012,8 +3533,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     gap: 8,
-    minHeight: 48,
-    paddingHorizontal: 12
+    minHeight: 46,
+    paddingHorizontal: 10
   },
   historyButton: {
     alignItems: 'center',
@@ -3022,14 +3543,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     gap: 8,
-    minHeight: 48,
-    paddingHorizontal: 12
+    minHeight: 46,
+    paddingHorizontal: 10
+  },
+  actionButtonText: {
+    fontSize: 13,
+    fontWeight: '800',
+    lineHeight: 17
   },
   goalSectionHeader: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flexDirection: 'row',
-    gap: 12,
-    marginBottom: 14
+    gap: 10,
+    marginBottom: 12
   },
   goalIcon: {
     alignItems: 'center',
@@ -3042,25 +3568,29 @@ const styles = StyleSheet.create({
   },
   goalSectionTitle: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: '900'
+    fontSize: 15,
+    fontWeight: '900',
+    lineHeight: 19
   },
   optionGrid: {
     flexDirection: 'row',
-    gap: 8
+    gap: 6
   },
   twoCol: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 8,
     marginBottom: 12
   },
   optionCard: {
+    alignItems: 'center',
     borderColor: 'rgba(255,255,255,0.16)',
     borderRadius: 8,
     borderWidth: 1,
     flex: 1,
-    minHeight: 88,
-    padding: 12,
+    justifyContent: 'center',
+    minHeight: 74,
+    paddingHorizontal: 6,
+    paddingVertical: 9,
     position: 'relative'
   },
   optionSelected: {
@@ -3068,30 +3598,38 @@ const styles = StyleSheet.create({
   },
   optionLead: {
     color: '#fff',
-    fontSize: 19,
+    fontSize: 14,
     fontWeight: '900',
+    lineHeight: 17,
+    textAlign: 'center'
+  },
+  optionCaption: {
+    color: '#aeb8c2',
+    fontSize: 11,
+    lineHeight: 14,
+    marginTop: 3,
     textAlign: 'center'
   },
   optionCheck: {
     alignItems: 'center',
     backgroundColor: gold,
-    borderRadius: 10,
-    height: 20,
+    borderRadius: 8,
+    height: 16,
     justifyContent: 'center',
     position: 'absolute',
-    right: 8,
-    top: 8,
-    width: 20
+    right: 6,
+    top: 6,
+    width: 16
   },
   optionEmpty: {
     borderColor: 'rgba(255,255,255,0.3)',
-    borderRadius: 10,
+    borderRadius: 8,
     borderWidth: 1,
-    height: 20,
+    height: 16,
     position: 'absolute',
-    right: 8,
-    top: 8,
-    width: 20
+    right: 6,
+    top: 6,
+    width: 16
   },
   inputBlock: {
     flex: 1
@@ -3103,19 +3641,49 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    minHeight: 54,
-    paddingHorizontal: 14
+    minHeight: 48,
+    paddingHorizontal: 12
   },
   metricCards: {
     flexDirection: 'row',
-    gap: 8
+    gap: 6
   },
   goalMetric: {
     borderColor: 'rgba(255,255,255,0.14)',
     borderRadius: 8,
     borderWidth: 1,
     flex: 1,
-    padding: 8
+    minHeight: 126,
+    padding: 7
+  },
+  goalMetricLabel: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '800',
+    lineHeight: 15
+  },
+  goalMetricValue: {
+    color: '#fff',
+    fontSize: 19,
+    fontWeight: '900',
+    lineHeight: 23,
+    marginTop: 6
+  },
+  goalMetricGoal: {
+    color: textMuted,
+    fontSize: 11,
+    lineHeight: 15,
+    marginTop: 2
+  },
+  goalMetricTrendGood: {
+    color: '#29e35f',
+    fontSize: 11,
+    lineHeight: 15
+  },
+  goalMetricTrendBad: {
+    color: '#ff4141',
+    fontSize: 11,
+    lineHeight: 15
   },
   followRow: {
     alignItems: 'center',
@@ -3138,15 +3706,87 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     padding: 14
   },
+  searchBar: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(17,14,7,0.74)',
+    borderColor: 'rgba(255,255,255,0.14)',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 12,
+    minHeight: 58,
+    paddingHorizontal: 14
+  },
+  searchInput: {
+    color: '#eae1d4',
+    flex: 1,
+    fontSize: 15
+  },
+  filterRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 14,
+    marginTop: 12
+  },
+  filterChip: {
+    borderColor: 'rgba(242,202,80,0.22)',
+    borderRadius: 999,
+    borderWidth: 1,
+    color: '#d0c5af',
+    fontSize: 12,
+    fontWeight: '800',
+    overflow: 'hidden',
+    paddingHorizontal: 10,
+    paddingVertical: 7
+  },
+  filterChipActive: {
+    backgroundColor: 'rgba(242,202,80,0.14)',
+    color: gold
+  },
+  tagRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 10
+  },
+  tagChip: {
+    backgroundColor: 'rgba(38,65,145,0.32)',
+    borderColor: 'rgba(157,178,255,0.18)',
+    borderRadius: 999,
+    borderWidth: 1,
+    color: '#9db2ff',
+    fontSize: 12,
+    fontWeight: '800',
+    overflow: 'hidden',
+    paddingHorizontal: 9,
+    paddingVertical: 6
+  },
+  profileAvatar: {
+    alignItems: 'center',
+    borderColor: gold,
+    borderRadius: 34,
+    borderWidth: 1.5,
+    height: 68,
+    justifyContent: 'center',
+    width: 68
+  },
   roleplayHeader: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: 8,
     paddingTop: 4
   },
   roleplayTitleBlock: {
     alignItems: 'center'
+  },
+  roleplayLiveLine: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 14
   },
   liveText: {
     color: '#29e35f',
@@ -3164,19 +3804,28 @@ const styles = StyleSheet.create({
     fontWeight: '900'
   },
   roleplayStats: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    gap: 8
   },
   statBlock: {
     borderRightColor: 'rgba(255,255,255,0.16)',
     borderRightWidth: 1,
     flex: 1,
     gap: 4,
+    minHeight: 116,
     paddingHorizontal: 6
   },
   statValue: {
     color: '#fff',
+    fontSize: 16,
+    fontWeight: '900',
+    lineHeight: 20
+  },
+  scenarioTitle: {
+    color: '#fff',
     fontSize: 18,
-    fontWeight: '900'
+    fontWeight: '900',
+    lineHeight: 23
   },
   videoPanels: {
     flexDirection: 'row',
@@ -3187,7 +3836,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#171d23',
     borderRadius: 8,
     flex: 1,
-    height: 420,
+    height: 300,
     padding: 18,
     position: 'relative'
   },

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Bot, ClipboardCheck, FileText, GraduationCap, LayoutDashboard, LogIn, LogOut, ShieldCheck, Target, Trophy, Users } from 'lucide-react';
 import './styles.css';
+import './styles/responsive.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8001';
 const SESSION_KEY = 'vcsa_token';

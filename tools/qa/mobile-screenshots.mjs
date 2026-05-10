@@ -21,7 +21,7 @@ const shots = [
     await page.getByText('Good morning, Chris', { exact: true }).waitFor();
   }],
   ['04-roadmap.png', async (page) => {
-    await page.getByText('Roadmap', { exact: true }).click();
+    await page.getByText('Roadmap', { exact: true }).last().click();
     await page.getByText('Top Producer Roadmap', { exact: true }).waitFor();
   }],
   ['05-step-detail.png', async (page) => {
@@ -29,15 +29,16 @@ const shots = [
     await page.getByText('Exact Words That Close', { exact: true }).waitFor();
   }],
   ['06-goalsheet.png', async (page) => {
-    await page.getByText('GoalSheet', { exact: true }).click();
+    await page.getByText('GoalSheet', { exact: true }).last().click();
     await page.getByText('Smart GoalSheet', { exact: true }).waitFor();
   }],
   ['07-roleplay.png', async (page) => {
-    await page.getByText('Roleplay Live', { exact: true }).click();
-    await page.getByText('Speaking Now', { exact: true }).waitFor();
+    await page.getByText('Roleplay', { exact: true }).last().click();
+    await page.getByText('Roleplay Live', { exact: true }).waitFor();
+    await page.getByText('AI BUYER PRACTICE', { exact: true }).waitFor();
   }],
   ['08-resources.png', async (page) => {
-    await page.getByText('Resources', { exact: true }).click();
+    await page.getByText('Resources', { exact: true }).last().click();
     await page.getByText('Approved training, scripts, checklists and sensitive-access content.', { exact: true }).waitFor();
   }]
 ];

@@ -1,12 +1,54 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WL Sales Academy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="description" content="WL Sales Academy - Mobile-first sales training, roleplay, Smart Agent, GoalSheet, manager review, and certification platform." />
+    <meta name="theme-color" content="#020506" />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="WL Sales Academy" />
+    <meta property="og:description" content="Premium sales training and coaching platform" />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WL Sales Academy" />
+    <meta name="twitter:description" content="Premium sales training and coaching platform" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>WL Sales Academy - Sales Training Platform</title>
+
+    <!-- Remove no-js class for JavaScript detection -->
+    <script>
+      document.documentElement.classList.remove('no-js');
+      document.documentElement.classList.add('js');
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Skip navigation link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Main app container -->
+    <div id="root" role="application" aria-label="WL Sales Academy Application"></div>
+
+    <!-- Fallback for JavaScript disabled -->
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>WL Sales Academy requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
+      </div>
+    </noscript>
+
     <script type="module" src="/src/App.jsx"></script>
   </body>
 </html>

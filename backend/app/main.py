@@ -11,8 +11,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
+from backend.app.env import load_local_env
+
+load_local_env()
+
 from backend.app import persistence
-from backend.app.smart_agent import get_provider
+from backend.app.smart_agent import get_provider, provider_status
 
 
 app = FastAPI(title="VCSA Academy API", version="0.1.0")
@@ -448,13 +452,15 @@ def health() -> dict[str, Any]:
 def ready() -> dict[str, Any]:
     users = persistence.list_users()
     resources = persistence.list_resources(include_unpublished=True)
+    smart_agent = provider_status(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
     checks = {
         "database": persistence.healthcheck()["status"] == "ok",
         "seed_users": len(users) >= 3,
         "seed_resources": len(resources) >= 3,
+        "smart_agent": smart_agent["provider"] in {"local", "openai", "zai"},
     }
     status = "ready" if all(checks.values()) else "degraded"
-    return envelope({"status": status, "checks": checks})
+    return envelope({"status": status, "checks": checks, "smart_agent": smart_agent})
 
 
 @app.post("/api/auth/login")
@@ -666,11 +672,17 @@ def reminders_upcoming(user: dict[str, Any] = Depends(require_user)) -> dict[str
     return envelope({"reminders": upcoming_followups(user["id"])})
 
 
+@app.get("/api/smart-agent/status")
+def smart_agent_status() -> dict[str, Any]:
+    return envelope(provider_status(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local")))
+
+
 @app.post("/api/smart-agent/chat")
 def smart_agent_chat(payload: ChatIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
-    provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
+    provider_name = os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local")
+    provider = get_provider(provider_name)
     result = provider.answer(payload.message, payload.mode, user, smart_agent_knowledge(user))
-    audit(user, "smart_agent_chat", "ai_conversation", str(uuid4()), "blocked" if result.risk_flags else "success", {"risk_flags": result.risk_flags, "provider": "local"})
+    audit(user, "smart_agent_chat", "ai_conversation", str(uuid4()), "blocked" if result.risk_flags else "success", {"risk_flags": result.risk_flags, "provider": provider.provider_name, "requested_provider": provider_name})
     return envelope(
         {
             "response": result.response,

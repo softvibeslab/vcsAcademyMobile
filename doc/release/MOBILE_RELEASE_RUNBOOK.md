@@ -11,6 +11,7 @@ This runbook prepares WL Sales Academy for Expo/EAS preview and production build
 Before running store-grade builds, confirm:
 
 - Production API URL.
+- Smart Agent provider mode: `local` for demo fallback or `openai` for live AI.
 - Apple Developer team and bundle identifier.
 - Google Play package name.
 - Final app icon, adaptive icon, splash assets, and any brand-approved Smart Agent artwork.
@@ -26,6 +27,24 @@ export EXPO_PUBLIC_SENTRY_DSN=
 export EXPO_IOS_BUNDLE_IDENTIFIER=com.whitelabel.salesacademy
 export EXPO_ANDROID_PACKAGE=com.whitelabel.salesacademy
 ```
+
+Backend-only Smart Agent environment:
+
+```bash
+export VCSA_SMART_AGENT_PROVIDER=zai
+export ZAI_API_KEY=...
+export ZAI_MODEL=glm-4.7
+export ZAI_BASE_URL=https://api.z.ai/api/coding/paas/v4
+export ZAI_TIMEOUT_SECONDS=20
+export ZAI_THINKING=disabled
+
+# Optional OpenAI fallback/provider
+export OPENAI_API_KEY=sk-...
+export OPENAI_MODEL=gpt-5.2
+export OPENAI_TIMEOUT_SECONDS=12
+```
+
+Never expose `ZAI_API_KEY` or `OPENAI_API_KEY` through Expo, React Native, `EXPO_PUBLIC_*`, or any client-side build variable.
 
 Optional version overrides:
 
@@ -86,6 +105,7 @@ Then verify:
 - Rep Home, Roadmap, Step Detail, GoalSheet, Roleplay, Resources, and Support load on a physical iOS or Android device.
 - Auth session restores after app restart.
 - Smart Agent returns compliant coaching responses.
+- `GET /api/smart-agent/status` returns the expected provider and `openai_configured=true` when OpenAI mode is enabled.
 - Manager/Admin workflows pass in the webapp against the same API.
 
 ## Guardrails In Code
