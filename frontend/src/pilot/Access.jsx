@@ -310,7 +310,7 @@ export function AccessAdmin({ api }) {
                 }}>
                   <input type="date" name="expires" aria-label={"Vencimiento de " + u.display_name} disabled={action.busy || u.plan !== "premium"}
                     defaultValue={(u.plan_expires_at || "").slice(0, 10)} title="Vacío = Premium sin vencimiento" />
-                  <button type="submit" className="text-button" disabled={action.busy || u.plan !== "premium"}>Guardar</button>
+                  <button type="submit" className="text-button" aria-label={"Guardar vencimiento de " + u.display_name} disabled={action.busy || u.plan !== "premium"}>Guardar</button>
                 </form>
               )}
             </div>
