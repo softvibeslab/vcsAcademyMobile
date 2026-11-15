@@ -35,6 +35,8 @@ Eventos de auditoría `auth_register`, `license_redeem` y `access_level_changed`
 
 ## 6. Next Backlog
 
+- Observaciones de la revisión del PR #1 sobre código previo: fecha al editar notas (Learning), snapshot del usuario en edición (Management), mensaje de contraseña (Auth), código muerto del onboarding en Auth, `scenario_id` en feedback, verificadores de features del 13-nov.
+
 - Cobro en línea (pasarela de pagos) para Premium.
 - Verificación de correo al registrarse.
 - Editar el contenido de las lecciones desde el admin.

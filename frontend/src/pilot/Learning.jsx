@@ -26,7 +26,7 @@ import {
 } from "./ui";
 import { noteKey, localDate } from "./model.mjs";
 import { LevelTag } from "./Access";
-import { stepAction } from "./access-model.mjs";
+import { stepAction, premiumLockedCount } from "./access-model.mjs";
 
 /** Panel cuando el servidor responde «requiere plan»: explica y ofrece desbloquear. */
 export function LockedPanel({ level, onLocked, back = "roadmap", backLabel = "Roadmap" }) {
@@ -45,7 +45,7 @@ export function LockedPanel({ level, onLocked, back = "roadmap", backLabel = "Ro
 export function Roadmap({ data, onLocked }) {
   const completed=data.steps.filter(s=>s.status==='completed').length;
   const next=data.steps.find(s=>s.status!=='completed'&&stepAction(s).kind==='open')||data.steps.find(s=>s.status!=='completed')||data.steps[0];
-  const lockedCount=data.steps.filter(s=>stepAction(s).kind==='plan').length;
+  const lockedCount=premiumLockedCount(data.steps);
   const percent=data.steps.length?Math.round(completed/data.steps.length*100):0;
   return <div className="pilot-roadmap-page">
     <Header title="Top Producer Roadmap" subtitle="Domina el blueprint de 11 pasos para la venta consultiva de alto rendimiento."/>

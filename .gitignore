@@ -54,3 +54,5 @@ yarn-error.log*
 # Builds públicos para Hostinger (hub/build-public.mjs)
 dist-public/
 dist-mobile-web-public/
+
+.license-secret

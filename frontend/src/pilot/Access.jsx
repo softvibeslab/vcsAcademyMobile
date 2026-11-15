@@ -291,13 +291,23 @@ export function AccessAdmin({ api }) {
               <span>{u.tier === "staff" ? "Equipo" : "Rep"}</span>
               <select aria-label={"Plan de " + u.display_name} value={u.plan} disabled={action.busy || u.tier === "staff"}
                 onChange={(e) => action.run(async () => {
-                  await api("/api/admin/users/" + u.id + "/plan", { method: "PATCH", body: JSON.stringify({ plan: e.target.value, plan_expires_at: null }) });
+                  await api("/api/admin/users/" + u.id + "/plan", { method: "PATCH", body: JSON.stringify({ plan: e.target.value, plan_expires_at: e.target.value === "premium" ? u.plan_expires_at : null }) });
                   reload();
                 }, u.display_name + ": plan " + (e.target.value === "premium" ? "Premium" : "Gratis") + ".")}>
                 <option value="gratis">Gratis</option>
                 <option value="premium">Premium</option>
               </select>
-              <span>{u.tier === "staff" ? "Acceso completo" : u.plan_expires_at || "—"}</span>
+              {u.tier === "staff" ? (
+                <span>Acceso completo</span>
+              ) : (
+                <input type="date" aria-label={"Vencimiento de " + u.display_name} disabled={action.busy || u.plan !== "premium"}
+                  defaultValue={(u.plan_expires_at || "").slice(0, 10)}
+                  title="Vacío = Premium sin vencimiento"
+                  onChange={(e) => action.run(async () => {
+                    await api("/api/admin/users/" + u.id + "/plan", { method: "PATCH", body: JSON.stringify({ plan: u.plan, plan_expires_at: e.target.value || null }) });
+                    reload();
+                  }, u.display_name + ": " + (e.target.value ? "Premium hasta el " + e.target.value : "Premium sin vencimiento") + ".")} />
+              )}
             </div>
           ))}
         </div>

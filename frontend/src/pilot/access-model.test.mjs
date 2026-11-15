@@ -25,3 +25,27 @@ test("etiquetas en español y error de plan reconocible", () => {
   assert.equal(planError(e), "premium");
   assert.equal(planError(Error("otro")), null);
 });
+
+// Revisión de código (PR #1)
+test("itemAccess: abierto, bloqueado por plan u oculto según el catálogo", async () => {
+  const { itemAccess } = await import("./access-model.mjs");
+  const catalog = { items: [
+    { id: "function:calculators", level: "premium", allowed: false },
+    { id: "function:notebook", level: "gratis", allowed: true },
+  ] };
+  assert.deepEqual(itemAccess(catalog, "function:calculators"), { kind: "plan", level: "premium" });
+  assert.deepEqual(itemAccess(catalog, "function:notebook"), { kind: "open" });
+  assert.deepEqual(itemAccess(catalog, "function:goalsheet"), { kind: "hidden" });
+  assert.deepEqual(itemAccess(null, "function:calculators"), { kind: "open" }); // sin catálogo no se bloquea la UI
+});
+
+test("premiumLockedCount cuenta solo pasos Premium bloqueados", async () => {
+  const { premiumLockedCount } = await import("./access-model.mjs");
+  const steps = [
+    { allowed: true, level: "publico" },
+    { allowed: false, lock: "plan", level: "gratis" },
+    { allowed: false, lock: "plan", level: "premium" },
+    { allowed: false, lock: "plan", level: "premium" },
+  ];
+  assert.equal(premiumLockedCount(steps), 2);
+});

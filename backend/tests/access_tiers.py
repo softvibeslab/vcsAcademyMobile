@@ -179,6 +179,73 @@ class AccessTiers(unittest.TestCase):
             ok(client.patch("/api/admin/access-items/function:goalsheet", json={"level": "gratis"}, headers=self.admin))
         self.assertTrue(ok(client.post("/api/smart-agent/public-chat", json={"message": "hola"}))["response"])
 
+    # Revisión de código (PR #1)
+    def test_review_progress_order_enforced_on_complete(self):
+        prem = ok(register("orden@demo.local"))["user"]
+        ok(client.patch(f"/api/admin/users/{prem['id']}/plan", json={"plan": "premium", "plan_expires_at": None}, headers=self.admin))
+        h = login("orden@demo.local", "clave-segura-1")
+        blocked = client.post("/api/blueprint/steps/step_11/complete", headers=h)
+        self.assertEqual(blocked.status_code, 409)
+        self.assertEqual(blocked.json()["detail"], "Completa el paso anterior.")
+        ok(client.post("/api/blueprint/steps/step_1/complete", headers=h))
+        ok(client.post("/api/blueprint/steps/step_1/complete", headers=h))  # repasar un paso ya hecho sigue permitido
+
+    def test_review_smart_agent_knowledge_respects_tier(self):
+        from backend.app.main import smart_agent_knowledge
+        visitor_ids = {k["id"] for k in smart_agent_knowledge(None)}
+        self.assertFalse(visitor_ids & {"step-5-script", "agenda-control-guide", "pricing-guide"}, visitor_ids)
+        free = ok(register("conocimiento@demo.local"))["user"]
+        free_ids = {k["id"] for k in smart_agent_knowledge(persistence.get_user(free["id"]))}
+        self.assertIn("agenda-control-guide", free_ids)
+        self.assertNotIn("pricing-guide", free_ids)
+
+    def test_review_goalsheet_gate_covers_reminders_and_insights(self):
+        h = headers_of(register("metas@demo.local"))
+        ok(client.patch("/api/admin/access-items/function:goalsheet", json={"level": "premium"}, headers=self.admin))
+        try:
+            self.assertEqual(client.get("/api/reminders/upcoming", headers=h).status_code, 403)
+            body = {"tour_outcome": "qualified", "sales_outcome": "no_sale"}
+            self.assertEqual(client.post("/api/smart-agent/insights/goalsheet", json=body, headers=h).status_code, 403)
+        finally:
+            ok(client.patch("/api/admin/access-items/function:goalsheet", json={"level": "gratis"}, headers=self.admin))
+
+    def test_review_redeem_rules(self):
+        multi = ok(client.post("/api/admin/license-codes", json={"plan_days": 30, "max_uses": 5, "expires_at": (TODAY + timedelta(days=30)).isoformat()}, headers=self.admin))["code"]
+        self.assertGreaterEqual(len(multi["code"].replace("SA-", "").replace("-", "")), 12)
+        h = headers_of(register("repite@demo.local"))
+        ok(client.post("/api/me/redeem", json={"code": multi["code"]}, headers=h))
+        again = client.post("/api/me/redeem", json={"code": multi["code"]}, headers=h)
+        self.assertEqual((again.status_code, again.json()["detail"]), (400, "Ya usaste este código."))
+        listed = next(c for c in ok(client.get("/api/admin/license-codes", headers=self.admin))["codes"] if c["id"] == multi["id"])
+        self.assertEqual(listed["uses"], 1)
+        unlimited = ok(register("ilimitado@demo.local"))["user"]
+        ok(client.patch(f"/api/admin/users/{unlimited['id']}/plan", json={"plan": "premium", "plan_expires_at": None}, headers=self.admin))
+        bogus = client.post("/api/me/redeem", json={"code": "SA-CUALQUIER-COSA"}, headers=login("ilimitado@demo.local", "clave-segura-1"))
+        self.assertEqual(bogus.status_code, 400)
+
+    def test_review_code_hash_is_keyed(self):
+        import hashlib
+        code = ok(client.post("/api/admin/license-codes", json={"plan_days": 30, "max_uses": 1, "expires_at": (TODAY + timedelta(days=30)).isoformat()}, headers=self.admin))["code"]
+        with persistence.connect() as db:
+            stored = db.execute("SELECT code_hash FROM license_codes WHERE id = ?", (code["id"],)).fetchone()["code_hash"]
+        self.assertNotEqual(stored, hashlib.sha256(code["code"].upper().encode()).hexdigest())
+
+    def test_review_admin_plan_change_survives_restart(self):
+        ok(client.patch("/api/admin/users/user_demo_rep/plan", json={"plan": "gratis", "plan_expires_at": None}, headers=self.admin))
+        try:
+            from backend.app.main import BLUEPRINT_STEPS, ROLEPLAY_SCENARIOS
+            access.init_schema(BLUEPRINT_STEPS, ROLEPLAY_SCENARIOS)
+            self.assertEqual(persistence.get_user("user_demo_rep")["plan"], "gratis")
+        finally:
+            ok(client.patch("/api/admin/users/user_demo_rep/plan", json={"plan": "premium", "plan_expires_at": None}, headers=self.admin))
+
+    def test_review_limiter_prunes_stale_keys(self):
+        limiter = access.Limiter(limit=5, window=0)
+        for i in range(50):
+            limiter.allow(f"k{i}")
+        limiter.allow("otra")
+        self.assertLessEqual(len(limiter.hits), 1)
+
     def test_rate_limit_ignores_spoofed_forwarded_for(self):
         access.limiter.limit, access.limiter.hits = 2, {}
         try:

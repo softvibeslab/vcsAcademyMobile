@@ -67,7 +67,7 @@ NFR-01..05 de la historia. Migración idempotente al arrancar (ALTER + INSERT OR
 
 ## 7. Security Considerations
 
-Contraseñas PBKDF2 existentes; códigos solo como hash; límite por IP en registro y canje; canje con UPDATE condicional (sin doble uso concurrente); auditoría de registro, canje, cambios de nivel y plan.
+Contraseñas PBKDF2 existentes; códigos de 12 caracteres guardados con HMAC-SHA256 (clave `VCSA_CODE_SECRET` o archivo `.license-secret` 0600 junto a la base, fuera de la tabla); un usuario no repite un código; límite 5/min por IP en registro y canje, con la IP tomada de `X-Real-IP` (nginx, `$remote_addr`) y nunca de `X-Forwarded-For`; orden del roadmap exigido al completar un paso (409); el conocimiento del coach solo incluye lo que el usuario puede abrir; canje con UPDATE condicional (sin doble uso concurrente); auditoría de registro, canje, cambios de nivel y plan.
 
 ## 8. RACI
 

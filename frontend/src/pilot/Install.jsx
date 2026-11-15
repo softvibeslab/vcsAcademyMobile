@@ -60,7 +60,7 @@ export function InstallButton({ compact = false, className = "" }) {
   }
   return (
     <span className={"pilot-install " + className}>
-      <button type="button" className={compact ? "pilot-install-btn compact" : "pilot-install-btn"} data-testid="install-app" onClick={install} aria-expanded={mode === "prompt" ? undefined : help}>
+      <button type="button" className={compact ? "pilot-install-btn compact" : "pilot-install-btn"} data-testid="install-app" aria-label="Instalar app" onClick={install} aria-expanded={mode === "prompt" ? undefined : help}>
         <Download size={16} aria-hidden="true" />
         <span>Instalar app</span>
       </button>

@@ -110,7 +110,7 @@ Como **visitante**, quiero **registrarme con mi correo** para **guardar mi progr
 **Flujo admin:**
 
 1. Admin abre «Acceso y planes» -> pestaña Contenido.
-2. Cambia el nivel de «Paso 3 · Rapport» de Premium a Gratis -> guardado con confirmacion; queda en auditoria.
+2. Cambia el nivel de «Paso 4 · Descubrimiento» de Premium a Gratis -> guardado con confirmacion; queda en auditoria.
 3. Pestaña Codigos -> «Generar codigo» (vigencia, usos) -> copia el codigo para enviarlo al usuario.
 
 **Flujos alternos y de error:**
@@ -244,7 +244,7 @@ Pantallas: IDs del wireframe aprobado para revision (`SalesAcademyVibes/work/fea
 │ │ Roleplay · Compromiso      │ Escenario│ (Premium ▾)  │ [on]   ││
 │ │ Guía de objeciones         │ Recurso  │ (Gratis  ▾)  │ [off]  ││
 │ └────────────────────────────┴──────────┴──────────────┴────────┘│
-│ Resumen: 4 públicos · 6 gratis · 14 premium        [Guardar]     │
+│ Resumen calculado del catálogo (hoy 3 públicos · 11 gratis · 14 premium)        [Guardar]     │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
@@ -265,7 +265,7 @@ Pantallas: IDs del wireframe aprobado para revision (`SalesAcademyVibes/work/fea
 ```
 ┌──────────────────────────────────┐
 │ Tu plan: GRATIS                  │
-│ Tienes acceso a 10 de 24 módulos │
+│ Tienes acceso a N de M módulos (calculado del catálogo) │
 │ [ Tengo un código premium ]      │  -> hoja C05
 │ Premium vence: —                 │
 └──────────────────────────────────┘
@@ -293,12 +293,12 @@ Pantallas: IDs del wireframe aprobado para revision (`SalesAcademyVibes/work/fea
 
 | ID | Origen | Criterio (Dado / Cuando / Entonces) | Tipo | Estado PO | Comentario PO |
 |---|---|---|---|---|---|
-| AC-01 | Propuesto IA | Dado un admin en «Acceso y planes», cuando cambia el nivel de «Paso 3» a Gratis y guarda, entonces la API devuelve el nivel nuevo y queda un evento `access_level_changed` en auditoria. | positivo | Aceptado | Aceptado según recomendación |
+| AC-01 | Propuesto IA | Dado un admin en «Acceso y planes», cuando cambia el nivel de «Paso 4» de Premium a Gratis y guarda, entonces la API devuelve el nivel nuevo y queda un evento `access_level_changed` en auditoria. | positivo | Aceptado | Aceptado según recomendación |
 | AC-02 | Propuesto IA | Dado un visitante sin sesion, cuando abre el Roadmap, entonces ve el Paso 1 abierto y los pasos Gratis y Premium con candado y su etiqueta, y la respuesta de la API no incluye su contenido. | positivo | Aceptado | Aceptado según recomendación |
 | AC-03 | Propuesto IA | Dado un visitante, cuando se registra con nombre, correo valido, contraseña de 8+ caracteres y acepta el aviso, entonces queda con sesion iniciada, plan Gratis, y los pasos Gratis se abren. | positivo | Aceptado | Aceptado según recomendación |
 | AC-04 | Propuesto IA | Dado un correo ya registrado (sin importar mayusculas), cuando alguien intenta registrarlo, entonces ve «Ese correo ya tiene cuenta. Inicia sesión.» y no se crea otra cuenta. | negativo | Aceptado | Aceptado según recomendación |
 | AC-05 | Propuesto IA | Dado un usuario Gratis, cuando abre un paso Premium, entonces ve la hoja C05 y la API responde 403 con `requires: premium` sin contenido. | negativo | Aceptado | Aceptado según recomendación |
-| AC-06 | Propuesto IA | Dado un usuario Gratis y un codigo activo, cuando lo canjea, entonces su plan pasa a Premium con la fecha de vencimiento del codigo y los pasos Premium se abren sin cerrar sesion. | positivo | Aceptado | Aceptado según recomendación |
+| AC-06 | Propuesto IA | Dado un usuario Gratis y un codigo activo, cuando lo canjea, entonces su plan pasa a Premium por los `plan_dias` del codigo contados desde el canje (BR-05) y los pasos Premium se abren sin cerrar sesion. | positivo | Aceptado | Aceptado según recomendación |
 | AC-07 | Propuesto IA | Dado un codigo invalido, vencido, revocado o sin usos, cuando se canjea, entonces ve «Código no válido o vencido.» y el plan no cambia. | negativo | Aceptado | Aceptado según recomendación |
 | AC-08 | Propuesto IA | Dado un usuario Premium con plan vencido, cuando carga la app, entonces es tratado como Gratis y conserva su progreso. | borde | Aceptado | Aceptado según recomendación |
 | AC-09 | Propuesto IA | Dado un rep o gerente, cuando llama a cualquier endpoint `/api/admin/access-items` o `/api/admin/license-codes`, entonces recibe 403. | negativo | Aceptado | Aceptado según recomendación |
@@ -311,7 +311,7 @@ Pantallas: IDs del wireframe aprobado para revision (`SalesAcademyVibes/work/fea
 | ID | AC cubiertos | Tipo | Precondicion | Pasos | Resultado esperado | Datos | Nivel de prueba | Origen | Estado PO |
 |---|---|---|---|---|---|---|---|---|---|
 | ESC-01 | AC-01, AC-09 | positivo/negativo | catalogo DS-01 | 1. admin PATCH step_3 a gratis 2. rep PATCH lo mismo | 1. 200 y auditoria 2. 403 | DS-01, DS-02 | integration | Propuesto IA | Aceptado |
-| ESC-02 | AC-02, AC-10 | positivo | sin sesion | 1. GET /api/public/catalog | step_1 `allowed:true` con contenido; step_2 y step_4 `allowed:false` sin contenido; oculto ausente | DS-01 | integration | Propuesto IA | Aceptado |
+| ESC-02 | AC-02, AC-10 | positivo | sin sesion | 1. GET /api/public/catalog 2. GET /api/public/blueprint/steps/step_1 y step_2 | 1. step_1 `allowed:true`; step_2 y step_4 `allowed:false`; ningún elemento trae contenido; oculto ausente 2. step_1 con contenido; step_2 403 | DS-01 | integration | Propuesto IA | Aceptado |
 | ESC-03 | AC-03, AC-04 | positivo/negativo | sin cuenta | 1. registrar `nuevo@demo.local` 2. registrar `NUEVO@demo.local` | 1. sesion, plan gratis 2. error duplicado, 1 sola cuenta | DS-02 | integration | Propuesto IA | Aceptado |
 | ESC-04 | AC-05, AC-06, AC-07 | positivo/negativo | usuario gratis | 1. GET step_4 2. canjear codigo vencido 3. canjear codigo activo 4. GET step_4 | 1. 403 2. error, sigue gratis 3. premium 4. 200 | DS-02, DS-03 | integration | Propuesto IA | Aceptado |
 | ESC-05 | AC-08, AC-11, AC-12 | borde | DS-02 | 1. premium vencido abre step_4 2. premium abre step_5 sin step_4 3. gerente abre step_9 | 1. 403 2. candado progreso 3. 200 | DS-02 | integration | Propuesto IA | Aceptado |
@@ -392,7 +392,7 @@ Resultado esperado del resumen W3: publicos = Paso 1, AI Coach, Calculadoras (3 
 ## 16. Seguridad, Privacidad Y Casos Borde
 
 - **Datos sensibles involucrados:** correo y nombre del usuario registrado; codigos de licencia.
-- **Permisos y abuso:** acceso decidido en el servidor; el frontend solo pinta. Registro masivo mitigado con limite por IP. Fuerza bruta de codigos mitigada con limite y codigos de 10+ caracteres aleatorios.
+- **Permisos y abuso:** acceso decidido en el servidor; el frontend solo pinta. Registro masivo mitigado con limite por IP. Fuerza bruta de codigos mitigada con limite y codigos de 12 caracteres aleatorios guardados con HMAC-SHA256 y clave del servidor; un mismo usuario no repite un codigo.
 - **Casos borde:** catalogo vacio; todos premium; elemento oculto; plan vencido; codigo usado en dos pestañas a la vez (solo uno gana); cambio de nivel con la leccion abierta.
 - **Mensajes de error al usuario:** «Ese correo ya tiene cuenta. Inicia sesión.» · «Usa al menos 8 caracteres.» · «Código no válido o vencido.» · «Este paso es Premium.» · «Completa el paso anterior.»
 
@@ -455,6 +455,7 @@ Resultado esperado del resumen W3: publicos = Paso 1, AI Coach, Calculadoras (3 
 |---|---|---|---|
 | v1 | 2026-11-14 | Creacion | Pedido del PO en chat |
 | v1 | 2026-11-14 | Aprobada: puntos abiertos resueltos con la recomendación IA | «date y publicalo» |
+| v1.1 | 2026-11-14 | Redacción alineada tras la revisión de código del PR #1: AC-06 dice explícitamente la regla ya aprobada en BR-05/DS-03; AC-01 y el flujo admin usan el paso 4 como ESC-07; ESC-02 separa catálogo y detalle; conteos calculados; NFR-01 con códigos de 12 caracteres y HMAC. Sin cambio de comportamiento aprobado | Revisión automática del PR |
 
 ## 24. Estimacion Para Cotizacion
 

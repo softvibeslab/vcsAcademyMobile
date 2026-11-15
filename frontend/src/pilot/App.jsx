@@ -18,7 +18,7 @@ import Auth from "./Auth";
 import GuestWorkspace from "./GuestWorkspace";
 import { UnlockSheet } from "./Access";
 import { InstallButton } from "./Install";
-import { planError } from "./access-model.mjs";
+import { planError, itemAccess } from "./access-model.mjs";
 import { Header, Loading, ErrorBox, Button } from "./ui";
 import { canManage, roleLabel } from "./model.mjs";
 import { HomeView, GoalSheet, Agenda, Profile, Calculators } from "./Workspace";
@@ -116,14 +116,14 @@ function App() {
         if (response.status === 401 && token) clear();
         const detail = payload.detail;
         if (detail && typeof detail === "object" && !Array.isArray(detail))
-          throw Object.assign(Error(detail.message || "No tienes acceso a esto."), detail);
-        throw Error(
+          throw Object.assign(Error(detail.message || "No tienes acceso a esto."), detail, { status: response.status });
+        throw Object.assign(Error(
           Array.isArray(detail)
             ? detail.map((x) => x.msg).join(". ")
             : detail ||
                 payload.message ||
                 "No fue posible completar la acción.",
-        );
+        ), { status: response.status });
       }
       return payload.data || {};
     },
@@ -139,7 +139,8 @@ function App() {
       try {
         const me = await api("/api/mobile/me");
         // Un módulo bloqueado por plan no tumba la carga: devuelve vacío y la UI muestra el candado.
-        const soft = (p, fallback) => api(p).catch((e) => (planError(e) ? fallback : Promise.reject(e)));
+        // También 404: el admin pudo ocultar el módulo.
+        const soft = (p, fallback) => api(p).catch((e) => (planError(e) || e.status === 404 ? fallback : Promise.reject(e)));
         const [
           dashboard,
           blueprint,
@@ -289,6 +290,15 @@ function App() {
     revision,
     onLocked: (level) => setUnlock({ level }),
   };
+  // Funciones que viven solo en el navegador: su nivel se aplica aquí con el catálogo del servidor.
+  const gate = (itemId) => {
+    const decision = itemAccess(data.catalog, itemId);
+    if (decision.kind === "plan")
+      return <LockedPanel level={decision.level} onLocked={props.onLocked} back="vault" backLabel="Bóveda" />;
+    if (decision.kind === "hidden")
+      return <ErrorBox error="Este módulo no está disponible en tu academia." />;
+    return null;
+  };
   let content;
   switch (page) {
     case "home":
@@ -332,7 +342,7 @@ function App() {
       break;
     case "notebook":
     case "diary":
-      content = (
+      content = gate("function:notebook") || (
         <Notebook key={page + user.id} {...props} diary={page === "diary"} />
       );
       break;
@@ -343,7 +353,7 @@ function App() {
       content = <ResourceDetail key={id} {...props} id={id} />;
       break;
     case "calculators":
-      content = <Calculators />;
+      content = gate("function:calculators") || <Calculators />;
       break;
     case "team":
       content = canManage(user) ? (

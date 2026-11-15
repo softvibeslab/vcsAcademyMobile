@@ -4,10 +4,12 @@ import { Home, Route, Bot, LayoutGrid, User, Sun, Moon } from "lucide-react";
 import { blueprintSteps } from "../../../packages/domain/src/index.mjs";
 import { Roadmap, Vault, LockedPanel } from "./Learning";
 import { UnlockSheet } from "./Access";
+import { itemAccess } from "./access-model.mjs";
 import { InstallButton } from "./Install";
 import { Calculators } from "./Workspace";
 import {
   Header,
+  ErrorBox,
   Card,
   Button,
   Field,
@@ -104,13 +106,14 @@ function GuestLesson({ api, id, step, onLocked, onRegister }) {
     setState({ busy: true });
     api("/api/public/blueprint/steps/" + encodeURIComponent(id))
       .then((d) => live && setState({ step: d.step }))
-      .catch((e) => live && setState({ requires: e.code === "requires_plan" ? e.requires : null, error: e.message }));
+      .catch((e) => live && setState({ requires: e.code === "requires_plan" ? e.requires : null, error: e.message || "No pudimos cargar la lección." }));
     return () => {
       live = false;
     };
   }, [api, id]);
   if (state.busy) return <Card><p>Cargando…</p></Card>;
-  if (state.requires || !state.step) return <LockedPanel level={state.requires || step?.level || "gratis"} onLocked={onLocked} />;
+  if (state.requires) return <LockedPanel level={state.requires} onLocked={onLocked} />;
+  if (!state.step) return <ErrorBox error={state.error} />;
   const data = state.step;
   return (
     <>
@@ -160,12 +163,17 @@ export default function GuestWorkspace({
           ? "coach"
           : page;
   const access = (target = route) => onAccess(target);
-  const [catalogSteps, setCatalogSteps] = useState(null),
+  const [catalog, setCatalog] = useState(null),
+    [catalogSteps, setCatalogSteps] = useState(null),
     [sheet, setSheet] = useState(null);
   useEffect(() => {
     let live = true;
     api("/api/public/catalog")
-      .then((d) => live && setCatalogSteps(d.steps || null))
+      .then((d) => {
+        if (!live) return;
+        setCatalog(d);
+        setCatalogSteps(d.steps || null);
+      })
       .catch(() => {});
     return () => {
       live = false;
@@ -179,7 +187,12 @@ export default function GuestWorkspace({
   else if (page === "vault") content = <Vault />;
   else if (page === "coach" || page === "roleplay")
     content = <GuestCoach api={api} onAccess={onAccess} />;
-  else if (page === "calculators") content = <Calculators />;
+  else if (page === "calculators") {
+    const decision = itemAccess(catalog, "function:calculators");
+    content = decision.kind === "plan" ? <LockedPanel level={decision.level} onLocked={locked} back="vault" backLabel="Bóveda" />
+      : decision.kind === "hidden" ? <ErrorBox error="Este módulo no está disponible." />
+      : <Calculators />;
+  }
   else if (page === "lesson" && catalogSteps) {
     const step = steps.find((s) => s.id === id);
     content = step ? (

@@ -7,6 +7,8 @@ decide qué abre cada quien; el contenido bloqueado nunca viaja al cliente.
 from __future__ import annotations
 
 import hashlib
+import hmac
+import os
 import secrets
 import sqlite3
 import time
@@ -34,6 +36,8 @@ class Limiter:
 
     def allow(self, key: str) -> bool:
         now = time.monotonic()
+        # Barre claves vencidas para que el diccionario no crezca con cada IP vista.
+        self.hits = {k: v for k, v in self.hits.items() if v and now - v[-1] < self.window}
         recent = [t for t in self.hits.get(key, []) if now - t < self.window]
         if len(recent) >= self.limit:
             self.hits[key] = recent
@@ -58,6 +62,8 @@ def init_schema(lessons: list[tuple[str, int, str, str]], scenarios: list[dict[s
         cols = _columns(db, "users")
         if "plan" not in cols:
             db.execute("ALTER TABLE users ADD COLUMN plan TEXT NOT NULL DEFAULT 'gratis'")
+            # Solo al migrar: rep demo Premium sin vencimiento (Q-07). Después manda el admin.
+            db.execute("UPDATE users SET plan = 'premium' WHERE id = 'user_demo_rep'")
         if "plan_expires_at" not in cols:
             db.execute("ALTER TABLE users ADD COLUMN plan_expires_at TEXT")
         db.executescript(
@@ -71,6 +77,12 @@ def init_schema(lessons: list[tuple[str, int, str, str]], scenarios: list[dict[s
                 visible INTEGER NOT NULL DEFAULT 1,
                 sort INTEGER NOT NULL DEFAULT 0,
                 updated_at TEXT NOT NULL
+            );
+            CREATE TABLE IF NOT EXISTS license_redemptions (
+                code_id TEXT NOT NULL,
+                user_id TEXT NOT NULL,
+                redeemed_at TEXT NOT NULL,
+                PRIMARY KEY (code_id, user_id)
             );
             CREATE TABLE IF NOT EXISTS license_codes (
                 id TEXT PRIMARY KEY,
@@ -105,8 +117,6 @@ def init_schema(lessons: list[tuple[str, int, str, str]], scenarios: list[dict[s
             "INSERT OR IGNORE INTO access_items (id, kind, ref_id, title, level, visible, sort, updated_at) VALUES (?, ?, ?, ?, ?, 1, ?, ?)",
             [(*d, now) for d in defaults],
         )
-        # Cuenta demo de rep: Premium sin vencimiento para que las demos sigan completas (Q-07).
-        db.execute("UPDATE users SET plan = 'premium' WHERE id = 'user_demo_rep' AND plan = 'gratis' AND plan_expires_at IS NULL")
 
 
 # ---------- reglas ----------
@@ -204,8 +214,30 @@ def set_plan(user_id: str, plan: str, expires_at: str | None) -> dict[str, Any] 
 
 # ---------- códigos ----------
 
+def _secret() -> bytes:
+    """Clave del HMAC de códigos: VCSA_CODE_SECRET o un archivo 0600 junto a la base (fuera de la tabla)."""
+    env = os.environ.get("VCSA_CODE_SECRET")
+    if env:
+        return env.encode("utf-8")
+    path = persistence.DB_PATH.parent / ".license-secret"
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd, "w") as f:
+            f.write(secrets.token_hex(32))
+    return path.read_text().strip().encode("utf-8")
+
+
+def _normalize(code: str) -> str:
+    return code.strip().upper()
+
+
 def _hash(code: str) -> str:
-    return hashlib.sha256(code.strip().upper().encode("utf-8")).hexdigest()
+    return hmac.new(_secret(), _normalize(code).encode("utf-8"), hashlib.sha256).hexdigest()
+
+
+def _legacy_hash(code: str) -> str:
+    return hashlib.sha256(_normalize(code).encode("utf-8")).hexdigest()
 
 
 def _row_code(row: sqlite3.Row, today: date) -> dict[str, Any]:
@@ -222,8 +254,8 @@ def _row_code(row: sqlite3.Row, today: date) -> dict[str, Any]:
 
 
 def create_code(plan_days: int, max_uses: int, expires_at: str, created_by: str) -> dict[str, Any]:
-    raw = "".join(secrets.choice(CODE_ALPHABET) for _ in range(8))
-    code = f"SA-{raw[:4]}-{raw[4:]}"
+    raw = "".join(secrets.choice(CODE_ALPHABET) for _ in range(12))
+    code = f"SA-{raw[:4]}-{raw[4:8]}-{raw[8:]}"
     code_id = f"lic_{secrets.token_hex(6)}"
     with persistence.connect() as db:
         db.execute(
@@ -246,23 +278,46 @@ def revoke_code(code_id: str) -> dict[str, Any] | None:
     return _row_code(row, date.today()) if row else None
 
 
-def redeem(user: dict[str, Any], code: str, today: date | None = None) -> dict[str, Any] | None:
-    """Canjea un código; el UPDATE condicional evita que dos canjes simultáneos pasen el límite."""
+def redeem(user: dict[str, Any], code: str, today: date | None = None) -> tuple[dict[str, Any] | None, str]:
+    """Canjea un código. Devuelve (usuario, "") o (None, "invalid" | "repeat" | "permanent").
+
+    Todo ocurre en una transacción IMMEDIATE: dos canjes simultáneos se serializan, el vencimiento
+    se calcula con el plan vigente en la base y un mismo usuario no puede repetir un código.
+    """
     today = today or date.today()
-    if user.get("plan") == "premium" and not user.get("plan_expires_at"):
-        return plan_view(user)  # Premium sin vencimiento: no consume el código.
-    with persistence.connect() as db:
-        row = db.execute("SELECT * FROM license_codes WHERE code_hash = ?", (_hash(code),)).fetchone()
+    connection = persistence.connect()
+    try:
+        connection.isolation_level = None
+        db = connection
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute("SELECT * FROM license_codes WHERE code_hash IN (?, ?)", (_hash(code), _legacy_hash(code))).fetchone()
         if not row or _row_code(row, today)["status"] != "activo":
-            return None
+            db.execute("ROLLBACK")
+            return None, "invalid"
+        fresh = db.execute("SELECT plan, plan_expires_at FROM users WHERE id = ?", (user["id"],)).fetchone()
+        if fresh["plan"] == "premium" and not fresh["plan_expires_at"]:
+            db.execute("ROLLBACK")
+            return None, "permanent"
+        if db.execute("SELECT 1 FROM license_redemptions WHERE code_id = ? AND user_id = ?", (row["id"], user["id"])).fetchone():
+            db.execute("ROLLBACK")
+            return None, "repeat"
         claimed = db.execute(
             "UPDATE license_codes SET uses = uses + 1 WHERE id = ? AND revoked = 0 AND uses < max_uses AND expires_at >= ?",
             (row["id"], today.isoformat()),
         ).rowcount
         if not claimed:
-            return None
-        current = user.get("plan_expires_at") if user.get("plan") == "premium" else None
+            db.execute("ROLLBACK")
+            return None, "invalid"
+        db.execute("INSERT INTO license_redemptions (code_id, user_id, redeemed_at) VALUES (?, ?, ?)", (row["id"], user["id"], datetime.utcnow().isoformat()))
+        current = fresh["plan_expires_at"] if fresh["plan"] == "premium" else None
         start = max(today, date.fromisoformat(current[:10])) if current else today
         expires = (start + timedelta(days=row["plan_days"])).isoformat()
         db.execute("UPDATE users SET plan = 'premium', plan_expires_at = ?, updated_at = ? WHERE id = ?", (expires, datetime.utcnow().isoformat(), user["id"]))
-    return plan_view(persistence.get_user(user["id"]))
+        db.execute("COMMIT")
+    except Exception:
+        if connection.in_transaction:
+            connection.execute("ROLLBACK")
+        raise
+    finally:
+        connection.close()
+    return plan_view(persistence.get_user(user["id"])), ""

@@ -23,3 +23,16 @@ export function planSummary(catalog) {
 export function planError(error) {
   return error?.code === "requires_plan" ? error.requires || "premium" : null;
 }
+
+/** Acceso a una función o recurso según el catálogo: abierto, bloqueado por plan u oculto por el admin. */
+export function itemAccess(catalog, id) {
+  if (!catalog?.items) return { kind: "open" };
+  const item = catalog.items.find((i) => i.id === id);
+  if (!item) return { kind: "hidden" };
+  return item.allowed ? { kind: "open" } : { kind: "plan", level: item.level };
+}
+
+/** Pasos bloqueados que solo abre Premium (los «gratis» piden cuenta, no Premium). */
+export function premiumLockedCount(steps) {
+  return steps.filter((s) => stepAction(s).kind === "plan" && s.level === "premium").length;
+}

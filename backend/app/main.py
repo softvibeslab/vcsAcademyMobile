@@ -325,10 +325,14 @@ def demo_user_catalog() -> list[dict[str, Any]]:
     ]
 
 
-def has_resource_access(resource: dict[str, Any], user: dict[str, Any]) -> bool:
+def has_resource_access(resource: dict[str, Any], user: dict[str, Any] | None) -> bool:
+    """Nivel del plan Y permiso por usuario (recursos sensibles). `None` = visitante sin cuenta."""
     decision = access.decide(f"resource:{resource['id']}", user)
     if decision["exists"] and not decision["allowed"]:
         return False
+    if decision["exists"] and not decision["visible"]:
+        return False
+    user = user or {"permissions": [], "roles": []}
     return (
         not resource["requires_access_grant"]
         or f"resource:{resource['id']}:read" in user["permissions"]
@@ -399,7 +403,8 @@ def serialize_step(step: tuple[str, int, str, str], completed_steps: set[str]) -
     }
 
 
-def smart_agent_knowledge(user: dict[str, Any]) -> list[dict[str, Any]]:
+def smart_agent_knowledge(user: dict[str, Any] | None) -> list[dict[str, Any]]:
+    """Solo lo que el usuario puede abrir: ni el cuerpo ni el resumen de lo bloqueado."""
     step_items = [
         {
             "id": step_id,
@@ -415,11 +420,11 @@ def smart_agent_knowledge(user: dict[str, Any]) -> list[dict[str, Any]]:
             "id": resource["id"],
             "title": resource["title"],
             "summary": resource["body"][:180],
-            "body": resource["body"] if has_resource_access(resource, user) else "",
+            "body": resource["body"],
             "tags": resource.get("tags", []),
         }
         for resource in persistence.list_resources()
-        if has_resource_access(resource, user) or not resource["requires_access_grant"]
+        if has_resource_access(resource, user)
     ]
     return step_items + resource_items
 
@@ -727,6 +732,9 @@ def complete_blueprint_step(step_id: str, user: dict[str, Any] = Depends(require
     if step_id not in {step[0] for step in BLUEPRINT_STEPS}:
         raise HTTPException(status_code=404, detail="Blueprint step not found")
     check_access(f"lesson:{step_id}", user)
+    step = next(item for item in BLUEPRINT_STEPS if item[0] == step_id)
+    if blueprint_status(step_id, step[1], persistence.get_completed_step_ids(user["id"])) == "locked":
+        raise HTTPException(status_code=409, detail="Completa el paso anterior.")
     persistence.complete_step(user["id"], step_id)
     audit(user, "blueprint_step_completed", "blueprint_step", step_id, "success")
     return envelope({"step_id": step_id, "status": "completed"})
@@ -776,7 +784,7 @@ def goalsheet_metrics(user: dict[str, Any] = Depends(require_item("function:goal
 
 
 @app.get("/api/reminders/upcoming")
-def reminders_upcoming(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+def reminders_upcoming(user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
     return envelope({"reminders": upcoming_followups(user["id"])})
 
 
@@ -809,7 +817,7 @@ def public_smart_agent_chat(payload: ChatIn) -> dict[str, Any]:
         "status": "active",
     }
     provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
-    result = provider.answer(payload.message, "welcome_intake", anonymous_user, smart_agent_knowledge(anonymous_user))
+    result = provider.answer(payload.message, "welcome_intake", anonymous_user, smart_agent_knowledge(None))
     return envelope(
         {
             "response": result.response,
@@ -823,7 +831,7 @@ def public_smart_agent_chat(payload: ChatIn) -> dict[str, Any]:
 
 
 @app.post("/api/smart-agent/insights/goalsheet")
-def goalsheet_insight(entry: GoalSheetEntryIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+def goalsheet_insight(entry: GoalSheetEntryIn, user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
     return envelope({"insight": create_goalsheet_insight(entry.model_dump())})
 
 
@@ -1112,10 +1120,11 @@ def public_blueprint_step(step_id: str, user: dict[str, Any] | None = Depends(op
 def redeem_code(payload: RedeemIn, request: Request, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
     if not access.limiter.allow(client_key(request, "redeem")):
         raise HTTPException(status_code=429, detail="Demasiados intentos. Espera un minuto.")
-    updated = access.redeem(user, payload.code)
+    updated, reason = access.redeem(user, payload.code)
     if not updated:
-        audit(user, "license_redeem", "user", user["id"], "blocked")
-        raise HTTPException(status_code=400, detail="Código no válido o vencido.")
+        audit(user, "license_redeem", "user", user["id"], "blocked", {"reason": reason})
+        message = {"repeat": "Ya usaste este código.", "permanent": "Ya tienes Premium sin vencimiento."}.get(reason, "Código no válido o vencido.")
+        raise HTTPException(status_code=400, detail=message)
     audit(user, "license_redeem", "user", user["id"], "success", {"plan_expires_at": updated["plan_expires_at"]})
     return envelope({"user": updated})
 
