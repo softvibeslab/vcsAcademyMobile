@@ -179,6 +179,16 @@ class AccessTiers(unittest.TestCase):
             ok(client.patch("/api/admin/access-items/function:goalsheet", json={"level": "gratis"}, headers=self.admin))
         self.assertTrue(ok(client.post("/api/smart-agent/public-chat", json={"message": "hola"}))["response"])
 
+    def test_rate_limit_ignores_spoofed_forwarded_for(self):
+        access.limiter.limit, access.limiter.hits = 2, {}
+        try:
+            codes = [client.post("/api/auth/register", headers={"X-Forwarded-For": f"10.0.0.{i}"},
+                                 json={"display_name": "X", "email": f"spoof{i}@demo.local", "password": "clave-segura-1", "accept_privacy": True}).status_code
+                     for i in range(3)]
+            self.assertEqual(codes, [200, 200, 429])
+        finally:
+            access.limiter.limit, access.limiter.hits = 1000, {}
+
     def test_rate_limit_on_register(self):
         access.limiter.limit, access.limiter.hits = 2, {}
         try:

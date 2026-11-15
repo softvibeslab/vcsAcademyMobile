@@ -11,7 +11,7 @@
 | Suite | Comando | Resultado |
 |---|---|---|
 | API existente (regresión) | `VCSA_DB_PATH=<tmp> .venv/bin/python backend/tests/e2e_smoke.py` | `E2E API smoke passed` |
-| Acceso (historia) | `.venv/bin/python backend/tests/access_tiers.py` | `Ran 7 tests … OK` |
+| Acceso (historia) | `.venv/bin/python backend/tests/access_tiers.py` | `Ran 8 tests … OK` |
 | Dominio | `npm test` | `pass 5 fail 0` |
 | Modelo UI (acceso + instalar + piloto) | `node --test frontend/src/pilot/*.test.mjs` | `pass 11 fail 0` |
 | Build | `npm run build:web` | `✓ built` |
@@ -29,6 +29,8 @@ Resultado del navegador: invitado ve `Comenzar · Crear cuenta gratis ×2 · Des
 | Regresión | GREEN | `backend/tests/e2e_smoke.py` | `E2E API smoke passed` |
 | T07 | RED | `node --test access-model.test.mjs` (módulo vacío) | `pass 0 fail 3` |
 | T07 | GREEN | `node --test frontend/src/pilot/*.test.mjs` | `pass 8 fail 0` (luego 11 con instalar) |
+| T09 | RED | `access_tiers.py` `test_rate_limit_ignores_spoofed_forwarded_for` | `[200, 200, 200] != [200, 200, 429]`: el límite tomaba el primer `X-Forwarded-For` (falsificable) |
+| T09 | GREEN | `access_tiers.py` | `Ran 8 tests … OK` (usa `X-Real-IP` que fija nginx) |
 | T08 | RED | Playwright `flow.mjs` | fallo de la prueba (selector «Nombre» ambiguo; espera de avatar oculto en móvil): corregida la prueba, no el producto |
 | T08 | GREEN | Playwright `flow.mjs` | 13 checks OK, 0 errores |
 
@@ -38,6 +40,7 @@ Resultado del navegador: invitado ve `Comenzar · Crear cuenta gratis ×2 · Des
 |---|---|---|
 | F1 | Pasos con candado de progreso se veían rotos: la clase `progress` chocaba con la barra de progreso existente | Renombrada a `lock-progress`; captura 05 corregida |
 | F2 | Capturas de la hoja salían vacías | Era la animación de entrada (0,2 s); medida la hoja (opaca, 298 px) y esperas añadidas a la prueba |
+| F4 | Límite por IP evadible con `X-Forwarded-For` falso | Clave por `X-Real-IP` (nginx); prueba T09 |
 | F3 | El roadmap marcaba siempre el paso 2 como actual (fijo en código) | Ahora es secuencial (primer paso sin completar), necesario para AC-11 |
 
 ## 3. Security Review

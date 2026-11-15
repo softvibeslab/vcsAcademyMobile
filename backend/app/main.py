@@ -271,8 +271,9 @@ def optional_user(authorization: str | None = Header(default=None)) -> dict[str,
 
 
 def client_key(request: Request, action: str) -> str:
-    forwarded = request.headers.get("x-forwarded-for", "").split(",")[0].strip()
-    return f"{action}:{forwarded or (request.client.host if request.client else 'unknown')}"
+    # nginx fija X-Real-IP con la IP real; X-Forwarded-For lo puede falsificar el cliente.
+    real_ip = request.headers.get("x-real-ip", "").strip()
+    return f"{action}:{real_ip or (request.client.host if request.client else 'unknown')}"
 
 
 def deny_plan(level: str) -> HTTPException:
