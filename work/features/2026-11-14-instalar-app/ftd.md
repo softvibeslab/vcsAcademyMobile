@@ -1,6 +1,6 @@
 # FTD: `instalar-app`
 
-**Status:** done
+**Status:** done (publicado en aisales 2026-11-14)
 **Lane:** FTD
 **Author:** `RogerDevAndroid`
 **Branch:** `feature/acceso-free-premium`

@@ -70,16 +70,18 @@ export function RegisterForm({ api, onLogin, destination = "roadmap", onBack, on
           {action.busy ? "Creando tu cuenta…" : "Crear cuenta gratis"} <ArrowRight size={17} />
         </Button>
       </form>
-      {onSignIn && (
-        <button className="text-button" onClick={onSignIn}>
-          ¿Ya tienes cuenta? Inicia sesión
-        </button>
-      )}
-      {onBack && (
-        <button className="text-button" onClick={onBack}>
-          Volver
-        </button>
-      )}
+      <div className="pilot-register-links">
+        {onSignIn && (
+          <button className="text-button" onClick={onSignIn}>
+            ¿Ya tienes cuenta? Inicia sesión
+          </button>
+        )}
+        {onBack && (
+          <button className="text-button" onClick={onBack}>
+            Volver
+          </button>
+        )}
+      </div>
     </>
   );
 }
