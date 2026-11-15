@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "url": "https://aisales.softvibes.pro/",
+  "guestPrivateRequests": [],
+  "errors": [],
+  "checks": [
+    "intro sequence",
+    "three guest entry choices",
+    "no implicit login",
+    "destination after login",
+    "errors reset on navigation",
+    "manager/director branches",
+    "invitation alternative",
+    "guest refresh resets",
+    "390px overflow"
+  ]
+}

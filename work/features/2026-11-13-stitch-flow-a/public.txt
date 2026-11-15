@@ -1,0 +1,1 @@
+PASS: Stitch A navigation, guest isolation, authentication and role branches

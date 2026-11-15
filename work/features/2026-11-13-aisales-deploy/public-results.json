@@ -1,0 +1,16 @@
+{
+  "url": "https://aisales.softvibes.pro/",
+  "passed": true,
+  "checks": [
+    "trusted HTTPS",
+    "new app served at root",
+    "Rep entry chooser",
+    "authenticated destination preserved",
+    "11 roadmap steps",
+    "dashboard API loaded",
+    "390px no overflow",
+    "logout",
+    "no runtime errors"
+  ],
+  "errors": []
+}

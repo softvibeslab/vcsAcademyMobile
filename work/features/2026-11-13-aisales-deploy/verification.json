@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "screens": 43,
+  "journeys": 8,
+  "destinations": "all valid",
+  "inlineNavigation": true,
+  "backNavigation": true,
+  "mobileSearch": true,
+  "noHorizontalOverflow": true,
+  "externalRequests": [],
+  "consoleErrors": []
+}

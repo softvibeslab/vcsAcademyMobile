@@ -1,0 +1,1 @@
+PASS: guest public coach, browser back, private gate and password reset with confirmation; destination preserved

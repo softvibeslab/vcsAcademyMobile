@@ -27,7 +27,12 @@
     "mobile:submit:production": "cd apps/mobile && npx eas-cli submit --profile production --platform all",
     "qa:mobile:screenshots": "node tools/qa/mobile-screenshots.mjs",
     "release:env:check": "node tools/release/validate-production-env.mjs",
-    "release:check": "npm run check && npm run build:web && npm run doctor:mobile && npm run export:mobile:web"
+    "release:check": "npm run check && npm run build:web && npm run doctor:mobile && npm run export:mobile:web",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "qa:e2e:dashboard": "node tools/qa/build-e2e-dashboard.mjs",
+    "qa:e2e:dashboard:serve": "python3 -m http.server 4174 --bind 127.0.0.1 --directory doc/qa/e2e-dashboard"
   },
   "overrides": {
     "react": "19.1.0",
@@ -35,6 +40,7 @@
     "react-native": "0.81.5"
   },
   "devDependencies": {
-    "playwright": "^1.59.1"
+    "@playwright/test": "^1.63.0",
+    "playwright": "^1.63.0"
   }
 }
