@@ -16,7 +16,7 @@
     "backend:reset": "python3 -m backend.app.cli reset --yes",
     "test": "node --test packages/domain/test/*.test.mjs",
     "e2e:api": "python3 backend/tests/e2e_smoke.py",
-    "check": "npm test && npm run e2e:api",
+    "check": "npm test && npm run e2e:api && npm run e2e:access",
     "build:web": "npm --workspace frontend run build",
     "doctor:mobile": "npx expo-doctor",
     "export:mobile:web": "cd apps/mobile && npx expo export --platform web --output-dir dist-mobile-web",
@@ -32,7 +32,8 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "qa:e2e:dashboard": "node tools/qa/build-e2e-dashboard.mjs",
-    "qa:e2e:dashboard:serve": "python3 -m http.server 4174 --bind 127.0.0.1 --directory doc/qa/e2e-dashboard"
+    "qa:e2e:dashboard:serve": "python3 -m http.server 4174 --bind 127.0.0.1 --directory doc/qa/e2e-dashboard",
+    "e2e:access": "python3 backend/tests/access_tiers.py"
   },
   "overrides": {
     "react": "19.1.0",
