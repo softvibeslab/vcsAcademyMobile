@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Academy · Lámina A — Acceso y onboarding</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f4f4f4;
+      color: #111111;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Estilos para el placeholder de medios con X */
+    .media-placeholder-x {
+      position: relative;
+      background: #fcfcfc;
+      border: 1px dashed #9ca3af;
+      overflow: hidden;
+    }
+    .media-placeholder-x::before,
+    .media-placeholder-x::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to top right, transparent calc(50% - 0.75px), #cbd5e1 calc(50% - 0.5px), #cbd5e1 calc(50% + 0.5px), transparent calc(50% + 0.75px));
+      pointer-events: none;
+    }
+    .media-placeholder-x::after {
+      background: linear-gradient(to bottom right, transparent calc(50% - 0.75px), #cbd5e1 calc(50% - 0.5px), #cbd5e1 calc(50% + 0.5px), transparent calc(50% + 0.75px));
+    }
+    /* Grid de especificación visual de wireframe */
+    .wf-phone-frame {
+      width: 360px;
+      min-height: 640px;
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+  </style>
+<style>input,select,button{accent-color:#111} .canvas-container{max-width:none} </style>
+</head>
+<body class="p-8 sm:p-12 w-[1800px] min-w-[1800px] mx-auto select-none">
+
+  <!-- ========================================== -->
+  <!-- ENCABEZADO DE LÁMINA UX / ARQUITECTURA -->
+  <!-- ========================================== -->
+  <header class="border-b-2 border-neutral-300 pb-6 mb-10 flex items-start justify-between">
+    <div>
+      <div class="flex items-center gap-3 mb-2">
+        <span class="px-2.5 py-1 bg-black text-white text-xs font-mono-code font-bold uppercase tracking-wider rounded">LAM-UX-A01</span>
+        <span class="text-xs font-mono-code text-neutral-500 uppercase tracking-wider">Documento de arquitectura UX & Wireframes</span>
+        <span class="px-2 py-0.5 bg-neutral-200 text-neutral-700 text-[11px] font-mono-code rounded">ESTADO: EN REVISIÓN</span>
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight text-neutral-900">Sales Academy · Lámina A — Acceso y onboarding</h1>
+      <p class="text-sm text-neutral-600 mt-1 font-mono-code">Sales Academy · Wireframe para revisión · 13 nov 2026 · Versión 1.0 (Mobile 360×640px viewport)</p>
+    </div>
+
+    <!-- Metadatos de lámina -->
+    <div class="flex gap-6 text-xs text-neutral-600 font-mono-code border border-neutral-300 bg-white p-4 rounded-lg shadow-sm">
+      <div>
+        <p class="text-neutral-400 text-[10px] uppercase font-bold">Total Frames</p>
+        <p class="font-bold text-neutral-800">7 pantallas (Fila 1 & 2)</p>
+      </div>
+      <div class="border-l border-neutral-200 pl-4">
+        <p class="text-neutral-400 text-[10px] uppercase font-bold">Alcance</p>
+        <p class="font-bold text-neutral-800">Entrada, perfilado y auth</p>
+      </div>
+      <div class="border-l border-neutral-200 pl-4">
+        <p class="text-neutral-400 text-[10px] uppercase font-bold">Convención</p>
+        <p class="font-bold text-neutral-800">Gris escala / Sin UI final</p>
+      </div>
+      <div class="border-l border-neutral-200 pl-4">
+        <p class="text-neutral-400 text-[10px] uppercase font-bold">Tipografía</p>
+        <p class="font-bold text-neutral-800">Inter / Neutral Controls</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- GRILLA PRINCIPAL DE WIREFRAMES (4 COLUMNAS) -->
+  <!-- ========================================== -->
+  <main class="grid grid-cols-4 gap-x-10 gap-y-12 mb-16">
+
+    <!-- ---------------------------------------- -->
+    <!-- FRAME 1: A01 · BIENVENIDA -->
+    <!-- ---------------------------------------- -->
+    <div class="flex flex-col">
+      <!-- Metadatos y notas externas -->
+      <div class="mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono-code font-bold text-neutral-900 bg-neutral-200 px-2 py-0.5 rounded">A01 · Bienvenida</span>
+          <span class="text-[10px] font-mono-code text-neutral-600 border border-neutral-400 px-1.5 py-0.2 rounded font-semibold bg-white">REFERENCIA PILOTO</span>
+        </div>
+        <p class="text-xs text-neutral-500 mt-1 line-clamp-2">Pantalla de aterrizaje nativa. Selector de idioma, hero de valor y bifurcación inicial.</p>
+        <p class="text-[11px] font-mono-code text-neutral-600 mt-0.5"><span class="font-semibold">Destinos:</span> CTA [Comenzar] → A02 | [Ya tengo cuenta] → A06</p>
+      </div>
+
+      <!-- Teléfono Mobile 360px -->
+      <div class="wf-phone-frame">
+        <!-- Status Bar -->
+        <div class="h-6 px-4 flex justify-between items-center text-[10px] font-mono-code text-neutral-500 border-b border-neutral-200">
+          <span>09:41</span>
+          <div class="flex items-center gap-1.5">
+            <span>5G</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Wireframe Content -->
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <!-- Top nav wireframe -->
+          <div>
+            <div class="flex justify-between items-center pb-4 border-b border-neutral-100">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 border border-black flex items-center justify-center text-[10px] font-bold">SA</div>
+                <span class="text-xs font-bold tracking-tight text-neutral-800">Sales Academy</span>
+              </div>
+              <!-- Selector ES / EN -->
+              <div class="flex border border-neutral-300 rounded text-[10px] font-mono-code overflow-hidden">
+                <span class="px-1.5 py-0.5 bg-black text-white font-bold">ES</span>
+                <span class="px-1.5 py-0.5 bg-neutral-100 text-neutral-600">EN</span>
+              </div>
+            </div>
+
+            <!-- Placeholder Mascota / Hero Visual con X -->
+            <div class="mt-6 mb-4">
+              <div class="media-placeholder-x h-40 w-full rounded border flex flex-col items-center justify-center p-3 text-center">
+                <span class="text-[11px] font-mono-code text-neutral-600 bg-white/90 px-2 py-0.5 border border-neutral-300 rounded mb-1">[PLACEHOLDER ILUSTRACIÓN]</span>
+                <span class="text-[10px] text-neutral-500">Mascota Coach / Gráfico de confianza</span>
+              </div>
+            </div>
+
+            <!-- Textos jerárquicos de bienvenida -->
+            <div class="text-center mt-4">
+              <h2 class="text-lg font-bold text-neutral-900 leading-snug">Practica tus ventas.<br>Gana confianza.</h2>
+              <p class="text-xs text-neutral-600 mt-2 leading-relaxed">
+                Entrena objeciones y prepara tu próxima presentación.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTAs inferiores -->
+          <div class="mt-6 space-y-2.5 pt-4 border-t border-neutral-100">
+            <div class="w-full">
+              <div class="w-full py-2.5 bg-black text-white text-center text-xs font-semibold rounded flex items-center justify-center gap-1">
+                <span>Comenzar</span>
+                <span class="text-[10px] font-mono-code opacity-75">→ A02</span>
+              </div>
+            </div>
+            <div class="w-full">
+              <div class="w-full py-2 border border-neutral-300 text-neutral-800 text-center text-xs font-medium rounded flex items-center justify-center gap-1 bg-white hover:bg-neutral-50">
+                <span>Ya tengo cuenta</span>
+                <span class="text-[10px] font-mono-code text-neutral-500">→ A06</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home indicator -->
+        <div class="h-4 flex items-center justify-center">
+          <div class="w-24 h-1 bg-neutral-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Nota externa específica -->
+      <div class="mt-2.5 text-[11px] text-neutral-500 bg-neutral-100 p-2 rounded border border-neutral-200">
+        <span class="font-bold text-neutral-700">Ref:</span> designpiloto/1. Entrada principal sin autenticación. Sin gráficos comerciales en esta fase.
+      </div>
+    </div>
+
+    <!-- ---------------------------------------- -->
+    <!-- FRAME 2: A02 · CONOCE A TU COACH -->
+    <!-- ---------------------------------------- -->
+    <div class="flex flex-col">
+      <!-- Metadatos y notas externas -->
+      <div class="mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono-code font-bold text-neutral-900 bg-neutral-200 px-2 py-0.5 rounded">A02 · Conoce a tu coach</span>
+          <span class="text-[10px] font-mono-code text-neutral-600 border border-neutral-400 px-1.5 py-0.2 rounded font-semibold bg-white">REFERENCIA PILOTO</span>
+        </div>
+        <p class="text-xs text-neutral-500 mt-1 line-clamp-2">Consolidación de intros 1.2 y 1.3: saludo guiado y valor de personalización previa.</p>
+        <p class="text-[11px] font-mono-code text-neutral-600 mt-0.5"><span class="font-semibold">Destinos:</span> CTA [Continuar] → A03 | [Volver] → A01</p>
+      </div>
+
+      <!-- Teléfono Mobile 360px -->
+      <div class="wf-phone-frame">
+        <!-- Status Bar -->
+        <div class="h-6 px-4 flex justify-between items-center text-[10px] font-mono-code text-neutral-500 border-b border-neutral-200">
+          <span>09:41</span>
+          <div class="flex items-center gap-1.5">
+            <span>5G</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Wireframe Content -->
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <!-- Header con back y paso de onboarding -->
+            <div class="flex items-center justify-between pb-3 border-b border-neutral-100">
+              <div class="text-xs text-neutral-600 font-medium flex items-center gap-1 cursor-pointer">
+                <span>← Volver</span>
+              </div>
+              <span class="text-[10px] font-mono-code text-neutral-500 font-semibold">PASO 1 DE 3</span>
+            </div>
+
+            <!-- Barra de progreso lineal -->
+            <div class="w-full bg-neutral-200 h-1 rounded-full mt-3 overflow-hidden">
+              <div class="bg-black h-1 rounded-full w-1/3"></div>
+            </div>
+
+            <!-- Avatar del coach en placeholder -->
+            <div class="mt-6 flex flex-col items-center">
+              <div class="media-placeholder-x w-20 h-20 rounded-full border border-neutral-300 flex items-center justify-center">
+                <span class="text-[9px] font-mono-code text-neutral-600 bg-white/90 px-1 rounded">[COACH]</span>
+              </div>
+              <span class="text-xs font-bold text-neutral-800 mt-2">AI Sales Coach</span>
+              <span class="text-[10px] text-neutral-500">Especialista en Pitch & Negociación</span>
+            </div>
+
+            <!-- Bocadillo de diálogo / Mensaje del coach -->
+            <div class="mt-4 p-3.5 bg-neutral-50 border border-neutral-300 rounded-lg text-left relative">
+              <p class="text-xs text-neutral-800 leading-relaxed">
+                "¡Hola! Te haré un par de preguntas rápidas para calibrar el tono de los clientes y adaptar las simulaciones a tu día a día comercial."
+              </p>
+            </div>
+
+            <!-- Bullets de lo que se personalizará -->
+            <div class="mt-4 space-y-2">
+              <div class="flex items-start gap-2 p-2 border border-neutral-200 rounded bg-white">
+                <span class="text-xs font-mono-code font-bold">01</span>
+                <div>
+                  <p class="text-[11px] font-semibold text-neutral-800">Objeciones a tu medida</p>
+                  <p class="text-[10px] text-neutral-500">Precio, timing o competencia según tu rol.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 p-2 border border-neutral-200 rounded bg-white">
+                <span class="text-xs font-mono-code font-bold">02</span>
+                <div>
+                  <p class="text-[11px] font-semibold text-neutral-800">Casos de venta reales</p>
+                  <p class="text-[10px] text-neutral-500">Ejercicios adaptados a llamadas y demos.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA navegación inferior -->
+          <div class="mt-6 pt-4 border-t border-neutral-100">
+            <div class="w-full py-2.5 bg-black text-white text-center text-xs font-semibold rounded flex items-center justify-center gap-1">
+              <span>Continuar</span>
+              <span class="text-[10px] font-mono-code opacity-75">→ A03</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home indicator -->
+        <div class="h-4 flex items-center justify-center">
+          <div class="w-24 h-1 bg-neutral-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Nota externa específica -->
+      <div class="mt-2.5 text-[11px] text-neutral-500 bg-neutral-100 p-2 rounded border border-neutral-200">
+        <span class="font-bold text-neutral-700">Ref:</span> 1.2 y 1.3 unificadas. Se consolida el saludo conversational y el propósito de preguntas en un solo paso.
+      </div>
+    </div>
+
+    <!-- ---------------------------------------- -->
+    <!-- FRAME 3: A03 · TU PERFIL -->
+    <!-- ---------------------------------------- -->
+    <div class="flex flex-col">
+      <!-- Metadatos y notas externas -->
+      <div class="mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono-code font-bold text-neutral-900 bg-neutral-200 px-2 py-0.5 rounded">A03 · Tu perfil</span>
+          <span class="text-[10px] font-mono-code text-neutral-600 border border-neutral-400 px-1.5 py-0.2 rounded font-semibold bg-white">REFERENCIA PILOTO</span>
+        </div>
+        <p class="text-xs text-neutral-500 mt-1 line-clamp-2">Segmentación por responsabilidad comercial: bifurca la experiencia según el rol seleccionado.</p>
+        <p class="text-[11px] font-mono-code text-neutral-600 mt-0.5"><span class="font-semibold">Bifurcación:</span> Rep → A04 | Gerente → G01 | Dirección → G05</p>
+      </div>
+
+      <!-- Teléfono Mobile 360px -->
+      <div class="wf-phone-frame">
+        <!-- Status Bar -->
+        <div class="h-6 px-4 flex justify-between items-center text-[10px] font-mono-code text-neutral-500 border-b border-neutral-200">
+          <span>09:41</span>
+          <div class="flex items-center gap-1.5">
+            <span>5G</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Wireframe Content -->
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <!-- Header con back y paso -->
+            <div class="flex items-center justify-between pb-3 border-b border-neutral-100">
+              <span class="text-xs text-neutral-600 font-medium">← Volver</span>
+              <span class="text-[10px] font-mono-code text-neutral-500 font-semibold">PASO 2 DE 3</span>
+            </div>
+
+            <!-- Progreso -->
+            <div class="w-full bg-neutral-200 h-1 rounded-full mt-3 overflow-hidden">
+              <div class="bg-black h-1 rounded-full w-2/3"></div>
+            </div>
+
+            <!-- Título y bajada -->
+            <div class="mt-5">
+              <h2 class="text-base font-bold text-neutral-900">¿Cuál es tu rol comercial?</h2>
+              <p class="text-xs text-neutral-600 mt-1">Selecciona cómo participas en el ciclo de ventas.</p>
+            </div>
+
+            <!-- Selector de Opciones (Radio Cards) -->
+            <div class="mt-4 space-y-2.5">
+              <!-- Opción 1: Representante (Seleccionada) -->
+              <div class="p-3 border-2 border-black rounded-lg bg-neutral-50 flex items-start gap-3 cursor-pointer">
+                <div class="w-4 h-4 rounded-full border-2 border-black flex items-center justify-center mt-0.5 bg-black">
+                  <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                </div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-center">
+                    <p class="text-xs font-bold text-neutral-900">Representante de Ventas</p>
+                    <span class="text-[9px] font-mono-code bg-black text-white px-1.5 rounded">Ruta A04</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-600 mt-0.5">SDR, BDR, Account Executive. Práctica directa de pitch y objeciones.</p>
+                </div>
+              </div>
+
+              <!-- Opción 2: Gerente / Coach -->
+              <div class="p-3 border border-neutral-300 rounded-lg bg-white flex items-start gap-3 cursor-pointer hover:border-neutral-400">
+                <div class="w-4 h-4 rounded-full border border-neutral-400 flex items-center justify-center mt-0.5 bg-white"></div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-center">
+                    <p class="text-xs font-medium text-neutral-800">Gerente o Coach de Equipo</p>
+                    <span class="text-[9px] font-mono-code text-neutral-500 border border-neutral-200 px-1 rounded">Ruta G01</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-500 mt-0.5">Supervisión, asignación de pistas y métricas de práctica de equipo.</p>
+                </div>
+              </div>
+
+              <!-- Opción 3: Dirección -->
+              <div class="p-3 border border-neutral-300 rounded-lg bg-white flex items-start gap-3 cursor-pointer hover:border-neutral-400">
+                <div class="w-4 h-4 rounded-full border border-neutral-400 flex items-center justify-center mt-0.5 bg-white"></div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-center">
+                    <p class="text-xs font-medium text-neutral-800">Dirección Comercial / VP</p>
+                    <span class="text-[9px] font-mono-code text-neutral-500 border border-neutral-200 px-1 rounded">Ruta G05</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-500 mt-0.5">Visión agregada de habilitación comercial y retorno de entrenamiento.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Placeholder de preguntas pendientes -->
+            <div class="mt-4 p-2.5 border border-dashed border-neutral-300 bg-neutral-50 rounded text-[11px] text-neutral-500 font-mono-code">
+              [+] Preguntas 2 y 3: PENDIENTES DE DEFINIR POR PRODUCTO
+            </div>
+          </div>
+
+          <!-- CTA navegación -->
+          <div class="mt-5 pt-3 border-t border-neutral-100">
+            <div class="w-full py-2.5 bg-black text-white text-center text-xs font-semibold rounded flex items-center justify-center gap-1">
+              <span>Continuar con perfil seleccionado</span>
+              <span class="text-[10px] font-mono-code opacity-75">→</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home indicator -->
+        <div class="h-4 flex items-center justify-center">
+          <div class="w-24 h-1 bg-neutral-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Nota externa específica -->
+      <div class="mt-2.5 text-[11px] text-neutral-500 bg-neutral-100 p-2 rounded border border-neutral-200">
+        <span class="font-bold text-neutral-700">Ref:</span> 03_onboarding_perfil_mobile (HTML reconstruido tras screenshot negro). Bifurca según el rol seleccionado.
+      </div>
+    </div>
+
+    <!-- ---------------------------------------- -->
+    <!-- FRAME 4: A04 · POR DÓNDE EMPEZAR -->
+    <!-- ---------------------------------------- -->
+    <div class="flex flex-col">
+      <!-- Metadatos y notas externas -->
+      <div class="mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono-code font-bold text-neutral-900 bg-neutral-200 px-2 py-0.5 rounded">A04 · Por dónde empezar</span>
+          <span class="text-[10px] font-mono-code text-neutral-600 border border-neutral-400 px-1.5 py-0.2 rounded font-semibold bg-white">REFERENCIA PILOTO</span>
+        </div>
+        <p class="text-xs text-neutral-500 mt-1 line-clamp-2">Punto de inicio guiado para representante. Selección única de la primera herramienta.</p>
+        <p class="text-[11px] font-mono-code text-neutral-600 mt-0.5"><span class="font-semibold">Destinos:</span> Roadmap → C01 | AI Coach → D01 | Bóveda → E01</p>
+      </div>
+
+      <!-- Teléfono Mobile 360px -->
+      <div class="wf-phone-frame">
+        <!-- Status Bar -->
+        <div class="h-6 px-4 flex justify-between items-center text-[10px] font-mono-code text-neutral-500 border-b border-neutral-200">
+          <span>09:41</span>
+          <div class="flex items-center gap-1.5">
+            <span>5G</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Wireframe Content -->
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <!-- Header con back y paso -->
+            <div class="flex items-center justify-between pb-3 border-b border-neutral-100">
+              <span class="text-xs text-neutral-600 font-medium">← Volver</span>
+              <span class="text-[10px] font-mono-code text-neutral-500 font-semibold">PASO 3 DE 3</span>
+            </div>
+
+            <!-- Progreso completo -->
+            <div class="w-full bg-neutral-200 h-1 rounded-full mt-3 overflow-hidden">
+              <div class="bg-black h-1 rounded-full w-full"></div>
+            </div>
+
+            <div class="mt-5">
+              <h2 class="text-base font-bold text-neutral-900">¿Por dónde prefieres empezar?</h2>
+              <p class="text-xs text-neutral-600 mt-1">Podrás acceder a todas las secciones en cualquier momento.</p>
+            </div>
+
+            <!-- 3 Opciones de inicio guiado -->
+            <div class="mt-4 space-y-2.5">
+              <!-- Opción 1: Roadmap (Seleccionada) -->
+              <div class="p-3 border-2 border-black rounded-lg bg-neutral-50 flex items-start gap-2.5 cursor-pointer">
+                <div class="w-6 h-6 border border-neutral-400 bg-white rounded flex items-center justify-center font-mono-code text-[10px] font-bold">01</div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-center">
+                    <p class="text-xs font-bold text-neutral-900">Roadmap Estructurado</p>
+                    <span class="text-[9px] font-mono-code bg-black text-white px-1 rounded">→ C01</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-600 mt-0.5">Paso a paso desde prospección hasta cierre y negociación de contratos.</p>
+                </div>
+              </div>
+
+              <!-- Opción 2: AI Sales Coach -->
+              <div class="p-3 border border-neutral-300 rounded-lg bg-white flex items-start gap-2.5 cursor-pointer hover:border-neutral-400">
+                <div class="w-6 h-6 border border-neutral-300 bg-neutral-100 rounded flex items-center justify-center font-mono-code text-[10px] font-bold">02</div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-center">
+                    <p class="text-xs font-medium text-neutral-800">AI Sales Coach</p>
+                    <span class="text-[9px] font-mono-code text-neutral-500 border border-neutral-200 px-1 rounded">→ D01</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-500 mt-0.5">Roleplay conversacional inmediato con un comprador difícil simulado.</p>
+                </div>
+              </div>
+
+              <!-- Opción 3: Bóveda de Recursos -->
+              <div class="p-3 border border-neutral-300 rounded-lg bg-white flex items-start gap-2.5 cursor-pointer hover:border-neutral-400">
+                <div class="w-6 h-6 border border-neutral-300 bg-neutral-100 rounded flex items-center justify-center font-mono-code text-[10px] font-bold">03</div>
+                <div class="flex-1">
+                  <div class="flex justify-between items-center">
+                    <p class="text-xs font-medium text-neutral-800">Bóveda de Recursos</p>
+                    <span class="text-[9px] font-mono-code text-neutral-500 border border-neutral-200 px-1 rounded">→ E01</span>
+                  </div>
+                  <p class="text-[11px] text-neutral-500 mt-0.5">Plantillas de pitch, emails fríos y guías de manejo de objeciones.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Acceso invitado / Login rápido -->
+          <div class="mt-4 pt-3 border-t border-neutral-100 space-y-2">
+            <div class="w-full py-2.5 bg-black text-white text-center text-xs font-semibold rounded flex items-center justify-center gap-1">
+              <span>Continuar al módulo</span>
+              <span class="text-[10px] font-mono-code opacity-75">→ [Según opción]</span>
+            </div>
+            <p class="text-[10px] text-center text-neutral-400 font-mono-code">Requiere cuenta para guardar progreso de práctica</p>
+          </div>
+        </div>
+
+        <!-- Home indicator -->
+        <div class="h-4 flex items-center justify-center">
+          <div class="w-24 h-1 bg-neutral-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Nota externa específica -->
+      <div class="mt-2.5 text-[11px] text-neutral-500 bg-neutral-100 p-2 rounded border border-neutral-200">
+        <span class="font-bold text-neutral-700">Ref:</span> 1.4. Nota de arquitectura: Acceso invitado temporal vs registro previo formal pendiente de validación técnica.
+      </div>
+    </div>
+
+    <!-- ---------------------------------------- -->
+    <!-- FRAME 5: A05 · CREAR CUENTA / INVITADO -->
+    <!-- ---------------------------------------- -->
+    <div class="flex flex-col">
+      <!-- Metadatos y notas externas -->
+      <div class="mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono-code font-bold text-neutral-900 bg-neutral-200 px-2 py-0.5 rounded">A05 · Crear cuenta / invitado</span>
+          <span class="text-[10px] font-mono-code text-neutral-900 border border-black bg-neutral-100 px-1.5 py-0.2 rounded font-bold">PROPUESTO</span>
+        </div>
+        <p class="text-xs text-neutral-500 mt-1 line-clamp-2">Propuesta UX para resolver el hueco de alta de usuarios sin obligar a registro inmediato.</p>
+        <p class="text-[11px] font-mono-code text-neutral-600 mt-0.5"><span class="font-semibold">Destinos:</span> Crear → B01 (Dock activo) | Probar → A04 | Ya tengo → A06</p>
+      </div>
+
+      <!-- Teléfono Mobile 360px -->
+      <div class="wf-phone-frame">
+        <!-- Status Bar -->
+        <div class="h-6 px-4 flex justify-between items-center text-[10px] font-mono-code text-neutral-500 border-b border-neutral-200">
+          <span>09:41</span>
+          <div class="flex items-center gap-1.5">
+            <span>5G</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Wireframe Content -->
+        <div class="p-5 flex-1 flex flex-col justify-between overflow-y-auto">
+          <div>
+            <!-- Header con back y cerrar -->
+            <div class="flex items-center justify-between pb-3 border-b border-neutral-100">
+              <span class="text-xs text-neutral-600 font-medium">← Volver</span>
+              <span class="text-xs text-neutral-400 font-mono-code">✕</span>
+            </div>
+
+            <div class="mt-3">
+              <h2 class="text-base font-bold text-neutral-900">Crea tu cuenta de práctica</h2>
+              <p class="text-xs text-neutral-600 mt-0.5">Guarda tu historial de simulaciones y métricas.</p>
+            </div>
+
+            <!-- Formulario con controles reales -->
+            <div class="mt-4 space-y-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Nombre y apellido</label>
+                <div class="w-full px-3 py-1.5 border border-neutral-300 rounded text-xs text-neutral-800 bg-white">
+                  Rep A
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Correo electrónico profesional</label>
+                <div class="w-full px-3 py-1.5 border border-neutral-300 rounded text-xs text-neutral-800 bg-white">
+                  demo@example.com
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Contraseña</label>
+                <div class="w-full px-3 py-1.5 border border-neutral-300 rounded text-xs text-neutral-800 bg-white flex justify-between items-center">
+                  <span>••••••••••••</span>
+                  <span class="text-[10px] font-mono-code text-neutral-400">Mostrar</span>
+                </div>
+                <span class="text-[9px] text-neutral-400 mt-0.5 block">Requisitos de contraseña por definir</span>
+              </div>
+
+              <!-- Checkbox de privacidad / términos -->
+              <div class="flex items-start gap-2 pt-1">
+                <div class="w-3.5 h-3.5 border border-neutral-400 rounded mt-0.5 bg-white flex items-center justify-center text-black text-[8px]"></div>
+                <p class="text-[10px] text-neutral-500 leading-tight">
+                  Acepto los términos de servicio y la política de privacidad de datos de simulación.
+                </p>
+              </div>
+            </div>
+
+            <!-- Botón Crear cuenta -->
+            <div class="mt-4">
+              <div class="w-full py-2 bg-black text-white text-center text-xs font-semibold rounded flex items-center justify-center gap-1">
+                <span>Crear cuenta</span>
+                <span class="text-[10px] font-mono-code opacity-75">→ B01</span>
+              </div>
+            </div>
+
+            <!-- Separador "o" -->
+            <div class="relative my-3 text-center">
+              <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-neutral-200"></div></div>
+              <span class="relative bg-white px-2 text-[10px] font-mono-code text-neutral-400">O ALTERNATIVA</span>
+            </div>
+
+            <!-- Opción: Probar sin cuenta (Modo invitado) -->
+            <div class="w-full py-2 border border-neutral-400 text-neutral-800 text-center text-xs font-semibold rounded bg-neutral-50 flex items-center justify-center gap-1 hover:bg-neutral-100">
+              <span>Probar sesión como invitado</span>
+              <span class="text-[9px] font-mono-code text-neutral-600">→ A04</span>
+            </div>
+          </div>
+
+          <!-- Footer: Ya tengo cuenta -->
+          <div class="mt-4 pt-2 border-t border-neutral-100 text-center">
+            <p class="text-[11px] text-neutral-600">
+              ¿Ya tienes cuenta? <span class="font-bold underline text-black cursor-pointer">Iniciar sesión → A06</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Home indicator -->
+        <div class="h-4 flex items-center justify-center">
+          <div class="w-24 h-1 bg-neutral-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Nota externa específica -->
+      <div class="mt-2.5 text-[11px] text-neutral-500 bg-neutral-100 p-2 rounded border border-neutral-200">
+        <span class="font-bold text-neutral-700">Estado:</span> PROPUESTO para cerrar brecha de onboarding. No insinuar que el registro público abierto esté en producción.
+      </div>
+    </div>
+
+    <!-- ---------------------------------------- -->
+    <!-- FRAME 6: A06 · INICIAR SESIÓN -->
+    <!-- ---------------------------------------- -->
+    <div class="flex flex-col">
+      <!-- Metadatos y notas externas -->
+      <div class="mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono-code font-bold text-neutral-900 bg-neutral-200 px-2 py-0.5 rounded">A06 · Iniciar sesión</span>
+          <span class="text-[10px] font-mono-code text-neutral-600 border border-neutral-400 px-1.5 py-0.2 rounded font-semibold bg-white">REFERENCIA PILOTO</span>
+        </div>
+        <p class="text-xs text-neutral-500 mt-1 line-clamp-2">Autenticación directa de usuarios registrados y recuperación de credenciales.</p>
+        <p class="text-[11px] font-mono-code text-neutral-600 mt-0.5"><span class="font-semibold">Destinos:</span> Iniciar → B01 (Home con Dock) | Olvidé → A07 | Registro → A05</p>
+      </div>
+
+      <!-- Teléfono Mobile 360px -->
+      <div class="wf-phone-frame">
+        <!-- Status Bar -->
+        <div class="h-6 px-4 flex justify-between items-center text-[10px] font-mono-code text-neutral-500 border-b border-neutral-200">
+          <span>09:41</span>
+          <div class="flex items-center gap-1.5">
+            <span>5G</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Wireframe Content -->
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <!-- Top brand minimal -->
+            <div class="flex justify-between items-center pb-3 border-b border-neutral-100">
+              <span class="text-xs font-bold text-neutral-800">Sales Academy</span>
+              <span class="text-xs text-neutral-500 font-mono-code">← Salir</span>
+            </div>
+
+            <div class="mt-4">
+              <h2 class="text-base font-bold text-neutral-900">Bienvenido de nuevo</h2>
+              <p class="text-xs text-neutral-600 mt-0.5">Ingresa tus credenciales para continuar tu plan.</p>
+            </div>
+
+            <!-- Formulario de Login -->
+            <div class="mt-4 space-y-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Correo electrónico</label>
+                <div class="w-full px-3 py-1.5 border border-neutral-300 rounded text-xs text-neutral-800 bg-white">
+                  demo@example.com
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <label class="text-[11px] font-semibold text-neutral-700">Contraseña</label>
+                  <span class="text-[10px] text-neutral-500 underline font-mono-code cursor-pointer">¿Olvidaste tu contraseña? → A07</span>
+                </div>
+                <div class="w-full px-3 py-1.5 border border-neutral-300 rounded text-xs text-neutral-800 bg-white flex justify-between items-center">
+                  <span>••••••••••••</span>
+                  <span class="text-[10px] font-mono-code text-neutral-400">Ocultar</span>
+                </div>
+              </div>
+
+              <!-- Subestado de error secundario en wireframe -->
+              <div class="p-2 border border-neutral-400 bg-neutral-100 rounded flex items-center gap-2">
+                <span class="font-mono-code font-bold text-xs">[!]</span>
+                <p class="text-[10px] text-neutral-700"><span class="font-semibold">Subestado de error:</span> "Credenciales no coinciden. Revisa tu email."</p>
+              </div>
+            </div>
+
+            <!-- Botón de acceso primario -->
+            <div class="mt-4">
+              <div class="w-full py-2.5 bg-black text-white text-center text-xs font-semibold rounded flex items-center justify-center gap-1">
+                <span>Iniciar sesión</span>
+                <span class="text-[10px] font-mono-code opacity-75">→ B01</span>
+              </div>
+            </div>
+
+            <!-- Social Auth por validar -->
+            <div class="mt-4 pt-3 border-t border-neutral-200">
+              <p class="text-[10px] font-mono-code text-neutral-400 text-center mb-2">[OPCIONES POR VALIDAR EN ARQUITECTURA]</p>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="py-1.5 border border-neutral-300 rounded text-center text-[10px] text-neutral-600 bg-white">
+                  Google Workspace
+                </div>
+                <div class="py-1.5 border border-neutral-300 rounded text-center text-[10px] text-neutral-600 bg-white">
+                  Apple SSO
+                </div>
+              </div>
+              <p class="text-[9px] text-neutral-400 text-center mt-1.5 font-mono-code">Nota: ChatGPT OAuth no considerado como operativo.</p>
+            </div>
+          </div>
+
+          <!-- Bottom link -->
+          <div class="mt-4 pt-2 border-t border-neutral-100 text-center">
+            <p class="text-[11px] text-neutral-600">
+              ¿No tienes cuenta aún? <span class="font-bold underline text-black cursor-pointer">Crear cuenta → A05</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Home indicator -->
+        <div class="h-4 flex items-center justify-center">
+          <div class="w-24 h-1 bg-neutral-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Nota externa específica -->
+      <div class="mt-2.5 text-[11px] text-neutral-500 bg-neutral-100 p-2 rounded border border-neutral-200">
+        <span class="font-bold text-neutral-700">Ref:</span> 2.2. Login principal hacia pantalla B01 con dock persistente.
+      </div>
+    </div>
+
+    <!-- ---------------------------------------- -->
+    <!-- FRAME 7: A07 · RECUPERAR ACCESO -->
+    <!-- ---------------------------------------- -->
+    <div class="flex flex-col">
+      <!-- Metadatos y notas externas -->
+      <div class="mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono-code font-bold text-neutral-900 bg-neutral-200 px-2 py-0.5 rounded">A07 · Recuperar acceso</span>
+          <span class="text-[10px] font-mono-code text-neutral-600 border border-neutral-400 px-1.5 py-0.2 rounded font-semibold bg-white">REFERENCIA PILOTO</span>
+        </div>
+        <p class="text-xs text-neutral-500 mt-1 line-clamp-2">Flujo de reseteo de credenciales con mensaje neutro antienumeración de cuentas.</p>
+        <p class="text-[11px] font-mono-code text-neutral-600 mt-0.5"><span class="font-semibold">Destinos:</span> Enlace enviado → A07b | Volver a login → A06</p>
+      </div>
+
+      <!-- Teléfono Mobile 360px -->
+      <div class="wf-phone-frame">
+        <!-- Status Bar -->
+        <div class="h-6 px-4 flex justify-between items-center text-[10px] font-mono-code text-neutral-500 border-b border-neutral-200">
+          <span>09:41</span>
+          <div class="flex items-center gap-1.5">
+            <span>5G</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Wireframe Content -->
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <!-- Header con back -->
+            <div class="flex items-center justify-between pb-3 border-b border-neutral-100">
+              <span class="text-xs text-neutral-600 font-medium">← Volver al login</span>
+              <span class="text-xs font-mono-code text-neutral-400">AYUDA</span>
+            </div>
+
+            <div class="mt-4">
+              <h2 class="text-base font-bold text-neutral-900">Recupera tu contraseña</h2>
+              <p class="text-xs text-neutral-600 mt-1 leading-relaxed">
+                Ingresa tu correo registrado y te enviaremos un enlace seguro para restablecerla.
+              </p>
+            </div>
+
+            <!-- Input correo -->
+            <div class="mt-5 space-y-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Correo electrónico</label>
+                <div class="w-full px-3 py-2 border border-neutral-300 rounded text-xs text-neutral-800 bg-white">
+                  demo@example.com
+                </div>
+              </div>
+
+              <!-- Botón enviar -->
+              <div class="w-full py-2.5 bg-black text-white text-center text-xs font-semibold rounded flex items-center justify-center gap-1">
+                <span>Enviar enlace de recuperación</span>
+                <span class="text-[10px] font-mono-code opacity-75">→</span>
+              </div>
+            </div>
+
+            <!-- Mensaje de confirmación neutro -->
+            <div class="mt-5 p-3 border border-neutral-300 bg-neutral-50 rounded">
+              <div class="flex items-center gap-1.5 mb-1">
+                <span class="font-mono-code text-xs font-bold">[i]</span>
+                <span class="text-[11px] font-bold text-neutral-800">Confirmación de seguridad</span>
+              </div>
+              <p class="text-[10px] text-neutral-600 leading-normal">
+                Si la cuenta existe, recibirás instrucciones para recuperar el acceso.
+              </p>
+            </div>
+
+            <!-- Subestados propuestos documentados en el frame -->
+            <div class="mt-4 pt-3 border-t border-dashed border-neutral-300">
+              <p class="text-[10px] font-mono-code font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">Subestados derivados (A07.x):</p>
+              <div class="space-y-1 text-[10px] font-mono-code text-neutral-600 bg-neutral-100 p-2 rounded">
+                <p>• A07.1: Enlace recibido (espera de token)</p>
+                <p>• A07.2: Definir nueva contraseña (2 campos)</p>
+                <p>• A07.3: Enlace vencido / Solicitar reenvío</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom link de retorno -->
+          <div class="mt-4 pt-3 border-t border-neutral-100 text-center">
+            <span class="text-xs font-medium text-neutral-800 underline cursor-pointer">Volver a iniciar sesión → A06</span>
+          </div>
+        </div>
+
+        <!-- Home indicator -->
+        <div class="h-4 flex items-center justify-center">
+          <div class="w-24 h-1 bg-neutral-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Nota externa específica -->
+      <div class="mt-2.5 text-[11px] text-neutral-500 bg-neutral-100 p-2 rounded border border-neutral-200">
+        <span class="font-bold text-neutral-700">Ref:</span> 2.1. Seguridad preventiva contra enumeración de cuentas. Subestados de recuperación contemplados.
+      </div>
+    </div>
+
+    <!-- ---------------------------------------- -->
+  </main>
+
+  <!-- ========================================== -->
+  <!-- PIE DE LÁMINA: MAPA DE CONEXIONES Y SUPUESTOS -->
+  <!-- ========================================== -->
+  <footer class="border-t-2 border-neutral-300 pt-8 mt-12 grid grid-cols-3 gap-8">
+    
+    <!-- Columna 1: Matriz de navegación y conexiones -->
+    <div class="bg-white p-5 border border-neutral-300 rounded-lg shadow-sm">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-2.5 h-2.5 bg-black rounded-full"></span>
+        <h3 class="text-xs font-mono-code font-bold uppercase tracking-wider text-neutral-900">Mapa de conexiones de navegación (Lámina A)</h3>
+      </div>
+      
+      <div class="space-y-2 text-xs font-mono-code text-neutral-700">
+        <div class="p-1.5 bg-neutral-50 rounded border border-neutral-200">
+          <span class="font-bold">A01 Bienvenida:</span> [Comenzar] → <span class="bg-neutral-200 px-1 rounded">A02</span> | [Ya tengo cuenta] → <span class="bg-neutral-200 px-1 rounded">A06</span>
+        </div>
+        <div class="p-1.5 bg-neutral-50 rounded border border-neutral-200">
+          <span class="font-bold">A02 Coach:</span> [Continuar] → <span class="bg-neutral-200 px-1 rounded">A03</span> | [Volver] → <span class="bg-neutral-200 px-1 rounded">A01</span>
+        </div>
+        <div class="p-1.5 bg-neutral-50 rounded border border-neutral-200">
+          <span class="font-bold">A03 Perfil:</span> Rep → <span class="bg-neutral-200 px-1 rounded">A04</span> | Gerente → <span class="bg-neutral-200 px-1 rounded">G01</span> | Dirección → <span class="bg-neutral-200 px-1 rounded">G05</span>
+        </div>
+        <div class="p-1.5 bg-neutral-50 rounded border border-neutral-200">
+          <span class="font-bold">A04 Inicio:</span> Roadmap → <span class="bg-neutral-200 px-1 rounded">C01</span> | AI Coach → <span class="bg-neutral-200 px-1 rounded">D01</span> | Bóveda → <span class="bg-neutral-200 px-1 rounded">E01</span>
+        </div>
+        <div class="p-1.5 bg-neutral-50 rounded border border-neutral-200">
+          <span class="font-bold">A05 Alta:</span> [Crear cuenta] → <span class="bg-neutral-200 px-1 rounded">B01</span> | [Probar invitado] → <span class="bg-neutral-200 px-1 rounded">A04</span> | [Login] → <span class="bg-neutral-200 px-1 rounded">A06</span>
+        </div>
+        <div class="p-1.5 bg-neutral-50 rounded border border-neutral-200">
+          <span class="font-bold">A06 Login:</span> [Entrar] → <span class="bg-neutral-200 px-1 rounded">B01</span> | [Recuperar] → <span class="bg-neutral-200 px-1 rounded">A07</span> | [Crear] → <span class="bg-neutral-200 px-1 rounded">A05</span>
+        </div>
+        <div class="p-1.5 bg-neutral-50 rounded border border-neutral-200">
+          <span class="font-bold">A07 Reset:</span> [Enviar enlace] → <span class="bg-neutral-200 px-1 rounded">A07.x</span> | [Volver] → <span class="bg-neutral-200 px-1 rounded">A06</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna 2: Notas técnicas y supuestos de revisión -->
+    <div class="bg-white p-5 border border-neutral-300 rounded-lg shadow-sm">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-2.5 h-2.5 bg-neutral-600 rounded-full"></span>
+        <h3 class="text-xs font-mono-code font-bold uppercase tracking-wider text-neutral-900">Notas de revisión técnica y supuestos de UX</h3>
+      </div>
+      
+      <ul class="text-xs text-neutral-600 space-y-2.5 leading-relaxed">
+        <li>
+          <strong class="text-neutral-900 font-mono-code">1. Fuentes de diseño:</strong> Basado en 8 exports de entrada del piloto funcional. Se unificaron las pantallas 1.2 y 1.3 en el frame A02 para reducir fricción.
+        </li>
+        <li>
+          <strong class="text-neutral-900 font-mono-code">2. Reconstrucción de Perfil:</strong> El frame A03 fue reconstruido a partir del HTML de estructura, dado que el screenshot original se encontraba corrupto en negro.
+        </li>
+        <li>
+          <strong class="text-neutral-900 font-mono-code">3. Modo Invitado (Guest):</strong> El prototipo permite prueba sin login; en A05 se formaliza como opción temporal explícita para evitar abandono en onboarding.
+        </li>
+        <li>
+          <strong class="text-neutral-900 font-mono-code">4. OAuth / SSO Corporativo:</strong> Google y Apple se muestran como opciones por validar con el equipo de backend; ChatGPT OAuth descartado como acceso operativo.
+        </li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Convenciones de wireframe y leyenda -->
+    <div class="bg-white p-5 border border-neutral-300 rounded-lg shadow-sm">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-2.5 h-2.5 bg-neutral-400 rounded-full"></span>
+        <h3 class="text-xs font-mono-code font-bold uppercase tracking-wider text-neutral-900">Convenciones de diseño & Estándares</h3>
+      </div>
+      
+      <div class="space-y-3 text-xs">
+        <div class="flex items-center gap-3">
+          <div class="w-16 py-1 bg-black text-white text-center font-semibold text-[10px] rounded">CTA Primario</div>
+          <span class="text-neutral-600 text-[11px]">Acción principal hacia adelante o confirmación.</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-16 py-1 border border-neutral-300 text-neutral-800 text-center font-medium text-[10px] rounded bg-white">CTA Secundario</div>
+          <span class="text-neutral-600 text-[11px]">Ruta alternativa, volver o acción sin persistencia.</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="w-16 h-8 media-placeholder-x rounded border flex items-center justify-center text-[9px] font-mono-code text-neutral-500">[ X ]</div>
+          <span class="text-neutral-600 text-[11px]">Placeholder para ilustración, avatar o assets de medios.</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="px-2 py-0.5 border border-neutral-400 font-mono-code text-[10px] font-bold bg-neutral-100 rounded">EXISTENTE</span>
+          <span class="px-2 py-0.5 border border-black font-mono-code text-[10px] font-bold bg-white rounded">PROPUESTO</span>
+          <span class="text-neutral-600 text-[11px]">Diferenciación de madurez funcional.</span>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+<aside style="margin:24px 0;padding:12px;border:1px solid #aaa;font:12px system-ui;color:#444">Propuesta de wireframe. Datos y textos ilustrativos; no acredita funciones en producción. Fuentes y decisiones pendientes: INVENTORY.md.</aside>
+</body>
+</html>
+
+

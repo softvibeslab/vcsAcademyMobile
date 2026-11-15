@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>E2E Dashboard · VCSA Academy</title>
+<style>
+  :root { color-scheme: light dark; --bg:#0f1115; --card:#181b22; --line:#2a2f3a; --fg:#e6e8ee; --muted:#9aa3b2; --ok:#2ecc71; --bad:#ff5c5c; --warn:#f5b23e; --accent:#7aa2ff; }
+  @media (prefers-color-scheme: light) { :root { --bg:#f6f7fb; --card:#fff; --line:#e3e6ee; --fg:#1b1f28; --muted:#5d6675; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; background:var(--bg); color:var(--fg); }
+  header { padding: 32px 40px 16px; border-bottom:1px solid var(--line); }
+  h1 { margin:0 0 4px; font-size: 24px; }
+  h2 { margin: 32px 0 12px; font-size: 16px; text-transform: uppercase; letter-spacing:.08em; color:var(--muted); }
+  main { padding: 8px 40px 48px; max-width: 1200px; }
+  .sub { color:var(--muted); margin:0; }
+  .tiles { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px; margin-top:20px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+  .tile .label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+  .tile .value { font-size:26px; font-weight:600; margin-top:2px; }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; vertical-align:middle; }
+  .ok { background:var(--ok);} .bad { background:var(--bad);} .warn { background:var(--warn);}
+  table { width:100%; border-collapse: collapse; background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+  tr:last-child td { border-bottom:0; }
+  code { font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; background:rgba(127,127,127,.12); padding:1px 5px; border-radius:4px; }
+  .badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); white-space:nowrap; }
+  .badge.creado { color:var(--ok); border-color:var(--ok); }
+  .badge.modificado { color:var(--warn); border-color:var(--warn); }
+  .badge.generado { color:var(--accent); border-color:var(--accent); }
+  .missing { color:var(--bad); }
+  details { margin-top:6px; }
+  summary { cursor:pointer; color:var(--accent); font-size:13px; }
+  pre { margin:8px 0 0; padding:12px; background:rgba(127,127,127,.1); border-radius:8px; overflow:auto; font-size:12.5px; line-height:1.45; max-height:420px; }
+  a { color:var(--accent); }
+  a.view { white-space:nowrap; font-weight:600; text-decoration:none; }
+  .cmds { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:10px; }
+  .cmd { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .cmd code { display:block; margin-top:4px; padding:6px 8px; }
+  footer { color:var(--muted); font-size:12px; padding: 0 40px 32px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>E2E Dashboard · VCSA Academy</h1>
+  <p class="sub">Inventario de artefactos de Playwright, estado de la última ejecución y accesos rápidos. Generado 15/9/2026, 15:56:02.</p>
+  <div class="tiles">
+    <div class="tile"><div class="label">Última ejecución</div><div class="value"><span class="dot ok"></span>passed</div></div>
+    <div class="tile"><div class="label">Tests fallidos</div><div class="value">0</div></div>
+    <div class="tile"><div class="label">Tests definidos</div><div class="value">2 × 3 navegadores</div></div>
+    <div class="tile"><div class="label">@playwright/test</div><div class="value">^1.63.0</div></div>
+    <div class="tile"><div class="label">Artefactos</div><div class="value">13</div></div>
+    <div class="tile"><div class="label">Reporte HTML</div><div class="value"><a href="./playwright-report/index.html">Abrir</a></div></div>
+  </div>
+</header>
+<main>
+
+<h2>Configuración</h2>
+<table>
+  <thead><tr><th style="width:26%">Artefacto</th><th>Descripción</th><th style="width:9%">Estado</th><th style="width:14%">Archivo</th><th style="width:8%">Ver</th></tr></thead>
+  <tbody>
+  
+    <tr>
+      <td><strong>Configuración de Playwright</strong><br/><code>playwright.config.js</code></td>
+      <td>Define testDir ./e2e, baseURL http://127.0.0.1:5173 (sobreescribible con E2E_BASE_URL), tres proyectos (Chromium, Firefox, WebKit), reintentos y un worker en CI, trazas en el primer reintento, capturas solo en fallo y el webServer que arranca npm run dev:web.</td>
+      <td><span class="badge creado">creado</span></td>
+      <td>1.1 KB<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:36:06</span></td>
+      <td><a class="view" href="./files/playwright-config-js.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+  </tbody>
+</table>
+<h2>Tests</h2>
+<table>
+  <thead><tr><th style="width:26%">Artefacto</th><th>Descripción</th><th style="width:9%">Estado</th><th style="width:14%">Archivo</th><th style="width:8%">Ver</th></tr></thead>
+  <tbody>
+  
+    <tr>
+      <td><strong>Smoke tests de la pantalla de login</strong><br/><code>e2e/example.spec.js</code></td>
+      <td>Dos pruebas contra la vista sin sesión: título &quot;WL Sales Academy&quot; y visibilidad del encabezado y del botón &quot;Sign in&quot;. No requieren el backend FastAPI.</td>
+      <td><span class="badge creado">creado</span></td>
+      <td>719 B<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:36:06</span></td>
+      <td><a class="view" href="./files/e2e-example-spec-js.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+    <tr>
+      <td><strong>Fixtures compartidos</strong><br/><code>e2e/fixtures/index.js</code></td>
+      <td>Punto de extensión de test/expect. Incluye un ejemplo comentado de fixture authenticatedPage que inicia sesión con las credenciales demo.</td>
+      <td><span class="badge creado">creado</span></td>
+      <td>694 B<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:36:06</span></td>
+      <td><a class="view" href="./files/e2e-fixtures-index-js.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+    <tr>
+      <td><strong>Carpeta para Page Objects</strong><br/><code>e2e/pages/.gitkeep</code></td>
+      <td>Reservada para modelos de página (POM). Vacía por ahora.</td>
+      <td><span class="badge creado">creado</span></td>
+      <td>0 B<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:36:06</span></td>
+      <td><a class="view" href="./files/e2e-pages-gitkeep.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+    <tr>
+      <td><strong>Carpeta para datos de prueba</strong><br/><code>e2e/test-data/.gitkeep</code></td>
+      <td>Reservada para fixtures de datos (JSON, CSV). Vacía por ahora.</td>
+      <td><span class="badge creado">creado</span></td>
+      <td>0 B<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:36:06</span></td>
+      <td><a class="view" href="./files/e2e-test-data-gitkeep.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+  </tbody>
+</table>
+<h2>CI</h2>
+<table>
+  <thead><tr><th style="width:26%">Artefacto</th><th>Descripción</th><th style="width:9%">Estado</th><th style="width:14%">Archivo</th><th style="width:8%">Ver</th></tr></thead>
+  <tbody>
+  
+    <tr>
+      <td><strong>Workflow de GitHub Actions</strong><br/><code>.github/workflows/playwright.yml</code></td>
+      <td>Corre en push a main y en pull requests. Node 22 con caché npm, npm ci, instala navegadores con dependencias del sistema, ejecuta npx playwright test y sube playwright-report como artefacto durante 30 días.</td>
+      <td><span class="badge creado">creado</span></td>
+      <td>782 B<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:36:12</span></td>
+      <td><a class="view" href="./files/github-workflows-playwright-yml.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+  </tbody>
+</table>
+<h2>Proyecto</h2>
+<table>
+  <thead><tr><th style="width:26%">Artefacto</th><th>Descripción</th><th style="width:9%">Estado</th><th style="width:14%">Archivo</th><th style="width:8%">Ver</th></tr></thead>
+  <tbody>
+  
+    <tr>
+      <td><strong>Scripts y dependencias</strong><br/><code>package.json</code></td>
+      <td>Se añadió @playwright/test ^1.63.0, se alineó playwright a ^1.63.0 y se agregaron los scripts test:e2e, test:e2e:ui, test:e2e:debug, qa:e2e:dashboard y qa:e2e:dashboard:serve.</td>
+      <td><span class="badge modificado">modificado</span></td>
+      <td>2.1 KB<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:40:57</span></td>
+      <td><a class="view" href="./files/package-json.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+    <tr>
+      <td><strong>Lockfile regenerado</strong><br/><code>package-lock.json</code></td>
+      <td>Actualizado al instalar @playwright/test y las dependencias del monorepo (no existía node_modules).</td>
+      <td><span class="badge modificado">modificado</span></td>
+      <td>337.3 KB<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:35:22</span></td>
+      <td><a class="view" href="./files/package-lock-json.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+    <tr>
+      <td><strong>Exclusiones de Playwright</strong><br/><code>.gitignore</code></td>
+      <td>Se ignoran test-results/, playwright-report/, blob-report/ y playwright/.cache/.</td>
+      <td><span class="badge modificado">modificado</span></td>
+      <td>627 B<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:55:45</span></td>
+      <td><a class="view" href="./files/gitignore.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+  </tbody>
+</table>
+<h2>Salidas generadas</h2>
+<table>
+  <thead><tr><th style="width:26%">Artefacto</th><th>Descripción</th><th style="width:9%">Estado</th><th style="width:14%">Archivo</th><th style="width:8%">Ver</th></tr></thead>
+  <tbody>
+  
+    <tr>
+      <td><strong>Reporte HTML de la última ejecución</strong><br/><code>playwright-report/index.html</code></td>
+      <td>Reporte interactivo de Playwright. Se copia dentro de este dashboard en ./playwright-report/.</td>
+      <td><span class="badge generado">generado</span></td>
+      <td>508.1 KB<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:37:29</span></td>
+      <td><a class="view" href="./playwright-report/index.html">Abrir ↗</a></td>
+    </tr>
+    <tr>
+      <td><strong>Resumen de la última ejecución</strong><br/><code>test-results/.last-run.json</code></td>
+      <td>Estado global y lista de tests fallidos. Es la fuente del semáforo de este dashboard.</td>
+      <td><span class="badge generado">generado</span></td>
+      <td>45 B<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:37:29</span></td>
+      <td><a class="view" href="./files/test-results-last-run-json.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+  </tbody>
+</table>
+<h2>Dashboard</h2>
+<table>
+  <thead><tr><th style="width:26%">Artefacto</th><th>Descripción</th><th style="width:9%">Estado</th><th style="width:14%">Archivo</th><th style="width:8%">Ver</th></tr></thead>
+  <tbody>
+  
+    <tr>
+      <td><strong>Generador de este dashboard</strong><br/><code>tools/qa/build-e2e-dashboard.mjs</code></td>
+      <td>Lee el inventario, el estado de la última ejecución y copia el reporte. Se ejecuta con npm run qa:e2e:dashboard.</td>
+      <td><span class="badge creado">creado</span></td>
+      <td>14.1 KB<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:56:02</span></td>
+      <td><a class="view" href="./files/tools-qa-build-e2e-dashboard-mjs.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+    <tr>
+      <td><strong>Esta página</strong><br/><code>doc/qa/e2e-dashboard/index.html</code></td>
+      <td>Salida estática del generador. Se sirve en local con npm run qa:e2e:dashboard:serve.</td>
+      <td><span class="badge generado">generado</span></td>
+      <td>esta ejecución<br/><span style="color:var(--muted);font-size:12px">15/9/2026, 15:56:02</span></td>
+      <td><a class="view" href="./index.html" target="_blank">Abrir ↗</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Comandos</h2>
+<div class="cmds">
+  <div class="cmd">Ejecutar la suite en los tres navegadores<code>npm run test:e2e</code></div>
+  <div class="cmd">Modo interactivo (UI mode)<code>npm run test:e2e:ui</code></div>
+  <div class="cmd">Depurar con el inspector<code>npm run test:e2e:debug</code></div>
+  <div class="cmd">Ver el reporte HTML nativo<code>npx playwright show-report</code></div>
+  <div class="cmd">Regenerar este dashboard<code>npm run qa:e2e:dashboard</code></div>
+  <div class="cmd">Servirlo en local (puerto 4174)<code>npm run qa:e2e:dashboard:serve</code></div>
+</div>
+</main>
+<footer>Fuente de estado: <code>test-results/.last-run.json</code>. Regenera el dashboard después de cada ejecución para refrescar el semáforo y la copia del reporte.</footer>
+</body>
+</html>

@@ -256,6 +256,8 @@ def row_to_user(row: sqlite3.Row | None) -> dict[str, Any] | None:
         "team_id": row["team_id"],
         "permissions": json_loads(row["permissions_json"], []),
         "status": row["status"],
+        "plan": row["plan"] if "plan" in row.keys() else "gratis",
+        "plan_expires_at": row["plan_expires_at"] if "plan_expires_at" in row.keys() else None,
     }
 
 

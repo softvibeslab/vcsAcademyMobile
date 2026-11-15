@@ -1,0 +1,13 @@
+✔ month metrics exclude other periods and reuse canonical qualified-tour denominator (1.130834ms)
+✔ weekly range starts Monday and excludes future entries (0.416666ms)
+✔ no-sale form clears stale volume, validates input and never adds unsupported channel fields (0.209833ms)
+✔ role preference cannot grant manager access (0.07525ms)
+✔ notebook storage is scoped to authenticated identity (0.143167ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48.484667

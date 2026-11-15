@@ -1,0 +1,15 @@
+{
+  "base": "https://aisales.softvibes.pro/",
+  "viewports": [
+    390,
+    768,
+    1280
+  ],
+  "screens": 11,
+  "errors": [],
+  "originalRobot": true,
+  "originalPalette": true,
+  "editorialHeroRemoved": true,
+  "sidebarRemoved": true,
+  "vaultSearch": true
+}

@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "checks": [
+    "public coach",
+    "invalid login",
+    "rep denied admin",
+    "restricted resource denied",
+    "local note deletion",
+    "network failure and retry",
+    "expired token cleared"
+  ],
+  "errors": []
+}

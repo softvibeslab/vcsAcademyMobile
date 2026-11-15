@@ -1,0 +1,75 @@
+<svg viewBox="0 0 260 320"  fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Drop Shadow at base -->
+          <ellipse cx="130" cy="308" rx="46" ry="7" fill="#000000" fill-opacity="0.06"></ellipse>
+          
+          <!-- Feet (Marfil & Gold) -->
+          <ellipse cx="110" cy="296" rx="14" ry="7" fill="#EAEAE6"></ellipse>
+          <ellipse cx="110" cy="294" rx="12" ry="5" fill="#C5A059"></ellipse>
+          <ellipse cx="150" cy="296" rx="14" ry="7" fill="#EAEAE6"></ellipse>
+          <ellipse cx="150" cy="294" rx="12" ry="5" fill="#C5A059"></ellipse>
+          
+          <!-- Legs (Segmented Golden accents) -->
+          <rect x="106" y="272" width="8" height="22" rx="4" fill="#C5A059"></rect>
+          <rect x="146" y="272" width="8" height="22" rx="4" fill="#C5A059"></rect>
+          <rect x="104" y="278" width="12" height="4" rx="2" fill="#FAF9F5"></rect>
+          <rect x="144" y="278" width="12" height="4" rx="2" fill="#FAF9F5"></rect>
+
+          <!-- Body (White/Ivory torso with golden joints) -->
+          <rect x="98" y="196" width="64" height="66" rx="28" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="2.5"></rect>
+          <circle cx="130" cy="228" r="16" fill="#F0EFE9" stroke="#C5A059" stroke-width="2"></circle>
+          <circle cx="130" cy="228" r="4" fill="#C5A059"></circle>
+          <!-- Chest button dots -->
+          <circle cx="130" cy="218" r="1.5" fill="#A07D38"></circle>
+          <circle cx="130" cy="238" r="1.5" fill="#A07D38"></circle>
+          <circle cx="120" cy="228" r="1.5" fill="#A07D38"></circle>
+          <circle cx="140" cy="228" r="1.5" fill="#A07D38"></circle>
+
+          <!-- Pelvis joint -->
+          <rect x="110" y="258" width="40" height="7" rx="3.5" fill="#C5A059"></rect>
+
+          <!-- Left Arm (Resting politely at side) -->
+          <path d="M98 206 C84 214 80 236 86 248 C88 252 93 252 94 248 C98 238 98 220 102 214 Z" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="2"></path>
+          <circle cx="99" cy="209" r="6" fill="#FAF9F5" stroke="#C5A059" stroke-width="2"></circle>
+          <ellipse cx="88" cy="253" rx="5" ry="6" fill="#EAEAE6"></ellipse>
+
+          <!-- Right Arm (Waving friendly gesture up) -->
+          <circle cx="161" cy="209" r="6" fill="#FAF9F5" stroke="#C5A059" stroke-width="2"></circle>
+          <path d="M163 207 C174 200 182 178 178 152 C177 148 171 148 171 153 C172 170 167 194 158 205 Z" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="2"></path>
+          <!-- Waving Hand with 4 fingers -->
+          <g transform="translate(168, 134)">
+            <ellipse cx="10" cy="14" rx="6" ry="5" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="1.5"></ellipse>
+            <rect x="5" y="4" width="2.5" height="7" rx="1.2" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="1"></rect>
+            <rect x="8.5" y="2" width="2.5" height="9" rx="1.2" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="1"></rect>
+            <rect x="12" y="3" width="2.5" height="8" rx="1.2" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="1"></rect>
+            <rect x="15" y="6" width="2.5" height="6" rx="1.2" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="1"></rect>
+            <!-- Thumb -->
+            <path d="M4 12 C1 11 0 14 3 16 Z" fill="#FAF9F5"></path>
+          </g>
+
+          <!-- Neck Joint -->
+          <rect x="122" y="186" width="16" height="12" rx="4" fill="#C5A059"></rect>
+
+          <!-- Antenna -->
+          <rect x="128" y="78" width="4" height="20" rx="2" fill="#C5A059"></rect>
+          <circle cx="130" cy="74" r="6" fill="#C5A059" stroke="#A07D38" stroke-width="2"></circle>
+
+          <!-- Head (Rounded ivory capsule/television frame) -->
+          <rect x="68" y="94" width="124" height="94" rx="42" fill="#FAF9F5" stroke="#E5E4DE" stroke-width="3"></rect>
+          
+          <!-- Ear caps with gold detail -->
+          <rect x="60" y="128" width="8" height="26" rx="4" fill="#C5A059"></rect>
+          <rect x="192" y="128" width="8" height="26" rx="4" fill="#C5A059"></rect>
+
+          <!-- Visor / Face Screen (Glossy Dark Charcoal/Black Screen) -->
+          <rect x="80" y="106" width="100" height="70" rx="30" fill="#151716"></rect>
+          
+          <!-- Visor reflection accent -->
+          <path d="M94 112 Q130 114 166 112" stroke="#2A2F2D" stroke-width="2" stroke-linecap="round"></path>
+
+          <!-- Gold Expressive Eyes (Smiling happy arches) -->
+          <path d="M96 139 C96 128 112 128 112 139" stroke="#C5A059" stroke-width="4.5" stroke-linecap="round" fill="none"></path>
+          <path d="M148 139 C148 128 164 128 164 139" stroke="#C5A059" stroke-width="4.5" stroke-linecap="round" fill="none"></path>
+          
+          <!-- Cute subtle smile / mouth -->
+          <path d="M125 151 Q130 156 135 151" stroke="#C5A059" stroke-width="3" stroke-linecap="round" fill="none"></path>
+        </svg>

@@ -1,0 +1,26 @@
+Verified route: home
+Verified route: goalsheet
+Verified route: home
+Verified route: roadmap
+Verified route: coach
+Verified route: roleplay
+Verified route: notebook
+Verified route: vault
+Verified route: agenda
+Verified route: resources
+Verified route: profile
+Verified route: feedback
+Verified route: calculators
+Verified route: diary
+Verified route: home
+Verified route: roadmap
+Verified route: vault
+Verified route: coach
+Verified route: profile
+Verified route: goalsheet
+Verified route: notebook
+Verified route: agenda
+Verified route: notebook
+Verified route: team
+Verified route: admin
+PASS: real API browser flows, desktop/mobile and role isolation

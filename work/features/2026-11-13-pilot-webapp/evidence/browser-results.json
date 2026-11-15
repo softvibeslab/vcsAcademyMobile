@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "checks": [
+    "login three roles",
+    "goalsheet persisted",
+    "lesson content and completion",
+    "coach response",
+    "roleplay turn complete submit",
+    "notebook persistence and user isolation",
+    "eight mobile routes no overflow",
+    "manager review and certification",
+    "admin resource publish and invitation",
+    "audit list",
+    "no browser runtime errors"
+  ],
+  "errors": []
+}
