@@ -1,8 +1,10 @@
 import {CoachIllustration} from "./Onboarding";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Home, Route, Bot, LayoutGrid, User, Sun, Moon } from "lucide-react";
 import { blueprintSteps } from "../../../packages/domain/src/index.mjs";
-import { Roadmap, Vault } from "./Learning";
+import { Roadmap, Vault, LockedPanel } from "./Learning";
+import { UnlockSheet } from "./Access";
+import { InstallButton } from "./Install";
 import { Calculators } from "./Workspace";
 import {
   Header,
@@ -20,7 +22,7 @@ const nav = [
   ["vault", "Bóveda", LayoutGrid],
   ["profile", "Perfil", User],
 ];
-const steps = blueprintSteps.map((s) => ({
+const localSteps = blueprintSteps.map((s) => ({
   id: s.id,
   title: s.title,
   description: s.shortDescription,
@@ -94,10 +96,48 @@ function GuestCoach({ api, onAccess }) {
     </>
   );
 }
+/** Lección pública con contenido real del servidor (nivel Público). */
+function GuestLesson({ api, id, step, onLocked, onRegister }) {
+  const [state, setState] = useState({ busy: true });
+  useEffect(() => {
+    let live = true;
+    setState({ busy: true });
+    api("/api/public/blueprint/steps/" + encodeURIComponent(id))
+      .then((d) => live && setState({ step: d.step }))
+      .catch((e) => live && setState({ requires: e.code === "requires_plan" ? e.requires : null, error: e.message }));
+    return () => {
+      live = false;
+    };
+  }, [api, id]);
+  if (state.busy) return <Card><p>Cargando…</p></Card>;
+  if (state.requires || !state.step) return <LockedPanel level={state.requires || step?.level || "gratis"} onLocked={onLocked} />;
+  const data = state.step;
+  return (
+    <>
+      <Back to="roadmap">Roadmap</Back>
+      <Header eyebrow={"PASO " + data.step_number + " · PÚBLICO"} title={data.title} subtitle={data.description} />
+      <Card>
+        <p className="lead">{data.purpose}</p>
+        {(data.scripts || []).map((sc) => (
+          <article className="script" key={sc.id}>
+            <small>{sc.script_type}</small>
+            <h2>{sc.title}</h2>
+            <p>{sc.body}</p>
+            <p className="fine-print">{sc.compliance_note}</p>
+          </article>
+        ))}
+        <ul>{(data.checklist || []).map((c) => <li key={c}>{c}</li>)}</ul>
+        <Button onClick={onRegister}>Crea tu cuenta gratis para guardar tu progreso</Button>
+      </Card>
+    </>
+  );
+}
+
 export default function GuestWorkspace({
   route,
   api,
   onAccess,
+  onRegister = onAccess,
   onRestart,
   onExit,
   theme,
@@ -120,13 +160,34 @@ export default function GuestWorkspace({
           ? "coach"
           : page;
   const access = (target = route) => onAccess(target);
+  const [catalogSteps, setCatalogSteps] = useState(null),
+    [sheet, setSheet] = useState(null);
+  useEffect(() => {
+    let live = true;
+    api("/api/public/catalog")
+      .then((d) => live && setCatalogSteps(d.steps || null))
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [api]);
+  // El servidor decide los niveles; si no responde, se muestra la vista previa local.
+  const steps = catalogSteps || localSteps;
+  const locked = (level) => setSheet(level || "gratis");
   let content;
-  if (page === "roadmap") content = <Roadmap data={{ steps }} />;
+  if (page === "roadmap") content = <Roadmap data={{ steps }} onLocked={locked} />;
   else if (page === "vault") content = <Vault />;
   else if (page === "coach" || page === "roleplay")
     content = <GuestCoach api={api} onAccess={onAccess} />;
   else if (page === "calculators") content = <Calculators />;
-  else if (page === "lesson") {
+  else if (page === "lesson" && catalogSteps) {
+    const step = steps.find((s) => s.id === id);
+    content = step ? (
+      <GuestLesson key={id} api={api} id={id} step={step} onLocked={locked} onRegister={() => onRegister("lesson/" + id)} />
+    ) : (
+      <Header title="No encontramos esta lección" />
+    );
+  } else if (page === "lesson") {
     const step = steps.find((s) => s.id === id);
     content = step ? (
       <>
@@ -275,6 +336,7 @@ export default function GuestWorkspace({
             <span className="brand-mark">SA</span><span>Sales Academy<small className="pilot-brand-subtitle">Edición Top Producer</small></span>
           </a>
           <span className="top-label">EXPLORACIÓN SIN CUENTA</span>
+          <div className="top-actions"><InstallButton /></div>
           <button aria-label="Cambiar tema" onClick={toggleTheme}>
             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
           </button>
@@ -292,10 +354,23 @@ export default function GuestWorkspace({
               <Button secondary onClick={() => access()}>
                 Iniciar sesión
               </Button>
+              <Button onClick={() => onRegister(route)}>Crear cuenta gratis</Button>
             </div>
           </div>
           {content}
         </div>
+        {sheet && (
+          <UnlockSheet
+            api={api}
+            signedIn={false}
+            level={sheet}
+            onClose={() => setSheet(null)}
+            onRegister={() => {
+              setSheet(null);
+              onRegister(route);
+            }}
+          />
+        )}
         <footer className="app-footer">
           Sales Academy · Exploración temporal
         </footer>

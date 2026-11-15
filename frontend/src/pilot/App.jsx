@@ -16,6 +16,9 @@ import {
 } from "lucide-react";
 import Auth from "./Auth";
 import GuestWorkspace from "./GuestWorkspace";
+import { UnlockSheet } from "./Access";
+import { InstallButton } from "./Install";
+import { planError } from "./access-model.mjs";
 import { Header, Loading, ErrorBox, Button } from "./ui";
 import { canManage, roleLabel } from "./model.mjs";
 import { HomeView, GoalSheet, Agenda, Profile, Calculators } from "./Workspace";
@@ -26,12 +29,14 @@ import {
   Resources,
   ResourceDetail,
   Notebook,
+  LockedPanel,
 } from "./Learning";
 import { Coach, Feedback } from "./Coach";
 import { Team, Admin } from "./Management";
 import "./styles.css";
 import "./fonts.css";
 import "./training-design.css";
+import "./access.css";
 const SESSION = "sa.pilot.session",
   BASE = (import.meta.env.VITE_PILOT_API_BASE_URL || "").replace(/\/$/, "");
 const nav = [
@@ -52,6 +57,7 @@ function App() {
     [error, setError] = useState(""),
     [revision, setRevision] = useState(0),
     [route, setRoute] = useState(() => location.hash.slice(1) || "home");
+  const [unlock, setUnlock] = useState(null);
   const [guest, setGuest] = useState(false),
     [authEntry, setAuthEntry] = useState({
       view: "welcome",
@@ -109,6 +115,8 @@ function App() {
       if (!response.ok) {
         if (response.status === 401 && token) clear();
         const detail = payload.detail;
+        if (detail && typeof detail === "object" && !Array.isArray(detail))
+          throw Object.assign(Error(detail.message || "No tienes acceso a esto."), detail);
         throw Error(
           Array.isArray(detail)
             ? detail.map((x) => x.msg).join(". ")
@@ -130,6 +138,8 @@ function App() {
     (async () => {
       try {
         const me = await api("/api/mobile/me");
+        // Un módulo bloqueado por plan no tumba la carga: devuelve vacío y la UI muestra el candado.
+        const soft = (p, fallback) => api(p).catch((e) => (planError(e) ? fallback : Promise.reject(e)));
         const [
           dashboard,
           blueprint,
@@ -138,17 +148,17 @@ function App() {
           feedback,
           certifications,
           reminders,
-        ] = await Promise.all(
-          [
-            "/api/dashboard/rep",
-            "/api/blueprint/steps",
-            "/api/goalsheet/history",
-            "/api/resources",
-            "/api/roleplay/submissions/mine",
-            "/api/certifications/mine",
-            "/api/reminders/upcoming",
-          ].map((p) => api(p)),
-        );
+          catalog,
+        ] = await Promise.all([
+          api("/api/dashboard/rep"),
+          api("/api/blueprint/steps"),
+          soft("/api/goalsheet/history", { entries: [], locked: true }),
+          api("/api/resources"),
+          api("/api/roleplay/submissions/mine"),
+          api("/api/certifications/mine"),
+          api("/api/reminders/upcoming"),
+          soft("/api/public/catalog", null),
+        ]);
         if (live) {
           setUser(me.user);
           setData({
@@ -159,6 +169,8 @@ function App() {
             submissions: feedback.submissions,
             decisions: certifications.decisions,
             reminders: reminders.reminders,
+            catalog,
+            goalsheetLocked: Boolean(history.locked),
           });
         }
       } catch (e) {
@@ -203,6 +215,11 @@ function App() {
           setAuthEntry({ view: "login", destination });
           setGuest(false);
           location.hash = "access/login";
+        }}
+        onRegister={(destination) => {
+          setAuthEntry({ view: "register", destination });
+          setGuest(false);
+          location.hash = "access/register";
         }}
         onRestart={() => {
           setAuthEntry({ view: "start", destination: route });
@@ -264,7 +281,14 @@ function App() {
       : ["feedback", "roleplay"].includes(page)
         ? "coach"
         : page;
-  const props = { api, user, data, refresh, revision };
+  const props = {
+    api,
+    user,
+    data,
+    refresh,
+    revision,
+    onLocked: (level) => setUnlock({ level }),
+  };
   let content;
   switch (page) {
     case "home":
@@ -292,13 +316,19 @@ function App() {
       content = <Vault {...props} />;
       break;
     case "goalsheet":
-      content = <GoalSheet key={id || "today"} {...props} initialDate={id} />;
+      content = data.goalsheetLocked ? (
+        <LockedPanel level="premium" onLocked={props.onLocked} back="vault" backLabel="Bóveda" />
+      ) : (
+        <GoalSheet key={id || "today"} {...props} initialDate={id} />
+      );
       break;
     case "agenda":
       content = <Agenda {...props} />;
       break;
     case "profile":
-      content = <Profile {...props} logout={logout} />;
+      content = (
+        <Profile {...props} logout={logout} onUnlock={() => setUnlock({ level: "premium" })} />
+      );
       break;
     case "notebook":
     case "diary":
@@ -405,7 +435,7 @@ function App() {
             <span className="brand-mark">SA</span><span>Sales Academy<small className="pilot-brand-subtitle">Edición Top Producer</small></span>
           </a>
           <span className="top-label">TU MÉTODO. TU CRECIMIENTO.</span>
-          <div className="top-actions"><a className="pilot-method-link" href="#roadmap">Método</a>
+          <div className="top-actions"><InstallButton /><a className="pilot-method-link" href="#roadmap">Método</a>
             <a href="#agenda" aria-label="Abrir agenda">
               <CalendarDays size={20} />
             </a>
@@ -433,6 +463,18 @@ function App() {
           Sales Academy <span>by AgenticOS</span>
         </footer>
       </main>
+      {unlock && (
+        <UnlockSheet
+          api={api}
+          signedIn
+          level={unlock.level}
+          onClose={() => setUnlock(null)}
+          onUnlocked={() => {
+            setUnlock(null);
+            refresh();
+          }}
+        />
+      )}
       <nav className="bottom-nav" aria-label="Navegación principal">
         {nav.map(([key, label, Icon]) => (
           <a

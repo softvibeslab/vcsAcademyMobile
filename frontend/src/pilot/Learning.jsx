@@ -8,6 +8,7 @@ import {
   Folder,
   Check,
   ArrowRight,
+  Lock,
 } from "lucide-react";
 import {
   Header,
@@ -24,9 +25,27 @@ import {
   ActionStatus,
 } from "./ui";
 import { noteKey, localDate } from "./model.mjs";
-export function Roadmap({ data }) {
+import { LevelTag } from "./Access";
+import { stepAction } from "./access-model.mjs";
+
+/** Panel cuando el servidor responde «requiere plan»: explica y ofrece desbloquear. */
+export function LockedPanel({ level, onLocked, back = "roadmap", backLabel = "Roadmap" }) {
+  return (
+    <>
+      <Back to={back}>{backLabel}</Back>
+      <Card className="pilot-locked-panel">
+        <LevelTag level={level} allowed={false} />
+        <h2>{level === "gratis" ? "Este módulo es gratis con tu cuenta." : "Este módulo es Premium."}</h2>
+        <p>{level === "gratis" ? "Crea tu cuenta gratis para abrirlo." : "Activa Premium con el código de tu academia para abrirlo."}</p>
+        {onLocked && <Button onClick={() => onLocked(level)}>{level === "gratis" ? "Crear cuenta gratis" : "Desbloquear premium"}</Button>}
+      </Card>
+    </>
+  );
+}
+export function Roadmap({ data, onLocked }) {
   const completed=data.steps.filter(s=>s.status==='completed').length;
-  const next=data.steps.find(s=>s.status!=='completed')||data.steps[0];
+  const next=data.steps.find(s=>s.status!=='completed'&&stepAction(s).kind==='open')||data.steps.find(s=>s.status!=='completed')||data.steps[0];
+  const lockedCount=data.steps.filter(s=>stepAction(s).kind==='plan').length;
   const percent=data.steps.length?Math.round(completed/data.steps.length*100):0;
   return <div className="pilot-roadmap-page">
     <Header title="Top Producer Roadmap" subtitle="Domina el blueprint de 11 pasos para la venta consultiva de alto rendimiento."/>
@@ -35,13 +54,15 @@ export function Roadmap({ data }) {
       <div className="pilot-roadmap-summary-footer"><div><div className="progress"><span style={{width:percent+'%'}}/></div><small>{completed} de {data.steps.length} módulos completados</small></div><a className="button" href={next?'#lesson/'+next.id:'#home'}>{completed?'Continuar':'Comenzar Lección 1'} <ArrowRight size={16}/></a></div>
     </section>
     <div className="pilot-list-heading"><h2>TU BLUEPRINT DE {data.steps.length} MÓDULOS</h2><span>{completed} / {data.steps.length} listos</span></div>
-    <div className="roadmap">{data.steps.map((step,i)=><a className={'roadmap-step '+(step.status==='completed'?'completed':'')+(step===next?' current':'')} href={'#lesson/'+step.id} key={step.id}><span className="step-number">{step.status==='completed'?<Check size={18}/>:i+1}</span><div><h2>{i+1}. {step.title}</h2><small>{step.status==='completed'?'COMPLETADO':'DISPONIBLE'}</small><p>{step.description}</p></div><span className="pilot-step-action">{step.status==='completed'?'Repasar':'Comenzar'}</span></a>)}</div>
+    <div className="roadmap">{data.steps.map((step,i)=>{const act=stepAction(step);const cls='roadmap-step '+(step.status==='completed'?'completed':'')+(step===next?' current':'')+(act.kind!=='open'?' locked lock-'+act.kind:'');const inner=<><span className="step-number">{step.status==='completed'?<Check size={18}/>:act.kind==='plan'?<Lock size={16}/>:i+1}</span><div><h2>{i+1}. {step.title}</h2><small>{step.status==='completed'?'COMPLETADO':act.kind==='progress'?'COMPLETA EL PASO ANTERIOR':act.kind==='plan'?'BLOQUEADO':'DISPONIBLE'} <LevelTag level={step.level} allowed={act.kind!=='plan'}/></small><p>{step.description}</p></div><span className="pilot-step-action">{act.label}</span></>;return act.kind==='open'?<a className={cls} href={'#lesson/'+step.id} key={step.id}>{inner}</a>:act.kind==='plan'?<button type="button" className={cls} key={step.id} onClick={()=>onLocked?.(act.level)}>{inner}</button>:<div className={cls} key={step.id} aria-disabled="true">{inner}</div>})}</div>
+    {lockedCount>0&&<section className="pilot-unlock-cta"><div><strong>{lockedCount} {lockedCount===1?'paso más':'pasos más'} con Premium</strong><small>Activa tu licencia con el código de tu academia.</small></div><button className="button" onClick={()=>onLocked?.('premium')}>Desbloquear premium</button></section>}
   </div>;
 }
-export function Lesson({ api, id, refresh }) {
+export function Lesson({ api, id, refresh, onLocked }) {
   const r = useRemote(api, "/api/blueprint/steps/" + encodeURIComponent(id)),
     action = useAction();
   if (r.busy) return <Loading />;
+  if (r.requires) return <LockedPanel level={r.requires} onLocked={onLocked} />;
   if (r.error) return <ErrorBox error={r.error} retry={r.retry} />;
   const { step } = r.data;
   const { media = [], scripts = [], checklist = [] } = step;
@@ -133,7 +154,7 @@ export function Resources({ data, kind }) {
             icon={Folder}
             title={r.title}
             description={(r.tags || []).join(" · ")}
-            badge={r.has_access ? "DISPONIBLE" : "ACCESO RESTRINGIDO"}
+            badge={r.has_access ? "DISPONIBLE" : r.level === "premium" || r.level === "gratis" ? (r.level === "premium" ? "PREMIUM" : "GRATIS") + " · BLOQUEADO" : "ACCESO RESTRINGIDO"}
             to={"resource/" + r.id}
           />
         ))}
@@ -144,13 +165,15 @@ export function Resources({ data, kind }) {
     </>
   );
 }
-export function ResourceDetail({ api, id }) {
+export function ResourceDetail({ api, id, onLocked }) {
   const r = useRemote(api, "/api/resources/" + encodeURIComponent(id));
   return (
     <>
       <Back to="resources">Recursos</Back>
       {r.busy ? (
         <Loading />
+      ) : r.requires ? (
+        <LockedPanel level={r.requires} onLocked={onLocked} back="resources" backLabel="Recursos" />
       ) : r.error ? (
         <ErrorBox error={r.error} retry={r.retry} />
       ) : (

@@ -12,6 +12,7 @@ import {
   ActionStatus,
 } from "./ui";
 import { money } from "./model.mjs";
+import { AccessAdmin } from "./Access";
 function Certification({ api, rep, done }) {
   const r = useRemote(api, "/api/certifications/readiness/" + rep.user.id),
     action = useAction();
@@ -264,7 +265,7 @@ export function Admin({ api }) {
   const action = useAction(),
     r = useRemote(
       api,
-      "/api/admin/" + (tab === "audit" ? "audit-events" : tab),
+      "/api/admin/" + (tab === "audit" ? "audit-events" : tab === "access" ? "access-items" : tab),
       version,
     );
   const reload = () => setVersion((v) => v + 1);
@@ -278,6 +279,7 @@ export function Admin({ api }) {
       <div className="segmented tabs">
         {[
           ["resources", "Contenido"],
+          ["access", "Acceso y planes"],
           ["users", "Usuarios"],
           ["audit", "Auditoría"],
         ].map(([v, l]) => (
@@ -294,7 +296,9 @@ export function Admin({ api }) {
         ))}
       </div>
       <ActionStatus action={action} />
-      {r.busy ? (
+      {tab === "access" ? (
+        <AccessAdmin api={api} />
+      ) : r.busy ? (
         <Loading />
       ) : r.error ? (
         <ErrorBox error={r.error} retry={r.retry} />

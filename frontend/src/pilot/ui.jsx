@@ -97,6 +97,7 @@ export function Tile({ icon: Icon, title, description, to, badge }) {
 export function useRemote(api, path, revision = 0) {
   const [data, setData] = useState(null),
     [error, setError] = useState(""),
+    [requires, setRequires] = useState(null),
     [busy, setBusy] = useState(true),
     [retry, setRetry] = useState(0),
     [loadedPath, setLoadedPath] = useState("");
@@ -105,12 +106,16 @@ export function useRemote(api, path, revision = 0) {
     setData(null);
     setBusy(true);
     setError("");
+    setRequires(null);
     api(path)
       .then((d) => {
         if (live) setData(d);
       })
       .catch((e) => {
-        if (live) setError(e.message);
+        if (live) {
+          setError(e.message);
+          setRequires(e.code === "requires_plan" ? e.requires || "premium" : null);
+        }
       })
       .finally(() => {
         if (live) {
@@ -125,6 +130,7 @@ export function useRemote(api, path, revision = 0) {
   return {
     data,
     error,
+    requires,
     busy: busy || loadedPath !== path,
     retry: () => setRetry((x) => x + 1),
   };

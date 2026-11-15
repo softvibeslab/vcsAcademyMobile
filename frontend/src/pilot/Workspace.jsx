@@ -23,6 +23,7 @@ import {
   ActionStatus,
   Tile,
 } from "./ui";
+import { PlanCard } from "./Access";
 import {
   periodEntries,
   metricsFor,
@@ -320,7 +321,7 @@ export function Agenda({ data }) {
     </>
   );
 }
-export function Profile({ user, data, api, logout }) {
+export function Profile({ user, data, api, logout, onUnlock }) {
   const [goal, setGoal] = useState(() => ({
       month: localDate().slice(0, 7),
       amount: "",
@@ -337,6 +338,7 @@ export function Profile({ user, data, api, logout }) {
         title="Perfil y progreso"
         subtitle="Personaliza tu objetivo y administra tu acceso."
       />
+      <PlanCard user={user} data={data} onUnlock={onUnlock} />
       <div className="two-col">
         <Card>
           <div className="profile-identity">

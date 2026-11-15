@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from backend.app import persistence
+from backend.app import access, persistence
 from backend.app.smart_agent import get_provider
 
 
@@ -72,6 +72,37 @@ BLUEPRINT_STEPS = [
     ("step_9", 9, "Point of Confirmation", "Confirm value, fit, and readiness."),
     ("step_10", 10, "Programs", "Present approved program options clearly."),
     ("step_11", 11, "T.O. Pricing", "Transition pricing with full disclosure."),
+]
+
+
+ROLEPLAY_SCENARIOS = [
+    {
+        "id": "scenario_step_5_commitment",
+        "blueprint_step_id": "step_5",
+        "title": "Step 5 Commitment Check",
+        "difficulty": "medium",
+        "buyer_context": "Guest likes the property but avoids making decisions today.",
+        "objective": "Practice a clear, respectful yes/no commitment.",
+        "success_criteria": ["Professional tone", "Clear transition", "No pressure", "Full disclosure awareness"],
+    },
+    {
+        "id": "scenario_discovery_motivation",
+        "blueprint_step_id": "step_4",
+        "title": "Discovery Motivation",
+        "difficulty": "easy",
+        "buyer_context": "Guest gives short answers and has not explained why vacation ownership matters.",
+        "objective": "Use F.O.R.M. and discovery questions to uncover motivation.",
+        "success_criteria": ["Open-ended questions", "Active listening", "Clear summary", "No interrogation"],
+    },
+    {
+        "id": "scenario_confirmation_objection",
+        "blueprint_step_id": "step_9",
+        "title": "Point of Confirmation Objection",
+        "difficulty": "hard",
+        "buyer_context": "Guest likes the experience but says they need to think about it before hearing programs.",
+        "objective": "Confirm value and surface the real objection without pressure.",
+        "success_criteria": ["Calm tone", "Value recap", "Objection clarity", "Manager handoff readiness"],
+    },
 ]
 
 
@@ -172,6 +203,33 @@ class ResourceIn(BaseModel):
     status: Literal["draft", "published", "archived"] = "published"
 
 
+class RegisterIn(BaseModel):
+    display_name: str = Field(min_length=1, max_length=80)
+    email: str = Field(pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$", max_length=120)
+    password: str = Field(min_length=8, max_length=128)
+    accept_privacy: Literal[True]
+
+
+class RedeemIn(BaseModel):
+    code: str = Field(min_length=4, max_length=40)
+
+
+class AccessItemPatch(BaseModel):
+    level: Literal["publico", "gratis", "premium"] | None = None
+    visible: bool | None = None
+
+
+class LicenseCodeIn(BaseModel):
+    plan_days: int = Field(default=90, ge=1, le=3650)
+    max_uses: int = Field(default=1, ge=1, le=1000)
+    expires_at: date
+
+
+class UserPlanIn(BaseModel):
+    plan: Literal["gratis", "premium"]
+    plan_expires_at: date | None = None
+
+
 class CertificationDecisionIn(BaseModel):
     status: Literal["approved", "denied", "needs_practice"]
     notes: str = ""
@@ -180,9 +238,11 @@ class CertificationDecisionIn(BaseModel):
 @app.on_event("startup")
 def startup() -> None:
     persistence.init_db()
+    access.init_schema(BLUEPRINT_STEPS, ROLEPLAY_SCENARIOS)
 
 
 persistence.init_db()
+access.init_schema(BLUEPRINT_STEPS, ROLEPLAY_SCENARIOS)
 
 
 def envelope(data: Any = None, message: str | None = None) -> dict[str, Any]:
@@ -204,6 +264,36 @@ def require_user(authorization: str | None = Header(default=None)) -> dict[str, 
     if not user:
         raise HTTPException(status_code=401, detail="Authentication required")
     return user
+
+
+def optional_user(authorization: str | None = Header(default=None)) -> dict[str, Any] | None:
+    return persistence.get_user_by_token(get_bearer_token(authorization))
+
+
+def client_key(request: Request, action: str) -> str:
+    forwarded = request.headers.get("x-forwarded-for", "").split(",")[0].strip()
+    return f"{action}:{forwarded or (request.client.host if request.client else 'unknown')}"
+
+
+def deny_plan(level: str) -> HTTPException:
+    message = "Crea tu cuenta gratis para abrir esto." if level == "gratis" else "Esto es Premium."
+    return HTTPException(status_code=403, detail={"code": "requires_plan", "requires": level, "message": message})
+
+
+def check_access(item_id: str, user: dict[str, Any] | None) -> None:
+    decision = access.decide(item_id, user)
+    if not decision["exists"] or not decision["visible"]:
+        raise HTTPException(status_code=404, detail="Not found")
+    if not decision["allowed"]:
+        raise deny_plan(decision["level"])
+
+
+def require_item(item_id: str):
+    def dependency(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+        check_access(item_id, user)
+        return user
+
+    return dependency
 
 
 def require_manager(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
@@ -235,6 +325,9 @@ def demo_user_catalog() -> list[dict[str, Any]]:
 
 
 def has_resource_access(resource: dict[str, Any], user: dict[str, Any]) -> bool:
+    decision = access.decide(f"resource:{resource['id']}", user)
+    if decision["exists"] and not decision["allowed"]:
+        return False
     return (
         not resource["requires_access_grant"]
         or f"resource:{resource['id']}:read" in user["permissions"]
@@ -249,11 +342,47 @@ def blueprint_progress(step_id: str, completed_steps: set[str]) -> int:
 
 
 def blueprint_status(step_id: str, step_number: int, completed_steps: set[str]) -> str:
+    """Roadmap en orden: el primer paso sin completar es el actual (antes el 2 era fijo)."""
     if step_id in completed_steps:
         return "completed"
-    if step_number == 2:
-        return "current"
-    return "locked"
+    first_open = min((number for sid, number, *_ in BLUEPRINT_STEPS if sid not in completed_steps), default=None)
+    return "current" if step_number == first_open else "locked"
+
+
+def with_access(step: dict[str, Any], user: dict[str, Any] | None) -> dict[str, Any]:
+    decision = access.decide(f"lesson:{step['id']}", user)
+    lock = "plan" if not decision["allowed"] else "progress" if step["status"] == "locked" else None
+    return {**step, "level": decision["level"], "allowed": decision["allowed"], "lock": lock}
+
+
+def visible_steps(user: dict[str, Any] | None, completed_steps: set[str]) -> list[dict[str, Any]]:
+    return [
+        with_access(serialize_step(step, completed_steps), user)
+        for step in BLUEPRINT_STEPS
+        if access.decide(f"lesson:{step[0]}", user)["visible"]
+    ]
+
+
+def step_detail(step: tuple[str, int, str, str], user: dict[str, Any] | None, completed_steps: set[str]) -> dict[str, Any]:
+    step_id = step[0]
+    data = with_access(serialize_step(step, completed_steps), user)
+    data.update(
+        {
+            "purpose": "Train the exact behavior for this moment in the official Blueprint.",
+            "media": [{"type": "video", "title": f"{data['title']} training", "duration": "6 min"}],
+            "scripts": [
+                {
+                    "id": f"{step_id}-practice-script",
+                    "title": f"{data['title']} practice script",
+                    "script_type": "practice",
+                    "body": "Use this as training language, not legal or official contractual language.",
+                    "compliance_note": "Practice scripts must be labeled as training guidance.",
+                }
+            ],
+            "checklist": ["Know the purpose", "Practice the transition", "Ask Smart Agent for coaching", "Run a roleplay"],
+        }
+    )
+    return data
 
 
 def serialize_step(step: tuple[str, int, str, str], completed_steps: set[str]) -> dict[str, Any]:
@@ -472,7 +601,7 @@ def login(payload: LoginIn, response: Response) -> dict[str, Any]:
         max_age=7 * 24 * 60 * 60,
     )
     audit(user, "auth_login", "user", user["id"], "success")
-    return envelope({"user": user, "token": session["token"], "expires_at": session["expires_at"]})
+    return envelope({"user": access.plan_view(user), "token": session["token"], "expires_at": session["expires_at"]})
 
 
 @app.get("/api/auth/demo-users")
@@ -530,7 +659,7 @@ def logout(response: Response, authorization: str | None = Header(default=None))
 
 @app.get("/api/mobile/me")
 def mobile_me(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
-    return envelope({"user": user})
+    return envelope({"user": access.plan_view(user)})
 
 
 @app.get("/api/manager/team-dashboard")
@@ -580,8 +709,7 @@ def rep_dashboard(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any
 
 @app.get("/api/blueprint/steps")
 def get_blueprint_steps(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
-    completed_steps = persistence.get_completed_step_ids(user["id"])
-    return envelope({"steps": [serialize_step(step, completed_steps) for step in BLUEPRINT_STEPS]})
+    return envelope({"steps": visible_steps(user, persistence.get_completed_step_ids(user["id"]))})
 
 
 @app.get("/api/blueprint/steps/{step_id}")
@@ -589,37 +717,22 @@ def get_blueprint_step(step_id: str, user: dict[str, Any] = Depends(require_user
     step = next((item for item in BLUEPRINT_STEPS if item[0] == step_id), None)
     if not step:
         raise HTTPException(status_code=404, detail="Blueprint step not found")
-    data = serialize_step(step, persistence.get_completed_step_ids(user["id"]))
-    data.update(
-        {
-            "purpose": "Train the exact behavior for this moment in the official Blueprint.",
-            "media": [{"type": "video", "title": f"{data['title']} training", "duration": "6 min"}],
-            "scripts": [
-                {
-                    "id": f"{step_id}-practice-script",
-                    "title": f"{data['title']} practice script",
-                    "script_type": "practice",
-                    "body": "Use this as training language, not legal or official contractual language.",
-                    "compliance_note": "Practice scripts must be labeled as training guidance.",
-                }
-            ],
-            "checklist": ["Know the purpose", "Practice the transition", "Ask Smart Agent for coaching", "Run a roleplay"],
-        }
-    )
-    return envelope({"step": data})
+    check_access(f"lesson:{step_id}", user)
+    return envelope({"step": step_detail(step, user, persistence.get_completed_step_ids(user["id"]))})
 
 
 @app.post("/api/blueprint/steps/{step_id}/complete")
 def complete_blueprint_step(step_id: str, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
     if step_id not in {step[0] for step in BLUEPRINT_STEPS}:
         raise HTTPException(status_code=404, detail="Blueprint step not found")
+    check_access(f"lesson:{step_id}", user)
     persistence.complete_step(user["id"], step_id)
     audit(user, "blueprint_step_completed", "blueprint_step", step_id, "success")
     return envelope({"step_id": step_id, "status": "completed"})
 
 
 @app.get("/api/goalsheet/today")
-def goalsheet_today(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+def goalsheet_today(user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
     today = date.today().isoformat()
     existing = persistence.get_goalsheet(user["id"], today)
     return envelope(
@@ -639,7 +752,7 @@ def goalsheet_today(user: dict[str, Any] = Depends(require_user)) -> dict[str, A
 
 
 @app.post("/api/goalsheet")
-def save_goalsheet(entry: GoalSheetEntryIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+def save_goalsheet(entry: GoalSheetEntryIn, user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
     if entry.sales_volume < 0 or entry.number_of_sales < 0:
         raise HTTPException(status_code=400, detail="Sales volume and sales count must be non-negative")
     if entry.number_of_sales > 0 and entry.sales_outcome != "sold":
@@ -652,12 +765,12 @@ def save_goalsheet(entry: GoalSheetEntryIn, user: dict[str, Any] = Depends(requi
 
 
 @app.get("/api/goalsheet/history")
-def goalsheet_history(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+def goalsheet_history(user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
     return envelope({"entries": persistence.list_goalsheets(user["id"])})
 
 
 @app.get("/api/goalsheet/metrics")
-def goalsheet_metrics(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+def goalsheet_metrics(user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
     return envelope({"metrics": calculate_metrics(persistence.list_goalsheets(user["id"]))})
 
 
@@ -667,7 +780,7 @@ def reminders_upcoming(user: dict[str, Any] = Depends(require_user)) -> dict[str
 
 
 @app.post("/api/smart-agent/chat")
-def smart_agent_chat(payload: ChatIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+def smart_agent_chat(payload: ChatIn, user: dict[str, Any] = Depends(require_item("function:coach"))) -> dict[str, Any]:
     provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
     result = provider.answer(payload.message, payload.mode, user, smart_agent_knowledge(user))
     audit(user, "smart_agent_chat", "ai_conversation", str(uuid4()), "blocked" if result.risk_flags else "success", {"risk_flags": result.risk_flags, "provider": "local"})
@@ -684,6 +797,7 @@ def smart_agent_chat(payload: ChatIn, user: dict[str, Any] = Depends(require_use
 
 @app.post("/api/smart-agent/public-chat")
 def public_smart_agent_chat(payload: ChatIn) -> dict[str, Any]:
+    check_access("function:coach", None)
     anonymous_user = {
         "id": "public_welcome_agent",
         "email": "visitor@vcsa.local",
@@ -717,33 +831,9 @@ def roleplay_scenarios(user: dict[str, Any] = Depends(require_user)) -> dict[str
     return envelope(
         {
             "scenarios": [
-                {
-                    "id": "scenario_step_5_commitment",
-                    "blueprint_step_id": "step_5",
-                    "title": "Step 5 Commitment Check",
-                    "difficulty": "medium",
-                    "buyer_context": "Guest likes the property but avoids making decisions today.",
-                    "objective": "Practice a clear, respectful yes/no commitment.",
-                    "success_criteria": ["Professional tone", "Clear transition", "No pressure", "Full disclosure awareness"],
-                },
-                {
-                    "id": "scenario_discovery_motivation",
-                    "blueprint_step_id": "step_4",
-                    "title": "Discovery Motivation",
-                    "difficulty": "easy",
-                    "buyer_context": "Guest gives short answers and has not explained why vacation ownership matters.",
-                    "objective": "Use F.O.R.M. and discovery questions to uncover motivation.",
-                    "success_criteria": ["Open-ended questions", "Active listening", "Clear summary", "No interrogation"],
-                },
-                {
-                    "id": "scenario_confirmation_objection",
-                    "blueprint_step_id": "step_9",
-                    "title": "Point of Confirmation Objection",
-                    "difficulty": "hard",
-                    "buyer_context": "Guest likes the experience but says they need to think about it before hearing programs.",
-                    "objective": "Confirm value and surface the real objection without pressure.",
-                    "success_criteria": ["Calm tone", "Value recap", "Objection clarity", "Manager handoff readiness"],
-                },
+                {**scenario, "level": access.decide(f"scenario:{scenario['id']}", user)["level"], "allowed": access.decide(f"scenario:{scenario['id']}", user)["allowed"]}
+                for scenario in ROLEPLAY_SCENARIOS
+                if access.decide(f"scenario:{scenario['id']}", user)["visible"]
             ]
         }
     )
@@ -751,6 +841,7 @@ def roleplay_scenarios(user: dict[str, Any] = Depends(require_user)) -> dict[str
 
 @app.post("/api/roleplay/sessions")
 def create_roleplay_session(payload: RoleplaySessionIn, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+    check_access(f"scenario:{payload.scenario_id}", user)
     session_id = f"rp_{uuid4().hex[:8]}"
     session = {
         "id": session_id,
@@ -838,8 +929,10 @@ def review_roleplay_submission(submission_id: str, payload: RoleplayReviewIn, us
 @app.get("/api/resources")
 def resources(user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
     visible_resources = [
-        {key: value for key, value in resource.items() if key != "body"} | {"has_access": has_resource_access(resource, user)}
+        {key: value for key, value in resource.items() if key != "body"}
+        | {"has_access": has_resource_access(resource, user), "level": access.ensure_resource_item(resource).get("level", "gratis")}
         for resource in persistence.list_resources()
+        if access.decide(f"resource:{resource['id']}", user)["visible"]
     ]
     return envelope({"resources": visible_resources})
 
@@ -849,6 +942,12 @@ def get_resource(resource_id: str, user: dict[str, Any] = Depends(require_user))
     resource = persistence.get_resource(resource_id)
     if not resource:
         raise HTTPException(status_code=404, detail="Resource not found")
+    decision = access.decide(f"resource:{resource_id}", user)
+    if decision["exists"] and not decision["visible"]:
+        raise HTTPException(status_code=404, detail="Resource not found")
+    if decision["exists"] and not decision["allowed"]:
+        audit(user, "resource_access", "resource", resource_id, "blocked", {"requires": decision["level"]})
+        raise deny_plan(decision["level"])
     allowed = has_resource_access(resource, user)
     audit(user, "sensitive_resource_access" if resource["requires_access_grant"] else "resource_access", "resource", resource_id, "success" if allowed else "blocked")
     if not allowed:
@@ -901,7 +1000,7 @@ def certification_decision(user_id: str, payload: CertificationDecisionIn, user:
 
 @app.get("/api/admin/users")
 def admin_users(user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
-    return envelope({"users": persistence.list_users()})
+    return envelope({"users": [access.plan_view(item) for item in persistence.list_users()]})
 
 
 @app.post("/api/admin/users")
@@ -959,6 +1058,7 @@ def admin_resources(user: dict[str, Any] = Depends(require_admin)) -> dict[str, 
 @app.post("/api/admin/resources")
 def admin_save_resource(payload: ResourceIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
     saved = persistence.save_resource(payload.model_dump())
+    access.ensure_resource_item(saved)
     audit(user, "admin_resource_saved", "resource", saved["id"], "success", {"sensitivity": saved["sensitivity"]})
     return envelope({"resource": saved})
 
@@ -966,3 +1066,103 @@ def admin_save_resource(payload: ResourceIn, user: dict[str, Any] = Depends(requ
 @app.get("/api/admin/audit-events")
 def get_audit_events(user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
     return envelope({"events": persistence.list_audit_events()})
+
+
+# ---------- Registro y niveles de acceso (HU-AISALES-ACCESO-01) ----------
+
+
+@app.post("/api/auth/register")
+def register(payload: RegisterIn, request: Request, response: Response) -> dict[str, Any]:
+    if not access.limiter.allow(client_key(request, "register")):
+        raise HTTPException(status_code=429, detail="Demasiados intentos. Espera un minuto.")
+    email = payload.email.strip().lower()
+    if persistence.get_user_by_email(email):
+        raise HTTPException(status_code=409, detail="Ese correo ya tiene cuenta. Inicia sesión.")
+    user = persistence.save_user(
+        {"email": email, "display_name": payload.display_name.strip(), "roles": ["sales_rep"], "team_id": None, "permissions": [], "status": "active"},
+        password=payload.password,
+    )
+    user = access.set_plan(user["id"], "gratis", None)
+    session = persistence.create_session(user["id"])
+    response.set_cookie(key="vcsa_session", value=session["token"], httponly=True, secure=False, samesite="lax", max_age=7 * 24 * 60 * 60)
+    audit(user, "auth_register", "user", user["id"], "success", {"plan": "gratis"})
+    return envelope({"user": user, "token": session["token"], "expires_at": session["expires_at"]})
+
+
+@app.get("/api/public/catalog")
+def public_catalog(user: dict[str, Any] | None = Depends(optional_user)) -> dict[str, Any]:
+    data = access.catalog(user)
+    completed = persistence.get_completed_step_ids(user["id"]) if user else set()
+    data["steps"] = visible_steps(user, completed)
+    return envelope(data)
+
+
+@app.get("/api/public/blueprint/steps/{step_id}")
+def public_blueprint_step(step_id: str, user: dict[str, Any] | None = Depends(optional_user)) -> dict[str, Any]:
+    step = next((item for item in BLUEPRINT_STEPS if item[0] == step_id), None)
+    if not step:
+        raise HTTPException(status_code=404, detail="Blueprint step not found")
+    check_access(f"lesson:{step_id}", user)
+    completed = persistence.get_completed_step_ids(user["id"]) if user else set()
+    return envelope({"step": step_detail(step, user, completed)})
+
+
+@app.post("/api/me/redeem")
+def redeem_code(payload: RedeemIn, request: Request, user: dict[str, Any] = Depends(require_user)) -> dict[str, Any]:
+    if not access.limiter.allow(client_key(request, "redeem")):
+        raise HTTPException(status_code=429, detail="Demasiados intentos. Espera un minuto.")
+    updated = access.redeem(user, payload.code)
+    if not updated:
+        audit(user, "license_redeem", "user", user["id"], "blocked")
+        raise HTTPException(status_code=400, detail="Código no válido o vencido.")
+    audit(user, "license_redeem", "user", user["id"], "success", {"plan_expires_at": updated["plan_expires_at"]})
+    return envelope({"user": updated})
+
+
+@app.get("/api/admin/access-items")
+def admin_access_items(user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    items = access.list_items()
+    summary = {level: sum(1 for i in items if i["level"] == level and i["visible"]) for level in access.LEVELS}
+    return envelope({"items": items, "summary": summary})
+
+
+@app.patch("/api/admin/access-items/{item_id}")
+def admin_update_access_item(item_id: str, payload: AccessItemPatch, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    before = access.get_item(item_id)
+    if not before:
+        raise HTTPException(status_code=404, detail="Access item not found")
+    saved = access.update_item(item_id, payload.level, payload.visible)
+    audit(user, "access_level_changed", "access_item", item_id, "success",
+          {"from": {"level": before["level"], "visible": before["visible"]}, "to": {"level": saved["level"], "visible": saved["visible"]}})
+    return envelope({"item": saved})
+
+
+@app.get("/api/admin/license-codes")
+def admin_license_codes(user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    return envelope({"codes": access.list_codes()})
+
+
+@app.post("/api/admin/license-codes")
+def admin_create_license_code(payload: LicenseCodeIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    code = access.create_code(payload.plan_days, payload.max_uses, payload.expires_at.isoformat(), user["id"])
+    audit(user, "license_code_created", "license_code", code["id"], "success", {"plan_days": payload.plan_days, "max_uses": payload.max_uses})
+    return envelope({"code": code}, "Copia el código ahora: no se vuelve a mostrar.")
+
+
+@app.delete("/api/admin/license-codes/{code_id}")
+def admin_revoke_license_code(code_id: str, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    revoked = access.revoke_code(code_id)
+    if not revoked:
+        raise HTTPException(status_code=404, detail="License code not found")
+    audit(user, "license_code_revoked", "license_code", code_id, "success")
+    return envelope({"code": revoked})
+
+
+@app.patch("/api/admin/users/{user_id}/plan")
+def admin_update_user_plan(user_id: str, payload: UserPlanIn, user: dict[str, Any] = Depends(require_admin)) -> dict[str, Any]:
+    if not persistence.get_user(user_id):
+        raise HTTPException(status_code=404, detail="User not found")
+    expires = payload.plan_expires_at.isoformat() if payload.plan_expires_at else None
+    saved = access.set_plan(user_id, payload.plan, expires)
+    audit(user, "user_plan_changed", "user", user_id, "success", {"plan": payload.plan, "plan_expires_at": expires})
+    return envelope({"user": saved})

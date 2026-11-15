@@ -12,6 +12,7 @@ import {
   EyeOff,
 } from "lucide-react";
 import { Button, Field, useAction, ActionStatus } from "./ui";
+import { RegisterForm } from "./Access";
 const views = [
   "welcome",
   "intro",
@@ -25,6 +26,7 @@ const views = [
   "manager",
   "direction",
   "public",
+  "register",
 ];
 const choices = [
   [
@@ -398,6 +400,15 @@ export default function Auth({
               </button>
             </>
           )}
+          {view === "register" && (
+            <RegisterForm
+              api={api}
+              onLogin={onLogin}
+              destination={destination === "home" ? "roadmap" : destination}
+              onSignIn={() => loginFrom("register")}
+              onBack={() => setView("welcome")}
+            />
+          )}
           {view === "account" && (
             <>
               <span className="icon-badge">
@@ -407,11 +418,10 @@ export default function Auth({
               <p>
                 Guarda tu progreso, tus resultados y el feedback de tu equipo.
               </p>
-              <div className="notice">
-                Las cuentas se crean por invitación de tu administrador. Si aún
-                no tienes acceso, puedes explorar como invitado.
-              </div>
-              <Button onClick={() => loginFrom("account")}>
+              <Button onClick={() => setView("register")}>
+                Crear cuenta gratis
+              </Button>
+              <Button secondary onClick={() => loginFrom("account")}>
                 Ya tengo una cuenta
               </Button>
               <Button
@@ -595,9 +605,9 @@ export default function Auth({
                   <br />
                   <button
                     className="text-button"
-                    onClick={() => setView("account")}
+                    onClick={() => setView("register")}
                   >
-                    No tengo cuenta
+                    Crear cuenta gratis
                   </button>
                   {demos.length > 0 && (
                     <details className="demo-options">

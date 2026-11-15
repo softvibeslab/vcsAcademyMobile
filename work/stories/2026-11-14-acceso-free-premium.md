@@ -1,6 +1,6 @@
 # Historia Enriquecida: `Registro y niveles de acceso Público / Gratis / Premium administrables`
 
-**Readiness:** EN REVISION
+**Readiness:** LISTA
 **ID:** `HU-AISALES-ACCESO-01`
 **Solicitante:** PO (Roger), chat 2026-11-14
 **Product Owner (aprueba):** PO de Sales Academy
@@ -178,8 +178,8 @@ Pantallas: IDs del wireframe aprobado para revision (`SalesAcademyVibes/work/fea
 
 ## 9. Diseno
 
-**Estado del diseno:** Borrador
-**Fuente del diseno:** Stitch C05 (desbloquear acceso), A06 (login), B06 (perfil); wireframe propuesto en este documento para registro, candados y panel admin.
+**Estado del diseno:** Aprobado
+**Fuente del diseno:** Stitch C05 (desbloquear acceso), A06 (login), B06 (perfil); wireframes W1-W5 y casos de uso de este documento, aprobados por el PO el 2026-11-14 («date y publicalo»).
 
 | Pantalla / componente | Existe en el diseno | Estados cubiertos (carga, vacio, error, exito) | Observaciones |
 |---|---|---|---|
@@ -293,38 +293,38 @@ Pantallas: IDs del wireframe aprobado para revision (`SalesAcademyVibes/work/fea
 
 | ID | Origen | Criterio (Dado / Cuando / Entonces) | Tipo | Estado PO | Comentario PO |
 |---|---|---|---|---|---|
-| AC-01 | Propuesto IA | Dado un admin en «Acceso y planes», cuando cambia el nivel de «Paso 3» a Gratis y guarda, entonces la API devuelve el nivel nuevo y queda un evento `access_level_changed` en auditoria. | positivo | Pendiente | |
-| AC-02 | Propuesto IA | Dado un visitante sin sesion, cuando abre el Roadmap, entonces ve el Paso 1 abierto y los pasos Gratis y Premium con candado y su etiqueta, y la respuesta de la API no incluye su contenido. | positivo | Pendiente | |
-| AC-03 | Propuesto IA | Dado un visitante, cuando se registra con nombre, correo valido, contraseña de 8+ caracteres y acepta el aviso, entonces queda con sesion iniciada, plan Gratis, y los pasos Gratis se abren. | positivo | Pendiente | |
-| AC-04 | Propuesto IA | Dado un correo ya registrado (sin importar mayusculas), cuando alguien intenta registrarlo, entonces ve «Ese correo ya tiene cuenta. Inicia sesión.» y no se crea otra cuenta. | negativo | Pendiente | |
-| AC-05 | Propuesto IA | Dado un usuario Gratis, cuando abre un paso Premium, entonces ve la hoja C05 y la API responde 403 con `requires: premium` sin contenido. | negativo | Pendiente | |
-| AC-06 | Propuesto IA | Dado un usuario Gratis y un codigo activo, cuando lo canjea, entonces su plan pasa a Premium con la fecha de vencimiento del codigo y los pasos Premium se abren sin cerrar sesion. | positivo | Pendiente | |
-| AC-07 | Propuesto IA | Dado un codigo invalido, vencido, revocado o sin usos, cuando se canjea, entonces ve «Código no válido o vencido.» y el plan no cambia. | negativo | Pendiente | |
-| AC-08 | Propuesto IA | Dado un usuario Premium con plan vencido, cuando carga la app, entonces es tratado como Gratis y conserva su progreso. | borde | Pendiente | |
-| AC-09 | Propuesto IA | Dado un rep o gerente, cuando llama a cualquier endpoint `/api/admin/access-items` o `/api/admin/license-codes`, entonces recibe 403. | negativo | Pendiente | |
-| AC-10 | Propuesto IA | Dado un elemento oculto por el admin, cuando cualquier usuario no admin carga el catalogo, entonces el elemento no aparece. | borde | Pendiente | |
-| AC-11 | Propuesto IA | Dado un usuario Premium, cuando abre el Paso 5 sin completar el 4, entonces ve «Completa el paso anterior» (candado de progreso), no la hoja C05. | borde | Pendiente | |
-| AC-12 | Propuesto IA | Dado un gerente o admin, cuando abre cualquier leccion, entonces tiene acceso sin plan premium. | positivo | Pendiente | |
+| AC-01 | Propuesto IA | Dado un admin en «Acceso y planes», cuando cambia el nivel de «Paso 3» a Gratis y guarda, entonces la API devuelve el nivel nuevo y queda un evento `access_level_changed` en auditoria. | positivo | Aceptado | Aceptado según recomendación |
+| AC-02 | Propuesto IA | Dado un visitante sin sesion, cuando abre el Roadmap, entonces ve el Paso 1 abierto y los pasos Gratis y Premium con candado y su etiqueta, y la respuesta de la API no incluye su contenido. | positivo | Aceptado | Aceptado según recomendación |
+| AC-03 | Propuesto IA | Dado un visitante, cuando se registra con nombre, correo valido, contraseña de 8+ caracteres y acepta el aviso, entonces queda con sesion iniciada, plan Gratis, y los pasos Gratis se abren. | positivo | Aceptado | Aceptado según recomendación |
+| AC-04 | Propuesto IA | Dado un correo ya registrado (sin importar mayusculas), cuando alguien intenta registrarlo, entonces ve «Ese correo ya tiene cuenta. Inicia sesión.» y no se crea otra cuenta. | negativo | Aceptado | Aceptado según recomendación |
+| AC-05 | Propuesto IA | Dado un usuario Gratis, cuando abre un paso Premium, entonces ve la hoja C05 y la API responde 403 con `requires: premium` sin contenido. | negativo | Aceptado | Aceptado según recomendación |
+| AC-06 | Propuesto IA | Dado un usuario Gratis y un codigo activo, cuando lo canjea, entonces su plan pasa a Premium con la fecha de vencimiento del codigo y los pasos Premium se abren sin cerrar sesion. | positivo | Aceptado | Aceptado según recomendación |
+| AC-07 | Propuesto IA | Dado un codigo invalido, vencido, revocado o sin usos, cuando se canjea, entonces ve «Código no válido o vencido.» y el plan no cambia. | negativo | Aceptado | Aceptado según recomendación |
+| AC-08 | Propuesto IA | Dado un usuario Premium con plan vencido, cuando carga la app, entonces es tratado como Gratis y conserva su progreso. | borde | Aceptado | Aceptado según recomendación |
+| AC-09 | Propuesto IA | Dado un rep o gerente, cuando llama a cualquier endpoint `/api/admin/access-items` o `/api/admin/license-codes`, entonces recibe 403. | negativo | Aceptado | Aceptado según recomendación |
+| AC-10 | Propuesto IA | Dado un elemento oculto por el admin, cuando cualquier usuario no admin carga el catalogo, entonces el elemento no aparece. | borde | Aceptado | Aceptado según recomendación |
+| AC-11 | Propuesto IA | Dado un usuario Premium, cuando abre el Paso 5 sin completar el 4, entonces ve «Completa el paso anterior» (candado de progreso), no la hoja C05. | borde | Aceptado | Aceptado según recomendación |
+| AC-12 | Propuesto IA | Dado un gerente o admin, cuando abre cualquier leccion, entonces tiene acceso sin plan premium. | positivo | Aceptado | Aceptado según recomendación |
 
 ## 12. Escenarios De Prueba (Funcionales Y De Usuario)
 
 | ID | AC cubiertos | Tipo | Precondicion | Pasos | Resultado esperado | Datos | Nivel de prueba | Origen | Estado PO |
 |---|---|---|---|---|---|---|---|---|---|
-| ESC-01 | AC-01, AC-09 | positivo/negativo | catalogo DS-01 | 1. admin PATCH step_3 a gratis 2. rep PATCH lo mismo | 1. 200 y auditoria 2. 403 | DS-01, DS-02 | integration | Propuesto IA | Pendiente |
-| ESC-02 | AC-02, AC-10 | positivo | sin sesion | 1. GET /api/public/catalog | step_1 `allowed:true` con contenido; step_2 y step_4 `allowed:false` sin contenido; oculto ausente | DS-01 | integration | Propuesto IA | Pendiente |
-| ESC-03 | AC-03, AC-04 | positivo/negativo | sin cuenta | 1. registrar `nuevo@demo.local` 2. registrar `NUEVO@demo.local` | 1. sesion, plan gratis 2. error duplicado, 1 sola cuenta | DS-02 | integration | Propuesto IA | Pendiente |
-| ESC-04 | AC-05, AC-06, AC-07 | positivo/negativo | usuario gratis | 1. GET step_4 2. canjear codigo vencido 3. canjear codigo activo 4. GET step_4 | 1. 403 2. error, sigue gratis 3. premium 4. 200 | DS-02, DS-03 | integration | Propuesto IA | Pendiente |
-| ESC-05 | AC-08, AC-11, AC-12 | borde | DS-02 | 1. premium vencido abre step_4 2. premium abre step_5 sin step_4 3. gerente abre step_9 | 1. 403 2. candado progreso 3. 200 | DS-02 | integration | Propuesto IA | Pendiente |
-| ESC-06 | AC-02, AC-03, AC-05, AC-06 | UAT | sitio desplegado | 1. entrar a `/` 2. «Crear cuenta gratis» 3. abrir paso 2 4. abrir paso 4 5. canjear codigo 6. abrir paso 4 | candados correctos y desbloqueo en cada paso | DS-01..03 | e2e + UAT manual | Propuesto IA | Pendiente |
-| ESC-07 | AC-01 | UAT | admin | 1. cambiar paso 4 a gratis 2. entrar como gratis | paso 4 abierto | DS-01 | UAT manual | Propuesto IA | Pendiente |
+| ESC-01 | AC-01, AC-09 | positivo/negativo | catalogo DS-01 | 1. admin PATCH step_3 a gratis 2. rep PATCH lo mismo | 1. 200 y auditoria 2. 403 | DS-01, DS-02 | integration | Propuesto IA | Aceptado |
+| ESC-02 | AC-02, AC-10 | positivo | sin sesion | 1. GET /api/public/catalog | step_1 `allowed:true` con contenido; step_2 y step_4 `allowed:false` sin contenido; oculto ausente | DS-01 | integration | Propuesto IA | Aceptado |
+| ESC-03 | AC-03, AC-04 | positivo/negativo | sin cuenta | 1. registrar `nuevo@demo.local` 2. registrar `NUEVO@demo.local` | 1. sesion, plan gratis 2. error duplicado, 1 sola cuenta | DS-02 | integration | Propuesto IA | Aceptado |
+| ESC-04 | AC-05, AC-06, AC-07 | positivo/negativo | usuario gratis | 1. GET step_4 2. canjear codigo vencido 3. canjear codigo activo 4. GET step_4 | 1. 403 2. error, sigue gratis 3. premium 4. 200 | DS-02, DS-03 | integration | Propuesto IA | Aceptado |
+| ESC-05 | AC-08, AC-11, AC-12 | borde | DS-02 | 1. premium vencido abre step_4 2. premium abre step_5 sin step_4 3. gerente abre step_9 | 1. 403 2. candado progreso 3. 200 | DS-02 | integration | Propuesto IA | Aceptado |
+| ESC-06 | AC-02, AC-03, AC-05, AC-06 | UAT | sitio desplegado | 1. entrar a `/` 2. «Crear cuenta gratis» 3. abrir paso 2 4. abrir paso 4 5. canjear codigo 6. abrir paso 4 | candados correctos y desbloqueo en cada paso | DS-01..03 | e2e + UAT manual | Propuesto IA | Aceptado |
+| ESC-07 | AC-01 | UAT | admin | 1. cambiar paso 4 a gratis 2. entrar como gratis | paso 4 abierto | DS-01 | UAT manual | Propuesto IA | Aceptado |
 
 ## 13. Datos De Prueba
 
 | ID | Descripcion | Origen | Registros | Por que aplica (regla / AC) | Validado PO | Comentario PO |
 |---|---|---|---|---|---|---|
-| DS-01 | Catalogo con niveles por defecto | Simulado IA | 24 | BR-01, BR-08; AC-01, AC-02, AC-10 | Pendiente | |
-| DS-02 | Usuarios por estado de plan | Simulado IA | 6 | BR-02, BR-04; AC-03..AC-12 | Pendiente | |
-| DS-03 | Codigos premium | Simulado IA | 4 | BR-05; AC-06, AC-07 | Pendiente | |
+| DS-01 | Catalogo con niveles por defecto | Simulado IA | 24 | BR-01, BR-08; AC-01, AC-02, AC-10 | Si | Aceptado según recomendación |
+| DS-02 | Usuarios por estado de plan | Simulado IA | 6 | BR-02, BR-04; AC-03..AC-12 | Si | Aceptado según recomendación |
+| DS-03 | Codigos premium | Simulado IA | 4 | BR-05; AC-06, AC-07 | Si | Aceptado según recomendación |
 
 ### DS-01 - Catalogo (extracto)
 
@@ -400,13 +400,13 @@ Resultado esperado del resumen W3: publicos = Paso 1, AI Coach, Calculadoras (3 
 
 | ID | Tipo | Categoria | Pregunta o supuesto | Recomendacion IA | Impacto si se decide mal | Bloquea | Para quien | Respuesta / decision | Estado |
 |---|---|---|---|---|---|---|---|---|---|
-| Q-01 | Pregunta | Alcance | ¿Los tres niveles son Público (sin cuenta) / Gratis (con cuenta) / Premium? | Sí: así se lee «pública, logeada y premium». | Modelo de datos distinto | Si | PO | | Abierta |
-| Q-02 | Pregunta | Negocio | ¿Cómo se obtiene Premium? | Código de licencia que genera el admin (diseño C05), sin cobro. Pagos en otra historia. | Si se quiere cobro ahora: +servicio externo, +3-5 días | Si | PO | | Abierta |
-| Q-03 | Pregunta | Alcance | ¿Qué entra en el CRUD? | Nivel y visibilidad de los 11 pasos, escenarios de roleplay, recursos y funciones; no editar el contenido. | Editar contenido duplica el trabajo | Si | PO | | Abierta |
-| Q-04 | Pregunta | Seguridad | ¿Se verifica el correo al registrarse? | No en esta versión (no hay servicio de correo); se anota como siguiente paso. | Cuentas con correos falsos | No | PO | | Abierta |
-| Q-05 | Pregunta | UX | ¿Lo bloqueado se muestra con candado o se oculta? | Con candado y la acción para subir de nivel: impulsa el registro. | Menos conversión si se oculta | Si | PO | | Abierta |
-| Q-06 | Pregunta | Datos | ¿Niveles iniciales? | Los de BR-08 / DS-01 (paso 1 público, 2-3 gratis, 4-11 premium). | Contenido regalado o demasiado cerrado | No | PO | | Abierta |
-| Q-07 | Supuesto | Datos | Las cuentas demo existentes (rep, manager, admin) quedan con acceso completo para no romper demos. | Rep demo = premium sin vencimiento. | Demo rota | No | PO | | Abierta |
+| Q-01 | Pregunta | Alcance | ¿Los tres niveles son Público (sin cuenta) / Gratis (con cuenta) / Premium? | Sí: así se lee «pública, logeada y premium». | Modelo de datos distinto | Si | PO | Aceptada la recomendación IA («date y publicalo», 2026-11-14) | Respondida |
+| Q-02 | Pregunta | Negocio | ¿Cómo se obtiene Premium? | Código de licencia que genera el admin (diseño C05), sin cobro. Pagos en otra historia. | Si se quiere cobro ahora: +servicio externo, +3-5 días | Si | PO | Aceptada la recomendación IA («date y publicalo», 2026-11-14) | Respondida |
+| Q-03 | Pregunta | Alcance | ¿Qué entra en el CRUD? | Nivel y visibilidad de los 11 pasos, escenarios de roleplay, recursos y funciones; no editar el contenido. | Editar contenido duplica el trabajo | Si | PO | Aceptada la recomendación IA («date y publicalo», 2026-11-14) | Respondida |
+| Q-04 | Pregunta | Seguridad | ¿Se verifica el correo al registrarse? | No en esta versión (no hay servicio de correo); se anota como siguiente paso. | Cuentas con correos falsos | No | PO | Aceptada la recomendación IA («date y publicalo», 2026-11-14) | Respondida |
+| Q-05 | Pregunta | UX | ¿Lo bloqueado se muestra con candado o se oculta? | Con candado y la acción para subir de nivel: impulsa el registro. | Menos conversión si se oculta | Si | PO | Aceptada la recomendación IA («date y publicalo», 2026-11-14) | Respondida |
+| Q-06 | Pregunta | Datos | ¿Niveles iniciales? | Los de BR-08 / DS-01 (paso 1 público, 2-3 gratis, 4-11 premium). | Contenido regalado o demasiado cerrado | No | PO | Aceptada la recomendación IA («date y publicalo», 2026-11-14) | Respondida |
+| Q-07 | Supuesto | Datos | Las cuentas demo existentes (rep, manager, admin) quedan con acceso completo para no romper demos. | Rep demo = premium sin vencimiento. | Demo rota | No | PO | Aceptada la recomendación IA («date y publicalo», 2026-11-14) | Respondida |
 
 ## 18. Dependencias Y Riesgos
 
@@ -443,17 +443,18 @@ Resultado esperado del resumen W3: publicos = Paso 1, AI Coach, Calculadoras (3 
 
 ## 22. Aprobacion Del Product Owner
 
-**Decision del PO:** Pendiente
-**Aprobado por (nombre y rol):** `<nombre y rol>`
-**Fecha de aprobacion:** `<yyyy-mm-dd>`
-**Evidencia de aprobacion (cita y canal):** `<"texto exacto" - canal>`
-**Version aprobada:** `<v1>`
+**Decision del PO:** Aprobada
+**Aprobado por (nombre y rol):** Roger, Product Owner
+**Fecha de aprobacion:** 2026-11-14
+**Evidencia de aprobacion (cita y canal):** "date y publicalo" - chat de Claude Code, en respuesta a «¿Las tomo como recomendé o quieres cambiar alguna?»
+**Version aprobada:** v1
 
 ## 23. Revisiones
 
 | Version | Fecha | Cambio | Motivo |
 |---|---|---|---|
 | v1 | 2026-11-14 | Creacion | Pedido del PO en chat |
+| v1 | 2026-11-14 | Aprobada: puntos abiertos resueltos con la recomendación IA | «date y publicalo» |
 
 ## 24. Estimacion Para Cotizacion
 

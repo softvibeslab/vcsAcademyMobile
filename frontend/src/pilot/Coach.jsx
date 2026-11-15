@@ -13,7 +13,7 @@ import {
   useAction,
   ActionStatus,
 } from "./ui";
-export function Coach({ api, refresh, initialTab }) {
+export function Coach({ api, refresh, initialTab, onLocked }) {
   const [tab, setTab] = useState(initialTab),
     [messages, setMessages] = useState([]),
     [message, setMessage] = useState(""),
@@ -102,12 +102,22 @@ export function Coach({ api, refresh, initialTab }) {
                 >
                   <option value="">Selecciona una práctica</option>
                   {r.data.scenarios.map((s) => (
-                    <option value={s.id} key={s.id}>
+                    <option value={s.id} key={s.id} disabled={s.allowed === false}>
+                      {s.allowed === false ? "🔒 " : ""}
                       {s.title} · {s.difficulty}
+                      {s.allowed === false ? " · Premium" : ""}
                     </option>
                   ))}
                 </select>
               </Field>
+              {r.data.scenarios.some((s) => s.allowed === false) && onLocked && (
+                <p className="fine-print">
+                  Algunas prácticas son Premium.{" "}
+                  <button type="button" className="text-button" onClick={() => onLocked("premium")}>
+                    Desbloquear premium
+                  </button>
+                </p>
+              )}
               {scenario && (
                 <>
                   <p>{scenario.buyer_context}</p>
