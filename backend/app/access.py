@@ -222,10 +222,16 @@ def _secret() -> bytes:
     path = persistence.DB_PATH.parent / ".license-secret"
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
-        fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-        with os.fdopen(fd, "w") as f:
-            f.write(secrets.token_hex(32))
-    return path.read_text().strip().encode("utf-8")
+        try:
+            fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+            with os.fdopen(fd, "w") as f:
+                f.write(secrets.token_hex(32))
+        except FileExistsError:
+            pass  # otra solicitud la creó al mismo tiempo: se usa esa
+    key = path.read_text().strip()
+    if len(key) < 32:
+        raise RuntimeError("La clave de códigos (.license-secret) está vacía o incompleta.")
+    return key.encode("utf-8")
 
 
 def _normalize(code: str) -> str:

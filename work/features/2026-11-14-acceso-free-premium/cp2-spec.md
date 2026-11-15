@@ -26,8 +26,9 @@ Historia, sección 5 (incluye / no incluye).
 
 **Modelo**
 - `users.plan` (`gratis`|`premium`), `users.plan_expires_at` (fecha o nulo = sin vencimiento).
+- `license_redemptions(code_id, user_id, redeemed_at)`: un canje por usuario y código.
 - `access_items(id, kind, ref_id, title, level, visible, sort, updated_at)`; id `lesson:step_N`, `scenario:<id>`, `function:<coach|calculators|goalsheet|notebook>`, `resource:<id>`.
-- `license_codes(id, code_hash sha256, hint, plan_days, max_uses, uses, expires_at, revoked, created_by, created_at)`.
+- `license_codes(id, code_hash HMAC-SHA256 con clave del servidor, hint, plan_days, max_uses, uses, expires_at, revoked, created_by, created_at)`.
 
 **Regla de acceso:** visitante → publico; gratis → publico+gratis; premium vigente → todos; roles admin/manager/to_manager/trainer/coach → todos. Elemento oculto: 404 salvo admin. Bloqueado: 403 `{"code":"requires_plan","requires":"gratis|premium","message":...}` sin contenido.
 

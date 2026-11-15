@@ -300,13 +300,18 @@ export function AccessAdmin({ api }) {
               {u.tier === "staff" ? (
                 <span>Acceso completo</span>
               ) : (
-                <input type="date" aria-label={"Vencimiento de " + u.display_name} disabled={action.busy || u.plan !== "premium"}
-                  defaultValue={(u.plan_expires_at || "").slice(0, 10)}
-                  title="Vacío = Premium sin vencimiento"
-                  onChange={(e) => action.run(async () => {
-                    await api("/api/admin/users/" + u.id + "/plan", { method: "PATCH", body: JSON.stringify({ plan: u.plan, plan_expires_at: e.target.value || null }) });
+                <form className="pilot-expiry" onSubmit={(e) => {
+                  e.preventDefault();
+                  const value = new FormData(e.currentTarget).get("expires") || null;
+                  action.run(async () => {
+                    await api("/api/admin/users/" + u.id + "/plan", { method: "PATCH", body: JSON.stringify({ plan: u.plan, plan_expires_at: value }) });
                     reload();
-                  }, u.display_name + ": " + (e.target.value ? "Premium hasta el " + e.target.value : "Premium sin vencimiento") + ".")} />
+                  }, u.display_name + ": " + (value ? "Premium hasta el " + value : "Premium sin vencimiento") + ".");
+                }}>
+                  <input type="date" name="expires" aria-label={"Vencimiento de " + u.display_name} disabled={action.busy || u.plan !== "premium"}
+                    defaultValue={(u.plan_expires_at || "").slice(0, 10)} title="Vacío = Premium sin vencimiento" />
+                  <button type="submit" className="text-button" disabled={action.busy || u.plan !== "premium"}>Guardar</button>
+                </form>
               )}
             </div>
           ))}

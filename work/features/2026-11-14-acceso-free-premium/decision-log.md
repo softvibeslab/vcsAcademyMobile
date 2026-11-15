@@ -9,3 +9,4 @@
 | 2026-11-14 | Roadmap secuencial (antes paso 2 fijo como actual) | Necesario para AC-11 y para cuentas nuevas | Agente, dentro de la historia aprobada |
 | 2026-11-14 | Staff (admin, manager, to_manager, trainer, coach) con acceso completo por rol | AC-12 | PO |
 | 2026-11-14 | Recursos sensibles exigen nivel Y el permiso por usuario existente | No debilitar el control previo | Agente |
+| 2026-11-14 | Candados de calculadoras y notebook se aplican en la UI y se abren si el catálogo no carga | Son funciones sin datos en el servidor; cerrar ante error rompería la app sin ganancia de seguridad | Agente (revisión PR #1) |

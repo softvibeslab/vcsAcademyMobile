@@ -106,7 +106,7 @@ function GuestLesson({ api, id, step, onLocked, onRegister }) {
     setState({ busy: true });
     api("/api/public/blueprint/steps/" + encodeURIComponent(id))
       .then((d) => live && setState({ step: d.step }))
-      .catch((e) => live && setState({ requires: e.code === "requires_plan" ? e.requires : null, error: e.message || "No pudimos cargar la lección." }));
+      .catch((e) => live && setState({ requires: e.code === "requires_plan" ? e.requires : null, error: e.status === 404 ? "Esta lección ya no está disponible." : e.message || "No pudimos cargar la lección." }));
     return () => {
       live = false;
     };

@@ -157,7 +157,7 @@ function App() {
           api("/api/resources"),
           api("/api/roleplay/submissions/mine"),
           api("/api/certifications/mine"),
-          api("/api/reminders/upcoming"),
+          soft("/api/reminders/upcoming", { reminders: [] }),
           soft("/api/public/catalog", null),
         ]);
         if (live) {

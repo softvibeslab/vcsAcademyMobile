@@ -220,8 +220,13 @@ class AccessTiers(unittest.TestCase):
         self.assertEqual(listed["uses"], 1)
         unlimited = ok(register("ilimitado@demo.local"))["user"]
         ok(client.patch(f"/api/admin/users/{unlimited['id']}/plan", json={"plan": "premium", "plan_expires_at": None}, headers=self.admin))
-        bogus = client.post("/api/me/redeem", json={"code": "SA-CUALQUIER-COSA"}, headers=login("ilimitado@demo.local", "clave-segura-1"))
-        self.assertEqual(bogus.status_code, 400)
+        h_unl = login("ilimitado@demo.local", "clave-segura-1")
+        bogus = client.post("/api/me/redeem", json={"code": "SA-CUALQUIER-COSA"}, headers=h_unl)
+        self.assertEqual((bogus.status_code, bogus.json()["detail"]), (400, "Código no válido o vencido."))
+        fresh = ok(client.post("/api/admin/license-codes", json={"plan_days": 30, "max_uses": 1, "expires_at": (TODAY + timedelta(days=30)).isoformat()}, headers=self.admin))["code"]
+        permanent = client.post("/api/me/redeem", json={"code": fresh["code"]}, headers=h_unl)
+        self.assertEqual((permanent.status_code, permanent.json()["detail"]), (400, "Ya tienes Premium sin vencimiento."))
+        self.assertEqual(next(c for c in ok(client.get("/api/admin/license-codes", headers=self.admin))["codes"] if c["id"] == fresh["id"])["uses"], 0)
 
     def test_review_code_hash_is_keyed(self):
         import hashlib
@@ -229,6 +234,7 @@ class AccessTiers(unittest.TestCase):
         with persistence.connect() as db:
             stored = db.execute("SELECT code_hash FROM license_codes WHERE id = ?", (code["id"],)).fetchone()["code_hash"]
         self.assertNotEqual(stored, hashlib.sha256(code["code"].upper().encode()).hexdigest())
+        self.assertEqual(stored, access._hash(code["code"]))
 
     def test_review_admin_plan_change_survives_restart(self):
         ok(client.patch("/api/admin/users/user_demo_rep/plan", json={"plan": "gratis", "plan_expires_at": None}, headers=self.admin))
@@ -238,6 +244,14 @@ class AccessTiers(unittest.TestCase):
             self.assertEqual(persistence.get_user("user_demo_rep")["plan"], "gratis")
         finally:
             ok(client.patch("/api/admin/users/user_demo_rep/plan", json={"plan": "premium", "plan_expires_at": None}, headers=self.admin))
+
+    def test_review_hidden_lesson_not_in_knowledge(self):
+        from backend.app.main import smart_agent_knowledge
+        ok(client.patch("/api/admin/access-items/lesson:step_1", json={"visible": False}, headers=self.admin))
+        try:
+            self.assertNotIn("step_1", {k["id"] for k in smart_agent_knowledge(None)})
+        finally:
+            ok(client.patch("/api/admin/access-items/lesson:step_1", json={"visible": True}, headers=self.admin))
 
     def test_review_limiter_prunes_stale_keys(self):
         limiter = access.Limiter(limit=5, window=0)

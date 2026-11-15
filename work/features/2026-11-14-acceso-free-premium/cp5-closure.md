@@ -19,6 +19,7 @@ Registro público con cuenta Gratis, niveles Público / Gratis / Premium por lec
 - Las reglas de acceso viven en `backend/app/access.py`; la UI solo pinta (`access-model.mjs`).
 - Un nivel nuevo de contenido se agrega como fila en `access_items` (migración `init_schema`, INSERT OR IGNORE).
 - Rate limit por `X-Real-IP` (nginx), nunca por `X-Forwarded-For`.
+- La clave HMAC de códigos (`/srv/aisales/data/.license-secret` o `VCSA_CODE_SECRET`) debe respaldarse con la base; si se pierde, los códigos vigentes dejan de servir (los planes ya activados no se afectan).
 
 ## 3. Decisions Recorded
 

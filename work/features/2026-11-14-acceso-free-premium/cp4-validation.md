@@ -11,12 +11,12 @@
 | Suite | Comando | Resultado |
 |---|---|---|
 | API existente (regresión) | `VCSA_DB_PATH=<tmp> .venv/bin/python backend/tests/e2e_smoke.py` | `E2E API smoke passed` |
-| Acceso (historia + revisión PR #1) | `.venv/bin/python backend/tests/access_tiers.py` | `Ran 15 tests … OK` |
+| Acceso (historia + revisión PR #1) | `.venv/bin/python backend/tests/access_tiers.py` | `Ran 16 tests … OK` |
 | Dominio | `npm test` | `pass 5 fail 0` |
 | Modelo UI (acceso + instalar + piloto) | `node --test frontend/src/pilot/*.test.mjs` | `pass 13 fail 0` |
 | Build | `npm run build:web` | `✓ built` |
 | Migración desde esquema anterior | worktree de HEAD crea base → código nuevo arranca 2 veces | columnas `plan`, `plan_expires_at`; 28 elementos sin duplicar; rep demo premium, visitor gratis |
-| Navegador (ESC-06 + instalar) | Playwright `flow.mjs` (390×844 y 1440×900, backend en base temporal + `vite preview`) | 13 checks OK, 0 errores JS (abajo) |
+| Navegador (ESC-06 + instalar + revisión) | Playwright `flow.mjs` (390×844 y 1440×900, backend en base temporal + `vite preview`) | 17 checks OK, 0 errores JS (conteo final) |
 
 Resultado del navegador: invitado ve `Comenzar · Crear cuenta gratis ×2 · Desbloquear premium…`; hoja «Crea tu cuenta gratis»; registro → plan Gratis (`Comenzar · Completa el paso anterior ×2 · Desbloquear premium…`); canje → Premium (`Comenzar · Completa el paso anterior…`, CTA premium desaparece); Perfil «Premium · 28 de 28 módulos · vence el 2027-02-12»; admin cambia «4 · Discovery / Survey» a Gratis con confirmación; botón «Instalar app» visible y oculto en modo instalada.
 
@@ -34,9 +34,11 @@ Resultado del navegador: invitado ve `Comenzar · Crear cuenta gratis ×2 · Des
 | T10 | RED | `access_tiers.py` (7 pruebas `test_review_*`) | 7 FAIL: conocimiento del visitante incluía `agenda-control-guide` y `step-5-script`; `200 != 409` al completar el paso 11 sin el 1; código de 8 caracteres; recordatorios sin guarda; hash sin clave; reinicio devolvía Premium al rep demo; limitador sin purga |
 | T10 | GREEN | `access_tiers.py` + `e2e_smoke.py` | `Ran 15 tests … OK`; `E2E API smoke passed` |
 | T11 | RED | `node --test access-model.test.mjs` | `pass 3 fail 2` (`itemAccess`, `premiumLockedCount` inexistentes) |
-| T11 | GREEN | `node --test frontend/src/pilot/*.test.mjs` | `pass 13 fail 0`; Playwright 15 checks (aviso «8 pasos más con Premium», calculadoras Premium bloqueadas al invitado) |
+| T11 | GREEN | `node --test frontend/src/pilot/*.test.mjs` | `pass 13 fail 0`; Playwright 15 checks en ese momento (aviso «8 pasos más con Premium», calculadoras Premium bloqueadas al invitado) |
+| T12 | RED | Playwright `flow.mjs` (Goal Sheet Premium, usuario Gratis) | `free_loads_with_goalsheet_premium: false`: `/api/reminders/upcoming` 403 tumbaba la carga |
+| T12 | GREEN | Playwright `flow.mjs` + `access_tiers.py` | 17 checks OK; `Ran 16 tests OK` (lección oculta fuera del conocimiento; canje con Premium permanente no consume el código; hash = HMAC del servidor) |
 | T08 | RED | Playwright `flow.mjs` | fallo de la prueba (selector «Nombre» ambiguo; espera de avatar oculto en móvil): corregida la prueba, no el producto |
-| T08 | GREEN | Playwright `flow.mjs` | 13 checks OK, 0 errores |
+| T08 | GREEN | Playwright `flow.mjs` | 13 checks OK, 0 errores (primera versión; final 17) |
 
 ## 2. Findings
 
@@ -47,12 +49,15 @@ Resultado del navegador: invitado ve `Comenzar · Crear cuenta gratis ×2 · Des
 | F4 | Límite por IP evadible con `X-Forwarded-For` falso | Clave por `X-Real-IP` (nginx); prueba T09 |
 | F5 | Revisión automática PR #1 (P1): fuga de recursos al chat público, orden del roadmap no exigido, Goal Sheet oculto rompía la carga, nivel de calculadoras sin efecto | Corregidas con pruebas T10/T11 |
 | F6 | Revisión PR #1 (P2): repetición de código por usuario, códigos de 8 caracteres, hash sin clave, canjes concurrentes, rep demo reseteado al reiniciar, limitador sin purga, aviso Premium contaba pasos gratis, error de red mostrado como paywall, botón sin nombre accesible, plan sin vencimiento en admin, script de despliegue sin reversión temprana, httpx sin fijar | Corregidas |
+| F8 | Revisión PR #1, 2ª pasada (P1): recordatorios bloqueaban la carga; reversión del despliegue silenciosa y restauración de respaldo incompleto | Corregidas (T12, `deploy.sh`) |
+| F9 | Revisión PR #1, 2ª pasada (P2/P3): clave vacía o carrera al crearla, clave fuera del respaldo, lecciones ocultas en el conocimiento, vencimiento guardado en cada tecla, sufijo de despliegue sin validar, 404 en inglés, pruebas débiles | Corregidas |
+| F10 | Candado de calculadoras/notebook se abre si el catálogo no carga | No se corrige: funciones solo de navegador, sin datos de servidor que proteger (decisión registrada) |
 | F7 | Revisión PR #1 en código previo (notas, edición de usuarios, código muerto en Auth, título de feedback, verificadores viejos) | Fuera de alcance; backlog en cp5 |
 | F3 | El roadmap marcaba siempre el paso 2 como actual (fijo en código) | Ahora es secuencial (primer paso sin completar), necesario para AC-11 |
 
 ## 3. Security Review
 
-Acceso decidido en el servidor; contenido bloqueado no viaja (ESC-02). Admin-only verificado (ESC-01). Códigos como SHA-256, mostrados una sola vez, listados con `hint`. Límite 5/min por IP en registro y canje (prueba 429). Canje con UPDATE condicional. Sin secretos nuevos.
+Acceso decidido en el servidor; contenido bloqueado no viaja (ESC-02). Admin-only verificado (ESC-01). Códigos como SHA-256, mostrados una sola vez, listados con `hint`. Límite 5/min por IP en registro y canje (prueba 429). Canje en transacción IMMEDIATE (sin doble uso ni carrera de vencimientos), un canje por usuario y código. **Secreto nuevo:** clave HMAC de códigos en `VCSA_CODE_SECRET` o en `/data/.license-secret` (0600, se crea sola, nunca en git: `.gitignore`); `deploy.sh` la respalda junto con la base porque sin ella los códigos vigentes dejan de servir.
 
 ## 4. TRUST 5
 
@@ -73,4 +78,4 @@ Avanza a CP5 y despliegue (aprobación del PO: «date y publicalo»).
 ## Gate CP4 -> CP5
 
 - [x] Evidencia ejecutada
-- [x] Sin hallazgos abiertos
+- [x] Sin hallazgos abiertos en el alcance; F7 diferido al backlog de cp5 (código previo) y F10 aceptado

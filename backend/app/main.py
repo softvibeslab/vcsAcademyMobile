@@ -414,6 +414,7 @@ def smart_agent_knowledge(user: dict[str, Any] | None) -> list[dict[str, Any]]:
             "tags": ["blueprint", f"step-{step_number}", title.lower()],
         }
         for step_id, step_number, title, description in BLUEPRINT_STEPS
+        if access.decide(f"lesson:{step_id}", user)["visible"]
     ]
     resource_items = [
         {
