@@ -1,6 +1,6 @@
 # FTD: `guia-de-inicio`
 
-**Status:** in-progress
+**Status:** done (publicado en aisales 2026-11-16)
 **Lane:** FTD
 **Author:** `RogerDevAndroid`
 **Branch:** `feature/guia-de-inicio`
@@ -59,6 +59,7 @@ Que cada persona entienda en un minuto para qué sirve la app, fije su meta y pr
 | T03 | RED | Playwright `guide.mjs` | Fallo de la prueba: «Abrir lección» aparece en la hoja y en la tarjeta de Home (comportamiento correcto); selector acotado a la hoja |
 | T03 | GREEN | Playwright `guide.mjs` (390×844 rep nuevo; 1440×900 admin; backend en base temporal) | 15 checks OK, 0 errores JS: se abre sola en la 1.ª visita («Hola, Ana…»); metas guardadas (Home muestra $20,000); «Abrir lección» cierra la hoja y marca el paso; mensaje al coach lo marca; tarjeta «3 de 5 · Siguiente: Registra tu día»; no se reabre al recargar; Ocultar; Perfil la reabre y la vuelve a mostrar; «Omitir guía» persiste; admin ve 7 pasos |
 | — | GREEN | `npm run build:web` | `✓ built` |
+| T04 | GREEN | `deploy-web.sh 20261116a` + Playwright en vivo (rep demo) | Release `/srv/aisales-release-20261116a` (`assets/pilot-BbSXMpJ7.js`), anterior `20261114c` conservada; guía abre sola «Hola, Chris…», «Omitir guía» persiste, tarjeta en Home y en Perfil, 0 errores JS |
 
 ## Decisiones
 
@@ -74,4 +75,4 @@ Que cada persona entienda en un minuto para qué sirve la app, fije su meta y pr
 
 ## Siguiente
 
-Desplegar en aisales y verificar en vivo.
+Publicado. Siguiente posible: sincronizar el estado de la guía entre dispositivos (requiere API).
