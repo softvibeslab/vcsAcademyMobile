@@ -18,6 +18,8 @@ import Auth from "./Auth";
 import GuestWorkspace from "./GuestWorkspace";
 import { UnlockSheet } from "./Access";
 import { InstallButton } from "./Install";
+import { GuideSheet, GuideCard, GuideProfileCard } from "./Guide";
+import { guideKey, emptyGuide, shouldAutoOpen, markGuide, routeEvent } from "./guide-model.mjs";
 import { planError, itemAccess } from "./access-model.mjs";
 import { Header, Loading, ErrorBox, Button } from "./ui";
 import { canManage, roleLabel } from "./model.mjs";
@@ -37,6 +39,7 @@ import "./styles.css";
 import "./fonts.css";
 import "./training-design.css";
 import "./access.css";
+import "./guide.css";
 const SESSION = "sa.pilot.session",
   BASE = (import.meta.env.VITE_PILOT_API_BASE_URL || "").replace(/\/$/, "");
 const nav = [
@@ -58,6 +61,8 @@ function App() {
     [revision, setRevision] = useState(0),
     [route, setRoute] = useState(() => location.hash.slice(1) || "home");
   const [unlock, setUnlock] = useState(null);
+  const [guide, setGuideState] = useState(null),
+    [guideOpen, setGuideOpen] = useState(false);
   const [guest, setGuest] = useState(false),
     [authEntry, setAuthEntry] = useState({
       view: "welcome",
@@ -130,6 +135,35 @@ function App() {
     [token, clear],
   );
   const refresh = () => setRevision((n) => n + 1);
+  // Guía de inicio: estado por cuenta en este dispositivo (FTD guia-de-inicio).
+  const setGuide = useCallback(
+    (next) => {
+      if (!user) return;
+      setGuideState(next);
+      try {
+        localStorage.setItem(guideKey(user.id), JSON.stringify(next));
+      } catch {}
+    },
+    [user],
+  );
+  useEffect(() => {
+    if (!user) return setGuideState(null);
+    try {
+      setGuideState({ ...emptyGuide(), ...JSON.parse(localStorage.getItem(guideKey(user.id)) || "{}") });
+    } catch {
+      setGuideState(emptyGuide());
+    }
+  }, [user?.id]);
+  useEffect(() => {
+    if (!guide || !data) return;
+    if (shouldAutoOpen(guide, route.split("/")[0])) {
+      setGuide({ ...guide, seen: true });
+      setGuideOpen(true);
+      return;
+    }
+    const marked = markGuide(guide, routeEvent(route));
+    if (marked !== guide) setGuide(marked);
+  }, [guide, data, route, setGuide]);
   useEffect(() => {
     if (!token) return;
     let live = true;
@@ -289,6 +323,7 @@ function App() {
     refresh,
     revision,
     onLocked: (level) => setUnlock({ level }),
+    onGuideEvent: (event) => guide && setGuide(markGuide(guide, event)),
   };
   // Funciones que viven solo en el navegador: su nivel se aplica aquí con el catálogo del servidor.
   const gate = (itemId) => {
@@ -302,7 +337,12 @@ function App() {
   let content;
   switch (page) {
     case "home":
-      content = <HomeView {...props} />;
+      content = (
+        <>
+          <GuideCard user={user} data={data} guide={guide} setGuide={setGuide} onOpen={() => setGuideOpen(true)} />
+          <HomeView {...props} />
+        </>
+      );
       break;
     case "roadmap":
       content = <Roadmap {...props} />;
@@ -337,7 +377,12 @@ function App() {
       break;
     case "profile":
       content = (
-        <Profile {...props} logout={logout} onUnlock={() => setUnlock({ level: "premium" })} />
+        <Profile
+          {...props}
+          logout={logout}
+          onUnlock={() => setUnlock({ level: "premium" })}
+          guideSlot={<GuideProfileCard user={user} data={data} guide={guide} setGuide={setGuide} onOpen={() => setGuideOpen(true)} />}
+        />
       );
       break;
     case "notebook":
@@ -473,6 +518,9 @@ function App() {
           Sales Academy <span>by AgenticOS</span>
         </footer>
       </main>
+      {guideOpen && guide && (
+        <GuideSheet user={user} data={data} guide={guide} setGuide={setGuide} onClose={() => setGuideOpen(false)} />
+      )}
       {unlock && (
         <UnlockSheet
           api={api}
