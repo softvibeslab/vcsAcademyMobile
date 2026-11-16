@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}{{ doc.seo.title }}{% endblock %}</title>
+    <meta
+      name="description"
+      content="{% block description %}{{ doc.seo.description }}{% endblock %}"
+    />
+    {% if preview %}
+    <meta name="robots" content="noindex, nofollow" />
+    {% endif %}
+    <meta name="theme-color" content="#151714" />
+    <link rel="icon" href="/growth-assets/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/growth-assets/site.css" />
+    <link rel="stylesheet" href="/growth-assets/public-v2.css" />
+    <link rel="stylesheet" href="/growth-assets/campaign.css" />
+    <link rel="stylesheet" href="/growth-assets/advisor.css" />
+    {% block styles %}{% endblock %}
+    <script type="module" src="/growth-assets/site.mjs"></script>
+    {% if not preview %}<script type="module" src="/growth-assets/advisor.mjs"></script>{% endif %}
+    {% block scripts %}{% endblock %}
+  </head>
+  <body
+    class="public-v2 {% block bodyclass %}{% endblock %}"
+    data-page="{% block page %}landing{% endblock %}"
+    data-preview="{{ 'true' if preview else 'false' }}"
+  >
+    <a class="skip" href="#main">Saltar al contenido</a>
+    {% if preview %}
+    <div class="preview-bar">
+      Vista previa privada · Los cambios todavía no se publican.
+      <a href="/cms/">Volver al editor</a>
+    </div>
+    {% endif %}
+    <header class="site-header">
+      <div class="container nav">
+        <a
+          class="brand"
+          href="{{ '/cms/preview/' if preview else '/descubre/' }}"
+          aria-label="Sales Academy, inicio"
+          ><span class="brand-mark">S<span>A</span></span
+          ><span
+            >SALES<br />ACADEMY<span class="brand-sub"
+              >AGENTES DE IA PARA TU SALA</span
+            ></span
+          ></a
+        >
+        <nav aria-label="Navegación principal">
+          <a href="/descubre/#recorrido">Agentes en acción</a
+          ><a href="{{ '/cms/preview/?page=hub' if preview else '/mediahub/' }}"
+            >Mediahub</a
+          ><a class="nav-demo" href="https://salesacademy.softvibes.art/"
+            >Ver la demo <span aria-hidden="true">↗</span></a
+          >
+        </nav>
+        <a class="button button-small campaign-header-cta" href="{{ whatsapp_demo_url }}" target="_blank" rel="noopener noreferrer" data-whatsapp-demo
+          >Solicitar demo por WhatsApp <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </header>
+    <main id="main">{% block content %}{% endblock %}</main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <a class="brand" href="/descubre/"
+          ><span class="brand-mark">S<span>A</span></span
+          ><span>SALES<br />ACADEMY</span></a
+        >
+        <p>Tu método. Tus agentes de IA.<br />El siguiente paso de tu sala.</p>
+        <div>
+          <a href="/mediahub/">Recursos abiertos</a
+          ><a href="{{ whatsapp_demo_url }}" target="_blank" rel="noopener noreferrer" data-whatsapp-demo>Solicitar demo por WhatsApp ↗</a
+          ><a href="https://salesacademy.softvibes.art/">Ver la demo ↗</a
+          ><a href="/descubre/privacidad/">Privacidad</a
+          ><button class="text-button" data-consent-settings>
+            Preferencias de medición
+          </button>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>Sales Academy · Softvibes</span
+        ><span>Inteligencia artificial para preparar, practicar y acompañar.</span>
+      </div>
+    </footer>
+    <section
+      class="consent-panel"
+      id="consent-panel"
+      aria-label="Preferencias de medición"
+      hidden
+    >
+      <div>
+        <strong>Tú decides qué compartes.</strong>
+        <p>
+          Podemos medir visitas y uso de recursos para mejorar esta experiencia.
+          No enviamos tus respuestas del diagnóstico.
+        </p>
+      </div>
+      <div class="consent-actions">
+        <button class="button button-small" data-consent="granted">
+          Permitir medición</button
+        ><button
+          class="button button-small button-outline"
+          data-consent="denied"
+        >
+          Solo lo necesario
+        </button>
+      </div>
+    </section>
+  </body>
+</html>

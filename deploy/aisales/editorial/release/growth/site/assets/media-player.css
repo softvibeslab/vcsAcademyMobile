@@ -1,0 +1,81 @@
+.film-player {
+  margin: 0 0 2rem;
+  min-width: 0;
+}
+.film-player-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 76vh;
+  max-height: 76svh;
+  object-fit: contain;
+  background: #10120f;
+  border: 1px solid #494a40;
+  border-radius: 6px;
+}
+.film-player-video:focus-visible {
+  outline: 3px solid #9a732f;
+  outline-offset: 5px;
+}
+.film-player-stage { position:relative; }
+.film-play-button {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:min(190px,calc(100% - 32px));
+  min-height:162px;
+  padding:20px 16px 18px;
+  border:1px solid #d4ba7a;
+  border-radius:22px;
+  background:#10150ef2;
+  color:#fff8e5;
+  box-shadow:0 16px 44px #0008;
+  font-family:inherit;
+  cursor:pointer;
+  transition:background 160ms ease,box-shadow 160ms ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.film-play-icon {
+  display:grid;
+  place-items:center;
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  background:#e0c584;
+  color:#182014;
+  box-shadow:0 0 0 7px #d4ba7a24;
+  animation:film-play-pulse 1.5s ease-out 3;
+}
+.film-play-icon svg { display:block; width:34px; height:34px; margin-left:3px; fill:currentColor; }
+.film-play-text { font-size:14px; font-weight:700; line-height:1.2; letter-spacing:.02em; }
+.film-play-detail { font-size:10px; line-height:1.4; color:#dddfd1; }
+.film-play-button:hover { background:#222b1c; box-shadow:0 16px 44px #0009,0 0 0 2px #d4ba7a55; }
+.film-play-button:focus-visible { outline:3px solid #fff0bb; outline-offset:5px; }
+.film-play-button:disabled { cursor:progress; }
+@keyframes film-play-pulse {
+  0% { box-shadow:0 0 0 0 #e0c58470; }
+  100% { box-shadow:0 0 0 17px #e0c58400; }
+}
+.film-player figcaption { padding-top: 14px; }
+.film-player-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+.film-player-hint,
+.film-player-error { font-size: 13px; line-height: 1.65; margin: 7px 0 0; }
+.film-player-error { font-weight: 600; }
+.film-player [data-video-retry] { margin-top: 12px; min-height: 44px; }
+.film-player [hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .film-player { scroll-behavior: auto; }
+  .film-play-icon { animation:none; }
+  .film-play-button { transition:none; }
+}

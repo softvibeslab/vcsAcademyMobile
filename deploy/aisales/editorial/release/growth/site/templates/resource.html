@@ -1,0 +1,136 @@
+{% extends 'base.html' %} {% from 'macros.html' import video_player with context %}
+{% block styles %}<link rel="stylesheet" href="/growth-assets/media-player.css" />{% endblock %}
+{% block scripts %}<script type="module" src="/growth-assets/media-player.mjs"></script>{% endblock %}
+{% block title %}{{ resource.title }} · Sales
+Academy{% endblock %}{% block description %}{{ resource.excerpt }}{% endblock
+%}{% block page %}resource{% endblock %} {% block content %}
+<article class="container reading-layout" data-resource-id="{{ resource.id }}">
+  <header class="reading-head">
+    <a
+      class="quiet-link"
+      href="{{ '/cms/preview/?page=hub' if preview else '/mediahub/' }}"
+      >← Volver al mediahub</a
+    >
+    <p class="eyebrow">
+      {{
+      {'template':'PLANTILLA','guide':'GUÍA','matrix':'MATRIZ','video':'VIDEO','audio':'AUDIO'}.get(resource.type,resource.type)
+      }} / {{ resource.evidenceLabel }}
+    </p>
+    <h1>{{ resource.title }}</h1>
+    <p class="reading-excerpt">{{ resource.excerpt }}</p>
+    <div class="reading-meta">
+      <span>{{ resource.duration }}</span
+      ><span
+        >Para {{
+        {'rep':'representantes','leader':'líderes','director':'dirección'}.get(resource.role,resource.role)
+        }}</span
+      ><span>Revisión: {{ resource.reviewedAt }}</span>
+    </div>
+  </header>
+  <aside class="reading-aside">
+    <div class="sticky-note">
+      <p class="eyebrow">DE ESTA PÁGINA A TU EQUIPO</p>
+      <h2>Hazlo tuyo.</h2>
+      <p>
+        Descarga el recurso en formato de texto editable y llévalo a la próxima
+        conversación.
+      </p>
+      {% if not preview %}<a
+        class="button button-small"
+        href="/mediahub/{{ resource.slug }}/descargar/"
+        download
+        >Descargar recurso ↓</a
+      >{% else %}
+      <p class="caption">
+        La descarga pública estará disponible después de publicar.
+      </p>
+      {% endif %}
+      <p class="caption">
+        Formato Markdown (.md). Se abre con cualquier editor de texto.
+      </p>
+    </div>
+  </aside>
+  <div class="reading-body">
+    <p class="campaign-note">Agentes de IA para el trabajo de tu sala: usa este recurso para preparar una consulta, ensayar una habilidad y decidir el siguiente paso con tu equipo.</p>
+    {% if resource.id == 'room-day' %}
+    <p><a class="button button-small" href="/growth-assets/scenarios/index.html">Explorar las seis escenas y las pantallas ↗</a></p>
+    {% endif %}
+    {% if resource.get('videoId') %}{{ video_player(resource) }}{% endif %}
+    {% if resource.coverId and not resource.get('videoId') %}<img
+      class="article-cover"
+      src="/media/{{ resource.coverId }}/web"
+      alt="{{ media_items.get(resource.coverId, {}).get('alt', 'Portada de ' ~ resource.title) }}"
+    />{% endif %}{% for b in resource.body %}{% if b.type=='heading' %}
+    <h2>{{ b.text }}</h2>
+    {% elif b.type=='paragraph' %}
+    <p>{{ b.text }}</p>
+    {% elif b.type=='list' %}
+    <ul>
+      {% for item in b['items'] %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    {% elif b.type=='table' %}
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            {% for h in b.headers %}
+            <th>{{ h }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in b.rows %}
+          <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}{% endfor %} {% if resource.externalMediaUrl %}
+    <div class="external-media">
+      <p>Material audiovisual complementario</p>
+      <a
+        class="button button-outline"
+        href="{{ resource.externalMediaUrl }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Abrir contenido audiovisual ↗</a
+      >
+      <p class="caption">
+        Se abrirá el proveedor externo. No se carga contenido de terceros hasta
+        que lo elijas.
+      </p>
+    </div>
+    {% endif %} {% if resource.attachments %}
+    <h2>Materiales complementarios</h2>
+    <ul>
+      {% for mid in resource.attachments %}
+      <li>
+        {% set asset = media_items.get(mid, {}) %}
+        {% set variant = 'download' if asset.get('mime') == 'application/pdf' else 'web' %}
+        <a href="/media/{{ mid }}/{{ variant }}" download>
+          Descargar {{ asset.get('title', 'archivo ' ~ loop.index) }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <p class="article-source">{{ resource.sourceNote }}</p>
+    <div class="article-next">
+      <p class="eyebrow">EL SIGUIENTE PASO</p>
+      <h2>Tu método, acompañado por agentes de IA.</h2>
+      <p>
+        Lleva este caso a una demo. Revisemos cómo preparar, practicar y acompañar
+        a tu equipo con el contexto de tu sala.
+      </p>
+      <a class="button" href="{{ whatsapp_demo_url }}" target="_blank" rel="noopener noreferrer" data-whatsapp-demo>Solicitar demo por WhatsApp ↗</a>
+      <p><a class="campaign-link" href="/descubre/diagnostico/" data-recommendation-link>Encontrar primero el foco de mi sala →</a></p>
+    </div>
+  </div>
+</article>
+{% endblock %}

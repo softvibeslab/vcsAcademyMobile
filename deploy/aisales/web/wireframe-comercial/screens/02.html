@@ -1,0 +1,441 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>02 · Landing · Móvil</title><style>
+    body {
+      background-color: #10120f;
+      color: #f4f2e9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .font-serif-brand {
+      font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+    }
+    /* Touch target guarantee */
+    .touch-target-min {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    /* Hide scrollbars for clean mobile presentation */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  
+
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  
+*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}[type='text'],input:where(:not([type])),[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='datetime-local'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],[multiple],textarea,select{-webkit-appearance:none;appearance:none;background-color:#fff;border-color:#6b7280;border-width:1px;border-radius:0px;padding-top:0.5rem;padding-right:0.75rem;padding-bottom:0.5rem;padding-left:0.75rem;font-size:1rem;line-height:1.5rem;--tw-shadow:0 0 #0000;}[type='text']:focus, input:where(:not([type])):focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus{outline:2px solid transparent;outline-offset:2px;--tw-ring-inset:var(--tw-empty,/*!*/ /*!*/);--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:#2563eb;--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);border-color:#2563eb}input::placeholder,textarea::placeholder{color:#6b7280;opacity:1}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-date-and-time-value{min-height:1.5em;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit,::-webkit-datetime-edit-year-field,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute-field,::-webkit-datetime-edit-second-field,::-webkit-datetime-edit-millisecond-field,::-webkit-datetime-edit-meridiem-field{padding-top:0;padding-bottom:0}select{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");background-position:right 0.5rem center;background-repeat:no-repeat;background-size:1.5em 1.5em;padding-right:2.5rem;print-color-adjust:exact}[multiple],[size]:where(select:not([size="1"])){background-image:initial;background-position:initial;background-repeat:unset;background-size:initial;padding-right:0.75rem;print-color-adjust:unset}[type='checkbox'],[type='radio']{-webkit-appearance:none;appearance:none;padding:0;print-color-adjust:exact;display:inline-block;vertical-align:middle;background-origin:border-box;-webkit-user-select:none;user-select:none;flex-shrink:0;height:1rem;width:1rem;color:#2563eb;background-color:#fff;border-color:#6b7280;border-width:1px;--tw-shadow:0 0 #0000}[type='checkbox']{border-radius:0px}[type='radio']{border-radius:100%}[type='checkbox']:focus,[type='radio']:focus{outline:2px solid transparent;outline-offset:2px;--tw-ring-inset:var(--tw-empty,/*!*/ /*!*/);--tw-ring-offset-width:2px;--tw-ring-offset-color:#fff;--tw-ring-color:#2563eb;--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow)}[type='checkbox']:checked,[type='radio']:checked{border-color:transparent;background-color:currentColor;background-size:100% 100%;background-position:center;background-repeat:no-repeat}[type='checkbox']:checked{background-image:url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");}@media (forced-colors: active) {[type='checkbox']:checked{-webkit-appearance:auto;appearance:auto}}[type='radio']:checked{background-image:url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");}@media (forced-colors: active) {[type='radio']:checked{-webkit-appearance:auto;appearance:auto}}[type='checkbox']:checked:hover,[type='checkbox']:checked:focus,[type='radio']:checked:hover,[type='radio']:checked:focus{border-color:transparent;background-color:currentColor}[type='checkbox']:indeterminate{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e");border-color:transparent;background-color:currentColor;background-size:100% 100%;background-position:center;background-repeat:no-repeat;}@media (forced-colors: active) {[type='checkbox']:indeterminate{-webkit-appearance:auto;appearance:auto}}[type='checkbox']:indeterminate:hover,[type='checkbox']:indeterminate:focus{border-color:transparent;background-color:currentColor}[type='file']{background:unset;border-color:inherit;border-width:0;border-radius:0;padding:0;font-size:unset;line-height:inherit}[type='file']:focus{outline:1px solid ButtonText;outline:1px auto -webkit-focus-ring-color}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.bottom-0{bottom:0px}.bottom-20{bottom:5rem}.left-0{left:0px}.right-0{right:0px}.right-4{right:1rem}.top-0{top:0px}.z-10{z-index:10}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-0\.5{margin-bottom:0.125rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-auto{margin-left:auto}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.aspect-\[9\/12\]{aspect-ratio:9/12}.h-1{height:0.25rem}.h-1\.5{height:0.375rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-6{height:1.5rem}.h-8{height:2rem}.h-\[82px\]{height:82px}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-1{width:0.25rem}.w-1\.5{width:0.375rem}.w-14{width:3.5rem}.w-2{width:0.5rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-full{width:100%}.max-w-\[320px\]{max-width:320px}.max-w-\[390px\]{max-width:390px}.max-w-\[85\%\]{max-width:85%}.flex-1{flex:1 1 0%}.translate-x-0\.5{--tw-translate-x:0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.list-none{list-style-type:none}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-0\.5{gap:0.125rem}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-4{gap:1rem}.gap-space-sm{gap:0.5rem}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.625rem * var(--tw-space-y-reverse))}.space-y-3\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.875rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.875rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.self-start{align-self:flex-start}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.125rem}.rounded-full{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-\[\#dcdcd2\]{--tw-border-opacity:1;border-color:rgb(220 220 210 / var(--tw-border-opacity, 1))}.border-advisor-gold\/40{border-color:rgb(244 189 63 / 0.4)}.border-border-dark{--tw-border-opacity:1;border-color:rgb(48 52 42 / var(--tw-border-opacity, 1))}.border-border-dark\/60{border-color:rgb(48 52 42 / 0.6)}.bg-\[\#0a0c09\]{--tw-bg-opacity:1;background-color:rgb(10 12 9 / var(--tw-bg-opacity, 1))}.bg-\[\#10120f\]{--tw-bg-opacity:1;background-color:rgb(16 18 15 / var(--tw-bg-opacity, 1))}.bg-\[\#d4b574\]{--tw-bg-opacity:1;background-color:rgb(212 181 116 / var(--tw-bg-opacity, 1))}.bg-\[\#f5f3ed\]{--tw-bg-opacity:1;background-color:rgb(245 243 237 / var(--tw-bg-opacity, 1))}.bg-\[\#f7f5f0\]{--tw-bg-opacity:1;background-color:rgb(247 245 240 / var(--tw-bg-opacity, 1))}.bg-advisor-gold{--tw-bg-opacity:1;background-color:rgb(244 189 63 / var(--tw-bg-opacity, 1))}.bg-advisor-visitor{--tw-bg-opacity:1;background-color:rgb(32 60 40 / var(--tw-bg-opacity, 1))}.bg-primary{--tw-bg-opacity:1;background-color:rgb(241 209 141 / var(--tw-bg-opacity, 1))}.bg-primary-container{--tw-bg-opacity:1;background-color:rgb(212 181 116 / var(--tw-bg-opacity, 1))}.bg-primary\/20{background-color:rgb(241 209 141 / 0.2)}.bg-surface{--tw-bg-opacity:1;background-color:rgb(22 19 15 / var(--tw-bg-opacity, 1))}.bg-surface-container{--tw-bg-opacity:1;background-color:rgb(34 31 26 / var(--tw-bg-opacity, 1))}.bg-surface-container-high{--tw-bg-opacity:1;background-color:rgb(45 42 37 / var(--tw-bg-opacity, 1))}.bg-surface-container-highest{--tw-bg-opacity:1;background-color:rgb(56 52 47 / var(--tw-bg-opacity, 1))}.bg-surface-container-low{--tw-bg-opacity:1;background-color:rgb(30 27 23 / var(--tw-bg-opacity, 1))}.bg-surface-container-lowest{--tw-bg-opacity:1;background-color:rgb(16 14 10 / var(--tw-bg-opacity, 1))}.bg-surface-container-lowest\/80{background-color:rgb(16 14 10 / 0.8)}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-\[\#10120f\]{--tw-gradient-from:#10120f var(--tw-gradient-from-position);--tw-gradient-to:rgb(16 18 15 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), transparent var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-black\/40{--tw-gradient-to:rgb(0 0 0 / 0.4) var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-space-md{padding-left:1rem;padding-right:1rem}.px-space-xs{padding-left:0.25rem;padding-right:0.25rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.py-9{padding-top:2.25rem;padding-bottom:2.25rem}.py-space-xs{padding-top:0.25rem;padding-bottom:0.25rem}.pb-2{padding-bottom:0.5rem}.pb-24{padding-bottom:6rem}.pb-3\.5{padding-bottom:0.875rem}.pb-8{padding-bottom:2rem}.pl-2{padding-left:0.5rem}.pr-3\.5{padding-right:0.875rem}.pt-1{padding-top:0.25rem}.pt-2{padding-top:0.5rem}.pt-6{padding-top:1.5rem}.text-left{text-align:left}.text-center{text-align:center}.font-body-md{font-family:Inter, Arial, sans-serif}.font-headline-lg{font-family:Newsreader, Georgia, serif}.font-headline-md{font-family:Newsreader, Georgia, serif}.font-headline-xl{font-family:Newsreader, Georgia, serif}.font-label-sm{font-family:Inter, Arial, sans-serif}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[13px\]{font-size:13px}.text-\[14px\]{font-size:14px}.text-\[16px\]{font-size:16px}.text-\[18px\]{font-size:18px}.text-\[20px\]{font-size:20px}.text-\[24px\]{font-size:24px}.text-\[28px\]{font-size:28px}.text-\[9px\]{font-size:9px}.text-body-md{font-size:14px;line-height:20px;font-weight:400}.text-headline-lg{font-size:23px;line-height:30px;font-weight:400}.text-headline-md{font-size:17px;line-height:24px;font-weight:400}.text-headline-xl{font-size:32px;line-height:40px;font-weight:400}.text-label-sm{font-size:12px;line-height:16px;font-weight:500}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.tracking-\[0\.18em\]{letter-spacing:0.18em}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-\[\#10120f\]{--tw-text-opacity:1;color:rgb(16 18 15 / var(--tw-text-opacity, 1))}.text-\[\#20211e\]{--tw-text-opacity:1;color:rgb(32 33 30 / var(--tw-text-opacity, 1))}.text-\[\#62655e\]{--tw-text-opacity:1;color:rgb(98 101 94 / var(--tw-text-opacity, 1))}.text-\[\#765922\]{--tw-text-opacity:1;color:rgb(118 89 34 / var(--tw-text-opacity, 1))}.text-advisor-ink{--tw-text-opacity:1;color:rgb(24 34 25 / var(--tw-text-opacity, 1))}.text-on-primary-container{--tw-text-opacity:1;color:rgb(92 70 15 / var(--tw-text-opacity, 1))}.text-on-surface-variant{--tw-text-opacity:1;color:rgb(208 197 181 / var(--tw-text-opacity, 1))}.text-primary{--tw-text-opacity:1;color:rgb(241 209 141 / var(--tw-text-opacity, 1))}.text-text-light{--tw-text-opacity:1;color:rgb(244 242 233 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-60{opacity:0.6}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-150{transition-duration:150ms}.selection\:bg-primary *::selection{--tw-bg-opacity:1;background-color:rgb(241 209 141 / var(--tw-bg-opacity, 1))}.selection\:text-advisor-ink *::selection{--tw-text-opacity:1;color:rgb(24 34 25 / var(--tw-text-opacity, 1))}.selection\:bg-primary::selection{--tw-bg-opacity:1;background-color:rgb(241 209 141 / var(--tw-bg-opacity, 1))}.selection\:text-advisor-ink::selection{--tw-text-opacity:1;color:rgb(24 34 25 / var(--tw-text-opacity, 1))}.hover\:border-\[\#765922\]:hover{--tw-border-opacity:1;border-color:rgb(118 89 34 / var(--tw-border-opacity, 1))}.hover\:bg-surface-container:hover{--tw-bg-opacity:1;background-color:rgb(34 31 26 / var(--tw-bg-opacity, 1))}.hover\:text-primary:hover{--tw-text-opacity:1;color:rgb(241 209 141 / var(--tw-text-opacity, 1))}.active\:scale-90:active{--tw-scale-x:.9;--tw-scale-y:.9;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group[open] .group-open\:rotate-180{--tw-rotate:180deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.dark\:border-border-dark:is(.dark *){--tw-border-opacity:1;border-color:rgb(48 52 42 / var(--tw-border-opacity, 1))}.dark\:bg-surface:is(.dark *){--tw-bg-opacity:1;background-color:rgb(22 19 15 / var(--tw-bg-opacity, 1))}.dark\:bg-surface-container-lowest:is(.dark *){--tw-bg-opacity:1;background-color:rgb(16 14 10 / var(--tw-bg-opacity, 1))}.dark\:text-on-surface-variant:is(.dark *){--tw-text-opacity:1;color:rgb(208 197 181 / var(--tw-text-opacity, 1))}.dark\:text-primary:is(.dark *){--tw-text-opacity:1;color:rgb(241 209 141 / var(--tw-text-opacity, 1))}</style><link rel="stylesheet" href="../wireframe.css"><body>
+<!-- Container max 390px centered simulation viewport -->
+<div class="max-w-[390px] mx-auto min-h-screen bg-[#10120f] relative shadow-2xl flex flex-col">
+<!-- TOP APP BAR (Shared Components: TopAppBar Exact Specs) -->
+<header class="h-[82px] bg-surface dark:bg-surface border-b border-border-dark dark:border-border-dark docked full-width top-0 sticky z-40 px-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<button aria-label="Abrir menú" class="touch-target-min flex items-center justify-center text-primary dark:text-primary active:scale-95 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-headline-md text-primary dark:text-primary tracking-wide font-normal italic font-serif-brand">SA</span>
+<span class="text-[10px] tracking-[0.18em] font-label-sm text-primary uppercase font-semibold">SALES ACADEMY</span>
+</div>
+</div>
+<a class="touch-target-min px-3 py-2 bg-primary-container text-on-primary-container font-label-sm text-label-sm rounded font-medium flex items-center justify-center active:scale-95 transition-all duration-150 shadow-sm text-center" href="https://wa.me/">
+        Demo
+      </a>
+</header>
+<main class="flex-1 flex flex-col">
+<!-- HERO SECTION -->
+<section class="px-space-md pt-6 pb-8 bg-[#10120f]">
+<!-- Badge -->
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-high border border-border-dark mb-4">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-[10px] tracking-wider text-primary font-medium uppercase">
+            AGENTES DE INTELIGENCIA ARTIFICIAL PARA TU SALA
+          </span>
+</div>
+<!-- Headline in Serif with Italic Emphasis -->
+<h1 class="font-headline-xl text-headline-xl text-text-light font-serif-brand tracking-tight mb-3">
+          Agentes de IA. <span class="italic text-primary font-serif-brand">Tu método</span>, presente en cada conversación.
+        </h1>
+<!-- Subtitle -->
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 leading-relaxed">
+          Explora una forma de IA para preparar tu tour, practicar y acompañar a tu equipo con el método de tu sala.
+        </p>
+<!-- CTA Buttons -->
+<div class="flex flex-col gap-2.5 mb-8">
+<a class="touch-target-min w-full bg-[#d4b574] text-[#10120f] font-label-sm text-label-sm font-semibold rounded flex items-center justify-center gap-2 px-4 shadow-sm active:scale-95 transition-all duration-150" href="https://wa.me/">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span>Solicitar demo por WhatsApp</span>
+</a>
+<a class="touch-target-min w-full bg-surface-container-low text-text-light border border-border-dark font-label-sm text-label-sm rounded flex items-center justify-center gap-1 px-4 active:scale-95 transition-all duration-150 hover:bg-surface-container" href="#pilares">
+<span>Explorar los pilares</span>
+<span class="material-symbols-outlined text-[16px]">arrow_downward</span>
+</a>
+</div>
+<!-- CONCEPTUAL VSL VIDEO CARD (Portrait 9:16 Compact Card) -->
+<div class="relative w-full rounded border border-border-dark bg-surface-container-lowest overflow-hidden shadow-lg mb-6">
+<div class="p-3 border-b border-border-dark flex items-center justify-between bg-surface-container-low">
+<span class="font-label-sm text-[10px] tracking-widest text-primary uppercase font-medium">PELÍCULA CONCEPTUAL · SALES ACADEMY</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface-container-highest text-[10px] text-on-surface-variant font-label-sm">
+<span class="w-1 h-1 rounded-full bg-advisor-gold"></span> 33 s
+            </span>
+</div>
+<!-- Video Mock Frame -->
+<div class="relative aspect-[9/12] w-full bg-[#0a0c09] overflow-hidden flex flex-col justify-end p-4">
+<div class="absolute inset-0 w-full h-full object-cover opacity-60 wf-media" style="min-height: 100px;">[ IMAGEN · Referencia visual ]</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#10120f] via-transparent to-black/40"></div>
+<!-- Central Gold Play Button -->
+<div class="absolute inset-0 flex items-center justify-center">
+<button aria-label="Reproducir video conceptual" class="touch-target-min w-14 h-14 rounded-full bg-[#d4b574] text-[#10120f] flex items-center justify-center shadow-xl active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[28px] translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Mini Overlay Captions -->
+<div class="relative z-10 bg-surface-container-lowest/80 backdrop-blur-sm border border-border-dark p-2.5 rounded">
+<p class="font-headline-md text-headline-md italic font-serif-brand text-text-light mb-1">
+                "El valor del tour reside en la intención, no en la improvisación."
+              </p>
+<p class="font-label-sm text-[10px] text-on-surface-variant">Capítulo I · Estructura y Método de Hospitalidad</p>
+</div>
+</div>
+<div class="p-3 bg-surface-container-low border-t border-border-dark text-center">
+<p class="font-label-sm text-[11px] text-on-surface-variant">Audio y subtítulos en español. Reproduce cuando quieras.</p>
+</div>
+</div>
+<!-- Disclaimer Badges -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[16px]">verified</span>
+<span class="font-label-sm text-label-sm">Sin claims invasivos ni CMS externo</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[16px]">domain</span>
+<span class="font-label-sm text-label-sm">Adaptado a salas de hospitalidad y membresías</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[16px]">visibility</span>
+<span class="font-label-sm text-label-sm">Escenas y simulaciones conceptuales honestas</span>
+</div>
+</div>
+</section>
+<!-- FIVE PILLARS SECTION -->
+<section class="px-space-md py-8 bg-[#10120f] border-t border-border-dark" id="pilares">
+<div class="mb-5">
+<span class="font-label-sm text-[10px] tracking-widest text-primary uppercase block mb-1">METODOLOGÍA OPERATIVA</span>
+<h2 class="font-headline-lg text-headline-lg font-serif-brand text-text-light">
+            Cinco pilares para la <span class="italic text-primary">excelencia en sala</span>.
+          </h2>
+</div>
+<!-- Vertical Stage Cards / Simulated Phone Mockups -->
+<div class="space-y-4">
+<!-- Pillar 1: Preparar -->
+<div class="bg-surface-container-low border border-border-dark rounded p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-[10px] font-semibold tracking-wider text-primary uppercase">01 · PREPARAR</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[10px] text-on-surface-variant">Briefing de 3 min</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-serif-brand text-text-light mb-1">
+              "Llega con una intención clara."
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">
+              Genera contexto sobre perfil vacacional y motivos de compra antes de que la pareja se siente.
+            </p>
+<!-- Simulated Compact Phone Mockup with Demo Data -->
+<div class="bg-surface-container-lowest border border-border-dark rounded p-3">
+<div class="flex items-center gap-2 border-b border-border-dark pb-2 mb-2">
+<span class="material-symbols-outlined text-[14px] text-primary">person</span>
+<span class="font-label-sm text-[11px] text-text-light font-medium">Familia Morales · Torre Diamante</span>
+</div>
+<div class="space-y-1.5 font-label-sm text-[11px]">
+<div class="flex justify-between text-on-surface-variant">
+<span>Intención del día:</span>
+<span class="text-text-light font-medium">Alinear valor de tiempo</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Pregunta ancla:</span>
+<span class="text-primary italic">"¿Qué cambiarían del último viaje?"</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pillar 2: Aprender -->
+<div class="bg-surface-container-low border border-border-dark rounded p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-[10px] font-semibold tracking-wider text-primary uppercase">02 · APRENDER</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[10px] text-on-surface-variant">Módulo Activo</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-serif-brand text-text-light mb-1">
+              "Meet &amp; Greet impecable."
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">
+              Micro-dosis auditivas con el tono exacto que exige la membresía premium.
+            </p>
+<div class="bg-surface-container-lowest border border-border-dark rounded p-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">headphones</span>
+</span>
+<span class="font-label-sm text-[11px] text-text-light">Los primeros 4 minutos</span>
+</div>
+<span class="font-label-sm text-[10px] text-on-surface-variant">1:45 min</span>
+</div>
+</div>
+</div>
+<!-- Pillar 3: Practicar -->
+<div class="bg-surface-container-low border border-border-dark rounded p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-[10px] font-semibold tracking-wider text-primary uppercase">03 · PRACTICAR</span>
+<span class="px-2 py-0.5 rounded bg-advisor-visitor text-text-light text-[10px]">IA Conversacional</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-serif-brand text-text-light mb-1">
+              "Practicar objeción en tiempo real."
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">
+              Simulador con réplicas naturales de prospectos indecisos frente a la inversión inicial.
+            </p>
+<!-- Chat Simulator Preview -->
+<div class="bg-surface-container-lowest border border-border-dark rounded p-3 space-y-2">
+<div class="bg-advisor-visitor text-white text-[11px] font-body-md p-2 rounded max-w-[85%] self-start">
+                "Nos encanta el resort, pero preferimos pensarlo en casa con calma."
+              </div>
+<div class="bg-surface-container-high border border-border-dark text-text-light text-[11px] font-body-md p-2 rounded max-w-[85%] ml-auto">
+<span class="text-primary font-label-sm text-[10px] block mb-0.5">Sugerencia Método:</span>
+                "Es natural querer pensarlo. Cuando dicen pensarlo, ¿se refieren a las fechas o al compromiso financiero?"
+              </div>
+</div>
+</div>
+<!-- Pillar 4: Acompañar -->
+<div class="bg-surface-container-low border border-border-dark rounded p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-[10px] font-semibold tracking-wider text-primary uppercase">04 · ACOMPAÑAR</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[10px] text-on-surface-variant">Feedback Diario</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-serif-brand text-text-light mb-1">
+              "Una observación. Un siguiente paso."
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">
+              El director de sala revisa hallazgos concisos sin perder horas en planillas complejas.
+            </p>
+<div class="bg-surface-container-lowest border border-border-dark rounded p-3 flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">lightbulb</span>
+<p class="font-label-sm text-[11px] text-on-surface-variant">
+<strong class="text-text-light">Nota de Mesa:</strong> Hubo excelente rapport inicial, pero se saltó la clarificación de presupuesto antes del podio.
+              </p>
+</div>
+</div>
+<!-- Pillar 5: Escalar -->
+<div class="bg-surface-container-low border border-border-dark rounded p-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-[10px] font-semibold tracking-wider text-primary uppercase">05 · ESCALAR</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[10px] text-on-surface-variant">Etapas 1-3</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-serif-brand text-text-light mb-1">
+              "Implementación en tres etapas."
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">
+              Despliegue ordenado respetando la cultura y el ritmo comercial existente.
+            </p>
+<div class="grid grid-cols-3 gap-1.5 text-center font-label-sm text-[10px]">
+<div class="bg-surface-container-lowest p-2 border border-border-dark rounded">
+<span class="text-primary block font-bold">1</span>
+<span class="text-on-surface-variant">Calibrar</span>
+</div>
+<div class="bg-surface-container-lowest p-2 border border-border-dark rounded">
+<span class="text-primary block font-bold">2</span>
+<span class="text-on-surface-variant">Piloto 4 Mesas</span>
+</div>
+<div class="bg-surface-container-lowest p-2 border border-border-dark rounded">
+<span class="text-primary block font-bold">3</span>
+<span class="text-on-surface-variant">Sala Total</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- MEDIAHUB GUIDES SECTION (Warm Ivory Paper Background #f5f3ed) -->
+<section class="px-space-md py-8 bg-[#f5f3ed] text-[#20211e]">
+<div class="mb-5">
+<div class="inline-flex items-center gap-1 text-[#765922] font-label-sm text-[11px] tracking-wider uppercase font-semibold mb-1">
+<span class="material-symbols-outlined text-[14px]">menu_book</span>
+<span>BIBLIOTECA EDITORIAL</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg font-serif-brand text-[#20211e]">
+            MediaHub · <span class="italic text-[#765922]">Criterio de Sala</span>
+</h2>
+<p class="font-body-md text-body-md text-[#62655e] mt-1">
+            Guías metodológicas compactas desarrolladas con directores de membresías vacacionales.
+          </p>
+</div>
+<div class="space-y-3.5">
+<!-- Guide 1 -->
+<article class="bg-[#f7f5f0] border border-[#dcdcd2] rounded p-4 shadow-sm hover:border-[#765922] transition-colors">
+<span class="text-[10px] tracking-wider uppercase font-semibold text-[#765922] block mb-1">GUÍA RÁPIDA 01</span>
+<h3 class="font-headline-md text-headline-md font-serif-brand text-[#20211e] mb-1 leading-snug">
+              Antes del tour: una intención y dos preguntas
+            </h3>
+<p class="font-body-md text-body-md text-[#62655e] mb-3">
+              Cómo eliminar el diálogo genérico y estructurar los primeros minutos desde el interés genuino de la familia.
+            </p>
+<div class="flex items-center justify-between text-[11px] font-label-sm text-[#765922] pt-2 border-t border-[#dcdcd2]">
+<span>4 min de lectura</span>
+<span class="flex items-center gap-0.5 font-medium">Leer documento <span class="material-symbols-outlined text-[14px]">chevron_right</span></span>
+</div>
+</article>
+<!-- Guide 2 -->
+<article class="bg-[#f7f5f0] border border-[#dcdcd2] rounded p-4 shadow-sm hover:border-[#765922] transition-colors">
+<span class="text-[10px] tracking-wider uppercase font-semibold text-[#765922] block mb-1">GUÍA RÁPIDA 02</span>
+<h3 class="font-headline-md text-headline-md font-serif-brand text-[#20211e] mb-1 leading-snug">
+              La anatomía de una objeción de tiempo
+            </h3>
+<p class="font-body-md text-body-md text-[#62655e] mb-3">
+              Diferenciar entre falta de prioridad y duda de inversión sin presionar agresivamente al prospecto.
+            </p>
+<div class="flex items-center justify-between text-[11px] font-label-sm text-[#765922] pt-2 border-t border-[#dcdcd2]">
+<span>6 min de lectura</span>
+<span class="flex items-center gap-0.5 font-medium">Leer documento <span class="material-symbols-outlined text-[14px]">chevron_right</span></span>
+</div>
+</article>
+<!-- Guide 3 -->
+<article class="bg-[#f7f5f0] border border-[#dcdcd2] rounded p-4 shadow-sm hover:border-[#765922] transition-colors">
+<span class="text-[10px] tracking-wider uppercase font-semibold text-[#765922] block mb-1">GUÍA RÁPIDA 03</span>
+<h3 class="font-headline-md text-headline-md font-serif-brand text-[#20211e] mb-1 leading-snug">
+              Medir el progreso sin burocracia
+            </h3>
+<p class="font-body-md text-body-md text-[#62655e] mb-3">
+              Un marco operativo para supervisar consistencia metodológica sin inundar la sala de hojas de cálculo.
+            </p>
+<div class="flex items-center justify-between text-[11px] font-label-sm text-[#765922] pt-2 border-t border-[#dcdcd2]">
+<span>5 min de lectura</span>
+<span class="flex items-center gap-0.5 font-medium">Leer documento <span class="material-symbols-outlined text-[14px]">chevron_right</span></span>
+</div>
+</article>
+</div>
+</section>
+<!-- FAQ ACCORDION SECTION (Dark #10120f) -->
+<section class="px-space-md py-8 bg-[#10120f] border-t border-border-dark">
+<div class="mb-5">
+<span class="font-label-sm text-[10px] tracking-widest text-primary uppercase block mb-1">PREGUNTAS FRECUENTES</span>
+<h2 class="font-headline-lg text-headline-lg font-serif-brand text-text-light">
+            Criterio y despliegue técnico.
+          </h2>
+</div>
+<div class="space-y-2.5">
+<!-- FAQ Item 1 -->
+<details class="group bg-surface-container-low border border-border-dark rounded overflow-hidden">
+<summary class="touch-target-min list-none p-3.5 flex items-center justify-between cursor-pointer select-none">
+<span class="font-label-sm text-[13px] font-medium text-text-light">¿Requiere reemplazar nuestros guiones actuales?</span>
+<span class="material-symbols-outlined text-primary text-[18px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-3.5 pb-3.5 pt-1 text-on-surface-variant font-body-md text-[13px] border-t border-border-dark/60">
+              No. Sales Academy digitaliza y modela la metodología propia de tu desarrollo, preservando la identidad comercial y las políticas ya establecidas.
+            </div>
+</details>
+<!-- FAQ Item 2 -->
+<details class="group bg-surface-container-low border border-border-dark rounded overflow-hidden">
+<summary class="touch-target-min list-none p-3.5 flex items-center justify-between cursor-pointer select-none">
+<span class="font-label-sm text-[13px] font-medium text-text-light">¿Cómo interactúan los linners y closers?</span>
+<span class="material-symbols-outlined text-primary text-[18px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-3.5 pb-3.5 pt-1 text-on-surface-variant font-body-md text-[13px] border-t border-border-dark/60">
+              A través de micro-sesiones de 3 minutos en sus propios dispositivos móviles antes del turno o al finalizar el informe de mesa.
+            </div>
+</details>
+<!-- FAQ Item 3 -->
+<details class="group bg-surface-container-low border border-border-dark rounded overflow-hidden">
+<summary class="touch-target-min list-none p-3.5 flex items-center justify-between cursor-pointer select-none">
+<span class="font-label-sm text-[13px] font-medium text-text-light">¿Qué tiempo toma la fase piloto?</span>
+<span class="material-symbols-outlined text-primary text-[18px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-3.5 pb-3.5 pt-1 text-on-surface-variant font-body-md text-[13px] border-t border-border-dark/60">
+              La fase de calibración toma 5 días hábiles, seguida de un piloto controlado con un grupo de 4 a 6 ejecutivos durante dos semanas.
+            </div>
+</details>
+</div>
+</section>
+<!-- FINAL CTA SECTION -->
+<section class="px-space-md py-9 bg-surface-container-lowest border-t border-border-dark text-center">
+<div class="max-w-[320px] mx-auto">
+<span class="w-2 h-2 rounded-full bg-primary inline-block mb-3"></span>
+<h2 class="font-headline-lg text-headline-lg font-serif-brand text-text-light mb-3 leading-snug">
+            Lleva el método de tu mejor closer a cada mesa de tu sala.
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">
+            Conversemos sobre la dinámica específica de tu desarrollo turístico y cómo estructurar una demostración adaptada.
+          </p>
+<a class="touch-target-min w-full bg-[#d4b574] text-[#10120f] font-label-sm text-label-sm font-semibold rounded flex items-center justify-center gap-2 px-4 shadow-md active:scale-95 transition-all duration-150" href="https://wa.me/">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span>Solicitar demo por WhatsApp</span>
+</a>
+<span class="block mt-2 font-label-sm text-[11px] text-on-surface-variant">Respuesta directa de nuestro equipo metodológico</span>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="px-space-md py-6 bg-[#0a0c09] border-t border-border-dark text-on-surface-variant text-center space-y-4">
+<div class="flex items-center justify-center gap-1.5">
+<span class="font-serif-brand italic text-primary text-sm font-normal">SA</span>
+<span class="text-[10px] tracking-widest text-primary font-semibold uppercase">SALES ACADEMY</span>
+</div>
+<p class="font-label-sm text-[11px]">
+          © 2026 Sales Academy. Plataforma especializada para salas de tiempo compartido y clubes vacacionales.
+        </p>
+<div class="flex items-center justify-center gap-4 text-[11px] font-label-sm text-on-surface-variant pt-1">
+<a class="hover:text-primary transition-colors" href="#privacidad">Privacidad</a>
+<span>·</span>
+<a class="hover:text-primary transition-colors" href="#terminos">Términos</a>
+<span>·</span>
+<a class="hover:text-primary transition-colors" href="#contacto">Contacto</a>
+</div>
+</footer>
+</main>
+<!-- FLOATING ADVISOR LAUNCHER BUTTON (Fixed Bottom Right on mobile) -->
+<div class="fixed bottom-20 right-4 z-50">
+<button aria-label="Preguntar al asesor con IA" class="touch-target-min flex items-center gap-2 pl-2 pr-3.5 py-1.5 rounded-full bg-advisor-visitor border border-advisor-gold/40 shadow-xl active:scale-95 transition-transform" type="button">
+<span class="w-8 h-8 rounded-full bg-advisor-gold text-advisor-ink font-serif-brand font-bold text-xs flex items-center justify-center shadow">
+          SA
+        </span>
+<div class="flex flex-col text-left">
+<span class="text-[9px] uppercase tracking-wider text-primary font-semibold">Pregunta a Sales Academy</span>
+<span class="text-[11px] text-text-light font-medium leading-none">Tu asesor con IA</span>
+</div>
+</button>
+</div>
+<!-- BOTTOM NAVBAR (Shared Components: BottomNavBar Exact Specs) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-space-xs py-space-xs bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-border-dark dark:border-border-dark max-w-[390px] mx-auto right-0">
+<!-- Destination 1: Preparar (ACTIVE for Discovery & Tour Prep) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary py-space-xs touch-target-min active:scale-95 transition-all duration-150" href="#pilares">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">architecture</span>
+<span class="font-label-sm text-label-sm mt-0.5">Preparar</span>
+</a>
+<!-- Destination 2: Aprender -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant py-space-xs touch-target-min active:scale-95 transition-all duration-150 hover:text-primary" href="#pilares">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<span class="font-label-sm text-label-sm mt-0.5">Aprender</span>
+</a>
+<!-- Destination 3: Practicar -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant py-space-xs touch-target-min active:scale-95 transition-all duration-150 hover:text-primary" href="#pilares">
+<span class="material-symbols-outlined text-[20px]">record_voice_over</span>
+<span class="font-label-sm text-label-sm mt-0.5">Practicar</span>
+</a>
+<!-- Destination 4: Acompañar -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant py-space-xs touch-target-min active:scale-95 transition-all duration-150 hover:text-primary" href="#pilares">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+<span class="font-label-sm text-label-sm mt-0.5">Acompañar</span>
+</a>
+<!-- Destination 5: Escalar -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant py-space-xs touch-target-min active:scale-95 transition-all duration-150 hover:text-primary" href="#pilares">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+<span class="font-label-sm text-label-sm mt-0.5">Escalar</span>
+</a>
+</nav>
+</div>
+<script src="../screen.js"></script></body></html>

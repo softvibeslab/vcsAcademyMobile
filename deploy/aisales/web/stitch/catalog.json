@@ -1,0 +1,267 @@
+{
+  "groups": [
+    {
+      "id": "A",
+      "title": "Acceso y onboarding",
+      "screens": [
+        {
+          "id": "A01",
+          "title": "Bienvenida",
+          "description": "Referencia designpiloto/1: logo Sales Academy, placeholder mascota coach, ES/EN, Practica tus ventas. Gana confianza, Comenzar hacia A02, Ya tengo cuenta hacia A06."
+        },
+        {
+          "id": "A02",
+          "title": "Conoce a tu coach",
+          "description": "Referencias 1.2 y 1.3: saludo del coach, explicación de preguntas para personalizar, progreso, Continuar hacia A03 y Volver. Consolidar las dos introducciones en un solo frame con nota de ambas variantes."
+        },
+        {
+          "id": "A03",
+          "title": "Tu perfil",
+          "description": "Referencia 03_onboarding_perfil_mobile: selector Representante / Gerente o coach / Dirección, continuar: rep A04, gerente G01, dirección G05. Sin inventar preguntas 2 y 3; nota externa pendientes de definir."
+        },
+        {
+          "id": "A04",
+          "title": "Por dónde empezar",
+          "description": "Referencia 1.4: tres opciones Roadmap, Bóveda, AI Sales Coach; selección única; Continuar lleva C01/E01/D01 según selección; nota externa acceso invitado vs privado por confirmar."
+        },
+        {
+          "id": "A05",
+          "title": "Crear cuenta / invitado",
+          "description": "PROPUESTO para cerrar hueco de alta: nombre de ejemplo, email, contraseña, aviso privacidad, Crear cuenta, Probar sin cuenta, Ya tengo cuenta A06. No insinuar que el registro público esté implementado."
+        },
+        {
+          "id": "A06",
+          "title": "Iniciar sesión",
+          "description": "Referencia 2.2: correo, contraseña, mostrar, recuperación A07, iniciar sesión B01, Google/Apple como opciones por validar; ChatGPT no ofrecer como operativo. Error de credenciales en estado secundario."
+        },
+        {
+          "id": "A07",
+          "title": "Recuperar acceso",
+          "description": "Referencia 2.1: correo, Enviar enlace, confirmación genérica si la cuenta existe, Volver a iniciar sesión. Subestado propuesta enlace recibido/nueva contraseña/enlace vencido."
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "title": "Jornada del representante",
+      "screens": [
+        {
+          "id": "B01",
+          "title": "Home · desempeño",
+          "description": "Referencia home_rep_mobile y home_rep: Hoy/Semana/Mes; meta y avance; Tours/Qs, Ventas, Cierre, VPG; canal Agencia/Socios; follow-ups; recomendaciones del diary; CTA Registrar actividad E05. Mostrar números únicamente como ejemplo y meta sin configurar lleva E06. Nota desktop: mismos bloques en dos columnas."
+        },
+        {
+          "id": "B02",
+          "title": "Home · sin actividad",
+          "description": "PROPUESTO: sin meta, sin tours, sin recomendaciones; CTAs Definir meta E06, Registrar actividad E05, Explorar Roadmap C01. No gráficos con métricas falsas."
+        },
+        {
+          "id": "B03",
+          "title": "Agenda / tours",
+          "description": "EXISTENTE EN APP: acceso desde icono calendario del header; selector día/semana; tours de ejemplo Lead #101, horario y estado; seleccionar tour B05; volver a Home; estado sin tours y actualizar."
+        },
+        {
+          "id": "B04",
+          "title": "Seguimientos",
+          "description": "PROPUESTO derivado de Home y tareas: hoy/próximos/completados; Lead #101; siguiente acción, fecha y responsable; abrir, completar, reprogramar; enlace al tour B05 y nota E03."
+        },
+        {
+          "id": "B05",
+          "title": "Detalle y resultado de tour",
+          "description": "EXISTENTE EN APP: tour asignado; resultado Venta/No venta/Abandono; venta volumen/divisa; no venta objeción y recuperable con fecha/responsable; abandono paso 1-11; revisar y confirmar; conflicto de edición visible. Mantener separado del registro Goal Sheet E05."
+        },
+        {
+          "id": "B06",
+          "title": "Perfil y preferencias",
+          "description": "PROPUESTO con base en Perfil actual: identidad/rol, nivel de acceso, meta mensual E06, idioma/tema, repetir onboarding, acceso corporativo C05, cerrar sesión; versión invitado permite reiniciar prueba y explica que datos se borran al recargar."
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "title": "Aprendizaje y niveles",
+      "screens": [
+        {
+          "id": "C01",
+          "title": "Roadmap · 11 pasos",
+          "description": "Referencia roadmap_modular_estilo_smart_notebook: progreso y lista compacta de los 11 módulos: Meet & Greet, Agenda Control, Rapport FORM, Discovery, Remake the Pact, 3-Way Pitch, Property Tour, Model Suite, Point of Confirmation, Price & Negotiation, Closing & Onboarding. Estado disponible/en curso/completado/bloqueado. Entrar lección C02 o C05."
+        },
+        {
+          "id": "C02",
+          "title": "Lección · Meet & Greet",
+          "description": "Referencia lecci_n_1: título paso1/11, tabs Video/Audio/Texto, placeholder reproductor, 3 principios, guion, practicar D02, marcar completada, siguiente lección."
+        },
+        {
+          "id": "C03",
+          "title": "Lección · Rapport",
+          "description": "Referencia lecci_n_2_warm_up: mismo shell, principios de calibración, copiar guion y practicar. Mostrar Rapport como paso 3/11 según roadmap, con NOTA EXTERNA de discrepancia: export lo llama paso2; propuesta de orden por validar."
+        },
+        {
+          "id": "C04",
+          "title": "Plantilla · módulos restantes",
+          "description": "PROPUESTO, reutilizable pasos 2 y 4-11: título Agenda Control de ejemplo, selector de formato, objetivo, contenido por definir como placeholder, práctica D02, completar, anterior/siguiente. Sin inventar currículum detallado. Miniestado completado y siguiente."
+        },
+        {
+          "id": "C05",
+          "title": "Desbloquear acceso",
+          "description": "Referencia modal_desbloquear: bottom sheet sobre roadmap, cerrar, plan individual con Precio por confirmar, activar licencia con correo/código, estados código inválido/verificando/activado, volver roadmap. Sin prometer plan ni cobro real."
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "title": "AI Sales Coach",
+      "screens": [
+        {
+          "id": "D01",
+          "title": "Coach · inicio",
+          "description": "PROPUESTO desde navegación piloto: contexto de lección o diario, tarjetas Preparar presentación / Practicar objeción / Revisar pitch; recomendaciones; modo texto o roleplay; mensaje simulación/datos de ejemplo."
+        },
+        {
+          "id": "D02",
+          "title": "Preparar práctica",
+          "description": "PROPUESTO desde DESIGN.md: elegir habilidad, escenario comprador analítico/escéptico/apresurado, texto/voz, duración de práctica 90s como ejemplo, permiso micrófono si voz, iniciar D03, cancelar."
+        },
+        {
+          "id": "D03",
+          "title": "Roleplay · sesión",
+          "description": "Derivado executive_roleplay_simulator/DESIGN.md: escenario, contador 90s de ejemplo, objeciones, transcripción, tarjeta táctica, onda placeholder, mantener para hablar o escribir, pausar/terminar D04. Sin datos de evaluación real."
+        },
+        {
+          "id": "D04",
+          "title": "Evaluación y siguiente práctica",
+          "description": "PROPUESTO: sesión finalizada, fortalezas y una mejora como ejemplos, fragmento revisable, practicar otra vez D02, revisar lección C02, guardar reflexión E04. No porcentajes de precisión inventados."
+        },
+        {
+          "id": "D05",
+          "title": "Coach · conversación y estados",
+          "description": "Derivado copiloto existente: conversación contextual, input texto, adjuntar recurso conceptual, respuesta con enlace F04; estado IA no disponible permite consultar guiones, reintentar; permiso micro denegado ofrece texto. Aviso IA pendiente de activación según documentación actual."
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "title": "Bóveda · notas y resultados",
+      "screens": [
+        {
+          "id": "E01",
+          "title": "Bóveda",
+          "description": "Referencia b_veda_de_recursos: buscador, Smart Goal Sheet E05, Calculadoras F01, Smart Notebook E02, Smart Diary E04, Guías/Guiones/Audio F03. Dock Bóveda activo."
+        },
+        {
+          "id": "E02",
+          "title": "Smart Notebook · listado",
+          "description": "EXISTENTE EN APP sin export completo: buscar, categorías, notas fijadas/archivadas, nueva nota E03, grabar/subir como funciones propuestas; vacío con Crear primera nota."
+        },
+        {
+          "id": "E03",
+          "title": "Nota · editor y detalle",
+          "description": "EXISTENTE EN APP: título, cuerpo, categoría, vínculo opcional a tour, guardar, pendiente con fecha para Home, fijar/archivar; grabar/subir archivos propuesto por piloto, no atribuir implementación. Error conserva texto."
+        },
+        {
+          "id": "E04",
+          "title": "Smart Diary · post-tour",
+          "description": "Referencia smart_notebook_smart_diary_mobile: Grabar feedback / Subir nota (propuestas), 3 preguntas qué salió bien/dónde te atoraste/qué mejorar, Guardar feedback, Ver recomendaciones Home. Mostrar procesamiento pendiente/IA no disponible sin inventar consejo."
+        },
+        {
+          "id": "E05",
+          "title": "Smart Goal Sheet · actividad",
+          "description": "Referencia smart_goal_sheet_registro_mobile: tipo Q/CT/NQ/No Tour, canal Agencia/Socios, venta Sí/No, campo volumen si sí, motivo si no, manager/T.O. opcional, Guardar registro, Ver Home. Estados validación y guardado."
+        },
+        {
+          "id": "E06",
+          "title": "Goal Sheet · definir meta",
+          "description": "PROPUESTO sustentado en Home y perfil: periodo mensual, meta y unidad por confirmar, objetivos de actividad opcionales, resumen; Guardar meta -> B01. No calcular proyecciones comerciales no aprobadas."
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "title": "Biblioteca y calculadoras",
+      "screens": [
+        {
+          "id": "F01",
+          "title": "Smart Calculadoras",
+          "description": "PROPUESTO desde CTA Bóveda: catálogo con búsqueda, tarjetas de cálculo comercial y objetivo; nombres/fórmulas pendientes de validación; seleccionar F02, volver Bóveda."
+        },
+        {
+          "id": "F02",
+          "title": "Calculadora · detalle",
+          "description": "PROPUESTO: título cálculo de ejemplo, entradas Importe / Tasa / Plazo con unidades, Calcular, zona resultado ilustrativo sin cifras ni fórmula afirmada, limpiar, guardar como nota E03; validación campos y disclaimer fórmula por definir fuera del frame."
+        },
+        {
+          "id": "F03",
+          "title": "Guías / guiones / audio",
+          "description": "PROPUESTO desde Bóveda y recursos actuales: tabs Guías, Guiones, Audio; búsqueda; filtro por paso; tarjetas con tipo/duración; abrir F04; vacío búsqueda."
+        },
+        {
+          "id": "F04",
+          "title": "Recurso · lectura y audio",
+          "description": "Derivado recursos actuales: encabezado, formato/etiquetas, contenido placeholder, versión guion Copiar/Practicar D05; versión audio controles/transcripción; Guardar en Notebook; volver. No grabaciones reales ni afirmaciones comerciales."
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "title": "Gerencia y dirección",
+      "screens": [
+        {
+          "id": "G01",
+          "title": "Gerente · acceso o licencia",
+          "description": "Referencia gerente_acceso_o_licencia: Tengo acceso -> validar código/correo y G02; No tengo -> G05; volver selección de rol."
+        },
+        {
+          "id": "G02",
+          "title": "Configura tu academia",
+          "description": "Referencia gerente_configura_tu_contenido: bloques Cargar Roadmap 11 módulos G03 y Crear recurso G04, vista previa asesor, acceso separado Tablero de sala H01 (solo autorizado)."
+        },
+        {
+          "id": "G03",
+          "title": "Editor de módulo",
+          "description": "PROPUESTO desde CTA gerente: seleccionar paso1-11, título, video/audio/texto placeholder, borrador, vista previa C04, guardar borrador y revisar; publicación requiere acción explícita; estado error de carga."
+        },
+        {
+          "id": "G04",
+          "title": "Editor de recurso",
+          "description": "PROPUESTO desde CTA gerente: tipo guía/guion/audio, título, contenido o archivo, categoría y módulo asociado, preview F04, guardar borrador, publicar; estado vacío/carga/error."
+        },
+        {
+          "id": "G05",
+          "title": "Dirección · soluciones",
+          "description": "Referencia dirección_soluciones: Metodología Sales Academy, Marca privada/white label, Solución corporativa; precios Por cotizar, implementación aparte por confirmar; elegir opción G06; no checkout ficticio."
+        },
+        {
+          "id": "G06",
+          "title": "Solicitud de orientación",
+          "description": "PROPUESTO para CTA Agendar llamada/Elegir solución: organización y correo sintéticos, solución seleccionada, tamaño equipo opcional, disponibilidad, aviso privacidad y consentimiento de contacto, revisar y enviar -> confirmación de solicitud, volver. No afirmar reunión reservada."
+        }
+      ]
+    },
+    {
+      "id": "H",
+      "title": "Operación · tablero de sala",
+      "screens": [
+        {
+          "id": "H01",
+          "title": "Tablero de sala",
+          "description": "DESKTOP EXISTENTE EN APP: selector sala y fecha, columnas Rep A/Rep B, tarjetas Lead #101 sintéticas con hora/estado/resultado, Asignar tour H02, Importar H03, Actualizar, historial H04. Sidebar mínimo; permiso rep denegado."
+        },
+        {
+          "id": "H02",
+          "title": "Asignar / editar tour",
+          "description": "DESKTOP EXISTENTE EN APP: panel lateral representante de sala, Lead #101, inicio/fin, estado, guardar/cancelar; empalme muestra error y conserva datos. Tour con resultado exige resolver resultado antes de cancelar."
+        },
+        {
+          "id": "H03",
+          "title": "Importar y revisar",
+          "description": "DESKTOP EXISTENTE EN APP: CSV/JSON/texto/foto, analizar; tabla rep/lead/inicio/fin/estado con errores por fila; corregir, confirmar solo válidas, resumen importación. Nada se importa antes de confirmación."
+        },
+        {
+          "id": "H04",
+          "title": "Resultado e historial",
+          "description": "DESKTOP EXISTENTE EN APP: selección tour, Venta/No venta/Abandono y campos condicionales, historial antes/después, corregir, quitar con confirmación, conflicto exige actualizar; admin mover rep de sala y restaurar demo en zona restringida con confirmación."
+        }
+      ]
+    }
+  ]
+}

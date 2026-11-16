@@ -1,0 +1,28 @@
+# /etc/systemd/system/aisales-editorial.service
+[Unit]
+Description=AI Sales isolated editorial experience
+After=network.target
+[Service]
+Type=simple
+User=aisales-editorial
+Group=aisales-editorial
+WorkingDirectory=/srv/aisales-editorial/current
+Environment=SA_GROWTH_DATA_ROOT=/var/lib/aisales-editorial
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/srv/salesacademy-cloud/venv/bin/gunicorn --bind 127.0.0.1:18820 --workers 1 --threads 4 --timeout 60 --forwarded-allow-ips 127.0.0.1 --error-logfile - wsgi:app
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/aisales-editorial
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+[Install]
+WantedBy=multi-user.target

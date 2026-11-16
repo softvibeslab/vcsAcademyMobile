@@ -1,0 +1,179 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Home · desempeño</title><style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f4f4;
+      color: #111827;
+      margin: 0;
+      padding: 40px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .canvas-container {
+      width: 1720px;
+      margin: 0 auto;
+    }
+    .mobile-frame {
+      width: 360px;
+      min-height: 640px;
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .placeholder-box {
+      border: 1px dashed #9ca3af;
+      background-color: #f9fafb;
+      position: relative;
+    }
+    .placeholder-box::before, .placeholder-box::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to top right, transparent calc(50% - 0.5px), #d1d5db calc(50% - 0.5px), #d1d5db calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+                  linear-gradient(to bottom right, transparent calc(50% - 0.5px), #d1d5db calc(50% - 0.5px), #d1d5db calc(50% + 0.5px), transparent calc(50% + 0.5px));
+      pointer-events: none;
+    }
+    .badge-tag {
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+  
+input,select,button{accent-color:#111} .canvas-container{max-width:none} 
+*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.z-10{z-index:10}.col-span-2{grid-column:span 2 / span 2}.mb-0\.5{margin-bottom:0.125rem}.mb-1{margin-bottom:0.25rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.block{display:block}.flex{display:flex}.grid{display:grid}.h-10{height:2.5rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-28{height:7rem}.h-3{height:0.75rem}.h-3\.5{height:0.875rem}.h-6{height:1.5rem}.h-full{height:100%}.w-10{width:2.5rem}.w-2\.5{width:0.625rem}.w-3{width:0.75rem}.w-3\.5{width:0.875rem}.w-6{width:1.5rem}.w-full{width:100%}.flex-1{flex:1 1 0%}.cursor-pointer{cursor:pointer}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-8{gap:2rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.375rem * var(--tw-space-x-reverse));margin-left:calc(0.375rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-8 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.625rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-gray-200 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(229 231 235 / var(--tw-divide-opacity, 1))}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-sm{border-radius:0.125rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-black{--tw-border-opacity:1;border-color:rgb(0 0 0 / var(--tw-border-opacity, 1))}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-gray-400{--tw-border-opacity:1;border-color:rgb(156 163 175 / var(--tw-border-opacity, 1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.p-0\.5{padding:0.125rem}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.pb-0\.5{padding-bottom:0.125rem}.pb-2{padding-bottom:0.5rem}.pl-2{padding-left:0.5rem}.pl-8{padding-left:2rem}.pt-0\.5{padding-top:0.125rem}.pt-1{padding-top:0.25rem}.pt-2{padding-top:0.5rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.font-sans{font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[9px\]{font-size:9px}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.opacity-80{opacity:0.8}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:border-black:hover{--tw-border-opacity:1;border-color:rgb(0 0 0 / var(--tw-border-opacity, 1))}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-200:hover{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.hover\:text-black:hover{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}</style><style>html,body{width:100%!important;min-width:0!important;margin:0!important;padding:0!important;background:white!important;min-height:100%!important;font-family:Arial,sans-serif!important}body>div{width:100%!important;max-width:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;min-height:100vh!important;height:auto!important}body{overflow-x:hidden}input,select,button{accent-color:#111}button,a,[data-go]{cursor:pointer}a:focus-visible,button:focus-visible,[data-go]:focus-visible{outline:3px solid #5b69ff;outline-offset:2px}.screen-content{overflow:visible!important}*{scrollbar-width:thin}</style><body><div class="mobile-frame">
+          <!-- Status Bar -->
+          <div class="flex justify-between items-center px-4 py-2 border-b border-gray-100 text-[10px] font-mono text-gray-600 bg-white">
+            <span>09:41</span>
+            <span>5G 100%</span>
+          </div>
+
+          <!-- App Header -->
+          <div class="px-4 py-2.5 border-b border-gray-200 flex justify-between items-center bg-white">
+            <div class="flex items-center space-x-2">
+              <div class="w-6 h-6 bg-black text-white text-[10px] font-bold flex items-center justify-center rounded-sm">SA</div>
+              <span class="text-xs font-bold tracking-tight">Sales Academy</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button class="p-1 text-gray-700 hover:bg-gray-100 rounded text-[11px] border border-gray-300" title="Ver Agenda">→ B03 📅</button>
+              <div class="w-6 h-6 border border-gray-300 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-100">LM</div>
+            </div>
+          </div>
+
+          <!-- Screen Content (Scrollable simulation) -->
+          <div class="p-3.5 space-y-3 flex-1 overflow-hidden bg-white text-gray-900 text-xs">
+            <!-- User Greeting & Selector -->
+            <div class="flex justify-between items-center">
+              <div>
+                <span class="text-[10px] text-gray-500 block uppercase font-mono">Representante B2B</span>
+                <h2 class="font-bold text-sm">Rep A</h2>
+              </div>
+              <!-- Selector temporal Hoy / Semana / Mes -->
+              <div class="flex border border-gray-300 rounded text-[10px] font-mono bg-gray-50 p-0.5">
+                <span class="px-1.5 py-0.5 bg-black text-white font-semibold rounded-xs">Hoy</span>
+                <span class="px-1.5 py-0.5 text-gray-600">Sem</span>
+                <span class="px-1.5 py-0.5 text-gray-600">Mes</span>
+              </div>
+            </div>
+
+            <!-- Meta y Avance -->
+            <div class="border border-gray-300 p-2.5 rounded bg-gray-50 space-y-1.5">
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="font-semibold text-gray-800">Meta mes: $18,000 USD</span>
+                <span class="font-mono text-[10px] text-gray-500">Avance 68%</span>
+              </div>
+              <!-- Progress Bar -->
+              <div class="w-full bg-gray-200 h-2 rounded-sm overflow-hidden">
+                <div class="bg-black h-full" style="width: 68%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-[9px] text-gray-500 font-mono">
+                <span>$12,240 cerrado</span>
+                <a href="#e06" class="underline text-gray-800 font-sans">Ajustar meta → E06</a>
+              </div>
+            </div>
+
+            <!-- Grid de Métricas Sintéticas (Tours, Qs, Ventas, Cierre, VPG) -->
+            <div class="grid grid-cols-2 gap-2">
+              <div class="border border-gray-200 p-2 rounded bg-white">
+                <span class="text-[9px] text-gray-400 block uppercase font-mono">Tours / Qs</span>
+                <span class="text-sm font-bold text-gray-900">4 <span class="text-[10px] font-normal text-gray-500">tours · ejemplo</span></span>
+                <span class="text-[9px] text-gray-500 block mt-0.5">Canal: 3 Agencia · 1 Socios</span>
+              </div>
+              <div class="border border-gray-200 p-2 rounded bg-white">
+                <span class="text-[9px] text-gray-400 block uppercase font-mono">Ventas cerradas</span>
+                <span class="text-sm font-bold text-gray-900">2 <span class="text-[10px] font-normal text-gray-500">ventas · ejemplo</span></span>
+                <span class="text-[9px] text-gray-500 block mt-0.5">Vol: $4,500 USD</span>
+              </div>
+              <div class="border border-gray-200 p-2 rounded bg-white">
+                <span class="text-[9px] text-gray-400 block uppercase font-mono">Tasa de Cierre</span>
+                <span class="text-sm font-bold text-gray-900">50%</span>
+                <span class="text-[9px] text-gray-500 block mt-0.5">2 ventas / 4 tours · ejemplo</span>
+              </div>
+              <div class="border border-gray-200 p-2 rounded bg-white">
+                <span class="text-[9px] text-gray-400 block uppercase font-mono">VPG · volumen / tour</span>
+                <span class="text-sm font-bold text-gray-900">$1,125</span>
+                <span class="text-[9px] text-gray-500 block mt-0.5">Divisa: USD</span>
+              </div>
+            </div>
+
+            <!-- Follow-ups pendientes (conecta con B04) -->
+            <div class="border border-gray-200 p-2 rounded bg-white">
+              <div class="flex justify-between items-center text-[10px] mb-1">
+                <span class="font-bold text-gray-900 uppercase tracking-wide">Follow-ups hoy (2)</span>
+                <a href="#b04" class="text-gray-600 underline font-mono text-[9px]">Ver todos → B04</a>
+              </div>
+              <div class="text-[10px] text-gray-700 space-y-1">
+                <div class="flex justify-between border-b border-gray-100 pb-0.5">
+                  <span>Lead #101 · Llamada objeción precio</span>
+                  <span class="font-mono text-gray-500">14:00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recomendaciones Diary / AI Coach -->
+            <div class="border border-gray-300 p-2 rounded bg-gray-50 space-y-1">
+              <div class="flex items-center space-x-1">
+                <span class="text-[10px] font-bold text-gray-900">Diario de Coaching IA:</span>
+              </div>
+              <p class="text-[10px] text-gray-700 leading-tight">"Buen ritmo en cualificación de Socios. Refuerza urgencia en Lead #101 antes de las 14:00."</p>
+            </div>
+
+            <!-- CTA Registrar Actividad -->
+            <div class="pt-1">
+              <button class="w-full bg-black text-white text-[11px] font-semibold py-2 px-3 rounded text-center block">
+                + Registrar actividad → E05
+              </button>
+            </div>
+          </div>
+
+          <!-- Dock Estándar Persistente (Activo: Home) -->
+          <div class="border-t border-gray-200 px-2 py-1.5 bg-gray-50 flex justify-between items-center text-[9px] font-mono text-gray-500">
+            <div class="flex flex-col items-center text-black font-bold">
+              <div class="w-3.5 h-3.5 bg-black rounded-xs mb-0.5"></div>
+              <span>Home</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="w-3.5 h-3.5 border border-gray-400 rounded-xs mb-0.5"></div>
+              <span>Roadmap</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="w-3.5 h-3.5 border border-gray-400 rounded-xs mb-0.5"></div>
+              <span>AI Coach</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="w-3.5 h-3.5 border border-gray-400 rounded-xs mb-0.5"></div>
+              <span>Bóveda</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="w-3.5 h-3.5 border border-gray-400 rounded-xs mb-0.5"></div>
+              <span>Perfil</span>
+            </div>
+          </div>
+        </div><script src="../screen.js"></script></body></html>

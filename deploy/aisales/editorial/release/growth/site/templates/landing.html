@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import resource_card %}
+{% from 'macros.html' import video_player with context %}
+{% block bodyclass %}landing-v2 cinematic-page ai-campaign{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="/growth-assets/landing-v2.css" />
+<link rel="stylesheet" href="/growth-assets/media-player.css" />
+<link rel="stylesheet" href="/growth-assets/cinematic.css" />
+<link rel="stylesheet" href="/growth-assets/ai-journey.css" />
+{% endblock %}
+{% block scripts %}
+<script type="module" src="/growth-assets/journey.mjs"></script>
+<script type="module" src="/growth-assets/media-player.mjs"></script>
+{% endblock %}
+{% block content %}
+{% set collection = namespace(items={}) %}
+{% for r in resources if r.type == 'video' and r.videoId and r.videoId in video_catalog %}
+  {% if r.videoId not in collection.items %}{% set _ = collection.items.update({r.videoId: r}) %}{% endif %}
+{% endfor %}
+{% set featured = collection.items.get('smart-agent') %}
+{% macro demo_link(class_name='button sa-button-gold', label='Solicitar demo por WhatsApp') %}<a class="{{ class_name }}" href="{{ whatsapp_demo_url }}" target="_blank" rel="noopener noreferrer">{{ label }} <span aria-hidden="true">↗</span></a>{% endmacro %}
+{% macro scene_figure(photo, screen, label, retouched=false) %}
+<figure class="chapter-figure ai-inline-scene{{ ' ai-inline-retouched' if retouched else '' }}">
+  <img class="ai-inline-photo" src="/growth-assets/ai-scenes/{{ photo }}.webp" width="1672" height="941" alt="Escena ilustrativa generada de un equipo ficticio en una sala de ventas" loading="lazy" />
+  <div class="ai-inline-device"><img src="/growth-assets/{{ 'scenarios/screens' if retouched else 'ai-screens' }}/{{ screen }}.webp" width="390" height="844" loading="lazy" alt="{{ label }}. {{ 'Presentación retocada de una captura aportada.' if retouched else 'Captura real de la demo con datos de ejemplo.' }}" /></div>
+  <figcaption>{{ label }}.<span>{{ 'Captura aportada · presentación retocada · escena ilustrativa generada.' if retouched else 'Pantalla real de la demo · escena ilustrativa generada.' }}</span>{% if retouched %}<a href="/growth-assets/scenarios/screens/16-meet-greet-original.png" target="_blank" rel="noopener">Ver captura original ↗</a>{% endif %}</figcaption>
+</figure>
+{% endmacro %}
+
+<section class="ai-hero" aria-labelledby="ai-title">
+  <div class="container ai-hero-grid">
+    <div class="ai-hero-copy">
+      <p class="sa-kicker"><span aria-hidden="true"></span>{{ doc.hero.eyebrow }}</p>
+      <h1 id="ai-title">{% set headline = doc.hero.title.split('. ', 1) %}{% if headline|length > 1 %}{{ headline[0] }}.<br /><em>{{ headline[1] }}</em>{% else %}{{ doc.hero.title }}{% endif %}</h1>
+      <p class="ai-hero-description">{{ doc.hero.description }}</p>
+      <div class="hero-actions">{{ demo_link(label=doc.hero.primaryLabel) }}<a class="ai-hero-link" href="#recorrido">Explorar los pilares <span aria-hidden="true">↓</span></a></div>
+      <p class="ai-hero-note">Conversemos sobre el proceso de tu sala y el alcance que necesitas.</p>
+      <div class="ai-hero-pillars" aria-label="La IA en tu jornada"><span>Preparar</span><i aria-hidden="true">·</i><span>Practicar</span><i aria-hidden="true">·</i><span>Acompañar</span></div>
+    </div>
+    {% if featured %}
+    <div class="ai-vsl-panel" id="vision" data-vsl>
+      <div class="ai-vsl-heading"><span>CONOCE LA VISIÓN</span><strong>33 <small>segundos</small></strong></div>
+      <div class="ai-vsl-stage">
+        <img class="ai-vsl-context" src="/growth-assets/ai-scenes/consultation.webp" width="1672" height="941" alt="" />
+        <div class="ai-vsl-frame">{{ video_player(featured) }}</div>
+        <span class="ai-vsl-side" aria-hidden="true">UN NUEVO APOYO PARA TU EQUIPO</span>
+      </div>
+      <div class="ai-vsl-next">{{ demo_link('ai-vsl-cta') }}<a class="ai-vsl-transcript" href="{{ '/cms/preview/?resource=' ~ featured.slug if preview else '/mediahub/' ~ featured.slug ~ '/' }}">Leer el contenido del video</a></div>
+    </div>
+    {% else %}
+    <figure class="ai-hero-fallback"><img src="/growth-assets/ai-scenes/consultation.webp" width="1672" height="941" alt="Escena ilustrativa generada de una conversación en una sala de ventas" /><figcaption>Explora cómo plantear agentes de IA alrededor de tu método.</figcaption></figure>
+    {% endif %}
+  </div>
+  <div class="container ai-hero-foot"><span>SALES ACADEMY / INTELIGENCIA ARTIFICIAL EN CONTEXTO</span><span>Tu equipo. Tu método. El siguiente paso.</span></div>
+</section>
+
+<section class="ai-bridge" aria-labelledby="ai-pillars-title"><div class="container ai-bridge-grid"><p class="sa-section-label">CINCO PILARES / UNA JORNADA CON IA</p><h2 id="ai-pillars-title">El agente acompaña.<br /><em>Tu equipo lo lleva a la práctica.</em></h2><p>De la preparación al siguiente aprendizaje. Mira cómo el método, las preguntas al agente y las conversaciones humanas se conectan durante el día.</p></div></section>
+
+<section class="cinematic-journey ai-continuous" id="recorrido" data-journey data-active="start" aria-label="Cinco pilares para llevar agentes de IA a la jornada de la sala">
+  <div class="journey-stage" data-journey-stage aria-hidden="true">
+    <div class="ai-stage-glow"></div>
+    <div class="ai-stage-line"></div>
+    <div class="ai-room-scene">
+      <img class="ai-scene-world ai-world-start" src="/growth-assets/ai-scenes/briefing.webp" width="1672" height="941" alt="" loading="lazy" />
+      <img class="ai-scene-world ai-world-method" src="/growth-assets/ai-scenes/consultation.webp" width="1672" height="941" alt="" loading="lazy" />
+      <img class="ai-scene-world ai-world-practice" src="/growth-assets/ai-scenes/coaching.webp" width="1672" height="941" alt="" loading="lazy" />
+      <img class="ai-scene-world ai-world-coaching" src="/growth-assets/ai-scenes/coaching.webp" width="1672" height="941" alt="" loading="lazy" />
+      <img class="ai-scene-world ai-world-scale" src="/growth-assets/ai-scenes/briefing.webp" width="1672" height="941" alt="" loading="lazy" />
+      <span class="ai-photo-label">ESCENAS ILUSTRATIVAS GENERADAS</span>
+    </div>
+    <div class="ai-device">
+      <div class="ai-device-screens">
+        <img class="ai-product-screen ai-screen-start" src="/growth-assets/ai-screens/06-tour-preparation-mobile.webp" width="390" height="844" alt="" loading="lazy" />
+        <img class="ai-product-screen ai-screen-method" src="/growth-assets/scenarios/screens/16-meet-greet-retouched.webp" width="390" height="844" alt="" loading="lazy" />
+        <img class="ai-product-screen ai-screen-practice" src="/growth-assets/ai-screens/07-objection-practice-mobile.webp" width="390" height="844" alt="" loading="lazy" />
+        <img class="ai-product-screen ai-screen-coaching" src="/growth-assets/ai-screens/09-after-tour-mobile.webp" width="390" height="844" alt="" loading="lazy" />
+        <img class="ai-product-screen ai-screen-scale" src="/growth-assets/ai-screens/03-roadmap-mobile.webp" width="390" height="844" alt="" loading="lazy" />
+      </div>
+      <span class="ai-device-label"><span class="ai-original-label">INTERFAZ REAL · DATOS DE EJEMPLO</span><span class="ai-retouched-label">MEET &amp; GREET · PRESENTACIÓN RETOCADA</span></span>
+    </div>
+    <div class="ai-agent-orbit"><span>IA</span><p>Tu método.<br />Tu siguiente pregunta.</p></div>
+    <span class="ai-stage-word">Un paso más claro.</span>
+  </div>
+  <div class="journey-chapters">
+    <div class="journey-tools container"><nav class="journey-navigation" aria-label="Pilares del recorrido"><a href="#start"><span>01</span>Preparar</a><a href="#method"><span>02</span>Aprender</a><a href="#practice"><span>03</span>Practicar</a><a href="#coaching"><span>04</span>Acompañar</a><a href="#scale"><span>05</span>Escalar</a></nav><button class="journey-motion-toggle" type="button" data-motion-toggle aria-pressed="false" hidden>Reducir movimiento</button></div>
+
+    <article class="journey-chapter journey-start" id="start" data-chapter="start" aria-labelledby="start-title"><div class="container journey-chapter-layout"><div class="journey-copy"><p class="journey-eyebrow"><span>01 / PREPARAR CON IA</span>08:45 — 09:10 · Antes del tour</p><h2 id="start-title">Llega con<br /><em>una intención.</em></h2><p class="journey-lede">La jornada empieza antes del tour. Consulta la preparación y lleva al agente de IA una petición concreta, con el método de tu sala como punto de partida.</p><div class="ai-prompt"><span>PREGUNTA PROPUESTA AL AGENTE</span><p>«Quiero preparar preguntas para comprender cómo prefieren viajar.»</p></div><div class="journey-use-case"><span class="journey-case-label">CASO SIMULADO / ANA, REPRESENTANTE</span><h3>Preparar antes de presentar.</h3><p>Ana revisa Preparar mi tour, elige dos preguntas y acuerda con Jorge qué observar durante la conversación.</p></div></div>{{ scene_figure('briefing', '06-tour-preparation-mobile', 'Preparar mi tour') }}</div></article>
+
+    <article class="journey-chapter journey-method" id="method" data-chapter="method" aria-labelledby="method-title"><div class="container journey-chapter-layout"><div class="journey-copy"><p class="journey-eyebrow"><span>02 / APRENDER CON IA</span>09:10 · En la bienvenida</p><h2 id="method-title">{{ doc.sections.problemTitle }}</h2><p class="journey-lede">{{ doc.sections.problemBody }}</p><div class="ai-prompt"><span>PREGUNTA PROPUESTA AL AGENTE</span><p>«Ayúdame a preparar una bienvenida natural a partir del guion de Meet &amp; Greet.»</p></div><div class="journey-use-case"><span class="journey-case-label">CASO SIMULADO / CONSULTA DEL MÉTODO</span><h3>La bienvenida también se practica.</h3><p>Ana consulta el video, el guion y los errores frecuentes de Meet &amp; Greet. Prepara una pregunta para el agente de IA y revisa con Jorge cómo presentarse, explicar la duración de la visita y preguntar cómo prefieren que los llamen.</p></div></div>{{ scene_figure('consultation', '16-meet-greet-retouched', 'Meet & Greet · La bienvenida', retouched=true) }}</div></article>
+
+    <article class="journey-chapter journey-practice" id="practice" data-chapter="practice" aria-labelledby="practice-title"><div class="container journey-chapter-layout"><div class="journey-copy"><p class="journey-eyebrow"><span>03 / PRACTICAR CON IA</span>12:20 · Entre conversaciones</p><h2 id="practice-title">{{ doc.sections.practiceTitle }}</h2><p class="journey-lede">{{ doc.sections.practiceBody }}</p><div class="ai-prompt"><span>PREGUNTA PROPUESTA AL AGENTE</span><p>«Quiero ensayar cómo aclarar la duda: queremos pensarlo.»</p></div><div class="journey-use-case"><span class="journey-case-label">CASO SIMULADO / PRÁCTICA DE OBJECIONES</span><h3>Una duda concreta. Una práctica útil.</h3><p>Ana abre Practicar objeción y ensaya con Jorge una pregunta de clarificación. La IA forma parte de la preparación; el equipo lleva la práctica a la conversación.</p></div></div>{{ scene_figure('coaching', '07-objection-practice-mobile', 'Practicar objeción') }}</div></article>
+
+    <article class="journey-chapter journey-coaching" id="coaching" data-chapter="coaching" aria-labelledby="coaching-title"><div class="container journey-chapter-layout"><div class="journey-copy"><p class="journey-eyebrow"><span>04 / ACOMPAÑAR CON IA</span>15:30 — 16:30 · Aprender de la jornada</p><h2 id="coaching-title">Una observación.<br /><em>Un siguiente paso.</em></h2><p class="journey-lede">Usa el contexto de Sales Academy para preparar una reflexión con IA y revisarla con el líder. El equipo decide qué practicar después.</p><div class="ai-prompt"><span>PREGUNTA PROPUESTA AL AGENTE</span><p>«Ayúdame a ordenar lo que escuché y lo que quiero practicar mañana.»</p></div><div class="journey-use-case"><span class="journey-case-label">CASO SIMULADO / ANA Y JORGE</span><h3>El aprendizaje vuelve al equipo.</h3><p>Después del tour ofrece un punto de partida. Ana y Jorge conversan, eligen una conducta y la convierten en la siguiente práctica.</p></div></div>{{ scene_figure('coaching', '09-after-tour-mobile', 'Después del tour') }}</div></article>
+
+    <article class="journey-chapter journey-scale" id="scale" data-chapter="scale" aria-labelledby="rooms-title"><div class="container journey-chapter-layout"><div class="journey-copy"><p class="journey-eyebrow"><span>05 / ESCALAR CON CONTEXTO</span>Agentes de IA, sala por sala</p><h2 id="rooms-title">{{ doc.sections.stagesTitle }}</h2><p class="journey-lede">{{ doc.sections.stagesBody }}</p><ol class="journey-room-route" aria-label="Ruta propuesta para tres salas"><li><span>A</span><div><strong>Establecer.</strong><p>Acordar el método, los materiales y las tareas del agente.</p></div></li><li><span>B</span><div><strong>Replicar.</strong><p>Adaptar preguntas y acompañamiento al contexto de la siguiente sala.</p></div></li><li><span>C</span><div><strong>Consolidar.</strong><p>Revisar lo aprendido y decidir juntos cómo continuar.</p></div></li></ol><p class="journey-proposal-note">Ruta de implementación propuesta para validar en una demo.</p>{{ demo_link('ai-chapter-cta') }}</div>{{ scene_figure('briefing', '03-roadmap-mobile', 'Roadmap de entrenamiento') }}</div></article>
+  </div>
+</section>
+
+{% for room_guide in resources if room_guide.id == 'room-day' %}
+<section class="ai-day" aria-labelledby="ai-day-title"><div class="container ai-day-grid"><div class="ai-day-photo"><img src="/growth-assets/ai-scenes/consultation.webp" width="1672" height="941" alt="Escena ilustrativa generada de una conversación entre representante y huéspedes ficticios" loading="lazy" /><span>UNA JORNADA SIMULADA · SEIS MOMENTOS</span></div><div class="ai-day-copy"><p class="sa-section-label">EL AGENTE DE IA, EN EL DÍA A DÍA</p><h2 id="ai-day-title">Imagina el día.<br /><em>Reconoce cada acción.</em></h2><p>Acompaña a Ana y Jorge en seis situaciones. Mira qué consultar, qué preguntar al agente de IA y qué decisión corresponde al equipo. La galería reúne quince capturas de la demo y una pantalla aportada con presentación retocada.</p><div class="ai-day-facts"><span>06 <small>momentos</small></span><span>16 <small>pantallas de la app</small></span></div><a class="button sa-button-dark" href="/growth-assets/scenarios/index.html">Explorar la jornada con IA <span aria-hidden="true">↗</span></a><a class="ai-day-guide" href="{{ '/cms/preview/?resource=' ~ room_guide.slug if preview else '/mediahub/' ~ room_guide.slug ~ '/' }}">Leer la guía para tu equipo →</a></div></div></section>
+{% endfor %}
+
+{% if collection.items|length > (1 if featured else 0) %}
+<section class="journey-films" id="historias" aria-labelledby="films-title"><div class="container"><div class="journey-films-heading"><div><p class="sa-section-label">MÁS FORMAS DE IMAGINAR LA IA</p><h2 id="films-title">El conocimiento<br /><em>encuentra su lugar.</em></h2></div><p>Explora la visión de agentes que conectan método, práctica y acompañamiento. Los videos muestran conceptos; el recorrido combina capturas de la demo y la pantalla aportada de Meet &amp; Greet, identificada como presentación retocada.</p></div><div class="journey-film-grid" tabindex="0" aria-label="Más películas sobre agentes de IA; desplázate horizontalmente para explorar">{% for video_id, r in collection.items.items() if video_id != 'smart-agent' %}<article class="journey-film" id="film-{{ r.id }}"><div class="journey-film-number"><span>VISIÓN {{ '%02d'|format(loop.index) }}</span><span>{{ r.duration }}</span></div>{{ video_player(r) }}<h3>{{ r.title }}</h3><p>{{ r.excerpt }}</p><a class="journey-film-detail" href="{{ '/cms/preview/?resource=' ~ r.slug if preview else '/mediahub/' ~ r.slug ~ '/' }}">Ver contexto y transcripción <span aria-hidden="true">↗</span></a></article>{% endfor %}</div></div></section>
+{% endif %}
+
+<section class="sa-resources">
+  <div class="container">
+    <div class="sa-resource-heading" data-reveal>
+      <div>
+        <p class="sa-section-label">MEDIAHUB / MÉTODO + AGENTES DE IA</p>
+        <h2>Tu método, listo<br /><em>para conversar con IA.</em></h2>
+      </div>
+      <div>
+        <p>
+          Recursos para preparar una pregunta al agente de IA, practicar una situación y revisar el siguiente paso con tu equipo.
+        </p>
+        <a
+          class="sa-text-link sa-link-dark"
+          href="{{ '/cms/preview/?page=hub' if preview else '/mediahub/' }}"
+          >Explorar el mediahub <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </div>
+    <div class="sa-resources-grid">
+      {% set written_resources = resources|rejectattr('type', 'equalto', 'video')|list %}
+      {% for r in written_resources[:3] %}
+      <div class="sa-editorial-resource sa-editorial-{{ r.type }}" data-reveal>
+        {{ resource_card(r, loop.index, preview) }} {% if not r.coverId %}
+        <div class="sa-document-preview" aria-hidden="true">
+          <span class="sa-document-brand">SA / FIELD NOTES</span
+          ><strong>{{ r.title }}</strong>
+          <p>{{ r.excerpt }}</p>
+          <div class="sa-document-rule"></div>
+          <span class="sa-document-bottom"
+            >{{ {'template':'UNA HOJA PARA PREPARAR','guide':'UNA GUÍA PARA
+            ACOMPAÑAR','matrix':'UNA MATRIZ PARA EMPEZAR','video':'UNA IDEA PARA
+            EXPLORAR','audio':'UNA CONVERSACIÓN PARA ESCUCHAR'}.get(r.type, 'UN
+            RECURSO PARA APLICAR') }}<span>↗</span></span
+          >
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sa-diagnostic">
+  <div class="container sa-diagnostic-layout" data-reveal>
+    <div class="sa-diagnostic-mark" aria-hidden="true">
+      <span>6</span><i></i>
+    </div>
+    <div>
+      <p class="sa-section-label">ENCUENTRA DÓNDE PUEDE AYUDAR LA IA</p>
+      <h2>{{ doc.sections.ctaTitle }}</h2>
+      <p>{{ doc.sections.ctaBody }}</p>
+    </div>
+    <a class="button sa-button-dark" href="/descubre/diagnostico/"
+      >Diagnosticar mi sala <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</section>
+
+<section class="sa-faq">
+  <div class="container sa-faq-grid">
+    <div data-reveal>
+      <p class="sa-section-label">HABLEMOS CON CLARIDAD</p>
+      <h2>Las preguntas<br /><em>que importan.</em></h2>
+      <p>Lo que necesitas saber antes de dar el siguiente paso.</p>
+    </div>
+    <div class="faq-list" data-reveal>
+      {% for faq in doc.faqs %}
+      <details>
+        <summary>{{ faq.question }}<span aria-hidden="true">+</span></summary>
+        <p>{{ faq.answer }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="sa-contact" id="demo">
+  <div class="container sa-contact-grid">
+    <div class="sa-contact-copy" data-reveal>
+      <p class="sa-section-label">AGENTES DE IA / LLEVÉMOSLO A TU SALA</p>
+      <h2>Imagina tu jornada.<br /><em>Veámosla en una demo.</em></h2>
+      <p>Conversemos sobre tus materiales, tu equipo y las tareas que quieres apoyar con agentes de inteligencia artificial.</p>
+      <a class="button sa-button-gold ai-contact-action" href="{{ whatsapp_demo_url }}" target="_blank" rel="noopener noreferrer">Solicitar demo por WhatsApp <span aria-hidden="true">↗</span></a><p class="ai-contact-number">+52 984 316 3268</p>
+      <p class="sa-contact-caption">
+        WhatsApp abrirá un mensaje preparado. Tú decides cuándo enviarlo; acordaremos la disponibilidad contigo.
+      </p>
+    </div>
+    <form
+      id="demo-form"
+      method="post"
+      action="/growth-api/demo-requests"
+      data-enabled="{{ 'true' if contact_enabled else 'false' }}"
+      class="sa-contact-form"
+    >
+      <p class="sa-form-intro">¿Prefieres dejar tu solicitud aquí?</p>
+      <div class="form-grid">
+        <label class="full"
+          >Correo de contacto<input
+            type="email"
+            name="email"
+            maxlength="254"
+            autocomplete="email"
+            placeholder="tu@organizacion.com"
+            required
+        /></label>
+        <label
+          >Tu rol<select name="role" required>
+            <option value="">Selecciona</option>
+            <option value="director">Dirección</option>
+            <option value="leader">Líder de sala</option>
+            <option value="rep">Representante</option>
+            <option value="other">Otro</option>
+          </select></label
+        >
+        <label
+          >Salas de tu equipo<select name="roomCountBucket" required>
+            <option value="">Selecciona</option>
+            <option value="one">1 sala</option>
+            <option value="two">2 salas</option>
+            <option value="three">3 salas</option>
+            <option value="more">4 o más</option>
+          </select></label
+        >
+        <label class="full"
+          >¿Qué quieres revisar?<select name="need" required>
+            <option value="">Selecciona una prioridad</option>
+            <option value="coordination">Coordinación de sala</option>
+            <option value="practice">Práctica del equipo</option>
+            <option value="coaching">Coaching y acompañamiento</option>
+            <option value="pilot">Alcance de un piloto</option>
+          </select></label
+        >
+      </div>
+      <label class="check-label"
+        ><input type="checkbox" name="contactConsent" required /><span
+          >Acepto que se utilice mi correo para responder esta solicitud.
+          <a href="/descubre/privacidad/">Ver privacidad</a>.</span
+        ></label
+      >
+      <label class="check-label"
+        ><input type="checkbox" name="marketingOptIn" /><span
+          >Quiero recibir novedades y recursos cuando estén disponibles. Es
+          opcional.</span
+        ></label
+      >
+      <button class="button sa-button-gold" type="submit" disabled>
+        Solicitar una demo <span aria-hidden="true">↗</span>
+      </button>
+      {% if not contact_enabled %}
+      <p class="caption">
+        La recepción de solicitudes todavía no está habilitada. Puedes explorar
+        los recursos abiertos y la demo.
+      </p>
+      {% endif %}
+      <p
+        class="form-status"
+        id="demo-status"
+        role="status"
+        aria-live="polite"
+      ></p>
+      <noscript
+        ><p>
+          Activa JavaScript para enviar la solicitud. Los recursos permanecen
+          disponibles sin registro.
+        </p></noscript
+      >
+    </form>
+  </div>
+</section>
+{% endblock %}

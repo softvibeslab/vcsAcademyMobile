@@ -1,0 +1,28 @@
+window.FLOWS=[{name:'Descubrir la propuesta',ids:['01','03','04','05','08','09','11']},{name:'Diagnóstico y asesoría',ids:['01','06','07','11','12','13','14']},{name:'Entrada desde móvil',ids:['02','03','06','07','11']},{name:'Publicar un recurso',ids:['15','16','18','19','20','21','24']},{name:'Gestionar la academia',ids:['15','16','17','22','23','25','24']}];
+window.LINKS={
+'01':[['Vista móvil','02'],['Explorar MediaHub','03'],['Hacer diagnóstico','06'],['Galería','08'],['Método e implementación','09'],['Hablar con el asesor','11'],['Privacidad','10']],
+'02':[['MediaHub','03'],['Diagnóstico','06'],['Asesor','11'],['Vista escritorio','01']],
+'03':[['Abrir guía','04'],['Ver película conceptual','05'],['Volver al inicio','01']],
+'04':[['Ver película','05'],['Consultar al asesor','11'],['Volver a biblioteca','03']],
+'05':[['Hacer diagnóstico','06'],['Solicitar demo','14'],['Biblioteca','03']],
+'06':[['Siguiente / ver resultado · simulado','07'],['Volver al inicio','01']],
+'07':[['Conversar con asesor','11'],['Consultar método','09'],['Repetir diagnóstico','06']],
+'08':[['Ver método','09'],['Ver película','05'],['Solicitar demo','14']],
+'09':[['Consultar asesor','11'],['Diagnóstico','06'],['Volver al inicio','01']],
+'10':[['Volver al inicio','01'],['Acceso CMS','15']],
+'11':[['Iniciar conversación','12'],['Volver al inicio','01']],
+'12':[['Ver video recomendado','13'],['Solicitar demo','14'],['Volver al asesor','11']],
+'13':[['Continuar conversación','12'],['Solicitar demo','14']],
+'14':[['Continuar con asesor','12'],['Volver al inicio','01']],
+'15':[['Entrar al CMS · simulado','16'],['Volver al sitio','01']],
+'16':[['Editar landing','17'],['Recursos','18'],['Biblioteca de medios','20'],['Solicitudes','22'],['Asesor IA','23'],['Publicaciones','24'],['Usuarios y acceso','25']],
+'17':[['Vista previa de landing','01'],['Revisar publicaciones','24'],['Volver al CMS','16']],
+'18':[['Crear / editar recurso','19'],['Biblioteca de medios','20'],['Volver al CMS','16']],
+'19':[['Elegir medio','20'],['Volver a recursos','18'],['Revisar publicación','24']],
+'20':[['Subir medio','21'],['Editar recurso','19'],['Volver al CMS','16']],
+'21':[['Revisar biblioteca','20'],['Editar recurso','19']],
+'22':[['Abrir asesor IA','23'],['Volver al CMS','16']],
+'23':[['Probar asesor público','11'],['Solicitudes','22'],['Revisar publicaciones','24']],
+'24':[['Ver sitio publicado · vista previa','01'],['Editar landing','17'],['Volver al CMS','16']],
+'25':[['Volver al CMS','16'],['Cerrar sesión · simulado','15']]
+};

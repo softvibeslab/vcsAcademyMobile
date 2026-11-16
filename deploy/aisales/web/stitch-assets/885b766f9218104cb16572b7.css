@@ -1,0 +1,140 @@
+@font-face {
+  font-family: 'Arimo';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/2a5f6aa64321acf7b083a356.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/stitch-assets/98ec971f47d6f239437e585f.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/stitch-assets/1a644bcc1bf5fa728c90619c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/stitch-assets/2896808b2b5017ad19078ab3.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/6f2e69a4bd86a4a9796306c9.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/stitch-assets/c9c5d9fc72b61cf718026aab.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/stitch-assets/754c1462461a27a6378274b6.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/stitch-assets/98ef213294065e27da3a0257.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Libre Caslon Text';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/4b507c4977b60d78db9139a4.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Libre Caslon Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/111ccd1bf4309900ec3b7187.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Libre Caslon Text';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/stitch-assets/0aa76ada9d3b2daf7d6204e7.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url(/stitch-assets/882a2a989649236207a6da89.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url(/stitch-assets/dc4fd72872de44d4ae75c230.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/stitch-assets/fa976fefac0021cc28224474.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/bbe0fcf86dca84b42f05eb1c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/stitch-assets/b3c897d30d1558189001eda9.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/stitch-assets/b6e77dffe97d26af053c0298.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/stitch-assets/bb66eaff50365bf714d0b4a9.ttf) format('truetype');
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}

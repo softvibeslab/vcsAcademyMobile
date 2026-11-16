@@ -1,0 +1,57 @@
+{
+  "smart-agent": {
+    "id": "smart-agent",
+    "title": "El método, acompañado",
+    "src": "/growth-assets/films/smart-agent.mp4",
+    "poster": "/growth-assets/films/smart-agent.webp",
+    "width": 576,
+    "height": 1024,
+    "durationSeconds": 32.879,
+    "captions": "/growth-assets/films/smart-agent.es.vtt",
+    "audioKind": "speech"
+  },
+  "menos-caos": {
+    "id": "menos-caos",
+    "title": "Menos caos. Más criterio.",
+    "src": "/growth-assets/films/menos-caos.mp4",
+    "poster": "/growth-assets/films/menos-caos.webp",
+    "width": 576,
+    "height": 1024,
+    "durationSeconds": 41.399,
+    "captions": "/growth-assets/films/menos-caos.es.vtt",
+    "audioKind": "speech"
+  },
+  "sistema-conectado": {
+    "id": "sistema-conectado",
+    "title": "Del proceso a un sistema conectado",
+    "src": "/growth-assets/films/sistema-conectado.mp4",
+    "poster": "/growth-assets/films/sistema-conectado.webp",
+    "width": 720,
+    "height": 1280,
+    "durationSeconds": 41.375,
+    "captions": "/growth-assets/films/sistema-conectado.es.vtt",
+    "audioKind": "speech"
+  },
+  "infraestructura-comercial": {
+    "id": "infraestructura-comercial",
+    "title": "De depender del gerente a compartir el método",
+    "src": "/growth-assets/films/infraestructura-comercial.mp4",
+    "poster": "/growth-assets/films/infraestructura-comercial.webp",
+    "width": 480,
+    "height": 848,
+    "durationSeconds": 29.025,
+    "captions": "/growth-assets/films/infraestructura-comercial.es.vtt",
+    "audioKind": "speech"
+  },
+  "conocimiento-en-practica": {
+    "id": "conocimiento-en-practica",
+    "title": "Del conocimiento a la práctica diaria",
+    "src": "/growth-assets/films/conocimiento-en-practica.mp4",
+    "poster": "/growth-assets/films/conocimiento-en-practica.webp",
+    "width": 480,
+    "height": 848,
+    "durationSeconds": 36.594,
+    "captions": "/growth-assets/films/conocimiento-en-practica.es.vtt",
+    "audioKind": "speech"
+  }
+}

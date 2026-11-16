@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import resource_card with context %}
+{% block title %}Mediahub · Sales Academy{% endblock %}
+{% block page %}hub{% endblock %}
+{% block bodyclass %}hub-v2{% endblock %}
+{% block styles %}<link rel="stylesheet" href="/growth-assets/hub-v2.css" />{% endblock %}
+{% block content %}
+<section class="hub-hero sa-hub-hero">
+  <div class="container sa-hub-hero-grid">
+    <div><p class="sa-hub-kicker">SALES ACADEMY / AGENTES DE IA</p><h1>Tu método.<br /><em>Tu agente. Tu día.</em></h1><p class="sa-hub-lead">Recursos para llevar la inteligencia artificial a la preparación, la práctica y el acompañamiento de tu sala. Elige una tarea y encuentra por dónde empezar.</p></div>
+    <div class="sa-hub-index"><span>¿QUÉ NECESITAS HOY?</span><a href="{{ '/cms/preview/?page=hub&role=rep' if preview else '/mediahub/?role=rep' }}"><span>Preparar mi conversación</span><b aria-hidden="true">↗</b></a><a href="{{ '/cms/preview/?page=hub&role=leader' if preview else '/mediahub/?role=leader' }}"><span>Acompañar a mi equipo</span><b aria-hidden="true">↗</b></a><a href="{{ '/cms/preview/?page=hub&role=director' if preview else '/mediahub/?role=director' }}"><span>Dar forma a un piloto</span><b aria-hidden="true">↗</b></a></div>
+  </div>
+  <div class="container sa-hub-meta"><span>IDEAS PARA LLEVAR A LA SALA</span><span>Recursos completos. Sin registro.</span></div>
+</section>
+<section class="container hub-content sa-hub-content">
+  <form class="hub-filters" method="get" action="{{ '/cms/preview/' if preview else '/mediahub/' }}" aria-label="Filtrar recursos">
+    {% if preview %}<input type="hidden" name="page" value="hub" />{% endif %}
+    <label class="search-field"><span>Buscar un recurso</span><input type="search" name="q" value="{{ request.args.get('q','') }}" placeholder="Coaching, preparación, piloto…" maxlength="120" /></label>
+    <label><span>Para quién</span><select name="role"><option value="">Todos los roles</option>{% for v,l in [('rep','Representantes'),('leader','Líderes'),('director','Dirección')] %}<option value="{{ v }}" {% if request.args.get('role')==v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></label>
+    <label><span>Necesidad</span><select name="topic"><option value="">Todas las necesidades</option>{% for v,l in [('coordination','Coordinación'),('practice','Práctica'),('evidence','Evidencia')] %}<option value="{{ v }}" {% if request.args.get('topic')==v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></label>
+    <label><span>Formato</span><select name="type"><option value="">Todos los formatos</option>{% for v,l in [('template','Plantilla'),('guide','Guía'),('matrix','Matriz'),('video','Video'),('audio','Audio')] %}<option value="{{ v }}" {% if request.args.get('type')==v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></label>
+    <button class="button button-small" type="submit">Filtrar</button>
+  </form>
+  <div class="results-line"><p role="status">{{ resources|length }} recurso{{ 's' if resources|length != 1 else '' }} disponible{{ 's' if resources|length != 1 else '' }}</p><a href="{{ '/cms/preview/?page=hub' if preview else '/mediahub/' }}">Limpiar filtros</a></div>
+  <div class="sa-hub-collection">
+    {% for r in resources %}
+    <div class="sa-hub-resource sa-hub-resource-{{ r.type }}">
+      {{ resource_card(r, loop.index, preview) }}
+      {% if not r.coverId and not r.get('videoId') %}<div class="sa-hub-document" aria-hidden="true"><span>SA / FIELD NOTES</span><strong>{{ r.title }}</strong><p>{{ r.excerpt|truncate(110) }}</p><div class="sa-hub-document-foot"><span>{{ {'template':'PREPARAR','guide':'ACOMPAÑAR','matrix':'IMPLEMENTAR','video':'EXPLORAR','audio':'ESCUCHAR'}.get(r.type, 'APRENDER') }}</span><b>↗</b></div></div>{% endif %}
+    </div>
+    {% else %}
+    <div class="empty-state"><span class="empty-symbol" aria-hidden="true">↗</span><h2>No encontramos un recurso con esos filtros.</h2><p>Prueba con otra palabra o vuelve a ver la biblioteca completa.</p><a class="button" href="{{ '/cms/preview/?page=hub' if preview else '/mediahub/' }}">Ver todos los recursos</a></div>
+    {% endfor %}
+  </div>
+  <aside class="sa-hub-next"><div><p>DE LA IDEA A TU SALA</p><h2>Conoce tus agentes de IA.<br /><em>Empieza con una demo.</em></h2><span>Conversemos sobre tu método, tu equipo y el primer caso de uso.</span></div><a class="button" href="{{ whatsapp_demo_url }}" target="_blank" rel="noopener noreferrer" data-whatsapp-demo>Solicitar demo por WhatsApp <span aria-hidden="true">↗</span></a></aside>
+</section>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}{% block title %}Diagnostica tu sala · Sales Academy{%
+endblock %}{% block page %}diagnostic{% endblock %}{% block scripts %}
+<script type="module" src="/growth-assets/diagnostic-ui.mjs"></script>
+{% endblock %} {% block content %}
+<section class="container diagnostic-layout">
+  <div class="diagnostic-intro">
+    <p class="eyebrow">AGENTES DE IA / 6 PREGUNTAS PARA EMPEZAR</p>
+    <h1>Encuentra dónde<br />la IA puede <em>ayudarte.</em></h1>
+    <p>
+      Identifica qué preparar, practicar u ordenar en el día a día de tu sala.
+      Piensa en el proceso; tus respuestas se quedan en esta página.
+    </p>
+    <div class="diagnostic-promise">
+      <span>01 / Responde con honestidad</span
+      ><span>02 / Recibe una orientación</span
+      ><span>03 / Elige una acción</span>
+    </div>
+    <p class="caption">
+      Autoevaluación orientativa. No certifica preparación técnica ni desempeño
+      individual.
+    </p>
+    <a class="campaign-link" href="{{ whatsapp_demo_url }}" target="_blank" rel="noopener noreferrer" data-whatsapp-demo>Conocer los agentes en una demo ↗</a>
+  </div>
+  <div class="diagnostic-workspace">
+    <noscript
+      ><div class="notice">
+        El diagnóstico necesita JavaScript para calcular tu orientación sin
+        enviar respuestas. Puedes leer todos los
+        <a href="/mediahub/">recursos abiertos</a>.
+      </div></noscript
+    >
+    <form id="diagnostic-form">
+      <div class="diagnostic-progress">
+        <span id="question-counter">Pregunta 1 de 6</span
+        ><progress
+          id="question-progress"
+          max="6"
+          value="1"
+          aria-label="Progreso del diagnóstico"
+        ></progress>
+      </div>
+      <div id="question-container"></div>
+      <p id="diagnostic-error" class="form-status" role="alert"></p>
+      <div class="diagnostic-controls">
+        <button
+          type="button"
+          class="button button-outline"
+          id="question-back"
+          disabled
+        >
+          ← Anterior</button
+        ><button type="submit" class="button" id="question-next">
+          Siguiente →
+        </button>
+      </div>
+    </form>
+    <section
+      id="diagnostic-result"
+      data-demo-url="{{ whatsapp_demo_url }}"
+      hidden
+      tabindex="-1"
+      aria-labelledby="result-title"
+    ></section>
+  </div>
+</section>
+{% endblock %}

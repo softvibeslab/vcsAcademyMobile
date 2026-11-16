@@ -1,0 +1,827 @@
+{
+  "hero": {
+    "eyebrow": "AGENTES DE INTELIGENCIA ARTIFICIAL PARA TU SALA",
+    "title": "Agentes de IA. Tu método, presente en cada conversación.",
+    "description": "Explora una experiencia de IA pensada para preparar el tour, practicar una objeción y ordenar el siguiente paso con el método de tu sala.",
+    "primaryLabel": "Solicitar demo por WhatsApp"
+  },
+  "seo": {
+    "title": "Sales Academy · Agentes de IA para tu sala de ventas",
+    "description": "Explora cómo los agentes de IA pueden apoyar la preparación, la práctica y el acompañamiento de tu sala. Mira la visión y solicita una demo por WhatsApp."
+  },
+  "sections": {
+    "problemTitle": "Tu método, al alcance de la conversación.",
+    "problemBody": "Los agentes de IA conectan la consulta del método con una tarea concreta. Explora el Roadmap y prepara qué necesitas preguntar antes de la próxima conversación.",
+    "practiceTitle": "Ensaya antes de improvisar.",
+    "practiceBody": "Una duda concreta abre una práctica útil. Prepara el ejercicio para el agente de IA, consulta el recurso y ensaya la conversación con tu equipo.",
+    "stagesTitle": "Un método compartido. El contexto de cada sala.",
+    "stagesBody": "Una ruta propuesta para incorporar agentes de IA alrededor de tus materiales y responsabilidades: establecer la base, replicar con el contexto de cada sala y revisar la continuidad.",
+    "ctaTitle": "Veamos dónde puede ayudar la IA en tu sala.",
+    "ctaBody": "Cuéntanos cómo prepara y acompaña tu equipo cada conversación. En una demo revisamos Sales Academy y definimos qué casos vale la pena explorar."
+  },
+  "faqs": [
+    {
+      "question": "¿Qué haría un agente de IA en mi sala?",
+      "answer": "La propuesta es apoyar tareas concretas de preparación, consulta y práctica alrededor del método de tu equipo. En la demo revisamos los casos que te interesan, los materiales y el alcance disponible."
+    },
+    {
+      "question": "¿Los agentes de IA pueden usar el método de mi equipo?",
+      "answer": "La conversación empieza por tu proceso y tus materiales aprobados. La configuración, las fuentes que podrá consultar y los límites se acuerdan para cada implementación."
+    },
+    {
+      "question": "¿Todo lo que aparece en el video ya está disponible?",
+      "answer": "El video presenta una visión del producto. Las capturas del recorrido muestran la demo actual; durante la demostración distinguimos las funciones disponibles y lo que requiere desarrollo o configuración."
+    },
+    {
+      "question": "¿Cómo se aplicaría en tres salas?",
+      "answer": "La ruta propuesta es establecer la base en una sala, replicar con el contexto de la segunda y revisar la continuidad antes de integrar la tercera. Los accesos, materiales y responsabilidades deben acordarse para cada entorno."
+    },
+    {
+      "question": "¿El agente de IA sustituye al líder de la sala?",
+      "answer": "El equipo conserva las decisiones y el acompañamiento. El uso de IA se plantea como apoyo para preparar consultas y prácticas; el líder revisa el método y acuerda el siguiente paso."
+    },
+    {
+      "question": "¿Qué pasa cuando solicito la demo?",
+      "answer": "Se abre WhatsApp con un mensaje que puedes revisar y enviar. A partir de esa conversación se acuerdan disponibilidad y alcance; abrir el enlace no confirma una cita."
+    }
+  ],
+  "resources": [
+    {
+      "id": "before-tour",
+      "slug": "antes-del-tour",
+      "title": "Prepara el próximo tour con IA",
+      "excerpt": "Una hoja para preparar una consulta al agente de IA, elegir una conducta y practicar antes de la conversación.",
+      "body": [
+        {
+          "type": "heading",
+          "text": "Una preparación con IA y un objetivo concreto"
+        },
+        {
+          "type": "paragraph",
+          "text": "Antes del tour, prepara una consulta para el agente de IA alrededor de una conducta observable: preguntar, escuchar o resumir. Esta hoja te ayuda a ordenar el contexto y a revisar después la propuesta con tu líder."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Confirma la asignación. Revisa horario, responsable y canal para avisar un cambio. Usa únicamente la información autorizada de la operación. Esta hoja no necesita datos del visitante.",
+            "Elige un paso del método. Anota el nombre o identificador del paso y la versión del material aprobado. Si no sabes cuál está vigente, resuélvelo con el líder antes de improvisar.",
+            "Define una conducta observable. Completa: “En este tour voy a…”. Usa una acción concreta: preguntar, escuchar, resumir, verificar o explicar con un material aprobado.",
+            "Practica una situación. Con un compañero, plantea una objeción ficticia. El representante pregunta primero, verifica qué entendió y responde dentro de los límites del material autorizado.",
+            "Acuerda qué revisar después. Escoge una señal observable. No conviertas una sola venta o no venta en la evaluación completa de la práctica."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Hoja para completar"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Campo",
+            "Mi preparación"
+          ],
+          "rows": [
+            [
+              "Paso del método y versión",
+              ""
+            ],
+            [
+              "Conducta que voy a practicar",
+              ""
+            ],
+            [
+              "Situación ficticia para ensayar",
+              ""
+            ],
+            [
+              "Pregunta que usaré para comprender",
+              ""
+            ],
+            [
+              "Material autorizado que consultaré",
+              ""
+            ],
+            [
+              "Qué observaré al terminar",
+              ""
+            ],
+            [
+              "Qué necesito aclarar con mi líder",
+              ""
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Ejemplo simulado"
+        },
+        {
+          "type": "paragraph",
+          "text": "Paso: exploración de necesidades. Conducta: resumir lo que escuché y pedir confirmación. Situación: una persona ficticia dice “Necesito pensarlo”. Pregunta: “¿Qué parte te gustaría revisar con más calma?”. Señal: pude identificar una duda concreta sin suponer cuál era. No se registran nombres, presupuestos ni detalles de una persona real."
+        },
+        {
+          "type": "paragraph",
+          "text": "Pregunta propuesta para el agente de IA: «Quiero practicar escucha. Ayúdame a preparar una pregunta abierta antes de presentar». Es un ejemplo editorial; no una respuesta generada ni un registro de la aplicación."
+        },
+        {
+          "type": "heading",
+          "text": "Después del tour"
+        },
+        {
+          "type": "paragraph",
+          "text": "Escribe qué hiciste, qué observaste y qué repetirás o cambiarás. Si algo depende de precios, disponibilidad, condiciones o financiamiento, consulta la fuente autorizada. La práctica no autoriza promesas comerciales."
+        },
+        {
+          "type": "paragraph",
+          "text": "Siguiente paso: si cuesta mantener esta rutina en la sala, utiliza el diagnóstico abierto para elegir por dónde empezar."
+        }
+      ],
+      "type": "template",
+      "role": "rep",
+      "topic": "practice",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "duration": "5 min de lectura",
+      "status": "published",
+      "evidenceLabel": "Guía original · orientación práctica",
+      "sourceNote": "Sales Academy · recurso editorial original. No sustituye el método aprobado de cada sala.",
+      "reviewedAt": "2026-11-07"
+    },
+    {
+      "id": "coaching",
+      "slug": "coaching-con-una-accion",
+      "title": "Coaching y agentes de IA: el siguiente paso",
+      "excerpt": "Una guía para preparar una reflexión con apoyo de IA y acordar una acción observable con el líder.",
+      "body": [
+        {
+          "type": "heading",
+          "text": "De una observación a un acuerdo"
+        },
+        {
+          "type": "paragraph",
+          "text": "Usa esta guía para preparar una reflexión con apoyo de IA y revisarla con el líder. Pregunta propuesta para el agente: «Ayúdame a ordenar qué escuché, qué aclaré y qué necesito practicar». El equipo conserva la decisión sobre el siguiente paso."
+        },
+        {
+          "type": "paragraph",
+          "text": "Una conversación de coaching resulta más útil cuando termina con una conducta que ambas personas pueden reconocer. Esta guía ayuda a revisar una práctica sin etiquetar al representante ni inferir su intención."
+        },
+        {
+          "type": "paragraph",
+          "text": "1. Acordar el foco. “Vamos a revisar cómo verificaste que entendiste la necesidad”. Elige una habilidad, no todo el tour."
+        },
+        {
+          "type": "paragraph",
+          "text": "2. Pedir la versión del representante. “¿Qué intentaste hacer? ¿Qué parte te resultó difícil?”. Escucha antes de dar instrucciones."
+        },
+        {
+          "type": "paragraph",
+          "text": "3. Describir lo observado. “En el ejercicio respondiste antes de confirmar la duda”. Evita “No escuchas” o “Eres malo para cerrar”. Si no hubo observación directa o registro autorizado, dilo: se está trabajando con el relato del representante."
+        },
+        {
+          "type": "paragraph",
+          "text": "4. Comparar con el material aprobado. Revisen juntos el paso o guion vigente. Aclaren si existe una excepción y quién puede autorizarla."
+        },
+        {
+          "type": "paragraph",
+          "text": "5. Repetir una sola situación. El líder interpreta a una persona ficticia. El representante practica una respuesta. Se repite una vez con una corrección concreta; no se presiona para memorizar una frase fuera de contexto."
+        },
+        {
+          "type": "paragraph",
+          "text": "6. Cerrar un acuerdo. “En la siguiente práctica, antes de responder, resume la duda y confirma si la entendiste”. Define quién revisa, qué observa y cuándo se vuelve a conversar."
+        },
+        {
+          "type": "heading",
+          "text": "Registro de acuerdo"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Elemento",
+            "Qué registrar"
+          ],
+          "rows": [
+            [
+              "Habilidad",
+              "Una conducta, no una calificación general"
+            ],
+            [
+              "Evidencia",
+              "Observación de una práctica o relato identificado como tal"
+            ],
+            [
+              "Referencia",
+              "Material aprobado y versión"
+            ],
+            [
+              "Próxima acción",
+              "Qué se intentará hacer"
+            ],
+            [
+              "Revisión",
+              "Momento y persona responsable"
+            ],
+            [
+              "Resultado",
+              "Qué se observó en la siguiente práctica"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Ejemplo simulado"
+        },
+        {
+          "type": "paragraph",
+          "text": "Observación: en un roleplay, la persona respondió “Es la mejor opción” sin preguntar qué faltaba aclarar. Acuerdo: hacer una pregunta abierta y resumir la respuesta antes de presentar información. En la repetición se observa si lo hizo; no se concluye que esto aumentará automáticamente los cierres."
+        },
+        {
+          "type": "heading",
+          "text": "Criterio de cierre"
+        },
+        {
+          "type": "paragraph",
+          "text": "La sesión termina cuando el representante puede explicar la acción acordada y el líder sabe cómo revisarla. Si ambos salen con interpretaciones distintas, reformulen el acuerdo. La guía no es un instrumento de sanción ni una certificación automática."
+        },
+        {
+          "type": "paragraph",
+          "text": "Siguiente paso: conecta esta conversación con la hoja “Antes del próximo tour”."
+        }
+      ],
+      "type": "guide",
+      "role": "leader",
+      "topic": "practice",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "duration": "6 min de lectura",
+      "status": "published",
+      "evidenceLabel": "Guía original · orientación práctica",
+      "sourceNote": "Sales Academy · recurso editorial original. No sustituye el método aprobado de cada sala.",
+      "reviewedAt": "2026-11-07"
+    },
+    {
+      "id": "three-rooms",
+      "slug": "piloto-en-tres-salas",
+      "title": "Agentes de IA: una ruta para tres salas",
+      "excerpt": "Una matriz para acordar método, materiales, responsables y límites antes de plantear un piloto de IA en tres salas.",
+      "body": [
+        {
+          "type": "heading",
+          "text": "Primero acuerda qué significa que funcione"
+        },
+        {
+          "type": "paragraph",
+          "text": "Un piloto de agentes de IA entre salas necesita criterios comparables. Antes de fijar fechas, acuerda qué tareas se quieren apoyar, qué fuentes podrá consultar el agente, quién responde por el método y qué evidencia autoriza avanzar. La ruta aquí descrita es una propuesta por validar."
+        },
+        {
+          "type": "heading",
+          "text": "Matriz de preparación"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Acuerdo",
+            "Sala A",
+            "Sala B",
+            "Sala C",
+            "Evidencia esperada"
+          ],
+          "rows": [
+            [
+              "Responsable de operación",
+              "Por definir",
+              "Por definir",
+              "Por definir",
+              "Persona y función acordadas internamente"
+            ],
+            [
+              "Versión del método",
+              "Por validar",
+              "Por validar",
+              "Por validar",
+              "Material aprobado y accesible"
+            ],
+            [
+              "Fuentes y límites del agente de IA",
+              "Por acordar",
+              "Por acordar",
+              "Por acordar",
+              "Material autorizado y responsables de revisión"
+            ],
+            [
+              "Roadmap, registro de metas y práctica",
+              "Por validar",
+              "Por validar",
+              "Por validar",
+              "Recorrido completo con datos de ejemplo"
+            ],
+            [
+              "Accesos y límites de consulta",
+              "Por validar",
+              "Por validar",
+              "Por validar",
+              "Pruebas positivas y negativas por rol y sala"
+            ],
+            [
+              "Recursos iniciales",
+              "Por revisar",
+              "Por revisar",
+              "Por revisar",
+              "Fuente, derechos y aprobación"
+            ],
+            [
+              "Línea base",
+              "Por acordar",
+              "Por acordar",
+              "Por acordar",
+              "Definición, periodo y responsable del dato"
+            ],
+            [
+              "Soporte y seguimiento",
+              "Por definir",
+              "Por definir",
+              "Por definir",
+              "Canal, horario y responsable"
+            ],
+            [
+              "Criterio de avance",
+              "Por aprobar",
+              "Por aprobar",
+              "Por aprobar",
+              "Decisión escrita y evidencia asociada"
+            ]
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Etapa A · Establecer"
+        },
+        {
+          "type": "paragraph",
+          "text": "Recorrido objetivo del piloto de entrenamiento, por validar: el representante accede a la instancia de su sala, consulta su Training Roadmap y un recurso aprobado, utiliza el registro de metas acordado para el piloto y completa una práctica; el líder revisa la evidencia permitida. Los datos de ejemplo sirven para verificar funcionamiento; la operación real requiere identidad y permisos comprobados antes de comenzar. La asignación e integración de tours pertenecen a otro alcance. Documenta dudas y límites."
+        },
+        {
+          "type": "heading",
+          "text": "Etapa B · Replicar"
+        },
+        {
+          "type": "paragraph",
+          "text": "Repite la prueba en otra sala con su propia configuración. Comprueba que una persona no pueda consultar información fuera de su alcance. Registra qué se pudo reutilizar y qué requirió adaptación. No presupongas que la segunda sala usa el mismo proceso sólo por pertenecer a la misma organización."
+        },
+        {
+          "type": "heading",
+          "text": "Etapa C · Consolidar"
+        },
+        {
+          "type": "paragraph",
+          "text": "Integra la tercera sala cuando los acuerdos y pruebas se cumplan. Usa un diccionario común de estados y resultados. Comparar cifras sin las mismas definiciones puede confundir diferencias del proceso con desempeño."
+        },
+        {
+          "type": "heading",
+          "text": "Revisión de avance"
+        },
+        {
+          "type": "paragraph",
+          "text": "El responsable de cada sala responde: ¿el recorrido funciona?, ¿las personas pueden acceder sólo a lo que les corresponde?, ¿los materiales están aprobados?, ¿la evidencia está completa?, ¿quién atiende los incidentes? Si una condición necesaria no se cumple, registra el bloqueo y el siguiente paso; no lo marques terminado por tener una pantalla disponible."
+        },
+        {
+          "type": "heading",
+          "text": "Medición sin promesas"
+        },
+        {
+          "type": "paragraph",
+          "text": "Elige primero métricas de uso y calidad del dato: accesos sobre personas invitadas, uso del registro de metas acordado, recursos consultados y revisiones completadas, con un denominador y periodo acordados. Para hablar de resultados comerciales se necesitan resultados, montos, moneda, cancelaciones y contexto comparables. Una diferencia entre periodos no prueba por sí sola que la plataforma la causó."
+        },
+        {
+          "type": "paragraph",
+          "text": "Siguiente paso: lleva la matriz a una conversación de alcance. No incluyas datos personales de clientes en el material público."
+        }
+      ],
+      "type": "matrix",
+      "role": "director",
+      "topic": "evidence",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "duration": "8 min de lectura",
+      "status": "published",
+      "evidenceLabel": "Guía original · orientación práctica",
+      "sourceNote": "Sales Academy · recurso editorial original. No sustituye el método aprobado de cada sala.",
+      "reviewedAt": "2026-11-07"
+    },
+    {
+      "id": "film-smart-agent",
+      "slug": "smart-agent",
+      "title": "Agentes de IA en el día a día de tu sala",
+      "excerpt": "Conoce la visión de Sales Academy en 33 segundos: agentes de IA que conectan el método, la preparación y la práctica del equipo.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "Esta pieza presenta la visión de agentes de IA en Sales Academy mediante escenas conceptuales. Las pantallas del recorrido principal muestran la demo actual; en una demostración se revisan funciones y alcance disponibles."
+        },
+        {
+          "type": "heading",
+          "text": "Elegir una práctica para hoy"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Identifica una tarea de tu jornada que quieras preparar con apoyo de IA.",
+            "Consulta el recurso y redacta una pregunta para el agente usando una situación ficticia.",
+            "Lleva la propuesta al equipo y acuerda qué revisar en una demo de Sales Academy."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Transcripción del video"
+        },
+        {
+          "type": "paragraph",
+          "text": "No te voy a hablar de capacitación, te voy a presentar al nuevo integrante del equipo. Un agente inteligente que vive dentro de Sales Academy, aprende de tu proceso, organiza tu conocimiento y guía tu equipo de ventas en tiempo real. Tu hoja de objetivos SMART te muestra exactamente dónde estás y qué hacer a continuación. Roleplay Live es tan simple como una llamada, pero diseñada para entrenar a tu fuerza de ventas. Con Sales Academy, los líderes tienen la visibilidad que necesitan para guiar a su equipo hacia el éxito. Por eso creamos el agente de Sales Academy, para convertir el conocimiento de tus líderes en entrenamiento disponible en tiempo real. Agenda una demo."
+        }
+      ],
+      "type": "video",
+      "role": "rep",
+      "topic": "practice",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "videoId": "smart-agent",
+      "duration": "33 s de video",
+      "status": "published",
+      "evidenceLabel": "Visión de producto",
+      "sourceNote": "Material audiovisual aportado para Sales Academy. Subtítulos y transcripción automáticos revisados editorialmente.",
+      "reviewedAt": "2026-11-07"
+    },
+    {
+      "id": "film-menos-caos",
+      "slug": "menos-caos",
+      "title": "IA para ordenar la siguiente acción",
+      "excerpt": "Una visión de agentes de IA que ayudan a dar contexto a la jornada y preparar el siguiente paso.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "Esta pieza presenta la visión de agentes de IA en Sales Academy mediante escenas conceptuales. Las pantallas del recorrido principal muestran la demo actual; en una demostración se revisan funciones y alcance disponibles."
+        },
+        {
+          "type": "heading",
+          "text": "Preparar la siguiente conversación"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Identifica una tarea de tu jornada que quieras preparar con apoyo de IA.",
+            "Consulta el recurso y redacta una pregunta para el agente usando una situación ficticia.",
+            "Lleva la propuesta al equipo y acuerda qué revisar en una demo de Sales Academy."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Transcripción del video"
+        },
+        {
+          "type": "paragraph",
+          "text": "Imagina tener un asistente que no solo responde preguntas, sino que entiende tus objetivos, recuerda lo importante y te ayuda a actuar. Eso es un agente inteligente, una inteligencia artificial capaz de analizar información, utilizar herramientas y ejecutar tareas con cierto nivel de autonomía. En el día a día puede organizar pendientes, resumir mensajes, preparar reuniones, revisar métricas, detectar problemas y recordarte qué necesita atención. También puede aprender tus procesos, adaptarse a tu forma de trabajar y ayudarte a dar el siguiente paso. No se trata de reemplazar tu criterio, sino de reducir el trabajo repetitivo para que te concentres en las decisiones importantes, con menos caos y más control."
+        }
+      ],
+      "type": "video",
+      "role": "rep",
+      "topic": "coordination",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "videoId": "menos-caos",
+      "duration": "41 s de video",
+      "status": "published",
+      "evidenceLabel": "Visión de producto",
+      "sourceNote": "Material audiovisual aportado para Sales Academy. Subtítulos y transcripción automáticos revisados editorialmente.",
+      "reviewedAt": "2026-11-07"
+    },
+    {
+      "id": "film-sistema-conectado",
+      "slug": "sistema-conectado",
+      "title": "Agentes de IA alrededor de tu proceso",
+      "excerpt": "La visión de objetivos, conocimiento y acciones conectados por agentes de IA alrededor de una forma compartida de trabajar.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "Esta pieza presenta la visión de agentes de IA en Sales Academy mediante escenas conceptuales. Las pantallas del recorrido principal muestran la demo actual; en una demostración se revisan funciones y alcance disponibles."
+        },
+        {
+          "type": "heading",
+          "text": "Ordenar un proceso compartido"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Identifica una tarea de tu jornada que quieras preparar con apoyo de IA.",
+            "Consulta el recurso y redacta una pregunta para el agente usando una situación ficticia.",
+            "Lleva la propuesta al equipo y acuerda qué revisar en una demo de Sales Academy."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Transcripción del video"
+        },
+        {
+          "type": "paragraph",
+          "text": "Imagina tener un asistente que no solo responde preguntas, sino que entiende tus objetivos, recuerda lo importante y te ayuda a actuar. Eso es un agente inteligente, una inteligencia artificial capaz de analizar información, utilizar herramientas y ejecutar tareas con cierto nivel de autonomía. En el día a día puede organizar pendientes, resumir mensajes, preparar reuniones, revisar métricas, detectar problemas y recordarte qué necesita atención. También puede aprender tus procesos, adaptarse a tu forma de trabajar y ayudarte a dar el siguiente paso. No se trata de reemplazar tu criterio, sino de reducir el trabajo repetitivo para que te concentres en las decisiones importantes, con menos caos y más control."
+        }
+      ],
+      "type": "video",
+      "role": "director",
+      "topic": "coordination",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "videoId": "sistema-conectado",
+      "duration": "41 s de video",
+      "status": "published",
+      "evidenceLabel": "Visión de producto",
+      "sourceNote": "Material audiovisual aportado para Sales Academy. Subtítulos y transcripción automáticos revisados editorialmente.",
+      "reviewedAt": "2026-11-07"
+    },
+    {
+      "id": "film-infraestructura-comercial",
+      "slug": "infraestructura-comercial",
+      "title": "Tu método, acompañado por agentes de IA",
+      "excerpt": "Una visión del conocimiento del líder convertido en apoyo de IA para la preparación y la práctica del equipo.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "Esta pieza presenta la visión de agentes de IA en Sales Academy mediante escenas conceptuales. Las pantallas del recorrido principal muestran la demo actual; en una demostración se revisan funciones y alcance disponibles."
+        },
+        {
+          "type": "heading",
+          "text": "Acompañar con una acción concreta"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Identifica una tarea de tu jornada que quieras preparar con apoyo de IA.",
+            "Consulta el recurso y redacta una pregunta para el agente usando una situación ficticia.",
+            "Lleva la propuesta al equipo y acuerda qué revisar en una demo de Sales Academy."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Transcripción del video"
+        },
+        {
+          "type": "paragraph",
+          "text": "No te voy a hablar de capacitación, te voy a presentar al nuevo integrante del equipo. Un agente inteligente que vive dentro de Sales Academy, aprende de tu proceso, organiza tu conocimiento y guía tu equipo de ventas en tiempo real. Sales Academy no es una plataforma de cursos, es infraestructura comercial. Antes de culpar al talento, hay que revisar si tus sistemas de entrenamiento son los correctos. Si tu equipo depende del tiempo del gerente para mejorar, no tienes un sistema sustentable, tienes una dependencia. Por eso creamos el agente de Sales Academy, para convertir el conocimiento de tus líderes en entrenamiento disponible en tiempo real. Agenda una demo."
+        }
+      ],
+      "type": "video",
+      "role": "leader",
+      "topic": "practice",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "videoId": "infraestructura-comercial",
+      "duration": "29 s de video",
+      "status": "published",
+      "evidenceLabel": "Visión de producto",
+      "sourceNote": "Material audiovisual aportado para Sales Academy. Subtítulos y transcripción automáticos revisados editorialmente.",
+      "reviewedAt": "2026-11-07"
+    },
+    {
+      "id": "film-conocimiento-en-practica",
+      "slug": "conocimiento-en-practica",
+      "title": "Del conocimiento a la práctica con IA",
+      "excerpt": "Una visión de transformación: llevar el conocimiento de los líderes a una rutina de preparación y acompañamiento con agentes de IA.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "Esta pieza presenta la visión de agentes de IA en Sales Academy mediante escenas conceptuales. Las pantallas del recorrido principal muestran la demo actual; en una demostración se revisan funciones y alcance disponibles."
+        },
+        {
+          "type": "heading",
+          "text": "Preparar una implementación en tres salas"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Identifica una tarea de tu jornada que quieras preparar con apoyo de IA.",
+            "Consulta el recurso y redacta una pregunta para el agente usando una situación ficticia.",
+            "Lleva la propuesta al equipo y acuerda qué revisar en una demo de Sales Academy."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Transcripción del video"
+        },
+        {
+          "type": "paragraph",
+          "text": "Sé que hoy en día el entrenamiento depende de la energía y consistencia de un gerente. Y eso no es consistente, ni escalable. Por eso, hoy no vengo a darte otro entrenamiento. Hoy vengo a presentarte a un nuevo colaborador. El Smart Agent de Sales Academy. Coach de ventas disponible 24/7. Con el roadmap del Top Producer. Videos, guiones y recursos de alto valor. Creados desde el conocimiento de tus Top Producers, la cultura de tu empresa y la dirección de tus líderes. Y aquí es donde todo se conecta. El GoalSheet. Esa actividad alimenta la inteligencia del sistema. Y le da a los líderes métricas claras."
+        }
+      ],
+      "type": "video",
+      "role": "director",
+      "topic": "evidence",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "videoId": "conocimiento-en-practica",
+      "duration": "37 s de video",
+      "status": "published",
+      "evidenceLabel": "Visión de producto",
+      "sourceNote": "Material audiovisual aportado para Sales Academy. Subtítulos y transcripción automáticos revisados editorialmente.",
+      "reviewedAt": "2026-11-07"
+    },
+    {
+      "id": "room-day",
+      "slug": "un-dia-en-la-sala",
+      "title": "Un día en la sala con agentes de IA",
+      "excerpt": "Seis situaciones de time share: qué consultar, qué preguntar al agente de IA y qué decisión corresponde al equipo, con pantallas reales de la demo.",
+      "body": [
+        {
+          "type": "paragraph",
+          "text": "Acompaña a Ana, representante, y Jorge, líder, en seis momentos ficticios de una jornada con agentes de IA. Cada caso une una consulta real de la demo, una pregunta propuesta para el agente y una decisión humana. Los horarios, diálogos y fotografías son ilustrativos; las capturas conservan sus datos de ejemplo."
+        },
+        {
+          "type": "heading",
+          "text": "08:45 · Llegar con una intención"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ana prepara una habilidad que quiere practicar durante la jornada."
+        },
+        {
+          "type": "list",
+          "items": [
+            "En la app: Consultar Hoy y la plantilla Meta del mes.",
+            "Pregunta propuesta para el agente de IA: «Quiero practicar escucha. Ayúdame a preparar una pregunta abierta.»",
+            "Siguiente decisión: Elegir una pregunta abierta y compartirla con Jorge para revisión."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Diálogo simulado: Ana: «Hoy quiero escuchar mejor antes de presentar.» Jorge: «Elige una pregunta que te ayude a entender qué buscan.» Ana: «¿Cómo les gustaría viajar y qué les ha complicado hacerlo?»"
+        },
+        {
+          "type": "heading",
+          "text": "09:10 · Preparar antes de presentar"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ana revisa su preparación antes de conversar con dos huéspedes ficticios."
+        },
+        {
+          "type": "list",
+          "items": [
+            "En la app: Consultar Preparar mi tour y el Roadmap.",
+            "Pregunta propuesta para el agente de IA: «Quiero preparar preguntas para comprender cómo prefieren viajar.»",
+            "Siguiente decisión: Empezar por dos preguntas de exploración y adaptar el orden a las respuestas."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Diálogo simulado: Jorge: «¿Qué necesitas descubrir primero?» Ana: «Cómo quieren usar sus vacaciones y qué dudas traen.» Jorge: «Empieza por escucharlos; después podrás explicar lo relevante.»"
+        },
+        {
+          "type": "heading",
+          "text": "10:10 · Entender antes de proponer"
+        },
+        {
+          "type": "paragraph",
+          "text": "Elena y Diego quieren entender cómo encajaría una membresía con su forma de viajar."
+        },
+        {
+          "type": "list",
+          "items": [
+            "En la app: Consultar el paso de descubrimiento del Roadmap después de escuchar.",
+            "Pregunta propuesta para el agente de IA: «Ayúdame a revisar qué necesito aclarar antes de explicar una opción.»",
+            "Siguiente decisión: Revisar información oficial y señalar qué dudas necesitan confirmación."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Diálogo simulado: Elena: «No siempre sabemos con tiempo cuándo podremos viajar.» Ana: «¿Qué flexibilidad necesitarían?» Diego: «Queremos entender las condiciones antes de decidir.» Ana: «Lo revisamos juntos y dejamos identificadas las dudas que necesiten confirmación.»"
+        },
+        {
+          "type": "heading",
+          "text": "12:20 · Practicar una duda concreta"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ana y Jorge ensayan entre conversaciones; Jorge interpreta al huésped."
+        },
+        {
+          "type": "list",
+          "items": [
+            "En la app: Abrir la vista previa Practicar objeción.",
+            "Pregunta propuesta para el agente de IA: «Quiero ensayar cómo aclarar la duda: «queremos pensarlo».»",
+            "Siguiente decisión: Ensayar una pregunta de clarificación y explicar solo lo confirmado."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Diálogo simulado: Jorge · papel de huésped: «Nos interesa, pero queremos pensarlo.» Ana: «Claro. ¿Qué información les falta para valorar si encaja con ustedes?» Jorge · papel de huésped: «Todavía no entiendo las condiciones.» Ana: «Las revisamos con calma; si una respuesta no está confirmada, la consultamos.»"
+        },
+        {
+          "type": "heading",
+          "text": "15:30 · Convertir observación en coaching"
+        },
+        {
+          "type": "paragraph",
+          "text": "Jorge y Ana revisan el ejercicio y eligen un ajuste observable."
+        },
+        {
+          "type": "list",
+          "items": [
+            "En la app: Consultar Después del tour; el tablero de sala puede aportar contexto operativo separado.",
+            "Pregunta propuesta para el agente de IA: «Ayúdame a ordenar una reflexión sobre lo que escuché y lo que debo practicar.»",
+            "Siguiente decisión: Acordar resumir lo escuchado antes de responder en la siguiente práctica."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Diálogo simulado: Jorge: «¿Qué cambió cuando preguntaste qué información faltaba?» Ana: «Dejé de asumir la duda y pude escucharla.» Jorge: «En la siguiente práctica, resume lo que escuchaste antes de responder.»"
+        },
+        {
+          "type": "heading",
+          "text": "16:30 · Cerrar con el siguiente paso"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ana conserva una reflexión y decide qué practicar mañana."
+        },
+        {
+          "type": "list",
+          "items": [
+            "En la app: Consultar Después del tour y volver al Roadmap o al progreso demostrativo.",
+            "Pregunta propuesta para el agente de IA: «Quiero convertir la reflexión de hoy en una práctica para mañana.»",
+            "Siguiente decisión: Preparar una práctica de escucha y confirmación para la siguiente jornada."
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Diálogo simulado: Ana: «La pregunta abierta me ayudó a entender mejor la duda.» Jorge: «¿Qué practicarás mañana?» Ana: «Confirmar lo que escuché antes de explicar.» Jorge: «Empezamos por ahí.»"
+        },
+        {
+          "type": "heading",
+          "text": "Llévalo a tu siguiente práctica"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Momento",
+            "Lo que vamos a observar"
+          ],
+          "rows": [
+            [
+              "08:45 · Llegar con una intención",
+              "Elegir una pregunta abierta y compartirla con Jorge para revisión."
+            ],
+            [
+              "09:10 · Preparar antes de presentar",
+              "Empezar por dos preguntas de exploración y adaptar el orden a las respuestas."
+            ],
+            [
+              "10:10 · Entender antes de proponer",
+              "Revisar información oficial y señalar qué dudas necesitan confirmación."
+            ],
+            [
+              "12:20 · Practicar una duda concreta",
+              "Ensayar una pregunta de clarificación y explicar solo lo confirmado."
+            ],
+            [
+              "15:30 · Convertir observación en coaching",
+              "Acordar resumir lo escuchado antes de responder en la siguiente práctica."
+            ],
+            [
+              "16:30 · Cerrar con el siguiente paso",
+              "Preparar una práctica de escucha y confirmación para la siguiente jornada."
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "La app muestra datos de ejemplo. Meta del mes y Practicar objeción son vistas verificadas; SMART/GoalSheet y Roleplay Live pertenecen al concepto del video y no se presentan como funciones probadas. El tablero de sala aporta contexto operativo; no acredita una evaluación de coaching."
+        }
+      ],
+      "type": "guide",
+      "role": "rep",
+      "topic": "practice",
+      "level": "start",
+      "coverId": null,
+      "attachments": [],
+      "externalMediaUrl": "",
+      "duration": "8 min",
+      "status": "published",
+      "evidenceLabel": "Simulación de uso · pantallas de la demo",
+      "sourceNote": "Escenarios de uso de IA simulados; las preguntas son propuestas editoriales, no respuestas generadas ni conversaciones ejecutadas. Capturas reales de la demo del 7 de noviembre de 2026, con sus datos de ejemplo intactos. Fotografías ilustrativas generadas con IA; no son clientes ni testimonios.",
+      "reviewedAt": "2026-11-07"
+    }
+  ]
+}

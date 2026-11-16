@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Estudio editorial · Sales Academy</title>
+    <meta name="theme-color" content="#171b17" />
+    <link rel="icon" href="/growth-assets/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/growth-assets/site.css" />
+    <link rel="stylesheet" href="/growth-assets/cms.css" />
+    <script type="module" src="/growth-assets/cms.mjs"></script>
+  </head>
+  <body class="cms-body">
+    <script id="video-catalog" type="application/json">{{ video_catalog|tojson }}</script>
+    <a class="skip" href="#cms-content">Saltar al editor</a>
+    <div id="login-view" class="login-layout">
+      <div class="login-story">
+        <a class="brand" href="/descubre/"
+          ><span class="brand-mark">S<span>A</span></span
+          ><span>SALES<br />ACADEMY</span></a
+        >
+        <div>
+          <p class="eyebrow">ESTUDIO EDITORIAL</p>
+          <h1>El conocimiento<br />merece una<br /><em>buena casa.</em></h1>
+          <p>
+            Prepara el contenido.<br />Revisa cada detalle.<br />Publica con
+            intención.
+          </p>
+        </div>
+        <span class="login-foot">SALES ACADEMY / CONTENT STUDIO</span>
+      </div>
+      <div class="login-main">
+        <form id="login-form">
+          <p class="eyebrow">ACCESO PRIVADO</p>
+          <h2>Bienvenido al estudio.</h2>
+          <p>
+            Entra con tu cuenta editorial para trabajar en la landing y el
+            mediahub.
+          </p>
+          <label
+            >Usuario<input
+              name="username"
+              autocomplete="username"
+              required
+              maxlength="80"
+              autofocus /></label
+          ><label
+            >Contraseña<input
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              required /></label
+          ><button class="button" type="submit">
+            Entrar al CMS <span>↗</span>
+          </button>
+          <p id="login-status" class="form-status" role="status"></p>
+          <p class="caption">
+            ¿Necesitas acceso o recuperar tu cuenta? Contacta al administrador
+            del proyecto.
+          </p>
+          <a href="/descubre/" class="quiet-link">← Volver al sitio</a>
+        </form>
+        <noscript
+          ><p>
+            El editor necesita JavaScript. Los recursos públicos se pueden leer
+            sin activarlo.
+          </p></noscript
+        >
+      </div>
+    </div>
+    <div id="cms-shell" hidden>
+      <aside class="cms-sidebar">
+        <a class="brand" href="/cms/"
+          ><span class="brand-mark">S<span>A</span></span
+          ><span
+            >SALES<br />ACADEMY<span class="brand-sub"
+              >ESTUDIO EDITORIAL</span
+            ></span
+          ></a
+        >
+        <p class="sidebar-label">TU ESPACIO DE TRABAJO</p>
+        <nav id="cms-nav" aria-label="Módulos del CMS"></nav>
+        <div class="sidebar-bottom">
+          <a href="/descubre/" target="_blank" rel="noopener"
+            >Ver sitio público ↗</a
+          >
+          <div id="cms-user"></div>
+          <button id="logout-button" class="text-button">Cerrar sesión</button>
+        </div>
+      </aside>
+      <div class="cms-main">
+        <header class="cms-topbar">
+          <div>
+            <span class="cms-breadcrumb">SALES ACADEMY / ESTUDIO</span
+            ><span id="save-indicator">Cargando contenido…</span>
+          </div>
+          <div class="cms-top-actions">
+            <a
+              class="button button-small button-outline"
+              id="preview-link"
+              href="/cms/preview/"
+              target="_blank"
+              rel="noopener"
+              >Vista previa ↗</a
+            ><button class="button button-small" id="publish-button" hidden>
+              Publicar cambios
+            </button>
+          </div>
+        </header>
+        <div
+          id="cms-status"
+          class="cms-toast"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+        <main id="cms-content" tabindex="-1"></main>
+      </div>
+    </div>
+  </body>
+</html>

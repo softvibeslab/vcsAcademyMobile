@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'Arimo';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/2a5f6aa64321acf7b083a356.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/6f2e69a4bd86a4a9796306c9.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/stitch-assets/c9c5d9fc72b61cf718026aab.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/stitch-assets/754c1462461a27a6378274b6.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/stitch-assets/98ef213294065e27da3a0257.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Libre Caslon Text';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/4b507c4977b60d78db9139a4.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Libre Caslon Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/111ccd1bf4309900ec3b7187.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Libre Caslon Text';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/stitch-assets/0aa76ada9d3b2daf7d6204e7.ttf) format('truetype');
+}

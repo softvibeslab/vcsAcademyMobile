@@ -1,0 +1,91 @@
+{% macro resource_card(r, index=1, preview=false) %}
+<article
+  class="resource-card"
+  data-resource-card
+  data-title="{{ r.title|lower }}"
+  data-role="{{ r.role }}"
+  data-topic="{{ r.topic }}"
+  data-type="{{ r.type }}"
+>
+  <a
+    class="resource-art art-{{ r.type }}"
+    href="{{ '/cms/preview/?resource=' ~ r.slug if preview else '/mediahub/' ~ r.slug ~ '/' }}"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    {% if r.coverId %}<img
+      src="/media/{{ r.coverId }}/web"
+      alt=""
+      loading="lazy"
+    />{% elif r.get('videoId') %}{% set clip = video_catalog.get(r.videoId) %}{% if clip %}<img
+      src="{{ clip.poster }}"
+      alt=""
+      width="{{ clip.width }}"
+      height="{{ clip.height }}"
+      loading="lazy"
+    />{% endif %}{% else %}<span class="art-overline">SALES ACADEMY / FIELD NOTES</span
+    ><span class="art-number">0{{ index }}</span
+    ><span class="art-lines"><i></i><i></i><i></i></span
+    ><span class="art-caption"
+      >{{
+      {'template':'PREPARAR','guide':'ACOMPAÑAR','matrix':'IMPLEMENTAR','video':'EXPLORAR','audio':'ESCUCHAR'}.get(r.type,'APRENDER')
+      }}</span
+    >{% endif %}
+  </a>
+  <div class="resource-info">
+    <div class="meta">
+      <span
+        >{{
+        {'template':'Plantilla','guide':'Guía','matrix':'Matriz','video':'Video','audio':'Audio'}.get(r.type,r.type)
+        }}</span
+      ><span>{{ r.duration }}</span>
+    </div>
+    <h3>
+      <a
+        href="{{ '/cms/preview/?resource=' ~ r.slug if preview else '/mediahub/' ~ r.slug ~ '/' }}"
+        >{{ r.title }} <span aria-hidden="true">↗</span></a
+      >
+    </h3>
+    <p>{{ r.excerpt }}</p>
+    <span class="resource-role"
+      >Para {{ {'rep':'representantes','leader':'líderes de
+      sala','director':'dirección'}.get(r.role,r.role) }}</span
+    >
+  </div>
+</article>
+{% endmacro %}
+
+{% macro video_player(r) %}
+{% set clip = video_catalog.get(r.get('videoId')) %}
+{% if clip %}
+<figure class="film-player" data-film-player>
+  <div class="film-player-stage">
+  <video
+    class="film-player-video"
+    controls
+    playsinline
+    preload="none"
+    width="{{ clip.width }}"
+    height="{{ clip.height }}"
+    poster="{{ '/media/' ~ r.coverId ~ '/web' if r.coverId else clip.poster }}"
+    aria-label="{{ r.title }}. Película con subtítulos en español."
+  >
+    <source src="{{ clip.src }}" type="video/mp4" />
+    <track kind="captions" src="{{ clip.captions }}" srclang="es" label="Español" default />
+    Tu navegador no puede reproducir este video. Puedes leer su contenido en esta página.
+  </video>
+  <button class="film-play-button" type="button" data-video-play aria-label="Reproducir película: {{ r.title }}" hidden>
+    <span class="film-play-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z" /></svg></span>
+    <span class="film-play-text" data-play-text>Ver película</span>
+    <span class="film-play-detail">Audio y subtítulos</span>
+  </button>
+  </div>
+  <figcaption>
+    <span class="film-player-label">PELÍCULA CONCEPTUAL · SALES ACADEMY</span>
+    <p class="film-player-hint">Reproduce cuando quieras. Audio y subtítulos disponibles.</p>
+    <p class="film-player-error" data-video-error role="status" hidden>No se pudo cargar la película. Puedes reintentar o continuar con el contenido escrito.</p>
+    <button class="button button-small button-outline" type="button" data-video-retry hidden>Reintentar video</button>
+  </figcaption>
+</figure>
+{% endif %}
+{% endmacro %}

@@ -1,0 +1,63 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/stitch-assets/ee9558be9f8a4d750ce42b6f.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/a699af1dea30b799318e058c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/stitch-assets/e45972c7e9f24dc390848eb5.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/stitch-assets/87e867b52640b3b397a977c3.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/stitch-assets/6f49e1b28bce7339f4846ecd.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/289d2aa8e0ed6731529209b3.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/stitch-assets/e365077394b3cd598cba1dc3.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/stitch-assets/d6c65600eb0149bc0e2d25af.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/stitch-assets/3208926ba69d6886481d3ee0.ttf) format('truetype');
+}

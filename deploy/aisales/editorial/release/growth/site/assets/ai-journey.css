@@ -1,0 +1,245 @@
+/* The VSL introduces the promise. Native scroll connects people, method and AI. */
+.ai-campaign { --ai-cream:#f1eee5; --ai-olive:#a9b29b; }
+.ai-campaign .ai-hero { padding:44px 0 0; background:radial-gradient(ellipse at 78% 34%,#66552b23,transparent 48%),#10120f; }
+.ai-hero-grid { display:grid; grid-template-columns:1.08fr 1fr; align-items:center; gap:6%; }
+.ai-hero-copy { padding:20px 0 30px; position:relative; z-index:2; }
+.ai-campaign .ai-hero .sa-kicker { font-size:10px; margin-bottom:28px; max-width:510px; }
+.ai-hero h1 { font-size:clamp(52px,5.6vw,82px); line-height:1.01; letter-spacing:-.065em; font-weight:500; margin:0 0 28px; text-wrap:balance; }
+.ai-hero h1 em { font-family:Georgia,'Times New Roman',serif; font-weight:400; color:#dac38d; letter-spacing:-.045em; }
+.ai-campaign .ai-hero-description { color:#c2c7b9; font-size:16px; line-height:1.8; max-width:480px; margin-bottom:30px; }
+.ai-hero .hero-actions { align-items:center; gap:12px 24px; }
+.ai-hero .button { font-size:12px; padding-inline:21px; }
+.ai-hero-link { display:inline-flex; align-items:center; gap:20px; font-size:12px; min-height:44px; text-decoration:none; color:#e8e8dc; }
+.ai-hero-link span { color:#cdb67b; font-size:18px; }
+.ai-campaign .ai-hero-note { color:#aeb6a3; font-size:11px; line-height:1.7; margin:18px 0 0; max-width:390px; }
+.ai-hero-pillars { margin-top:33px; padding-top:20px; border-top:1px solid #49503d; max-width:390px; display:flex; align-items:center; gap:18px; color:#d6d9cc; font-size:11px; }
+.ai-hero-pillars i { color:#d4b574; font-style:normal; }
+.ai-vsl-panel { position:relative; min-width:0; padding:0 0 16px; }
+.ai-vsl-heading { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:0 0 18px; border-bottom:1px solid #56533d; margin-bottom:18px; }
+.ai-vsl-heading>span { font-size:9px; font-weight:600; letter-spacing:.15em; color:#d4b574; }
+.ai-vsl-heading strong { font-family:Georgia,serif; font-size:29px; font-weight:400; color:#f3efdf; }
+.ai-vsl-heading small { font-family:inherit; font-size:12px; color:#bbc3ac; }
+.ai-vsl-stage { position:relative; isolation:isolate; min-height:580px; }
+.ai-vsl-context { position:absolute; top:42px; bottom:125px; width:100%; height:calc(100% - 167px); object-fit:cover; object-position:42% center; opacity:.35; border:1px solid #7c7b644f; }
+.ai-vsl-stage::after { content:''; position:absolute; inset:42px 0 125px; background:linear-gradient(90deg,#10120f15,#10120fbb 85%); z-index:-1; }
+.ai-vsl-context { z-index:-2; }
+.ai-vsl-frame { width:min(280px,77%); margin-left:auto; margin-right:12%; }
+.ai-vsl-frame .film-player { margin:0; }
+.ai-vsl-frame .film-player-video { aspect-ratio:9/16; width:100%; height:auto; max-height:none; border:1px solid #c6b785; border-radius:10px; box-shadow:0 24px 70px #0008,0 0 0 5px #9e92591a; }
+.ai-vsl-frame .film-player figcaption { padding-top:14px; }
+.ai-vsl-frame .film-player-label { color:#c4cbbb; font-size:8px; line-height:1.7; letter-spacing:.08em; }
+.ai-vsl-frame .film-player-hint { font-size:10px; line-height:1.6; color:#b9c2ad; margin-top:4px; }
+.ai-vsl-frame .film-player-error { color:#f4d69c; font-size:12px; }
+.ai-vsl-side { position:absolute; left:0; top:50px; writing-mode:vertical-rl; transform:rotate(180deg); color:#ccd0c1; letter-spacing:.16em; font-size:8px; padding:14px 10px; }
+.ai-vsl-next { margin-top:13px; border-top:1px solid #52553f; padding-top:14px; display:flex; align-items:center; flex-wrap:wrap; justify-content:space-between; gap:5px 15px; }
+.ai-vsl-cta { min-height:44px; display:inline-flex; align-items:center; gap:13px; font-size:11px; color:#e4c98d; text-decoration:none; }
+.ai-vsl-cta>span { font-size:18px; }
+.ai-vsl-transcript { font-size:10px; min-height:44px; display:inline-flex; align-items:center; text-decoration:underline; text-underline-offset:4px; color:#bfc7b3; }
+.ai-hero-fallback { margin:0; }
+.ai-hero-fallback img { width:100%; height:520px; object-fit:cover; border-radius:3px; }
+.ai-hero-fallback figcaption { color:#c1c9b6; font-size:13px; line-height:1.7; padding:18px 0; }
+.ai-hero-foot { margin-top:37px; border-top:1px solid #373e2e; padding-block:25px; display:flex; justify-content:space-between; gap:20px; color:#b2baa6; font-size:8px; letter-spacing:.1em; }
+.ai-hero-foot>span:last-child { letter-spacing:0; }
+.ai-bridge { background:#ece9df; color:#272c22; padding:65px 0; border-top:1px solid #d7d2bd; }
+.ai-bridge-grid { display:grid; grid-template-columns:.62fr 1.45fr 1fr; gap:42px; align-items:center; }
+.ai-campaign .ai-bridge .sa-section-label { margin:0; max-width:190px; font-size:9px; line-height:1.9; }
+.ai-bridge h2 { font-size:clamp(29px,3vw,43px); line-height:1.12; letter-spacing:-.045em; margin:0; font-weight:500; }
+.ai-bridge h2 em { font-family:Georgia,serif; font-weight:400; color:#747452; }
+.ai-campaign .ai-bridge p:last-child { margin:0; color:#59624e; font-size:12px; line-height:1.8; }
+
+.ai-continuous { background:#10150e; }
+.ai-campaign .ai-continuous .journey-copy h2 { font-size:clamp(36px,3.6vw,53px); font-weight:500; }
+.ai-continuous .journey-lede { font-size:15px; line-height:1.8; }
+.ai-continuous .journey-eyebrow { margin-bottom:25px; }
+.ai-continuous .journey-navigation a,.ai-continuous .journey-motion-toggle { min-height:44px; }
+.ai-prompt { border-left:1px solid #c4ab6b; padding:5px 0 5px 19px; margin:25px 0 26px; }
+.ai-prompt>span { font-size:8px; font-weight:600; letter-spacing:.11em; color:#c7b37d; }
+.ai-campaign .ai-prompt>p { font-family:Georgia,serif; font-size:20px; line-height:1.4; color:#e6e8db; margin:11px 0 0; }
+.ai-continuous .journey-use-case { padding-top:21px; }
+.ai-continuous .journey-use-case h3 { font-size:18px; margin-block:12px 9px; }
+.ai-continuous .journey-use-case>p { font-size:12px; line-height:1.8; }
+.ai-chapter-cta { display:inline-flex; gap:20px; align-items:center; min-height:44px; margin-top:9px; font-size:12px; color:#e6cb8e; text-decoration:none; }
+.ai-chapter-cta>span { font-size:20px; }
+.ai-inline-scene { min-height:610px; position:relative; padding-top:0; }
+.ai-inline-photo { position:absolute; left:0; top:32px; width:85%; height:485px; object-fit:cover; object-position:42% center; border:1px solid #85876e; }
+.ai-inline-device { width:180px; position:absolute; right:0; top:0; padding:6px; border:1px solid #b2b59b; border-radius:24px; background:#363c2c; box-shadow:0 25px 50px #0007; }
+.ai-inline-device img { width:100%; height:auto; border-radius:18px; display:block; }
+.ai-inline-scene figcaption { position:absolute; bottom:12px; left:0; right:0; margin:0 auto; padding:0 10px; }
+.ai-inline-scene figcaption span { font-size:10px; }
+.ai-continuous .journey-start { min-height:0; padding-block:75px; }
+.ai-inline-retouched { padding-bottom:0; }
+.ai-inline-retouched figcaption { position:relative; margin-top:535px; bottom:auto; }
+.ai-inline-retouched figcaption a { display:inline-flex; align-items:center; min-height:44px; color:inherit; text-underline-offset:4px; }
+@media(max-width:979px) { .ai-inline-retouched figcaption { margin-top:485px; } }
+@media(max-width:720px) { .ai-inline-retouched figcaption { margin-top:490px; } }
+.ai-retouched-label { display:none; }
+.ai-continuous[data-active="method"] .ai-original-label { display:none; }
+.ai-continuous[data-active="method"] .ai-retouched-label { display:inline; }
+
+/* One frame stays in place while the context, app screen and camera change. */
+@media (min-width:980px) {
+  .ai-continuous.journey-enhanced .journey-stage { background:#10150e; }
+  .ai-continuous.journey-enhanced .journey-chapter { min-height:108svh; }
+  .ai-campaign .ai-continuous.journey-enhanced .journey-start { min-height:108svh; padding:0; }
+  .ai-continuous.journey-enhanced .journey-copy { max-width:500px; }
+  .ai-continuous.journey-enhanced .journey-tools { top:8px; }
+  .ai-continuous.journey-enhanced .journey-chapter-layout { padding-block:112px 86px; }
+  .ai-stage-glow { position:absolute; width:90vw; height:90vw; top:-20vw; left:20%; background:radial-gradient(ellipse,#ba984826,transparent 62%); transform:translate3d(calc(var(--journey-progress) * -8vw),calc(var(--chapter-progress) * -20px),0); }
+  .ai-stage-line { position:absolute; left:53%; width:1px; height:80%; top:11%; background:linear-gradient(transparent,#a6985c6b,transparent); transform:rotate(calc(-8deg + var(--journey-progress) * 14deg)); transform-origin:center; }
+  .ai-room-scene { position:absolute; left:53%; top:17%; width:39%; height:66%; max-width:600px; overflow:hidden; border:1px solid #a3a28559; border-radius:2px; transform:translate3d(calc(var(--chapter-progress) * -12px),calc(var(--chapter-progress) * -20px),0) scale(calc(1 + var(--chapter-progress) * .025)); }
+  .ai-room-scene::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 65%,#141a0dd9); pointer-events:none; }
+  .ai-scene-world { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:40% center; filter:saturate(.76) brightness(.8); opacity:0; transition:opacity 450ms ease; }
+  .ai-world-method { object-position:35% center; }
+  .ai-world-practice,.ai-world-coaching { object-position:25% center; }
+  [data-active="start"] .ai-world-start,[data-active="method"] .ai-world-method,[data-active="practice"] .ai-world-practice,[data-active="coaching"] .ai-world-coaching,[data-active="scale"] .ai-world-scale { opacity:1; }
+  .ai-photo-label { position:absolute; bottom:18px; left:20px; z-index:2; color:#e1e4d7; font-size:8px; letter-spacing:.08em; }
+  .ai-device { --phone-width:clamp(180px,15.5vw,220px); position:absolute; left:calc(77% - var(--phone-width)/2); top:calc(50% - var(--phone-width)*1.11); width:var(--phone-width); height:calc(var(--phone-width)*2.19); padding:7px; border:1px solid #c0c2a3; border-radius:30px; background:#343b2a; box-shadow:0 30px 70px #0008,inset 0 2px 2px #ede7ca55; z-index:3; transform:translate3d(calc(var(--chapter-progress)*8px),calc(var(--chapter-progress)*-25px),0) rotate(var(--ai-phone-angle,-3deg)); transition:transform 600ms cubic-bezier(.22,1,.36,1); }
+  .ai-device-screens { position:relative; width:100%; height:100%; overflow:hidden; border-radius:23px; background:#f7f7f2; }
+  .ai-product-screen { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:top; opacity:0; transition:opacity 140ms ease; }
+  [data-active="start"] .ai-screen-start,[data-active="method"] .ai-screen-method,[data-active="practice"] .ai-screen-practice,[data-active="coaching"] .ai-screen-coaching,[data-active="scale"] .ai-screen-scale { opacity:1; }
+  .ai-continuous[data-active="method"] { --ai-phone-angle:3deg; }
+  .ai-continuous[data-active="practice"] { --ai-phone-angle:-2deg; }
+  .ai-continuous[data-active="coaching"] { --ai-phone-angle:2deg; }
+  .ai-continuous[data-active="scale"] { --ai-phone-angle:-3deg; }
+  .ai-device-label { position:absolute; top:calc(100% + 18px); left:-35px; right:-35px; text-align:center; white-space:nowrap; color:#e2e8d4; font-size:8px; letter-spacing:.08em; text-shadow:0 1px 8px #000; }
+  .ai-agent-orbit { position:absolute; left:55%; top:68%; z-index:4; display:flex; gap:12px; align-items:center; max-width:205px; padding:18px; background:#d8c58f; color:#1b2215; box-shadow:0 12px 30px #0004; transform:translate3d(calc(var(--chapter-progress)*-9px),calc(var(--chapter-progress)*-32px),0); }
+  .ai-agent-orbit>span { width:34px; height:34px; border:1px solid #746d4a; border-radius:50%; display:grid; place-items:center; flex-shrink:0; font-family:Georgia,serif; font-size:16px; }
+  .ai-campaign .ai-agent-orbit p { font-family:Georgia,serif; color:#1b2215; font-size:15px; line-height:1.3; margin:0; }
+  .ai-stage-word { position:absolute; left:5%; bottom:3%; color:#d9c9930a; font-family:Georgia,serif; font-size:clamp(70px,10vw,150px); line-height:1; letter-spacing:-.05em; transform:translate3d(calc(var(--journey-progress)*-40px),0,0); }
+}
+
+.ai-day { background:#f0ede3; color:#262d21; padding:100px 0; }
+.ai-day-grid { display:grid; grid-template-columns:1.15fr 1fr; align-items:center; gap:8%; }
+.ai-day-photo { position:relative; }
+.ai-day-photo img { width:100%; height:550px; object-fit:cover; object-position:38% center; }
+.ai-day-photo>span { position:absolute; bottom:22px; left:24px; right:24px; padding:11px 15px; width:fit-content; background:#ece8dcea; color:#2d3524; font-size:8px; letter-spacing:.1em; }
+.ai-day h2 { font-size:clamp(38px,4vw,59px); line-height:1.04; letter-spacing:-.05em; font-weight:500; margin:0 0 26px; }
+.ai-day h2 em { font-family:Georgia,serif; font-weight:400; color:#6b7154; }
+.ai-campaign .ai-day-copy>p:not(.sa-section-label) { font-size:15px; line-height:1.8; color:#59634d; max-width:425px; }
+.ai-day-facts { display:flex; gap:35px; margin:28px 0 30px; padding-top:18px; border-top:1px solid #b8bda9; }
+.ai-day-facts>span { font-family:Georgia,serif; font-size:36px; line-height:1; }
+.ai-day-facts small { display:block; margin-top:9px; font-family:Arial,sans-serif; font-size:9px; color:#626c54; letter-spacing:.04em; }
+.ai-day-guide { display:block; width:fit-content; padding-block:15px 5px; min-height:44px; color:#586341; font-size:12px; text-decoration:underline; text-underline-offset:4px; }
+.ai-campaign .journey-film-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.ai-campaign .journey-films { padding-block:85px; background:#e8e4d9; }
+.ai-campaign .journey-film .film-player-video { max-height:440px; }
+.ai-campaign .sa-resources { padding-block:85px; }
+.ai-campaign .sa-contact-copy { max-width:540px; }
+.ai-contact-action { margin-top:20px; }
+.ai-campaign .ai-contact-number { font-family:Georgia,serif; font-size:25px; color:#e6d4a9; margin:18px 0; }
+.ai-campaign .sa-contact-caption { max-width:370px; }
+.ai-campaign .sa-contact-form { border-top:1px solid #645d40; }
+.ai-campaign :is(.ai-hero,.ai-day,.ai-bridge) a:focus-visible { outline:3px solid #b79b53; outline-offset:5px; }
+
+@media(min-width:980px) and (max-width:1199px) {
+  .ai-hero-grid { gap:5%; grid-template-columns:1.05fr 1fr; }
+  .ai-hero h1 { font-size:59px; }
+  .ai-vsl-frame { width:250px; margin-right:7%; }
+  .ai-vsl-stage { min-height:540px; }
+  .ai-bridge-grid { gap:24px; grid-template-columns:.6fr 1.4fr 1fr; }
+  .ai-continuous.journey-enhanced .journey-copy { max-width:405px; }
+  .ai-campaign .ai-continuous .journey-copy h2 { font-size:39px; }
+  .ai-continuous .journey-lede { font-size:14px; }
+  .ai-campaign .ai-prompt>p { font-size:18px; }
+  .ai-agent-orbit { left:54%; max-width:175px; padding:14px; gap:9px; }
+  .ai-campaign .ai-agent-orbit p { font-size:13px; }
+  .ai-day-photo img { height:500px; }
+}
+@media(max-width:979px) {
+  .ai-campaign .ai-hero { padding-top:30px; }
+  .ai-hero-grid { gap:5%; }
+  .ai-hero h1 { font-size:52px; }
+  .ai-campaign .ai-hero .sa-kicker { font-size:8px; }
+  .ai-campaign .ai-hero-description { font-size:14px; }
+  .ai-hero .button { font-size:11px; padding-inline:16px; }
+  .ai-vsl-frame { width:min(235px,90%); margin-right:0; }
+  .ai-vsl-stage { min-height:500px; }
+  .ai-vsl-side { font-size:7px; padding-inline:0; }
+  .ai-vsl-next { display:block; }
+  .ai-vsl-transcript { display:block; min-height:34px; padding-top:6px; }
+  .ai-hero-pillars { gap:12px; margin-top:23px; }
+  .ai-bridge-grid { grid-template-columns:1fr 1fr; gap:20px 30px; }
+  .ai-bridge .sa-section-label { grid-column:1/-1; }
+  .ai-bridge h2 { font-size:36px; }
+  .ai-continuous .journey-method .journey-copy,.ai-continuous .journey-coaching .journey-copy { grid-column:1; }
+  .ai-continuous .journey-method .chapter-figure,.ai-continuous .journey-coaching .chapter-figure { grid-column:2; }
+  .ai-inline-scene { min-height:550px; }
+  .ai-inline-photo { height:430px; }
+  .ai-inline-device { width:164px; }
+  .ai-day-grid { gap:6%; }
+  .ai-day-photo img { height:500px; }
+  .ai-day h2 { font-size:40px; }
+  .ai-campaign .ai-day-copy>p:not(.sa-section-label) { font-size:13px; }
+  .ai-campaign .journey-film-grid { grid-template-columns:none; }
+}
+@media(max-width:720px) {
+  .ai-campaign .ai-hero .container,.ai-campaign .ai-bridge .container,.ai-campaign .ai-day .container { width:calc(100% - 40px); }
+  .ai-hero-grid { display:flex; flex-direction:column; gap:28px; }
+  .ai-hero-copy { padding:0; width:100%; }
+  .ai-campaign .ai-hero .sa-kicker { margin-bottom:20px; max-width:320px; font-size:8px; }
+  .ai-hero h1 { font-size:clamp(43px,10.8vw,64px); line-height:1.04; margin-bottom:22px; max-width:610px; text-wrap:balance; }
+  .ai-campaign .ai-hero-description { font-size:14px; line-height:1.75; max-width:570px; margin-bottom:22px; }
+  .ai-hero .hero-actions { gap:4px 16px; }
+  .ai-hero .button { min-height:52px; font-size:11px; }
+  .ai-hero-link { font-size:11px; }
+  .ai-campaign .ai-hero-note { font-size:10px; margin-top:13px; max-width:350px; }
+  .ai-hero-pillars { display:none; }
+  .ai-vsl-panel { width:100%; max-width:480px; padding:0; margin-top:2px; }
+  .ai-vsl-heading { padding-bottom:13px; margin-bottom:18px; }
+  .ai-vsl-heading>span { font-size:9px; }
+  .ai-vsl-heading strong { font-size:27px; }
+  .ai-vsl-stage { min-height:0; }
+  .ai-vsl-context { top:30px; bottom:100px; height:calc(100% - 130px); object-position:35% center; opacity:.4; }
+  .ai-vsl-frame { width:min(270px,86%); margin:0 auto; }
+  .ai-vsl-frame .film-player-label { font-size:9px; }
+  .ai-vsl-frame .film-player-hint { font-size:11px; }
+  .ai-vsl-side { display:none; }
+  .ai-vsl-next { margin-top:17px; display:flex; flex-direction:column; align-items:flex-start; gap:0; }
+  .ai-vsl-cta { font-size:12px; }
+  .ai-vsl-transcript { font-size:11px; min-height:44px; }
+  .ai-hero-foot { margin-top:34px; padding-block:20px; font-size:7px; gap:14px; flex-direction:column; }
+  .ai-hero-foot>span:last-child { font-size:9px; }
+  .ai-hero-fallback img { height:410px; }
+  .ai-bridge { padding-block:48px; }
+  .ai-bridge-grid { display:block; }
+  .ai-campaign .ai-bridge .sa-section-label { max-width:none; font-size:8px; margin-bottom:21px; }
+  .ai-bridge h2 { font-size:35px; margin-bottom:22px; }
+  .ai-campaign .ai-bridge p:last-child { font-size:13px; }
+  .ai-continuous .journey-tools { padding-block:18px; gap:10px; }
+  .ai-continuous .journey-navigation { gap:0 16px; }
+  .ai-continuous .journey-navigation a { min-height:44px; }
+  .ai-continuous .journey-motion-toggle { min-height:44px; font-size:10px; }
+  .ai-continuous .journey-chapter,.ai-campaign .ai-continuous .journey-start { padding-block:45px 55px; }
+  .ai-continuous .journey-chapter-layout { gap:31px; }
+  .ai-continuous .journey-method .journey-copy,.ai-continuous .journey-coaching .journey-copy,.ai-continuous .journey-method .chapter-figure,.ai-continuous .journey-coaching .chapter-figure { grid-column:auto; grid-row:auto; }
+  .ai-campaign .ai-continuous .journey-copy h2 { font-size:39px; }
+  .ai-continuous .journey-lede { font-size:14px; }
+  .ai-continuous .journey-eyebrow { font-size:11px; margin-bottom:22px; }
+  .ai-continuous .journey-eyebrow>span { font-size:9px; }
+  .ai-campaign .ai-prompt>p { font-size:20px; }
+  .ai-prompt>span { font-size:9px; }
+  .ai-continuous .journey-use-case>p { font-size:13px; }
+  .ai-continuous .journey-case-label { font-size:9px; }
+  .ai-inline-scene { min-height:565px; max-width:460px; width:100%; margin:auto; }
+  .ai-inline-photo { width:82%; height:430px; top:36px; object-position:30% center; }
+  .ai-inline-device { width:170px; right:0; }
+  .ai-inline-scene figcaption { bottom:9px; color:#d2d7c6; font-size:12px; }
+  .ai-inline-scene figcaption span { font-size:10px; }
+  .ai-day { padding-block:55px; }
+  .ai-day-grid { display:flex; flex-direction:column; gap:32px; align-items:stretch; }
+  .ai-day-photo img { height:350px; }
+  .ai-day-photo>span { left:15px; right:15px; bottom:16px; font-size:7px; padding:10px; }
+  .ai-day-copy .sa-section-label { font-size:9px; margin-bottom:20px; }
+  .ai-day h2 { font-size:43px; }
+  .ai-campaign .ai-day-copy>p:not(.sa-section-label) { font-size:14px; }
+  .ai-day-facts { margin:25px 0; }
+  .ai-day-guide { font-size:12px; }
+  .ai-campaign .journey-films,.ai-campaign .sa-resources { padding-block:60px; }
+  .ai-campaign .journey-film .film-player-video { max-height:none; }
+  .ai-contact-action { font-size:11px; padding-inline:17px; }
+  .ai-campaign .ai-contact-number { font-size:26px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .ai-campaign .ai-scene-world,.ai-campaign .ai-product-screen,.ai-campaign .ai-device { transition:none; }
+  .ai-campaign .ai-vsl-panel { animation:none; transform:none; }
+}
