@@ -321,7 +321,7 @@ export function Agenda({ data }) {
     </>
   );
 }
-export function Profile({ user, data, api, logout, onUnlock }) {
+export function Profile({ user, data, api, logout, onUnlock, guideSlot }) {
   const [goal, setGoal] = useState(() => ({
       month: localDate().slice(0, 7),
       amount: "",
@@ -339,6 +339,7 @@ export function Profile({ user, data, api, logout, onUnlock }) {
         subtitle="Personaliza tu objetivo y administra tu acceso."
       />
       <PlanCard user={user} data={data} onUnlock={onUnlock} />
+      {guideSlot}
       <div className="two-col">
         <Card>
           <div className="profile-identity">

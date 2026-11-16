@@ -13,7 +13,7 @@ import {
   useAction,
   ActionStatus,
 } from "./ui";
-export function Coach({ api, refresh, initialTab, onLocked }) {
+export function Coach({ api, refresh, initialTab, onLocked, onGuideEvent }) {
   const [tab, setTab] = useState(initialTab),
     [messages, setMessages] = useState([]),
     [message, setMessage] = useState(""),
@@ -41,6 +41,7 @@ export function Coach({ api, refresh, initialTab, onLocked }) {
             })),
           }),
         });
+        onGuideEvent?.("coach");
         setMessages((m) => [
           ...m,
           { role: "user", content: text },
