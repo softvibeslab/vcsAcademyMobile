@@ -1,0 +1,2 @@
+{"backup": "daily-20261120T180457Z.tar.gz", "integrity": "ok", "restore": "verified", "assets_verified": 0, "retention_days": 7, "expired_files_removed": 0}
+active

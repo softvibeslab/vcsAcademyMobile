@@ -1,0 +1,16 @@
+{
+  "/": 200,
+  "/academia/": 200,
+  "/pilot.html": 200,
+  "/api/ready": 200,
+  "/api/pilot/tours": 401,
+  "/api/auth/demo-users": 404,
+  "/api/public/catalog": 404,
+  "/api/admin/users": 404,
+  "frontend_matches_build": true,
+  "built_assets_verified": true,
+  "owner_login": "passed",
+  "temporary_password_change_required": true,
+  "private_cookie": "Secure; HttpOnly; SameSite=Lax",
+  "logout_revokes_session": true
+}

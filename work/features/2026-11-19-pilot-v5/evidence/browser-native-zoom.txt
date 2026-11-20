@@ -43,7 +43,7 @@
   ],
   "observedNativeZoom": true,
   "horizontalOverflow": false,
-  "scope": "Unauthenticated welcome/login entry. Full authenticated reader UAT not exercised here.",
+  "scope": "Unauthenticated welcome and login. Native zoom verified; viewport screenshots via CDP, not full-page. Authenticated modules and screen-reader human UAT not exercised here.",
   "nativeExtensionAttempt": {
     "mechanism": "Temporary MV3 chrome.tabs.setZoom(2), confirmed with getZoom",
     "tabs": [
@@ -71,5 +71,105 @@
     "documentWidth": 640,
     "scrollWidth": 640,
     "bodyText": "Sales Academy\nEnglish\nEspañol\nWELCOME BACK\nYour next level awaits.\n\nSign in to your academy.\n\nEmail\nPassword\nForgot your password?\nSign in\nBack\nSales Academy · Learn with intention."
-  }
+  },
+  "captureNotes": [
+    {
+      "screen": "welcome",
+      "method": "CDP captureScreenshot without clip, native viewport capture",
+      "pngWidth": 1280,
+      "pngHeight": 813,
+      "bounds": {
+        "width": 640,
+        "dpr": 2,
+        "overflow": false,
+        "controls": [
+          {
+            "label": "English",
+            "left": 473.6171875,
+            "right": 536.46875,
+            "withinWidth": true
+          },
+          {
+            "label": "Español",
+            "left": 538.46875,
+            "right": 606,
+            "withinWidth": true
+          },
+          {
+            "label": "Get started",
+            "left": 75,
+            "right": 565,
+            "withinWidth": true
+          },
+          {
+            "label": "Sign in",
+            "left": 75,
+            "right": 565,
+            "withinWidth": true
+          }
+        ]
+      }
+    },
+    {
+      "screen": "login",
+      "method": "CDP captureScreenshot without clip, native viewport capture",
+      "pngWidth": 1280,
+      "pngHeight": 813,
+      "bounds": {
+        "width": 640,
+        "dpr": 2,
+        "overflow": false,
+        "controls": [
+          {
+            "label": "English",
+            "left": 473.6171875,
+            "right": 536.46875,
+            "withinWidth": true
+          },
+          {
+            "label": "Español",
+            "left": 538.46875,
+            "right": 606,
+            "withinWidth": true
+          },
+          {
+            "label": "email",
+            "left": 125,
+            "right": 515,
+            "withinWidth": true
+          },
+          {
+            "label": "password",
+            "left": 125,
+            "right": 515,
+            "withinWidth": true
+          },
+          {
+            "label": "button",
+            "left": 470,
+            "right": 510,
+            "withinWidth": true
+          },
+          {
+            "label": "Forgot your password?",
+            "left": 245.84375,
+            "right": 394.1484375,
+            "withinWidth": true
+          },
+          {
+            "label": "Sign in",
+            "left": 125,
+            "right": 515,
+            "withinWidth": true
+          },
+          {
+            "label": "Back",
+            "left": 304.125,
+            "right": 335.875,
+            "withinWidth": true
+          }
+        ]
+      }
+    }
+  ]
 }

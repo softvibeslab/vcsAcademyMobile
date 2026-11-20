@@ -52,7 +52,8 @@ PY
   if ! nginx -t; then cp "$ops/backups/${release_id}.nginx" "$site"; exit 1; fi
   if ! systemctl reload nginx; then cp "$ops/backups/${release_id}.nginx" "$site"; exit 1; fi
   ln -sfn "$release_dir" /srv/aisales/current
-  curl -fsS https://aisales.softvibes.pro/api/ready
+  # nginx reload is graceful: old workers can briefly retain the previous upstream.
+  curl --retry 10 --retry-delay 1 --retry-all-errors --fail --silent --show-error https://aisales.softvibes.pro/api/ready
   echo 'Activated matching web/API release. Database and previous release retained.'
 else
   echo 'Mode must be prepare or activate' >&2; exit 2

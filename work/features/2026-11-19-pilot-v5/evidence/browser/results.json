@@ -1,12 +1,92 @@
 {
   "base": "http://127.0.0.1:4197/pilot.html",
   "fixture": "Synthetic loopback only",
-  "duration_ms": 25192,
+  "duration_ms": 7184,
   "reports": [
     {
       "name": "Access and representative navigation",
-      "status": "failed",
-      "message": "locator.waitFor: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('main, form').filter({ has: getByRole('heading', { name: /Set your personal password|Hello,|My roadmap/ }) }).first() to be visible\u001b[22m\n"
+      "status": "passed",
+      "ms": 568
+    },
+    {
+      "name": "Multiple tours preserve separate records",
+      "status": "passed",
+      "ms": 371
+    },
+    {
+      "name": "Sold tour follow-up and completion",
+      "status": "passed",
+      "ms": 184
+    },
+    {
+      "name": "Monthly goal confirmation and KPI cards",
+      "status": "passed",
+      "ms": 148
+    },
+    {
+      "name": "Read-only legacy pagination is excluded from KPIs",
+      "status": "passed",
+      "ms": 99
+    },
+    {
+      "name": "Notebook persists and offline save retains draft",
+      "status": "passed",
+      "ms": 1009
+    },
+    {
+      "name": "Journal stores all three answers and handles offline",
+      "status": "passed",
+      "ms": 320
+    },
+    {
+      "name": "Calculators display approved reference results",
+      "status": "passed",
+      "ms": 305
+    },
+    {
+      "name": "Language preference persists and account remains safe",
+      "status": "passed",
+      "ms": 244
+    },
+    {
+      "name": "Owner creates, previews, uploads and publishes lesson",
+      "status": "passed",
+      "ms": 906
+    },
+    {
+      "name": "Representative requests access and owner approves it",
+      "status": "passed",
+      "ms": 617
+    },
+    {
+      "name": "Owner personal permission overrides and team privacy",
+      "status": "passed",
+      "ms": 338
+    },
+    {
+      "name": "Owner branding, ordering and archival",
+      "status": "passed",
+      "ms": 426
+    },
+    {
+      "name": "Responsive widths, keyboard and reduced motion",
+      "status": "passed",
+      "ms": 1021
+    },
+    {
+      "name": "Account dialog traps and restores keyboard focus",
+      "status": "passed",
+      "ms": 62
+    },
+    {
+      "name": "CSS layout at 200 percent (not browser zoom)",
+      "status": "passed",
+      "ms": 113
+    },
+    {
+      "name": "Sign out removes private access",
+      "status": "passed",
+      "ms": 121
     }
   ],
   "browser_errors": []

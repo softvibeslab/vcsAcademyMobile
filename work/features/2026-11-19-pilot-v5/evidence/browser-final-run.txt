@@ -1,4 +1,17 @@
-FAIL locator.waitFor: Timeout 12000ms exceeded.
-Call log:
-[2m  - waiting for locator('main, form').filter({ has: getByRole('heading', { name: /Set your personal password|Hello,|My roadmap/ }) }).first() to be visible[22m
-
+PASS Access and representative navigation
+PASS Multiple tours preserve separate records
+PASS Sold tour follow-up and completion
+PASS Monthly goal confirmation and KPI cards
+PASS Read-only legacy pagination is excluded from KPIs
+PASS Notebook persists and offline save retains draft
+PASS Journal stores all three answers and handles offline
+PASS Calculators display approved reference results
+PASS Language preference persists and account remains safe
+PASS Owner creates, previews, uploads and publishes lesson
+PASS Representative requests access and owner approves it
+PASS Owner personal permission overrides and team privacy
+PASS Owner branding, ordering and archival
+PASS Responsive widths, keyboard and reduced motion
+PASS Account dialog traps and restores keyboard focus
+PASS CSS layout at 200 percent (not browser zoom)
+PASS Sign out removes private access

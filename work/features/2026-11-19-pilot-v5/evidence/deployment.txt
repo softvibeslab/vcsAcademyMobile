@@ -1,0 +1,53 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 374B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 164B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 120.31kB 0.0s done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#5 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#5 DONE 0.1s
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] COPY backend/requirements.txt /app/backend/requirements.txt
+#7 CACHED
+
+#8 [4/5] RUN pip install --no-cache-dir -r /app/backend/requirements.txt
+#8 CACHED
+
+#9 [5/5] COPY backend /app/backend
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 exporting manifest sha256:70c520101f4286475e9b388a9c65ed3d2d5f3bc55f74eaca2b37118bb65dc456 done
+#10 exporting config sha256:0d8969050c4bbdc80ecf425e63be6c388bfe0004636f08dbb4a4f3c099e9a375 done
+#10 exporting attestation manifest sha256:bfc73a565a09f963a25479c244e23622d6868adc21430f3aed5d0c4aa926195d 0.0s done
+#10 exporting manifest list sha256:4c50f188d64c148b0783ebdeb8a7fccb02bae56f3be3e5a9905053f7ae82b3ff
+#10 exporting manifest list sha256:4c50f188d64c148b0783ebdeb8a7fccb02bae56f3be3e5a9905053f7ae82b3ff 0.0s done
+#10 naming to docker.io/library/aisales-pilot:20261120-v5 done
+#10 unpacking to docker.io/library/aisales-pilot:20261120-v5 done
+#10 DONE 0.1s
+aisales-api
+{"organization_id": "[private]", "accounts_created": 1}
+b73fdc92fd22508cf2456c63ca7c5119535ad3528a80e4aeada8e0e67d0d6d5c
+curl: (56) Recv failure: Connection reset by peer
+curl: (56) Recv failure: Connection reset by peer
+curl: (52) Empty reply from server
+Prepared private API. Previous API stopped for coordinated cutover; activate immediately.
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+curl: (22) The requested URL returned error: 502

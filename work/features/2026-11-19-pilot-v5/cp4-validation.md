@@ -1,6 +1,6 @@
 # CP4 · Validación del piloto v5
 
-**Status:** in_progress — suites, navegador y rendimiento VPS verificados en su alcance; cierre operativo y UAT pendientes.
+**Status:** verified_engineering — suites, navegador y rendimiento VPS verificados en su alcance; cierre operativo verificado; UAT humana pendiente.
 **Date:** 2026-11-20.
 **Plan:** [CP3](cp3-implementation-plan.md).
 **Contrato:** [CP2 v1](cp2-spec.md) y [aprobación](approval.md).
@@ -15,13 +15,13 @@ Se registran salidas observadas. La aprobación del contrato habilita desarrollo
 | Modelos frontend v5 | `node --test frontend/src/pilot-v5/*.test.mjs` | 12 pruebas pasan: dinero, calculadoras, payloads, roles, fecha Cancún, versiones y editor | [frontend-final.txt](evidence/frontend-final.txt) |
 | Revisión adversarial core | Cliente HTTP integrado, cookie y DB temporal | CSRF/origen rechazados; expiración/revocación; roles; legacy cerrado; migración repetida | [core-adversarial-review.txt](evidence/core-adversarial-review.txt) |
 | Learning y medios privados | Suite learning y autenticación integrada | Permisos, publicación, PDF, seed único e idempotencia comprobados | [learning-tdd.txt](evidence/learning-tdd.txt), [learning-filename-green.txt](evidence/learning-filename-green.txt) |
-| Respaldo/provisión/retención | `unittest backend.tests.pilot.test_operations -v` | 11 pruebas pasan; ruta privada, permisos 0700/0600, retención de 7 días solo archivos propios, restore y provisión idempotente | [operations-scripts-tdd.txt](evidence/operations-scripts-tdd.txt) |
+| Respaldo/provisión/retención | `unittest backend.tests.pilot.test_operations -v` | 12 pruebas pasan; ruta privada, permisos 0700/0600, retención de 7 días solo archivos propios, restore y provisión idempotente | [operations-scripts-tdd.txt](evidence/operations-scripts-tdd.txt) |
 | Ensayo operativo LOCAL | `tools/pilot/verify_operations.py` | 20 sesiones, 10,000 tours, 300 GET; hash/count legacy intactos tras dos migraciones; SQLite/PDF restaurados; venta posterior conservada | [operations.txt](evidence/operations.txt) |
 | Optimización LOCAL de métricas | Mismo ensayo ASGI/TestClient | p95 metrics 275.60 ms, tours 97.22, notes 91.41, followups 94.71, lessons 45.91; bundle Home 492.19. Umbral API 1000 ms intacto | [operations-aggregated-local.txt](evidence/operations-aggregated-local.txt) |
-| HTTP local real con cola de escritura | `tools/pilot/verify_operations.py --http` | Uvicorn único, httpx, 20 sesiones, 10,000 tours y 300 GET; Home paralelo p95 159.40 ms, metrics 125.99 ms, followups 126.40 ms; ambos gates pasan | [operations-http-queued-local.txt](evidence/operations-http-queued-local.txt); falta VPS final |
+| HTTP local real con cola de escritura | `tools/pilot/verify_operations.py --http` | Uvicorn único, httpx, 20 sesiones, 10,000 tours y 300 GET; Home paralelo p95 159.40 ms, metrics 125.99 ms, followups 126.40 ms; ambos gates pasan | [operations-http-queued-local.txt](evidence/operations-http-queued-local.txt); VPS registrado por separado |
 | Gate de historia | `verify-story` | LISTA antes de implementar | [story-approved.txt](evidence/story-approved.txt) |
 | Baseline anterior | `npm test`; modelos `frontend/src/pilot` | 5 y 17 pruebas anteriores pasan; no GREEN de v5 | [baseline-domain.txt](evidence/baseline-domain.txt), [baseline-ui.txt](evidence/baseline-ui.txt) |
-| Build web | `npm run build:web` | Vite construyó correctamente en 910 ms; entradas index/pilot y assets generados | [build-final.txt](evidence/build-final.txt) |
+| Build web | `npm run build:web` | Vite construyó correctamente en 921 ms; entradas index/pilot y assets generados | [frontend-final-build.txt](evidence/frontend-final-build.txt) |
 | Regresión de dominio anterior | `npm test` | 5 pruebas pasan después de integrar v5 | [domain-final.txt](evidence/domain-final.txt) |
 | Navegador | `tools/qa/pilot-v5-e2e.mjs` | 17/17 recorridos pasan, cero errores JS; 360/390/1440 px, foco, offline y layout CSS 200% | [browser/results.json](evidence/browser/results.json), [frontend-tdd.txt](evidence/frontend-tdd.txt) |
 | Rendimiento HTTP VPS final | Uvicorn real, 20 sesiones, 10,000 tours, 300 GET | p95 Home paralelo 461.84 ms; metrics 260.12 ms, followups 336.74 ms, tours 320.00 ms, notes 235.37 ms, lessons 187.14 ms. Ambos gates pasan con umbral 1000 ms | [operations-vps-http-final.txt](evidence/operations-vps-http-final.txt) |
@@ -89,7 +89,7 @@ Rutas de pruebas: `backend/tests/pilot/test_auth.py`, `test_activity.py`, `test_
 | 05 | Workspace `test_locale_is_persisted_and_cannot_change_identity`; Learning fallback | Persistencia/fallback verificados; EN/ES y persistencia E2E verificados |
 | 06 | Activity `test_two_tours_same_day_and_idempotency`; frontend No Tour corregido | API/modelos verificados; captura/recarga E2E verificadas |
 | 07 | MetricsTests/TourValidationTests, No Tour convive sin seguimiento | Automatizado verificado: DS-02, canal y Q efectivo |
-| 08 | Seis KPIs, ceros, half-up, mensual vs diario, paridad agregadosSQL/oráculo | Fórmulas verificadas; KPI cards E2E verificadas; lector pendiente |
+| 08 | Seis KPIs, ceros, half-up, mensual vs diario, paridad agregados SQL/oráculo | Fórmulas verificadas; KPI cards E2E verificadas; lector pendiente |
 | 09 | Activity: cancelación atómica, versión, mes original; auth request_id concurrente | Automatizado verificado; recorrido operativo E2E verificado |
 | 10 | Meta única/inmutable, carrera concurrente, siguiente mes, rechazo auditado | Automatizado verificado, incluidos triggers SQL |
 | 11 | Legacy propio separado; operations con 20 legacy, hash/conteo y migración doble | Sintético verificado; migración/backup del ambiente final en curso |
@@ -104,14 +104,14 @@ Rutas de pruebas: `backend/tests/pilot/test_auth.py`, `test_activity.py`, `test_
 | 20 | Loan referencia/cero/totales/límites | Saldo 16,000 y mensualidad 421.34/333.33 verificados; resultado visible E2E verificado |
 | 21 | Workspace: settings owner/version, markup rechazado, org ajena intacta | API verificada; marca E2E verificada |
 | 22 | Auth/locale persistente y navegación por rol | Parcial: API/modelos verificados; cuenta/guía/logout E2E verificados |
-| 23 | Responsive/teclado/foco/reduced-motion en implementación frontend | En curso: consolidar 360/390/1440 px, zoom 200%, foco y accesibilidad |
-| 24 | Bootstrap/core GREEN; operations restore/checksums/retención y venta posterior | LOCAL verificado; VPS HTTP final pasa tras SQL y cola de escritores; publicación/smoke pendientes |
+| 23 | Responsive/teclado/foco/reduced-motion en implementación frontend | 360/390/1440 px, teclado/foco y CSS 200% verificados; zoom nativo verificado en entrada/login; lector humano no ejecutado |
+| 24 | Bootstrap/core GREEN; operations restore/checksums/retención y venta posterior | LOCAL verificado; VPS HTTP final pasa tras SQL y cola de escritores; publicación y smoke HTTPS verificados |
 
 ### Alcance de navegador observado
 
 [Resultados](evidence/browser/results.json): 17/17 casos pasan en Chromium aislado contra API real de loopback y fixture sintético. Incluyen acceso/navegación, varios tours, seguimiento, meta/KPIs, notas/Diario offline, calculadoras, idioma, CMS/video/PDF, solicitudes/permisos, privacidad de equipo, marca/orden/archivo, foco modal y logout. No hay errores JS registrados. Los casos cubren la parte de navegador de AC-01/04/05/06/08/09/10/12–22 según el detalle del reporte; no equivalen a UAT del PO.
 
-La medición CSS al 200% pasó, pero **no es zoom nativo del navegador**. AC-23 conserva pendiente ese contraste y lector de pantalla. Safari/Firefox, reproducción remota real del proveedor y calidad editorial del material tampoco se afirman verificadas. [Límites y TDD frontend](evidence/frontend-tdd.txt).
+La medición CSS al 200% pasó, pero **no es zoom nativo del navegador**. Además se verificó zoom nativo mediante chrome.tabs.setZoom(2) en bienvenida/login; lector de pantalla humano no ejecutado. Safari/Firefox, reproducción remota real del proveedor y calidad editorial del material tampoco se afirman verificadas. [Límites y TDD frontend](evidence/frontend-tdd.txt).
 
 La decisión técnica de rendimiento y sus límites están en [ADR-002](adr-002-sqlite-concurrency.md).
 
@@ -126,15 +126,15 @@ La decisión técnica de rendimiento y sus límites están en [ADR-002](adr-002-
 | Permisos individuales, nombrePDF y corrección No Tour | RED/GREEN learning/frontend | Corregidos |
 | Respaldo/retención/provisión inseguros en bordes | 6 RED → 11 GREEN operativos; global 75 pasa | Corregidos en entorno sintético |
 | Rendimiento Home p95 > 1 s con 20 sesiones | WAL+FULL, agregación SQL con índice y cola RLock para escritores del proceso; HTTP local pasa sin cambiar timeout/last_seen/umbral | Corregido: HTTP VPS final pasa ambos gates |
-| Zoom nativo, configuración final y publicación | Responsables activos, sin sustituir por pruebas locales | En progreso |
+| Zoom nativo, configuración final y publicación | Zoom Chrome 200% en entrada/login; smoke HTTPS, cuenta de dueño, cookies, cierre de sesión y respaldo real | Verificados; lector humano/UAT no ejecutados |
 
 ## 5. TRUST 5 ejecutado hasta este alcance
 
-- **Tested:** RED→GREEN documentado, suite de 77 pruebas backend y 12 frontend pasan en salidas citadas. Casos negativos, fechas, ceros, concurrencia, permisos, privacidad y restore local ejecutados. El navegador tiene 17 recorridos observados y cero errores JS. Zoom nativo, lector de pantalla y cierre de publicación siguen abiertos; HTTP VPS final pasa.
+- **Tested:** RED→GREEN documentado, suite de 77 pruebas backend y 12 frontend pasan en salidas citadas. Casos negativos, fechas, ceros, concurrencia, permisos, privacidad y restore local ejecutados. El navegador tiene 17 recorridos observados y cero errores JS. Zoom nativo 200% en bienvenida/login y publicación verificados; lector de pantalla humano y UAT no ejecutados. HTTP VPS final pasa.
 - **Readable:** documentación funcional en español, identificadores en inglés, Repo Paths reales en CP3. Unidades/estados ligados al contrato.
 - **Unified:** entry points v5 separados del legacy según ADR; contratos comunes de roles/periodos; equipo usa los mismos KPIs que Home. Seed persistente sin recrear contenido.
-- **Secured:** cookie/CSRF/origen, allowlist/org/rol, revocación, inputs estrictos y PDF privado probados. Notas/Diario no entran en auditoría/IA. Claves privadas fuera del sitio, archivos 0600/directorios 0700 comprobados con datos sintéticos. No se certifica configuración productiva antes de preflight.
-- **Trackable:** aprobación→historia LISTA→AC/TC→tests/evidencias→rutas CP3 en rama `feature/pilot-v5`. request_id correlacionado. Commit/release/UAT se incorporan al cierre cuando existan.
+- **Secured:** cookie/CSRF/origen, allowlist/org/rol, revocación, inputs estrictos y PDF privado probados. Notas/Diario no entran en auditoría/IA. Claves privadas fuera del sitio, archivos 0600/directorios 0700 comprobados con datos sintéticos. Configuración productiva y acceso privado verificados en live-smoke.json.
+- **Trackable:** aprobación→historia LISTA→AC/TC→tests/evidencias→rutas CP3 en rama `feature/pilot-v5`. request_id correlacionado. Código de app 59210be y release 20261120-v5 trazados en CP5; UAT humana no registrada.
 
 ## 6. Gate de salida y decisión
 
@@ -142,14 +142,15 @@ La decisión técnica de rendimiento y sus límites están en [ADR-002](adr-002-
 - [x] Aislamiento, privacidad, reglas monetarias y migración sintética comprobados.
 - [x] Ensayo local de copia/restauración e integridad con límites explícitos.
 - [x] Build y 17 recorridos Chromium concluidos, incluidos offline, foco y CSS 200%, con cero errores JS.
-- [ ] Zoom nativo 200%, lector de pantalla y revisión editorial/UAT no comprobados por esos recorridos.
+- [x] Zoom nativo 200% verificado en bienvenida/login con Chrome tabs.setZoom; layout de app CSS 200% verificado.
+- [ ] Lector de pantalla humano y revisión editorial/UAT: pendientes del responsable, no se afirma certificación de accesibilidad.
 - [x] Rendimiento HTTP sintético del VPS comprobado con los umbrales originales.
-- [ ] Respaldo/configuración de corte y publicación/smoke consolidados por responsable de entrega.
+- [x] Respaldo real restaurado/verificado; nginx/API/frontend publicados, hashes del build y login de dueño comprobados.
 - [ ] UAT de negocio y revisión editorial registradas por responsable.
 - [x] Gobernanza estricta ejecutada con perfil local: exit 0, metodología y plantillas completas, adapters sincronizados. Repetir al consolidar el cierre operativo.
-- [ ] CP5 actualizado por responsable de entrega.
+- [x] CP5 actualizado con entrega, acceso, retención y límites.
 
-**Decisión:** continuar la validación/publicación autorizadas. No hay waiver ni UAT aprobada registrados. CP4 permanece abierto; un gate documental aprobado no sustituye los pendientes de producto/entorno.
+**Decisión:** entrega técnica publicada y verificada. No se afirma UAT de negocio ni revisión humana con lector de pantalla; el contenido real queda en borradores para revisión editorial por su dueño.
 
 ### Gobernanza ejecutada
 
@@ -159,4 +160,10 @@ Comando observado el 2026-11-20 (solo lectura; sin modificar el marco central):
 bash /Users/rogergv/Documents/SoftvibesLab/px-onboarding-mob-gen/install/verify-governance.sh /Users/rogergv/Documents/SoftvibesLab/px-onboarding-mob-gen --feature /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/work/features/2026-11-19-pilot-v5 --profile /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/.ecosystem360/team-bootstrap/project-profile.local.yml --strict
 ```
 
-Salida observada: `OK: adapters sincronizados con la fuente neutral (16 agentes, 13 skills, 6 rules, 7 bloques multi-herramienta).` y `OK: metodologia y plantillas de gobierno completas.` Exit 0. No reportó faltantes documentales. No sustituye UAT, accesibilidad pendiente ni verificaciones del ambiente final.
+Salida observada: `OK: adapters sincronizados con la fuente neutral (16 agentes, 13 skills, 6 rules, 7 bloques multi-herramienta).` y `OK: metodologia y plantillas de gobierno completas.` Exit 0. No reportó faltantes documentales. No sustituye UAT ni revisión humana de accesibilidad; las verificaciones del ambiente final se registran a continuación.
+
+## 7. Verificación pública consolidada
+
+`live-smoke.json`: /, /academia/, /pilot.html y ready=200; datos privados sin sesión=401; endpoints demo/globales=404. Login del dueño válido, cambio obligatorio de temporal, cookie Secure/HttpOnly/SameSite, logout invalida sesión. HTML y assets públicos coinciden byte por byte con build. `live-data-preservation.json`: doce tablas legacy preservadas y PRAGMA integrity_check=ok; 11 borradores, cero lecciones ficticias publicadas. `backup-live.txt`: respaldo diario restaurado, cron activo; primera copia fuera del VPS verificada. `public-browser.json`: bienvenida/login públicos sin excepciones JS ni overflow.
+
+El primer curl inmediatamente después de nginx reload recibió502 mientras terminaban workers anteriores; la API nueva estaba lista en loopback. Se volvió a comprobar HTTPS=200 y se añadió retry acotado al script para esa transición. No hubo restauración destructiva de datos. La primera repetición raíz del E2E requería actualizar el archivo privado del password sintético modificado durante QA; corregida esa entrada, 17/17 pasaron contra backend final.

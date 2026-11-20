@@ -1,0 +1,10 @@
+{
+  "offsite_backup_count": 1,
+  "private_directory_mode": "0o700",
+  "credential_file_mode": "0o600",
+  "retention_days": 7,
+  "local_schedule": "04:45; RunAtLoad; requires operator machine online",
+  "backup_sha256": [
+    "e9f7f8e6a4794c4148b1e3dbc4acb2b39a63fa61603ab78349b18fd1e67aa4c4"
+  ]
+}

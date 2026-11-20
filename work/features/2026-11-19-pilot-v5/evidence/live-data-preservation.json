@@ -1,0 +1,56 @@
+{
+  "legacy_tables": {
+    "sessions": {
+      "rows": 4,
+      "preserved": true
+    },
+    "training_progress": {
+      "rows": 3,
+      "preserved": true
+    },
+    "goalsheet_entries": {
+      "rows": 1,
+      "preserved": true
+    },
+    "roleplay_sessions": {
+      "rows": 1,
+      "preserved": true
+    },
+    "roleplay_submissions": {
+      "rows": 0,
+      "preserved": true
+    },
+    "audit_events": {
+      "rows": 30,
+      "preserved": true
+    },
+    "resources": {
+      "rows": 10,
+      "preserved": true
+    },
+    "certification_decisions": {
+      "rows": 0,
+      "preserved": true
+    },
+    "password_reset_tokens": {
+      "rows": 0,
+      "preserved": true
+    },
+    "access_items": {
+      "rows": 28,
+      "preserved": true
+    },
+    "license_codes": {
+      "rows": 0,
+      "preserved": true
+    },
+    "license_redemptions": {
+      "rows": 0,
+      "preserved": true
+    }
+  },
+  "integrity": "ok",
+  "pilot_accounts": 1,
+  "published_lessons": 0,
+  "draft_lessons": 11
+}
