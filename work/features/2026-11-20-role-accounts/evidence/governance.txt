@@ -3,8 +3,5 @@ Validando perfil: /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAca
 Validando iniciativa: /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/work/features/2026-11-20-role-accounts
 Strict: cp2-spec sin requisitos (REQ-...)
 Strict: cp2-spec sin criterios de aceptacion
-Strict (aviso): cp2-spec sin requisitos no funcionales (NFR-...).
-Strict (aviso): cp2-spec sin consideraciones de seguridad.
-Strict: cp1-srs sin necesidades/problema
 OK: adapters sincronizados con la fuente neutral (16 agentes, 13 skills, 6 rules, 7 bloques multi-herramienta).
 RESULTADO: gobierno INCOMPLETO.
