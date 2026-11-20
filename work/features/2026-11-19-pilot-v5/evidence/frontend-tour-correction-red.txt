@@ -1,0 +1,50 @@
+✔ Anyway uses present spending in year one and handles zero inflation (0.485667ms)
+✔ Anyway rejects ranges and nonfinite values (0.143917ms)
+✔ Loan uses nominal monthly interest and zero rate and full deposit (0.806417ms)
+✔ Loan rejects invalid terms and preserves no stale result (0.122583ms)
+✔ Money is exact cents and rejects ambiguous separators (0.188542ms)
+✔ No Tour strips hidden result and amount; sold tours keep original classification (0.092291ms)
+✔ Goal is monthly money and optional basis point target (0.100833ms)
+✔ Routes never give representative owner destinations (0.059666ms)
+✔ Business day is Cancun, not browser UTC (10.746083ms)
+✔ individual permission concurrency uses its own version, not the lesson version (0.297083ms)
+✖ a previous No Tour corrected into a Q defaults to no sale (1.097708ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.709542
+
+✖ failing tests:
+
+test at frontend/src/pilot-v5/model.test.mjs:20:1
+✖ a previous No Tour corrected into a Q defaults to no sale (1.097708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    {
+      channel: 'agency',
+      net_volume_cents: 0,
+      occurred_on: '2026-11-20',
+  +   sale_status: null,
+  -   sale_status: 'no_sale',
+      tour_kind: 'q'
+    }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:21:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { occurred_on: '2026-11-20', tour_kind: 'q', channel: 'agency', sale_status: null, net_volume_cents: 0 },
+    expected: { occurred_on: '2026-11-20', tour_kind: 'q', channel: 'agency', sale_status: 'no_sale', net_volume_cents: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

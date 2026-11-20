@@ -1,0 +1,17 @@
+test_encoded_pdf_filename_is_decoded_then_validated (backend.tests.pilot.test_learning.LearningAPI.test_encoded_pdf_filename_is_decoded_then_validated) ... FAIL
+
+======================================================================
+FAIL: test_encoded_pdf_filename_is_decoded_then_validated (backend.tests.pilot.test_learning.LearningAPI.test_encoded_pdf_filename_is_decoded_then_validated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_learning.py", line 252, in test_encoded_pdf_filename_is_decoded_then_validated
+    self.assertEqual(asset["name"], "Guía de práctica.pdf")
+AssertionError: 'Gu_C3_ADa_20de_20pr_C3_A1ctica.pdf' != 'Guía de práctica.pdf'
+- Gu_C3_ADa_20de_20pr_C3_A1ctica.pdf
++ Guía de práctica.pdf
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.018s
+
+FAILED (failures=1)

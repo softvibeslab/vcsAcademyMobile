@@ -1,0 +1,41 @@
+Pruebas operativas sintéticas — 2026-11-20
+
+Comando: .venv/bin/python -m unittest backend.tests.pilot.test_operations -v
+RED: 11 pruebas, seis fallos observados antes de corrección. Retención borraba
+un archivo ajeno; carpetas existentes permanecían 0755; errores dejaban archivos
+parciales y snapshots incompletos; credential_name aceptaba ../ y escapaba de
+la carpeta aprobada. Evidencia: operations-scripts-red.txt.
+
+GREEN: 11 pruebas, OK (0.234 s), en operations-scripts-green.txt. Corregidos:
+patrones explícitos de archivos propios, directorios 0700, archivos 0600,
+limpieza ante fallo, cierre de SQLite, verificación de SHA-256 de PDF restaurados,
+validación de nombres/duplicados y comprobación previa de asignaciones existentes.
+
+Alcance probado: respaldo SQLite íntegro/restaurado, no sobrescribir destino,
+preservación del archivo previo ante fallo, PDF restaurado idéntico, retención
+de siete días para daily y snapshots YYYYMMDD-v5.sqlite/json/nginx/-assets.tar.gz,
+preservación de archivos ajenos y symlinks, provisión idempotente sin rotar claves,
+credenciales fuera del sitio y con permisos privados, adopción solo explícita
+de usuario legacy, rechazo de mover un usuario ya asignado a otra organización.
+
+Regresión: .venv/bin/python -m unittest discover -s backend/tests/pilot -v
+75 pruebas, OK (2.363 s). Evidencia: operations-scripts-suite.txt.
+El ensayo de 20 sesiones/10000 tours y restauración se repitió con los scripts
+corregidos: operations.txt, todos los p95 API menores a un segundo.
+
+Sin datos reales, llamadas al VPS ni publicación. Todos los paths de prueba,
+cuentas @example.invalid, archivos y claves efímeras viven en TemporaryDirectory
+y se eliminan al finalizar. No se imprimen ni registran las claves generadas.
+
+Layout del contenedor: prueba adicional RED reprodujo que /tools/pilot/provision.py
+calculaba erróneamente '/' como repositorio y rechazaba /ops/credentials. Ahora se
+obtiene la raíz real desde identity.__file__ (/app en el contenedor).
+operations-mount-red.txt -> operations-mount-green.txt: 12 pruebas operativas OK.
+
+Rendimiento HTTP real: verify_operations.py --http usa un uvicorn con un solo
+event loop y 20 httpx.Client con conexión reutilizada. Home solicita metrics y
+followups en paralelo, como la interfaz; API y Home deben tener p95 <1000 ms.
+Prueba LOCAL: operations-http-local.txt, 300 solicitudes, 10000 tours,
+p95 Home 271.92 ms, metrics 256.72 ms, followups 209.18 ms. Ambos gates pasan.
+TestClient crea portales separados y su latencia no sustituye la del servicio
+HTTP. Un resultado local no certifica VPS, nginx, TLS ni red externa.

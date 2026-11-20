@@ -1,0 +1,36 @@
+{
+  "scope": "document_review_only",
+  "date": "2026-11-19",
+  "source_sha256": "5150ef1a3f80ad226222254033256c9b15bb9d190104c9909eb650397c3a047e",
+  "markdown_documents": 14,
+  "ac": 24,
+  "esc": 24,
+  "ds": 10,
+  "tc": 24,
+  "req": 24,
+  "missing_tc": [],
+  "broken_links": [],
+  "numeric_oracles": {
+    "closing_percent": "66.67",
+    "vpg_usd": "1000.00",
+    "average_ticket_usd": "1500.00",
+    "budget_percent": "50.00",
+    "budget_difference_usd": "-3000.00",
+    "closing_difference_pp": "16.67",
+    "anyway_usd": "89334.24",
+    "loan_usd": "421.34"
+  },
+  "implementation_verified": false,
+  "approval": "pending",
+  "reference_errors": [],
+  "review_resolutions": [
+    "No Tour coexists with tours",
+    "Monthly goals immutable/current month",
+    "Generic prelogin branding",
+    "Private PDF download; no third-party DRM claim",
+    "One backend pilot package",
+    "Monetary API units explicitly cents",
+    "Fixture identities/dates aligned",
+    "Performance scenario linked to NFR-08"
+  ]
+}

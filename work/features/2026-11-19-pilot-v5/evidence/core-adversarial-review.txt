@@ -1,0 +1,18 @@
+{
+  "private_headers": true,
+  "secure_response_has_no_password_or_session_token": true,
+  "missing_csrf": 403,
+  "wrong_csrf": 403,
+  "wrong_origin": 403,
+  "valid_cookie_origin_and_csrf": 201,
+  "representative_cannot_read_owner_workspace": 403,
+  "preferences_persist_across_authenticated_requests": 200,
+  "legacy_public_and_global_routes_absent": true,
+  "idle_expiry_enforced": true,
+  "absolute_expiry_enforced": true,
+  "credential_revision_revokes_session": true,
+  "organization_deactivation_revokes_session": true,
+  "repeat_migration_preserves_legacy_and_does_not_create_tours_or_demo_users": true,
+  "roadmap_seed_once_and_foreign_keys_valid": true
+}
+PASS: isolated synthetic DB only; no production credentials or records used.

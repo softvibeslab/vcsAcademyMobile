@@ -1,0 +1,4 @@
+T24 integration RED: .venv/bin/python -m unittest backend.tests.pilot.test_bootstrap
+Expected 401 for /api/pilot/tours, observed 404 (router not mounted).
+T24 integration GREEN: .venv/bin/python -m unittest discover -s backend/tests/pilot -p 'test_*.py'
+51 tests, 0.880s, OK. All private routers mounted; seed repeated twice keeps 11 drafts and exactly 3 initial open lessons.

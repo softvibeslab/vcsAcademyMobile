@@ -1,0 +1,227 @@
+✖ Anyway uses present spending in year one and handles zero inflation (1.679875ms)
+✖ Anyway rejects ranges and nonfinite values (0.248292ms)
+✖ Loan uses nominal monthly interest and zero rate and full deposit (1.160708ms)
+✖ Loan rejects invalid terms and preserves no stale result (0.862875ms)
+✖ Money is exact cents and rejects ambiguous separators (0.144ms)
+✖ No Tour strips hidden result and amount; sold tours keep original classification (0.34775ms)
+✖ Goal is monthly money and optional basis point target (0.154458ms)
+✖ Routes never give representative owner destinations (0.07975ms)
+✖ Business day is Cancun, not browser UTC (0.103083ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 0
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 84.2215
+
+✖ failing tests:
+
+test at frontend/src/pilot-v5/model.test.mjs:4:1
+✖ Anyway uses present spending in year one and handles zero inflation (1.679875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - 89334.24
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:4:88)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 89334.24,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot-v5/model.test.mjs:5:1
+✖ Anyway rejects ranges and nonfinite values (0.248292ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:5:146)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot-v5/model.test.mjs:6:1
+✖ Loan uses nominal monthly interest and zero rate and full deposit (1.160708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + undefined
+  - {
+  -   monthly: 421.34,
+  -   principal: 16000
+  - }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:6:86)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { principal: 16000, monthly: 421.34 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot-v5/model.test.mjs:7:1
+✖ Loan rejects invalid terms and preserves no stale result (0.862875ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:7:172)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot-v5/model.test.mjs:8:1
+✖ Money is exact cents and rejects ambiguous separators (0.144ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - 12345
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:8:74)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 12345,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot-v5/model.test.mjs:9:1
+✖ No Tour strips hidden result and amount; sold tours keep original classification (0.34775ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + undefined
+  - {
+  -   channel: null,
+  -   net_volume_cents: 0,
+  -   occurred_on: '2026-11-20',
+  -   sale_status: null,
+  -   tour_kind: 'no_tour'
+  - }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:9:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { occurred_on: '2026-11-20', tour_kind: 'no_tour', channel: null, sale_status: null, net_volume_cents: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot-v5/model.test.mjs:10:1
+✖ Goal is monthly money and optional basis point target (0.154458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + undefined
+  - {
+  -   budget_volume_cents: 600000,
+  -   month: '2026-11',
+  -   target_close_bps: 5000
+  - }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:10:74)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { month: '2026-11', budget_volume_cents: 600000, target_close_bps: 5000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot-v5/model.test.mjs:11:1
+✖ Routes never give representative owner destinations (0.07975ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - 'team'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:11:72)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'team',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot-v5/model.test.mjs:12:1
+✖ Business day is Cancun, not browser UTC (0.103083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - '2026-11-20'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:12:60)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '2026-11-20',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

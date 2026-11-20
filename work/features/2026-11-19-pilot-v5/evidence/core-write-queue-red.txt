@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_writers_queue_before_connect_and_rollback_releases_queue (backend.tests.pilot.test_auth.AuthTests.test_writers_queue_before_connect_and_rollback_releases_queue)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_auth.py", line 138, in test_writers_queue_before_connect_and_rollback_releases_queue
+    self.assertFalse(second_connect.wait(.1), 'second writer should wait before opening SQLite')
+AssertionError: True is not false : second writer should wait before opening SQLite
+
+----------------------------------------------------------------------
+Ran 1 test in 0.039s
+
+FAILED (failures=1)

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "story-gate",
+    "exit_code": 1,
+    "reason": "CP2 y aceptación PO pendientes; implementación todavía no iniciada",
+    "last_lines": [
+      "FALTA: falta quien aprobo (nombre y rol)",
+      "FALTA: fecha de aprobacion invalida: \"-\" (yyyy-mm-dd)",
+      "FALTA: falta la evidencia de aprobacion (cita textual y canal)",
+      "No verificable por maquina: que los criterios sean correctos, que los datos simulados sean realistas y que la cita de aprobacion sea autentica.",
+      "RESULTADO: historia NO LISTA para desarrollo (56 pendiente(s)): /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/work/stories/2026-11-19-pilot-v5.md"
+    ]
+  },
+  {
+    "name": "governance-gate",
+    "exit_code": 1,
+    "reason": "CP2 y aceptación PO pendientes; implementación todavía no iniciada",
+    "last_lines": [
+      "  FALTA: fecha de aprobacion invalida: \"-\" (yyyy-mm-dd)",
+      "  FALTA: falta la evidencia de aprobacion (cita textual y canal)",
+      "Strict: cp4-validation sin evidencia TDD (filas RED y GREEN llenas en la tabla de evidencia, o 'Excepcion TDD: <razon>' (rules-neutral/workflow-tdd.md))",
+      "OK: adapters sincronizados con la fuente neutral (16 agentes, 13 skills, 6 rules, 7 bloques multi-herramienta).",
+      "RESULTADO: gobierno INCOMPLETO."
+    ]
+  }
+]

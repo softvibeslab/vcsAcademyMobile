@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_locale_is_persisted_and_cannot_change_identity (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_locale_is_persisted_and_cannot_change_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 76, in test_locale_is_persisted_and_cannot_change_identity
+    self.assertEqual(response.status_code, 200, response.text)
+AssertionError: 404 != 200 : {"detail":"Not Found"}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.020s
+
+FAILED (failures=1)

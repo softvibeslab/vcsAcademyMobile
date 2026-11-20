@@ -1,0 +1,101 @@
+......FFFFEFFFFF
+======================================================================
+ERROR: test_no_tour_omitted_sale_is_normalized (backend.tests.pilot.test_activity.TourValidationTests.test_no_tour_omitted_sale_is_normalized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 77, in test_no_tour_omitted_sale_is_normalized
+    self.assertIsNone(result["sale_status"])
+                      ~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'sale_status'
+
+======================================================================
+FAIL: test_future_and_invalid_dates_fail (backend.tests.pilot.test_activity.TourValidationTests.test_future_and_invalid_dates_fail) (day='2026-11-21')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 96, in test_future_and_invalid_dates_fail
+    with self.subTest(day=day), self.assertRaises(HTTPException):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+======================================================================
+FAIL: test_future_and_invalid_dates_fail (backend.tests.pilot.test_activity.TourValidationTests.test_future_and_invalid_dates_fail) (day='2026-02-30')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 96, in test_future_and_invalid_dates_fail
+    with self.subTest(day=day), self.assertRaises(HTTPException):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+======================================================================
+FAIL: test_future_and_invalid_dates_fail (backend.tests.pilot.test_activity.TourValidationTests.test_future_and_invalid_dates_fail) (day='not-a-date')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 96, in test_future_and_invalid_dates_fail
+    with self.subTest(day=day), self.assertRaises(HTTPException):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+======================================================================
+FAIL: test_no_tour_cannot_carry_sale (backend.tests.pilot.test_activity.TourValidationTests.test_no_tour_cannot_carry_sale)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 82, in test_no_tour_cannot_carry_sale
+    with self.assertRaises(HTTPException):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+======================================================================
+FAIL: test_sale_and_channel_constraints (backend.tests.pilot.test_activity.TourValidationTests.test_sale_and_channel_constraints) (changes={'net_volume_cents': 0})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 90, in test_sale_and_channel_constraints
+    with self.subTest(changes=changes), self.assertRaises(HTTPException):
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+======================================================================
+FAIL: test_sale_and_channel_constraints (backend.tests.pilot.test_activity.TourValidationTests.test_sale_and_channel_constraints) (changes={'channel': None})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 90, in test_sale_and_channel_constraints
+    with self.subTest(changes=changes), self.assertRaises(HTTPException):
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+======================================================================
+FAIL: test_sale_and_channel_constraints (backend.tests.pilot.test_activity.TourValidationTests.test_sale_and_channel_constraints) (changes={'net_volume_cents': -1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 90, in test_sale_and_channel_constraints
+    with self.subTest(changes=changes), self.assertRaises(HTTPException):
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+======================================================================
+FAIL: test_sale_and_channel_constraints (backend.tests.pilot.test_activity.TourValidationTests.test_sale_and_channel_constraints) (changes={'net_volume_cents': 100000001})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 90, in test_sale_and_channel_constraints
+    with self.subTest(changes=changes), self.assertRaises(HTTPException):
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+======================================================================
+FAIL: test_sale_and_channel_constraints (backend.tests.pilot.test_activity.TourValidationTests.test_sale_and_channel_constraints) (changes={'sale_status': 'no_sale', 'net_volume_cents': 100})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 90, in test_sale_and_channel_constraints
+    with self.subTest(changes=changes), self.assertRaises(HTTPException):
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: HTTPException not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.008s
+
+FAILED (failures=9, errors=1)

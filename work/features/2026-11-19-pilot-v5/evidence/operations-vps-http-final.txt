@@ -1,0 +1,121 @@
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+{
+  "backup_restore": {
+    "asset_restore_verified": true,
+    "asset_sha256": "fdc9ae12138897c915b1a7e1a9aaba78da39cdaf9ee8278df8f2502d60c34316",
+    "database": {
+      "integrity": "ok",
+      "restored": true,
+      "sha256": "ae3f14e40ea9f1ee53cc590f271b236d335579dd59df51afa9ef763b8def2ca5",
+      "table_counts": {
+        "goalsheet_entries": 20,
+        "pilot_access_requests": 0,
+        "pilot_allowed_emails": 20,
+        "pilot_assets": 1,
+        "pilot_audit": 20,
+        "pilot_diary_entries": 0,
+        "pilot_followups": 0,
+        "pilot_idempotency": 0,
+        "pilot_lesson_access": 0,
+        "pilot_lesson_completions": 0,
+        "pilot_lesson_revisions": 11,
+        "pilot_lessons": 11,
+        "pilot_login_failures": 0,
+        "pilot_monthly_goals": 20,
+        "pilot_notes": 0,
+        "pilot_organizations": 1,
+        "pilot_schema_migrations": 2,
+        "pilot_sessions": 20,
+        "pilot_tours": 10000,
+        "users": 20
+      }
+    }
+  },
+  "elapsed_seconds": 4.8,
+  "environment": "isolated uvicorn over loopback HTTP; one ASGI event loop; real temporary SQLite",
+  "legacy_endpoints": {
+    "/api/admin/users": 404,
+    "/api/auth/demo-users": 404,
+    "/api/blueprint/steps": 404,
+    "/api/public/catalog": 404
+  },
+  "legacy_migration": {
+    "after": {
+      "count": 20,
+      "sha256": "c05257849d5cdb045426a7491687de8ba1a36aba411ea1ad27aac6a2d4d5ef5e"
+    },
+    "before": {
+      "count": 20,
+      "sha256": "c05257849d5cdb045426a7491687de8ba1a36aba411ea1ad27aac6a2d4d5ef5e"
+    },
+    "fabricated_tours": 0,
+    "runs": 2,
+    "unchanged": true
+  },
+  "limitations": [
+    "Loopback HTTP includes socket transport and one uvicorn event loop; TestClient mode uses separate portals and is not a deployment performance substitute. Both exclude nginx, TLS and external network latency.",
+    "The report describes its execution machine; a local run does not establish VPS performance.",
+    "Rollback check validates data preservation on a compatible pilot restart; it is not a deployed reverse-proxy/container rollback.",
+    "Asset copy/restore is a synthetic rehearsal; deployment must back up its private asset directory too."
+  ],
+  "performance": {
+    "api_gate_passed": true,
+    "home_gate_passed": true,
+    "home_request_pattern": "metrics + followups in parallel, matching UI",
+    "measurements": {
+      "followups_list": {
+        "maximum_ms": 416.3,
+        "p50_ms": 206.77,
+        "p95_ms": 336.74,
+        "samples": 60
+      },
+      "home_bundle_parallel": {
+        "maximum_ms": 498.74,
+        "p50_ms": 217.34,
+        "p95_ms": 461.84,
+        "samples": 60
+      },
+      "home_metrics": {
+        "maximum_ms": 273.3,
+        "p50_ms": 200.97,
+        "p95_ms": 260.12,
+        "samples": 60
+      },
+      "lesson_list": {
+        "maximum_ms": 236.34,
+        "p50_ms": 139.42,
+        "p95_ms": 187.14,
+        "samples": 60
+      },
+      "notes_list": {
+        "maximum_ms": 263.01,
+        "p50_ms": 157.48,
+        "p95_ms": 235.37,
+        "samples": 60
+      },
+      "tour_list": {
+        "maximum_ms": 492.78,
+        "p50_ms": 237.81,
+        "p95_ms": 320.0,
+        "samples": 60
+      }
+    },
+    "requests": 300,
+    "rounds_per_session": 3,
+    "sessions": 20,
+    "threshold_p95_ms": 1000,
+    "tours": 10000
+  },
+  "rollback_data_rehearsal": {
+    "container_proxy_switch_exercised": false,
+    "current_tours": 10001,
+    "post_snapshot_sale_preserved": true,
+    "snapshot_tours": 10000,
+    "strategy": "compatible pilot initialization with current DB; no old snapshot restore"
+  },
+  "scenario": "TC-24 / NFR-08",
+  "synthetic_only": true
+}

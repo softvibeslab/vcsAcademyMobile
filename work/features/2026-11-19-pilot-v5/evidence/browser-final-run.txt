@@ -1,0 +1,4 @@
+FAIL locator.waitFor: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('main, form').filter({ has: getByRole('heading', { name: /Set your personal password|Hello,|My roadmap/ }) }).first() to be visible[22m
+

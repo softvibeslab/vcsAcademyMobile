@@ -1,0 +1,59 @@
+EEEEEE
+======================================================================
+ERROR: test_cancelled_nq_is_not_effective_q (backend.tests.pilot.test_activity.MetricsTests.test_cancelled_nq_is_not_effective_q)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 35, in test_cancelled_nq_is_not_effective_q
+    self.assertEqual(result["activity_totals"]["qualified_tours"], 2)
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'activity_totals'
+
+======================================================================
+ERROR: test_money_rounds_half_up_at_final_cent (backend.tests.pilot.test_activity.MetricsTests.test_money_rounds_half_up_at_final_cent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 63, in test_money_rounds_half_up_at_final_cent
+    self.assertEqual(calculate_metrics(tours)["kpis"]["vpg_cents"], 1)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'kpis'
+
+======================================================================
+ERROR: test_monthly_comparisons_do_not_use_daily_totals (backend.tests.pilot.test_activity.MetricsTests.test_monthly_comparisons_do_not_use_daily_totals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 48, in test_monthly_comparisons_do_not_use_daily_totals
+    self.assertEqual(result["kpis"]["closing_percent"], "0.00")
+                     ~~~~~~^^^^^^^^
+KeyError: 'kpis'
+
+======================================================================
+ERROR: test_no_denominators_return_none (backend.tests.pilot.test_activity.MetricsTests.test_no_denominators_return_none)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 42, in test_no_denominators_return_none
+    self.assertTrue(all(value is None for value in result["kpis"].values()))
+                                                   ~~~~~~^^^^^^^^
+KeyError: 'kpis'
+
+======================================================================
+ERROR: test_six_metrics_use_effective_q_and_net (backend.tests.pilot.test_activity.MetricsTests.test_six_metrics_use_effective_q_and_net)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 23, in test_six_metrics_use_effective_q_and_net
+    self.assertEqual(result["activity_totals"]["qualified_tours"], 3)
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'activity_totals'
+
+======================================================================
+ERROR: test_void_and_no_tour_never_contribute_sales_or_volume (backend.tests.pilot.test_activity.MetricsTests.test_void_and_no_tour_never_contribute_sales_or_volume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 57, in test_void_and_no_tour_never_contribute_sales_or_volume
+    self.assertEqual(result["activity_totals"]["sales"], 1)
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'activity_totals'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (errors=6)

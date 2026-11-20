@@ -1,0 +1,126 @@
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+{
+  "backup_restore": {
+    "asset_restore_verified": true,
+    "asset_sha256": "fdc9ae12138897c915b1a7e1a9aaba78da39cdaf9ee8278df8f2502d60c34316",
+    "database": {
+      "integrity": "ok",
+      "restored": true,
+      "sha256": "6d7d8cc16037cc150743a1df1c983f5f9f7b31597d4b06cc7f1091095b5fc6cc",
+      "table_counts": {
+        "goalsheet_entries": 20,
+        "pilot_access_requests": 0,
+        "pilot_allowed_emails": 20,
+        "pilot_assets": 1,
+        "pilot_audit": 20,
+        "pilot_diary_entries": 0,
+        "pilot_followups": 0,
+        "pilot_idempotency": 0,
+        "pilot_lesson_access": 0,
+        "pilot_lesson_completions": 0,
+        "pilot_lesson_revisions": 11,
+        "pilot_lessons": 11,
+        "pilot_login_failures": 0,
+        "pilot_monthly_goals": 20,
+        "pilot_notes": 0,
+        "pilot_organizations": 1,
+        "pilot_schema_migrations": 2,
+        "pilot_sessions": 20,
+        "pilot_tours": 10000,
+        "users": 20
+      }
+    }
+  },
+  "elapsed_seconds": 4.41,
+  "environment": "local integrated ASGI via TestClient; real temporary SQLite; no network",
+  "legacy_endpoints": {
+    "/api/admin/users": 404,
+    "/api/auth/demo-users": 404,
+    "/api/blueprint/steps": 404,
+    "/api/public/catalog": 404
+  },
+  "legacy_migration": {
+    "after": {
+      "count": 20,
+      "sha256": "33bb135f3d6db7de5cc858acc9d3c112604f83a67b08f5ad7e71bd113fa49c18"
+    },
+    "before": {
+      "count": 20,
+      "sha256": "33bb135f3d6db7de5cc858acc9d3c112604f83a67b08f5ad7e71bd113fa49c18"
+    },
+    "fabricated_tours": 0,
+    "runs": 2,
+    "unchanged": true
+  },
+  "limitations": [
+    "Local ASGI/SQLite timings include real authentication but exclude VPS, nginx, TLS and network latency.",
+    "Rollback check validates data preservation on a compatible pilot restart; it is not a deployed reverse-proxy/container rollback.",
+    "Asset copy/restore is a synthetic rehearsal; deployment must back up its private asset directory too."
+  ],
+  "performance": {
+    "api_gate_passed": false,
+    "measurements": {
+      "followups_list": {
+        "maximum_ms": 240.77,
+        "p50_ms": 26.22,
+        "p95_ms": 119.78,
+        "samples": 60
+      },
+      "home_bundle_sequential": {
+        "maximum_ms": 2377.47,
+        "p50_ms": 215.84,
+        "p95_ms": 1841.52,
+        "samples": 60
+      },
+      "home_metrics": {
+        "maximum_ms": 2324.95,
+        "p50_ms": 102.98,
+        "p95_ms": 1627.15,
+        "samples": 60
+      },
+      "lesson_list": {
+        "maximum_ms": 1543.03,
+        "p50_ms": 27.36,
+        "p95_ms": 459.88,
+        "samples": 60
+      },
+      "notes_list": {
+        "maximum_ms": 455.64,
+        "p50_ms": 23.63,
+        "p95_ms": 197.19,
+        "samples": 60
+      },
+      "tour_list": {
+        "maximum_ms": 1859.22,
+        "p50_ms": 51.44,
+        "p95_ms": 368.52,
+        "samples": 60
+      }
+    },
+    "requests": 300,
+    "rounds_per_session": 3,
+    "sessions": 20,
+    "threshold_p95_ms": 1000,
+    "tours": 10000
+  },
+  "rollback_data_rehearsal": {
+    "container_proxy_switch_exercised": false,
+    "current_tours": 10001,
+    "post_snapshot_sale_preserved": true,
+    "snapshot_tours": 10000,
+    "strategy": "compatible pilot initialization with current DB; no old snapshot restore"
+  },
+  "scenario": "TC-24 / NFR-08",
+  "synthetic_only": true
+}
+Traceback (most recent call last):
+  File "/app/tools/pilot/verify_operations.py", line 201, in <module>
+    main()
+  File "/app/tools/pilot/verify_operations.py", line 197, in main
+    require(report["performance"]["api_gate_passed"], "API p95 exceeded 1000 ms")
+  File "/app/tools/pilot/verify_operations.py", line 40, in require
+    raise AssertionError(message)
+AssertionError: API p95 exceeded 1000 ms

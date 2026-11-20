@@ -1,0 +1,38 @@
+FFFF
+======================================================================
+FAIL: test_lesson_catalog_is_a_private_route (backend.tests.pilot.test_learning.VideoContract.test_lesson_catalog_is_a_private_route)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_learning.py", line 32, in test_lesson_catalog_is_a_private_route
+    self.assertEqual(response.status_code, 401)
+AssertionError: 404 != 401
+
+======================================================================
+FAIL: test_non_provider_host_is_rejected (backend.tests.pilot.test_learning.VideoContract.test_non_provider_host_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_learning.py", line 25, in test_non_provider_host_is_rejected
+    with self.assertRaises(Exception):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Exception not raised
+
+======================================================================
+FAIL: test_vimeo_unlisted_link_preserves_privacy_hash (backend.tests.pilot.test_learning.VideoContract.test_vimeo_unlisted_link_preserves_privacy_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_learning.py", line 19, in test_vimeo_unlisted_link_preserves_privacy_hash
+    self.assertEqual(
+AssertionError: None != {'provider': 'vimeo', 'id': '123456789', 'privacy_hash': 'abcdef1234'}
+
+======================================================================
+FAIL: test_youtube_link_is_normalized_to_provider_and_id (backend.tests.pilot.test_learning.VideoContract.test_youtube_link_is_normalized_to_provider_and_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_learning.py", line 13, in test_youtube_link_is_normalized_to_provider_and_id
+    self.assertEqual(
+AssertionError: None != {'provider': 'youtube', 'id': 'dQw4w9WgXcQ', 'privacy_hash': None}
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.017s
+
+FAILED (failures=4)

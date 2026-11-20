@@ -1,0 +1,75 @@
+FFFFFFF
+======================================================================
+FAIL: test_diary_requires_three_answers_and_is_private (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_diary_requires_three_answers_and_is_private)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 62, in test_diary_requires_three_answers_and_is_private
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_note_edit_conflict_delete_and_no_private_audit (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_note_edit_conflict_delete_and_no_private_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 44, in test_note_edit_conflict_delete_and_no_private_audit
+    note, payload = self.create_note()
+                    ^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 23, in create_note
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_notes_are_persistent_and_idempotent (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_notes_are_persistent_and_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 27, in test_notes_are_persistent_and_idempotent
+    note, payload = self.create_note()
+                    ^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 23, in create_note
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_owner_and_other_user_cannot_read_private_note (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_owner_and_other_user_cannot_read_private_note)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 37, in test_owner_and_other_user_cannot_read_private_note
+    note, _ = self.create_note()
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 23, in create_note
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_settings_owner_only_and_versioned (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_settings_owner_only_and_versioned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 74, in test_settings_owner_only_and_versioned
+    self.assertEqual(self.client.get("/api/pilot/owner/settings").status_code, 403)
+AssertionError: 404 != 403
+
+======================================================================
+FAIL: test_team_contains_only_own_organization_and_no_notes (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_team_contains_only_own_organization_and_no_notes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 86, in test_team_contains_only_own_organization_and_no_notes
+    self.create_note()
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 23, in create_note
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_unknown_scope_fields_are_rejected (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_unknown_scope_fields_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 71, in test_unknown_scope_fields_are_rejected
+    self.assertEqual(response.status_code, 422)
+AssertionError: 404 != 422
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.065s
+
+FAILED (failures=7)

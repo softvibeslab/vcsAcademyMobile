@@ -1,0 +1,46 @@
+✔ Anyway uses present spending in year one and handles zero inflation (0.846208ms)
+✔ Anyway rejects ranges and nonfinite values (0.163167ms)
+✔ Loan uses nominal monthly interest and zero rate and full deposit (0.8395ms)
+✔ Loan rejects invalid terms and preserves no stale result (0.093083ms)
+✔ Money is exact cents and rejects ambiguous separators (0.175083ms)
+✔ No Tour strips hidden result and amount; sold tours keep original classification (0.078ms)
+✔ Goal is monthly money and optional basis point target (0.093167ms)
+✔ Routes never give representative owner destinations (0.061583ms)
+✔ Business day is Cancun, not browser UTC (14.083333ms)
+✔ individual permission concurrency uses its own version, not the lesson version (0.285625ms)
+✔ a previous No Tour corrected into a Q defaults to no sale (0.074458ms)
+✖ publishing preserves reviewed lesson content and requires a new saved draft to republish (0.899125ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66.648916
+
+✖ failing tests:
+
+test at frontend/src/pilot-v5/model.test.mjs:24:1
+✖ publishing preserves reviewed lesson content and requires a new saved draft to republish (0.899125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + {}
+  - {
+  -   id: null,
+  -   pdf_asset_id: 'private-pdf',
+  -   title_en: 'Welcome',
+  -   video_url: 'https://youtu.be/example'
+  - }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:27:10)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: {},
+    expected: { id: null, title_en: 'Welcome', video_url: 'https://youtu.be/example', pdf_asset_id: 'private-pdf' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,10 @@
+2026-11-20 · Evidence observed during implementation
+Migration RED: test_additive_identity_schema_without_demo_seed failed: expected identity tables, observed set().
+Migration GREEN: same test passed after additive schema, no users seeded on two initializations.
+Auth RED: four tests failed on expected endpoint behavior, received 404.
+Auth GREEN: private login cookie/revocation, temporary password+CSRF, closed demo/recovery, origin/rate limit all passed.
+Operations RED: create_organization returned None; expected organization.
+Test harness correction: second schema initialization assertion was accidentally moved into account creation test during insertion; moved back to migration test. Expectations and product behavior unchanged.
+Operations GREEN: private credential file0600, no plaintext in result/database, no seeded accounts.
+Final command: .venv/bin/python -m unittest backend.tests.pilot.test_identity backend.tests.pilot.test_auth
+Observed: Ran 6 tests in 0.271s; OK.

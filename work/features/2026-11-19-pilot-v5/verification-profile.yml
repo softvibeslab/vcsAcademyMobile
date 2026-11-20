@@ -1,0 +1,26 @@
+project:
+  name: sales-academy-pilot
+  owner_accountable: Product Owner
+active_layers:
+  - backend
+  - frontend
+  - data
+  - infra
+runtime:
+  backend: python-fastapi
+  frontend: react-vite
+  data: sqlite
+  infra: docker-nginx
+conventions:
+  functional_docs_language: es
+  code_language: en
+  feature_workdir: work/features
+verification:
+  build_cmd: npm run build:web
+  test_cmd: .venv/bin/python -m unittest discover -s backend/tests/pilot -p 'test_*.py'
+  frontend_test_cmd: node --test frontend/src/pilot-v5/*.test.mjs
+  domain_test_cmd: npm test
+  lint_cmd: ''
+knowledge:
+  hermes: disabled
+  default_context: workspace

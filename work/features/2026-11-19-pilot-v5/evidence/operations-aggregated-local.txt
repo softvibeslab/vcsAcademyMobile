@@ -1,0 +1,114 @@
+{
+  "backup_restore": {
+    "asset_restore_verified": true,
+    "asset_sha256": "fdc9ae12138897c915b1a7e1a9aaba78da39cdaf9ee8278df8f2502d60c34316",
+    "database": {
+      "integrity": "ok",
+      "restored": true,
+      "sha256": "dd023cc8a28dafee58c01e7db3ca1479bdc891c6191a9780a377a8059bb92245",
+      "table_counts": {
+        "goalsheet_entries": 20,
+        "pilot_access_requests": 0,
+        "pilot_allowed_emails": 20,
+        "pilot_assets": 1,
+        "pilot_audit": 20,
+        "pilot_diary_entries": 0,
+        "pilot_followups": 0,
+        "pilot_idempotency": 0,
+        "pilot_lesson_access": 0,
+        "pilot_lesson_completions": 0,
+        "pilot_lesson_revisions": 11,
+        "pilot_lessons": 11,
+        "pilot_login_failures": 0,
+        "pilot_monthly_goals": 20,
+        "pilot_notes": 0,
+        "pilot_organizations": 1,
+        "pilot_schema_migrations": 2,
+        "pilot_sessions": 20,
+        "pilot_tours": 10000,
+        "users": 20
+      }
+    }
+  },
+  "elapsed_seconds": 1.18,
+  "environment": "local integrated ASGI via TestClient; real temporary SQLite; no network",
+  "legacy_endpoints": {
+    "/api/admin/users": 404,
+    "/api/auth/demo-users": 404,
+    "/api/blueprint/steps": 404,
+    "/api/public/catalog": 404
+  },
+  "legacy_migration": {
+    "after": {
+      "count": 20,
+      "sha256": "106f97de3d2dbb35cb20e065c9d65e71a874aa1cf54e9b2226a49c42e9f30470"
+    },
+    "before": {
+      "count": 20,
+      "sha256": "106f97de3d2dbb35cb20e065c9d65e71a874aa1cf54e9b2226a49c42e9f30470"
+    },
+    "fabricated_tours": 0,
+    "runs": 2,
+    "unchanged": true
+  },
+  "limitations": [
+    "Local ASGI/SQLite timings include real authentication but exclude VPS, nginx, TLS and network latency.",
+    "Rollback check validates data preservation on a compatible pilot restart; it is not a deployed reverse-proxy/container rollback.",
+    "Asset copy/restore is a synthetic rehearsal; deployment must back up its private asset directory too."
+  ],
+  "performance": {
+    "api_gate_passed": true,
+    "measurements": {
+      "followups_list": {
+        "maximum_ms": 452.0,
+        "p50_ms": 10.31,
+        "p95_ms": 94.71,
+        "samples": 60
+      },
+      "home_bundle_sequential": {
+        "maximum_ms": 583.79,
+        "p50_ms": 56.56,
+        "p95_ms": 492.19,
+        "samples": 60
+      },
+      "home_metrics": {
+        "maximum_ms": 578.17,
+        "p50_ms": 14.59,
+        "p95_ms": 275.6,
+        "samples": 60
+      },
+      "lesson_list": {
+        "maximum_ms": 96.94,
+        "p50_ms": 9.72,
+        "p95_ms": 45.91,
+        "samples": 60
+      },
+      "notes_list": {
+        "maximum_ms": 143.19,
+        "p50_ms": 11.2,
+        "p95_ms": 91.41,
+        "samples": 60
+      },
+      "tour_list": {
+        "maximum_ms": 349.87,
+        "p50_ms": 16.98,
+        "p95_ms": 97.22,
+        "samples": 60
+      }
+    },
+    "requests": 300,
+    "rounds_per_session": 3,
+    "sessions": 20,
+    "threshold_p95_ms": 1000,
+    "tours": 10000
+  },
+  "rollback_data_rehearsal": {
+    "container_proxy_switch_exercised": false,
+    "current_tours": 10001,
+    "post_snapshot_sale_preserved": true,
+    "snapshot_tours": 10000,
+    "strategy": "compatible pilot initialization with current DB; no old snapshot restore"
+  },
+  "scenario": "TC-24 / NFR-08",
+  "synthetic_only": true
+}

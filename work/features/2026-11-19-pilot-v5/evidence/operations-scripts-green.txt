@@ -1,0 +1,16 @@
+test_daily_archive_restores_pdf_database_and_private_modes (backend.tests.pilot.test_operations.OperationsTests.test_daily_archive_restores_pdf_database_and_private_modes) ... ok
+test_failed_daily_archive_removes_partial_and_preserves_prior_archive (backend.tests.pilot.test_operations.OperationsTests.test_failed_daily_archive_removes_partial_and_preserves_prior_archive) ... ok
+test_failed_sqlite_backup_removes_incomplete_destination (backend.tests.pilot.test_operations.OperationsTests.test_failed_sqlite_backup_removes_incomplete_destination) ... ok
+test_provision_adopts_only_explicit_legacy_mapping (backend.tests.pilot.test_operations.OperationsTests.test_provision_adopts_only_explicit_legacy_mapping) ... ok
+test_provision_is_idempotent_and_keeps_credentials_private (backend.tests.pilot.test_operations.OperationsTests.test_provision_is_idempotent_and_keeps_credentials_private) ... ok
+test_provision_never_moves_already_mapped_account (backend.tests.pilot.test_operations.OperationsTests.test_provision_never_moves_already_mapped_account) ... ok
+test_provision_private_existing_credentials_directory (backend.tests.pilot.test_operations.OperationsTests.test_provision_private_existing_credentials_directory) ... ok
+test_provision_rejects_credential_path_escape_before_writing (backend.tests.pilot.test_operations.OperationsTests.test_provision_rejects_credential_path_escape_before_writing) ... ok
+test_provision_rejects_credentials_inside_repository (backend.tests.pilot.test_operations.OperationsTests.test_provision_rejects_credentials_inside_repository) ... ok
+test_retention_removes_only_owned_backups_after_seven_days (backend.tests.pilot.test_operations.OperationsTests.test_retention_removes_only_owned_backups_after_seven_days) ... ok
+test_sqlite_backup_restores_and_does_not_replace_existing_destination (backend.tests.pilot.test_operations.OperationsTests.test_sqlite_backup_restores_and_does_not_replace_existing_destination) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.234s
+
+OK

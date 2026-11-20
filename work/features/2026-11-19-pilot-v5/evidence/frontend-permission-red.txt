@@ -1,0 +1,37 @@
+✔ Anyway uses present spending in year one and handles zero inflation (0.848583ms)
+✔ Anyway rejects ranges and nonfinite values (0.163333ms)
+✔ Loan uses nominal monthly interest and zero rate and full deposit (1.013416ms)
+✔ Loan rejects invalid terms and preserves no stale result (0.095292ms)
+✔ Money is exact cents and rejects ambiguous separators (0.171208ms)
+✔ No Tour strips hidden result and amount; sold tours keep original classification (0.0795ms)
+✔ Goal is monthly money and optional basis point target (0.08875ms)
+✔ Routes never give representative owner destinations (0.058917ms)
+✔ Business day is Cancun, not browser UTC (11.168334ms)
+✖ individual permission concurrency uses its own version, not the lesson version (0.724959ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.068292
+
+✖ failing tests:
+
+test at frontend/src/pilot-v5/model.test.mjs:14:1
+✖ individual permission concurrency uses its own version, not the lesson version (0.724959ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 7
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot-v5/model.test.mjs:16:10)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 7,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

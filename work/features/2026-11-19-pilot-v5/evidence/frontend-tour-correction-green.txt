@@ -1,0 +1,19 @@
+✔ Anyway uses present spending in year one and handles zero inflation (0.491041ms)
+✔ Anyway rejects ranges and nonfinite values (0.143833ms)
+✔ Loan uses nominal monthly interest and zero rate and full deposit (0.789417ms)
+✔ Loan rejects invalid terms and preserves no stale result (0.124209ms)
+✔ Money is exact cents and rejects ambiguous separators (0.183583ms)
+✔ No Tour strips hidden result and amount; sold tours keep original classification (0.091708ms)
+✔ Goal is monthly money and optional basis point target (0.099333ms)
+✔ Routes never give representative owner destinations (0.061375ms)
+✔ Business day is Cancun, not browser UTC (10.197208ms)
+✔ individual permission concurrency uses its own version, not the lesson version (0.213875ms)
+✔ a previous No Tour corrected into a Q defaults to no sale (0.068167ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.040583

@@ -1,0 +1,21 @@
+FF
+======================================================================
+FAIL: test_rejected_goal_duplicates_and_mutations_are_audited (backend.tests.pilot.test_activity.ActivityApiTests.test_rejected_goal_duplicates_and_mutations_are_audited)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 227, in test_rejected_goal_duplicates_and_mutations_are_audited
+    self.assertIn("monthly_goal_duplicate_rejected", actions)
+AssertionError: 'monthly_goal_duplicate_rejected' not found in ['monthly_goal_confirmed']
+
+======================================================================
+FAIL: test_followup_lists_have_bounded_stable_pages (backend.tests.pilot.test_activity.ActivityApiTests.test_followup_lists_have_bounded_stable_pages)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 236, in test_followup_lists_have_bounded_stable_pages
+    self.assertEqual(len(first["items"]), 2)
+AssertionError: 3 != 2
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.096s
+
+FAILED (failures=2)

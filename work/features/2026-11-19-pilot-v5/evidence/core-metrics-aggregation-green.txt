@@ -1,0 +1,61 @@
+....................................................FFF...FF.F............
+======================================================================
+FAIL: test_daily_archive_restores_pdf_database_and_private_modes (test_operations.OperationsTests.test_daily_archive_restores_pdf_database_and_private_modes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_operations.py", line 81, in test_daily_archive_restores_pdf_database_and_private_modes
+    self.assertEqual(stat.S_IMODE(folder.stat().st_mode), 0o700)
+AssertionError: 493 != 448
+
+======================================================================
+FAIL: test_failed_daily_archive_removes_partial_and_preserves_prior_archive (test_operations.OperationsTests.test_failed_daily_archive_removes_partial_and_preserves_prior_archive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_operations.py", line 122, in test_failed_daily_archive_removes_partial_and_preserves_prior_archive
+    self.assertEqual(list(folder.glob("*.partial")), [])
+AssertionError: Lists differ: [PosixPath('/var/folders/st/6m6rs6vd4dx8mv[84 chars]al')] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+PosixPath('/var/folders/st/6m6rs6vd4dx8mv_52r4c1d8w0000gn/T/pilot-ops-test-3xi8z817/daily/daily-20261120T175621Z.tar.gz.partial')
+
+- [PosixPath('/var/folders/st/6m6rs6vd4dx8mv_52r4c1d8w0000gn/T/pilot-ops-test-3xi8z817/daily/daily-20261120T175621Z.tar.gz.partial')]
++ []
+
+======================================================================
+FAIL: test_failed_sqlite_backup_removes_incomplete_destination (test_operations.OperationsTests.test_failed_sqlite_backup_removes_incomplete_destination)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_operations.py", line 72, in test_failed_sqlite_backup_removes_incomplete_destination
+    self.assertFalse(destination.exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_provision_private_existing_credentials_directory (test_operations.OperationsTests.test_provision_private_existing_credentials_directory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_operations.py", line 181, in test_provision_private_existing_credentials_directory
+    self.assertEqual(stat.S_IMODE(credentials.stat().st_mode), 0o700)
+AssertionError: 493 != 448
+
+======================================================================
+FAIL: test_provision_rejects_credential_path_escape_before_writing (test_operations.OperationsTests.test_provision_rejects_credential_path_escape_before_writing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_operations.py", line 163, in test_provision_rejects_credential_path_escape_before_writing
+    with self.assertRaises((ValueError, HTTPException)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'fastapi.exceptions.HTTPException'>) not raised
+
+======================================================================
+FAIL: test_retention_removes_only_owned_backups_after_seven_days (test_operations.OperationsTests.test_retention_removes_only_owned_backups_after_seven_days)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_operations.py", line 108, in test_retention_removes_only_owned_backups_after_seven_days
+    self.assertEqual(result["expired_files_removed"], len(old_names))
+AssertionError: 6 != 5
+
+----------------------------------------------------------------------
+Ran 74 tests in 1.650s
+
+FAILED (failures=6)

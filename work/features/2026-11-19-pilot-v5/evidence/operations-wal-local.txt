@@ -1,0 +1,122 @@
+{
+  "backup_restore": {
+    "asset_restore_verified": true,
+    "asset_sha256": "fdc9ae12138897c915b1a7e1a9aaba78da39cdaf9ee8278df8f2502d60c34316",
+    "database": {
+      "integrity": "ok",
+      "restored": true,
+      "sha256": "77d998da353f54773c07c695f290ad9d5d4c3907c9f313ab0b13199db7450472",
+      "table_counts": {
+        "goalsheet_entries": 20,
+        "pilot_access_requests": 0,
+        "pilot_allowed_emails": 20,
+        "pilot_assets": 1,
+        "pilot_audit": 20,
+        "pilot_diary_entries": 0,
+        "pilot_followups": 0,
+        "pilot_idempotency": 0,
+        "pilot_lesson_access": 0,
+        "pilot_lesson_completions": 0,
+        "pilot_lesson_revisions": 11,
+        "pilot_lessons": 11,
+        "pilot_login_failures": 0,
+        "pilot_monthly_goals": 20,
+        "pilot_notes": 0,
+        "pilot_organizations": 1,
+        "pilot_schema_migrations": 2,
+        "pilot_sessions": 20,
+        "pilot_tours": 10000,
+        "users": 20
+      }
+    }
+  },
+  "elapsed_seconds": 5.09,
+  "environment": "local integrated ASGI via TestClient; real temporary SQLite; no network",
+  "legacy_endpoints": {
+    "/api/admin/users": 404,
+    "/api/auth/demo-users": 404,
+    "/api/blueprint/steps": 404,
+    "/api/public/catalog": 404
+  },
+  "legacy_migration": {
+    "after": {
+      "count": 20,
+      "sha256": "8b312f14e87588708877b579b0ba429fc55ec30a3d5a4b348debe724f3b07f48"
+    },
+    "before": {
+      "count": 20,
+      "sha256": "8b312f14e87588708877b579b0ba429fc55ec30a3d5a4b348debe724f3b07f48"
+    },
+    "fabricated_tours": 0,
+    "runs": 2,
+    "unchanged": true
+  },
+  "limitations": [
+    "Local ASGI/SQLite timings include real authentication but exclude VPS, nginx, TLS and network latency.",
+    "Rollback check validates data preservation on a compatible pilot restart; it is not a deployed reverse-proxy/container rollback.",
+    "Asset copy/restore is a synthetic rehearsal; deployment must back up its private asset directory too."
+  ],
+  "performance": {
+    "api_gate_passed": false,
+    "measurements": {
+      "followups_list": {
+        "maximum_ms": 596.7,
+        "p50_ms": 28.19,
+        "p95_ms": 159.25,
+        "samples": 60
+      },
+      "home_bundle_sequential": {
+        "maximum_ms": 1840.1,
+        "p50_ms": 1316.89,
+        "p95_ms": 1604.43,
+        "samples": 60
+      },
+      "home_metrics": {
+        "maximum_ms": 1484.75,
+        "p50_ms": 1237.57,
+        "p95_ms": 1438.17,
+        "samples": 60
+      },
+      "lesson_list": {
+        "maximum_ms": 270.75,
+        "p50_ms": 30.88,
+        "p95_ms": 71.14,
+        "samples": 60
+      },
+      "notes_list": {
+        "maximum_ms": 484.51,
+        "p50_ms": 34.49,
+        "p95_ms": 165.77,
+        "samples": 60
+      },
+      "tour_list": {
+        "maximum_ms": 324.92,
+        "p50_ms": 95.96,
+        "p95_ms": 170.49,
+        "samples": 60
+      }
+    },
+    "requests": 300,
+    "rounds_per_session": 3,
+    "sessions": 20,
+    "threshold_p95_ms": 1000,
+    "tours": 10000
+  },
+  "rollback_data_rehearsal": {
+    "container_proxy_switch_exercised": false,
+    "current_tours": 10001,
+    "post_snapshot_sale_preserved": true,
+    "snapshot_tours": 10000,
+    "strategy": "compatible pilot initialization with current DB; no old snapshot restore"
+  },
+  "scenario": "TC-24 / NFR-08",
+  "synthetic_only": true
+}
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/tools/pilot/verify_operations.py", line 201, in <module>
+    main()
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/tools/pilot/verify_operations.py", line 197, in main
+    require(report["performance"]["api_gate_passed"], "API p95 exceeded 1000 ms")
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/tools/pilot/verify_operations.py", line 40, in require
+    raise AssertionError(message)
+AssertionError: API p95 exceeded 1000 ms

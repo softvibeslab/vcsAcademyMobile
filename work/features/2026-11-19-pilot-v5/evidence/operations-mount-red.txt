@@ -1,0 +1,17 @@
+test_provision_supports_operator_tools_mounted_outside_application (backend.tests.pilot.test_operations.OperationsTests.test_provision_supports_operator_tools_mounted_outside_application) ... ERROR
+
+======================================================================
+ERROR: test_provision_supports_operator_tools_mounted_outside_application (backend.tests.pilot.test_operations.OperationsTests.test_provision_supports_operator_tools_mounted_outside_application)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_operations.py", line 185, in test_provision_supports_operator_tools_mounted_outside_application
+    result = provision.provision(self.manifest(), self.root / "credentials")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/tools/pilot/provision.py", line 18, in provision
+    raise ValueError('Credentials must be outside the repository and site')
+ValueError: Credentials must be outside the repository and site
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (errors=1)

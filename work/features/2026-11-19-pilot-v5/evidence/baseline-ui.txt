@@ -1,0 +1,25 @@
+✔ stepAction: plan antes que progreso; abierto si se puede (0.787208ms)
+✔ planSummary cuenta módulos abiertos del catálogo (0.125291ms)
+✔ etiquetas en español y error de plan reconocible (0.095916ms)
+✔ itemAccess: abierto, bloqueado por plan u oculto según el catálogo (0.170083ms)
+✔ premiumLockedCount cuenta solo pasos Premium bloqueados (0.443458ms)
+✔ se abre sola solo la primera vez y solo en Home (0.423334ms)
+✔ pasos por rol: rep 5, gerente suma equipo, admin suma acceso (0.394916ms)
+✔ el avance se detecta con datos reales de la app (0.16425ms)
+✔ las visitas a pantallas guiadas se convierten en eventos (0.159167ms)
+✔ detecta app instalada (Android/escritorio e iOS) (0.365875ms)
+✔ detecta iOS, incluido iPadOS que se anuncia como Mac táctil (0.173208ms)
+✔ modo del botón e instrucciones en español (0.097708ms)
+✔ month metrics exclude other periods and reuse canonical qualified-tour denominator (1.000084ms)
+✔ weekly range starts Monday and excludes future entries (0.378334ms)
+✔ no-sale form clears stale volume, validates input and never adds unsupported channel fields (0.217084ms)
+✔ role preference cannot grant manager access (0.08475ms)
+✔ notebook storage is scoped to authenticated identity (0.13575ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42.047333

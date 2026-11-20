@@ -1,0 +1,21 @@
+FF
+======================================================================
+FAIL: test_audit_request_id_matches_server_response (backend.tests.pilot.test_auth.AuthTests.test_audit_request_id_matches_server_response)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_auth.py", line 82, in test_audit_request_id_matches_server_response
+    self.assertEqual(audit.get('request_id'), server_id)
+AssertionError: None != 'f2bd7c89-274d-4d44-9af8-258c0fcbf2e6'
+
+======================================================================
+FAIL: test_audit_request_id_migration_is_additive (backend.tests.pilot.test_auth.AuthTests.test_audit_request_id_migration_is_additive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_auth.py", line 93, in test_audit_request_id_migration_is_additive
+    self.assertIn('request_id', old)
+AssertionError: 'request_id' not found in {'id': 'old', 'organization_id': 'org', 'actor_id': 'rep', 'action': 'legacy', 'target_type': 'user', 'target_id': 'rep', 'metadata_json': '{}', 'created_at': '2026-11-01T00:00:00Z'}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.057s
+
+FAILED (failures=2)

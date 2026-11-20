@@ -33,6 +33,11 @@ def doctor() -> None:
 
 
 def main() -> None:
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1].startswith("pilot-"):
+        from backend.app.pilot.identity import main as pilot_main
+        pilot_main(sys.argv[1:])
+        return
     parser = argparse.ArgumentParser(description="VCSA backend operations")
     subcommands = parser.add_subparsers(dest="command", required=True)
     subcommands.add_parser("seed", help="Initialize database and seed demo launch data")

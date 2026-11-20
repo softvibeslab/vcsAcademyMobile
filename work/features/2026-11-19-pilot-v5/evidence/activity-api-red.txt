@@ -1,0 +1,75 @@
+FFFFFFF
+======================================================================
+FAIL: test_cancellation_is_atomic_with_followups (backend.tests.pilot.test_activity.ActivityApiTests.test_cancellation_is_atomic_with_followups)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 163, in test_cancellation_is_atomic_with_followups
+    tour, _ = self.create_tour()
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 138, in create_tour
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_edit_version_and_date_validation (backend.tests.pilot.test_activity.ActivityApiTests.test_edit_version_and_date_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 199, in test_edit_version_and_date_validation
+    tour, _ = self.create_tour()
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 138, in create_tour
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_legacy_history_is_preserved_and_private (backend.tests.pilot.test_activity.ActivityApiTests.test_legacy_history_is_preserved_and_private)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 211, in test_legacy_history_is_preserved_and_private
+    self.assertEqual(response.status_code, 200, response.text)
+AssertionError: 404 != 200 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_meta_is_current_month_unique_and_immutable (backend.tests.pilot.test_activity.ActivityApiTests.test_meta_is_current_month_unique_and_immutable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 183, in test_meta_is_current_month_unique_and_immutable
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_no_tour_can_coexist_but_cannot_have_followup (backend.tests.pilot.test_activity.ActivityApiTests.test_no_tour_can_coexist_but_cannot_have_followup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 191, in test_no_tour_can_coexist_but_cannot_have_followup
+    self.create_tour()
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 138, in create_tour
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_tour_scope_cannot_be_overridden (backend.tests.pilot.test_activity.ActivityApiTests.test_tour_scope_cannot_be_overridden)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 154, in test_tour_scope_cannot_be_overridden
+    tour, payload = self.create_tour()
+                    ^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 138, in create_tour
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_two_tours_same_day_and_idempotency (backend.tests.pilot.test_activity.ActivityApiTests.test_two_tours_same_day_and_idempotency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 142, in test_two_tours_same_day_and_idempotency
+    first, payload = self.create_tour()
+                     ^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_activity.py", line 138, in create_tour
+    self.assertEqual(response.status_code, 201, response.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.046s
+
+FAILED (failures=7)

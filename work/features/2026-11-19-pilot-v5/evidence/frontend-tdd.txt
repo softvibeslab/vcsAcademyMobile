@@ -1,0 +1,48 @@
+Frontend v5 — implementación y evidencia reproducible
+Fecha: 2026-11-20
+
+Contrato aprobado: cp2-spec.md + ux-spec.md + contracts-backend.md.
+Código: frontend/src/pilot-v5/; entrada: frontend/pilot.html.
+Legacy conservado en frontend/src/pilot/.
+
+TDD ejecutado (Node test runner):
+- frontend-red.txt → frontend-green.txt: 9 pruebas de calculadoras, centavos,
+  normalización No Tour, meta mensual, rutas por rol y fecha Cancún.
+- frontend-permission-red.txt → frontend-permission-green.txt: versión de permiso
+  individual propia; nuevo permiso empieza en cero, no usa versión de lección.
+- frontend-tour-correction-red.txt → frontend-tour-correction-green.txt:
+  No Tour corregido a Q usa no_sale por defecto.
+- frontend-editor-red.txt → frontend-editor-green.txt: publicar no borra el
+  formulario; usa revisión publicada y exige guardar borrador antes de republicar.
+- frontend-modal-red.json → browser/results.json: trampa de foco y restauración
+  del disparador en modal de cuenta. Estado final indicado en results.json.
+
+Excepción TDD: CSS y composición visual se validan mediante capturas y
+medición de desbordamiento en navegador aislado; no mediante pruebas espejo.
+
+E2E: tools/qa/pilot-v5-e2e.mjs. Solo loopback y fixture sintético en /tmp.
+Datos y claves de QA fuera del repositorio. No se guardan cookies, sesiones,
+contraseñas ni datos reales en la evidencia. API real; offline via navegador,
+sin sustituir respuestas del backend.
+
+Alcance navegador: Chromium aislado; desktop 1440 y móviles 390/360; teclado,
+modal, reduced-motion, disposición CSS zoom 200% (no zoom nativo de navegador).
+No constituye UAT de usuario ni prueba de Safari/Firefox o lector de pantalla.
+Iframe/URL de video comprobados; la reproducción del proveedor y la calidad
+pedagógica del contenido requieren revisión del dueño con su material real.
+
+Validación final ejecutada:
+- frontend-final-models.txt: 12/12 PASS.
+- frontend-final-build.txt: build Vite multipágina PASS.
+- frontend-format-check.txt: Prettier 3.6.2 PASS; archivos nuevos formateados.
+- browser/results.json: 17/17 E2E PASS; 0 excepciones JS de la app.
+- La expectativa original del check CSS200% dividía innerWidth por dos;
+  se corrigió tras medir documentElement.scrollWidth=1440, innerWidth=1440,
+  body.scrollWidth=720 y zoom=2. La comparación final usa las mismas unidades
+  visuales; no se alteró CSS para satisfacer esa expectativa errónea.
+
+Revisión final del histórico: se añadieron 101 resúmenes exclusivamente sintéticos
+al fixture descartable de /tmp; E2E verifica primera página de 100, Cargar más,
+101 registros únicos, agotamiento del cursor e invariancia de los KPIs.
+El script valida la ruta canónica de /tmp (en macOS /private/tmp) antes de crear
+esa tabla sintética, y solo permite URLs loopback.

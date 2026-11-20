@@ -56,3 +56,6 @@ dist-public/
 dist-mobile-web-public/
 
 .license-secret
+
+# Local governance profile (versioned snapshot lives with the feature)
+.ecosystem360/team-bootstrap/project-profile.local.yml

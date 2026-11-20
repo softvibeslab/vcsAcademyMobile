@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_team_detail_matches_home_and_learning_schema (backend.tests.pilot.test_workspace.WorkspaceApiTests.test_team_detail_matches_home_and_learning_schema)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_workspace.py", line 159, in test_team_detail_matches_home_and_learning_schema
+    self.assertEqual(detail["requests"][0].get("lesson_title"), "Meet & Greet")
+AssertionError: None != 'Meet & Greet'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.031s
+
+FAILED (failures=1)

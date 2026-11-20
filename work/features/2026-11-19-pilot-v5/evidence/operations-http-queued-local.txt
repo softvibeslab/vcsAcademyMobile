@@ -1,0 +1,117 @@
+{
+  "backup_restore": {
+    "asset_restore_verified": true,
+    "asset_sha256": "fdc9ae12138897c915b1a7e1a9aaba78da39cdaf9ee8278df8f2502d60c34316",
+    "database": {
+      "integrity": "ok",
+      "restored": true,
+      "sha256": "0ac6261887bfe757babc140233a7c47a7d5884a3bb279740289159d7487f7f40",
+      "table_counts": {
+        "goalsheet_entries": 20,
+        "pilot_access_requests": 0,
+        "pilot_allowed_emails": 20,
+        "pilot_assets": 1,
+        "pilot_audit": 20,
+        "pilot_diary_entries": 0,
+        "pilot_followups": 0,
+        "pilot_idempotency": 0,
+        "pilot_lesson_access": 0,
+        "pilot_lesson_completions": 0,
+        "pilot_lesson_revisions": 11,
+        "pilot_lessons": 11,
+        "pilot_login_failures": 0,
+        "pilot_monthly_goals": 20,
+        "pilot_notes": 0,
+        "pilot_organizations": 1,
+        "pilot_schema_migrations": 2,
+        "pilot_sessions": 20,
+        "pilot_tours": 10000,
+        "users": 20
+      }
+    }
+  },
+  "elapsed_seconds": 2.3,
+  "environment": "isolated uvicorn over loopback HTTP; one ASGI event loop; real temporary SQLite",
+  "legacy_endpoints": {
+    "/api/admin/users": 404,
+    "/api/auth/demo-users": 404,
+    "/api/blueprint/steps": 404,
+    "/api/public/catalog": 404
+  },
+  "legacy_migration": {
+    "after": {
+      "count": 20,
+      "sha256": "22247438a3b5e527a3a2c79850e002dc84a43abcb265acb660e68d6938c6a7fa"
+    },
+    "before": {
+      "count": 20,
+      "sha256": "22247438a3b5e527a3a2c79850e002dc84a43abcb265acb660e68d6938c6a7fa"
+    },
+    "fabricated_tours": 0,
+    "runs": 2,
+    "unchanged": true
+  },
+  "limitations": [
+    "Loopback HTTP includes socket transport and one uvicorn event loop; TestClient mode uses separate portals and is not a deployment performance substitute. Both exclude nginx, TLS and external network latency.",
+    "The report describes its execution machine; a local run does not establish VPS performance.",
+    "Rollback check validates data preservation on a compatible pilot restart; it is not a deployed reverse-proxy/container rollback.",
+    "Asset copy/restore is a synthetic rehearsal; deployment must back up its private asset directory too."
+  ],
+  "performance": {
+    "api_gate_passed": true,
+    "home_gate_passed": true,
+    "home_request_pattern": "metrics + followups in parallel, matching UI",
+    "measurements": {
+      "followups_list": {
+        "maximum_ms": 129.02,
+        "p50_ms": 103.77,
+        "p95_ms": 126.4,
+        "samples": 60
+      },
+      "home_bundle_parallel": {
+        "maximum_ms": 170.94,
+        "p50_ms": 107.02,
+        "p95_ms": 159.4,
+        "samples": 60
+      },
+      "home_metrics": {
+        "maximum_ms": 128.61,
+        "p50_ms": 98.17,
+        "p95_ms": 125.99,
+        "samples": 60
+      },
+      "lesson_list": {
+        "maximum_ms": 84.0,
+        "p50_ms": 64.51,
+        "p95_ms": 83.23,
+        "samples": 60
+      },
+      "notes_list": {
+        "maximum_ms": 93.69,
+        "p50_ms": 73.99,
+        "p95_ms": 91.68,
+        "samples": 60
+      },
+      "tour_list": {
+        "maximum_ms": 130.3,
+        "p50_ms": 102.46,
+        "p95_ms": 121.89,
+        "samples": 60
+      }
+    },
+    "requests": 300,
+    "rounds_per_session": 3,
+    "sessions": 20,
+    "threshold_p95_ms": 1000,
+    "tours": 10000
+  },
+  "rollback_data_rehearsal": {
+    "container_proxy_switch_exercised": false,
+    "current_tours": 10001,
+    "post_snapshot_sale_preserved": true,
+    "snapshot_tours": 10000,
+    "strategy": "compatible pilot initialization with current DB; no old snapshot restore"
+  },
+  "scenario": "TC-24 / NFR-08",
+  "synthetic_only": true
+}

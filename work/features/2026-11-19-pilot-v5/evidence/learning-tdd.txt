@@ -1,0 +1,48 @@
+Validación de Ruta/CMS y medios privados — 2026-11-20
+
+Comando: .venv/bin/python -m unittest backend.tests.pilot.test_learning -v
+
+RED inicial: 4 pruebas fallaron antes de implementar los comportamientos de
+normalización de video y catálogo privado. La ruta devolvía 404 en vez de 401,
+la normalización devolvía None y no rechazaba el host similar no autorizado.
+Salida: learning-red.txt.
+
+RED integración: 16 pruebas ejecutadas; 15 pasaron y una falló porque la semilla
+no actualizaba el marcador roadmap_seed_version aprobado en la organización
+(observado 0, esperado 1). Se alineó con el esquema compartido; catálogo y
+semilla ahora usan exclusivamente pilot_organizations, sin tabla auxiliar.
+Salida: learning-integration-red.txt.
+
+RED controles: 18 pruebas ejecutadas; falta observada de access_exceptions en
+el editor y solicitud todavía pending después de retirar la excepción deny
+con acceso de equipo abierto. Se añadieron versiones de excepciones, contadores
+de solicitudes scoped y resolución atómica al restaurar la regla de equipo.
+Salida: learning-controls-red.txt.
+
+GREEN final: 19 pruebas, OK, 0.449 s. Salida: learning-green.txt.
+Incluye servidor integrado con cookie real: login sintético, CSRF requerido,
+rechazo de acceso de representante al CMS, PDF privado autorizado y bloqueo
+inmediato al revocar la lista autorizada. No se sobreescriben dependencias de
+autenticación en esta prueba integrada.
+
+Otros comportamientos comprobados: 11 borradores sembrados una sola vez,
+archivado sin recreación, tres accesos iniciales abiertos, límites de publicación,
+aislamiento entre dos organizaciones, idempotencia de creación/completado/upload,
+publicación revisada sin sustituir contenido al guardar borrador, historial de
+completado, orden sin bloqueo secuencial ni cambios de permisos, allow/deny
+individual, solicitudes deduplicadas y espera de 24 horas, paginación, fallback
+de idioma, upload binario, límite real del stream, cuota, nombres seguros,
+limpieza temporal, descarga attachment/nosniff/private/no-store y rechazo de
+URLs con host engañoso, HTTP, userinfo, puertos alternativos y JavaScript.
+
+Datos: exclusivamente dos organizaciones y usuarios sintéticos @example.invalid
+en SQLite temporal. El PDF de pruebas es sintético. Sin llamadas remotas a
+YouTube/Vimeo, sin publicación ni cambios en producción. El dueño conserva la
+responsabilidad de previsualizar video embebible antes de publicar. La app
+controla entrega de referencias, no DRM ni verificación antivirus.
+
+Compatibilidad final de interfaz: X-File-Name usa encodeURIComponent para nombres
+con acentos. RED observado: se guardaba Gu_C3_ADa_20de_20pr_C3_A1ctica.pdf en vez
+de Guía de práctica.pdf. Se decodifica UTF-8 antes de validar/sanitizar, incluyendo
+rechazo de traversal codificado. learning-filename-red.txt ->
+learning-filename-green.txt: 20 pruebas, OK, 0.477 s.

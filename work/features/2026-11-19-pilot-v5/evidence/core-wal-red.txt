@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_storage_uses_wal_with_full_durability (backend.tests.pilot.test_auth.AuthTests.test_storage_uses_wal_with_full_durability)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_auth.py", line 111, in test_storage_uses_wal_with_full_durability
+    self.assertEqual(conn.execute('PRAGMA journal_mode').fetchone()[0], 'wal')
+AssertionError: 'delete' != 'wal'
+- delete
++ wal
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.017s
+
+FAILED (failures=1)

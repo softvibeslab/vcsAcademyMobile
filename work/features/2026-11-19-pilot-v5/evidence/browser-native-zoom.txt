@@ -1,0 +1,75 @@
+{
+  "url": "http://127.0.0.1:4197/pilot.html",
+  "isolated": true,
+  "viewport": null,
+  "mechanism": "Chromium persistent temporary profile partition.default_zoom_level preference",
+  "runs": [
+    {
+      "scale": 1,
+      "preference": 0,
+      "metrics": {
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "outerWidth": 1280,
+        "outerHeight": 900,
+        "dpr": 1,
+        "visualViewportScale": 1,
+        "documentWidth": 1280,
+        "scrollWidth": 1280,
+        "cssZoom": "1",
+        "bodyCssZoom": "1",
+        "title": "Sales Academy · Your next level",
+        "bodyText": "Sales Academy\nEnglish\nEspañol\nLEARN. APPLY. GROW.\n01\n↗\nYour next sale starts here.\n\nLearn your sales route, track your day, and work toward your goals.\n\nGet started\nSign in\nYour private learning workspace\nSales Academy · Learn with intention."
+      }
+    },
+    {
+      "scale": 2,
+      "preference": 3.8017840169239308,
+      "metrics": {
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "outerWidth": 1280,
+        "outerHeight": 900,
+        "dpr": 1,
+        "visualViewportScale": 1,
+        "documentWidth": 1280,
+        "scrollWidth": 1280,
+        "cssZoom": "1",
+        "bodyCssZoom": "1",
+        "title": "Sales Academy · Your next level",
+        "bodyText": "Sales Academy\nEnglish\nEspañol\nLEARN. APPLY. GROW.\n01\n↗\nYour next sale starts here.\n\nLearn your sales route, track your day, and work toward your goals.\n\nGet started\nSign in\nYour private learning workspace\nSales Academy · Learn with intention."
+      }
+    }
+  ],
+  "observedNativeZoom": true,
+  "horizontalOverflow": false,
+  "scope": "Unauthenticated welcome/login entry. Full authenticated reader UAT not exercised here.",
+  "nativeExtensionAttempt": {
+    "mechanism": "Temporary MV3 chrome.tabs.setZoom(2), confirmed with getZoom",
+    "tabs": [
+      {
+        "url": "http://127.0.0.1:4197/pilot.html",
+        "zoom": 2
+      }
+    ],
+    "metrics": {
+      "innerWidth": 640,
+      "innerHeight": 406,
+      "outerWidth": 1280,
+      "outerHeight": 900,
+      "dpr": 2,
+      "visualViewportScale": 1,
+      "documentWidth": 640,
+      "scrollWidth": 640,
+      "cssZoom": "1",
+      "bodyCssZoom": "1"
+    }
+  },
+  "loginAtNative200": {
+    "innerWidth": 640,
+    "dpr": 2,
+    "documentWidth": 640,
+    "scrollWidth": 640,
+    "bodyText": "Sales Academy\nEnglish\nEspañol\nWELCOME BACK\nYour next level awaits.\n\nSign in to your academy.\n\nEmail\nPassword\nForgot your password?\nSign in\nBack\nSales Academy · Learn with intention."
+  }
+}

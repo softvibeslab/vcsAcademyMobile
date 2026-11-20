@@ -1,0 +1,2 @@
+No verificable por maquina: que los criterios sean correctos, que los datos simulados sean realistas y que la cita de aprobacion sea autentica.
+RESULTADO: historia LISTA para desarrollo: work/stories/2026-11-19-pilot-v5.md

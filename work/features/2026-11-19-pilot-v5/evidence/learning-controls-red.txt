@@ -1,0 +1,43 @@
+test_catalog_pagination_and_language_fallback (backend.tests.pilot.test_learning.LearningAPI.test_catalog_pagination_and_language_fallback) ... ok
+test_closed_catalog_and_direct_content_never_leak_media (backend.tests.pilot.test_learning.LearningAPI.test_closed_catalog_and_direct_content_never_leak_media) ... ok
+test_create_idempotency_and_reject_client_tenant_or_representative (backend.tests.pilot.test_learning.LearningAPI.test_create_idempotency_and_reject_client_tenant_or_representative) ... ok
+test_edit_publish_archive_preserve_completion_and_old_revision (backend.tests.pilot.test_learning.LearningAPI.test_edit_publish_archive_preserve_completion_and_old_revision) ... ok
+test_owner_permission_editor_exposes_scoped_versions_and_pending_counts (backend.tests.pilot.test_learning.LearningAPI.test_owner_permission_editor_exposes_scoped_versions_and_pending_counts) ... ERROR
+test_pdf_quota_and_auth_are_checked_without_leaving_files (backend.tests.pilot.test_learning.LearningAPI.test_pdf_quota_and_auth_are_checked_without_leaving_files) ... ok
+test_pdf_upload_idempotency_headers_private_storage_and_cross_tenant (backend.tests.pilot.test_learning.LearningAPI.test_pdf_upload_idempotency_headers_private_storage_and_cross_tenant) ... ok
+test_pdf_validation_and_stream_limit_cleanup (backend.tests.pilot.test_learning.LearningAPI.test_pdf_validation_and_stream_limit_cleanup) ... ok
+test_pending_dedup_owner_resolution_and_user_isolation (backend.tests.pilot.test_learning.LearningAPI.test_pending_dedup_owner_resolution_and_user_isolation) ... ok
+test_publish_requires_media_and_rejects_other_tenant_asset (backend.tests.pilot.test_learning.LearningAPI.test_publish_requires_media_and_rejects_other_tenant_asset) ... ok
+test_rejection_enforces_24_hour_cooldown (backend.tests.pilot.test_learning.LearningAPI.test_rejection_enforces_24_hour_cooldown) ... ok
+test_reorder_is_atomic_versioned_and_preserves_access (backend.tests.pilot.test_learning.LearningAPI.test_reorder_is_atomic_versioned_and_preserves_access) ... ok
+test_seed_uses_persistent_organization_marker_and_never_recreates (backend.tests.pilot.test_learning.LearningAPI.test_seed_uses_persistent_organization_marker_and_never_recreates) ... ok
+test_team_access_resolves_pending_except_individual_deny (backend.tests.pilot.test_learning.LearningAPI.test_team_access_resolves_pending_except_individual_deny) ... FAIL
+test_lesson_catalog_is_a_private_route (backend.tests.pilot.test_learning.VideoContract.test_lesson_catalog_is_a_private_route) ... ok
+test_non_provider_host_is_rejected (backend.tests.pilot.test_learning.VideoContract.test_non_provider_host_is_rejected) ... ok
+test_vimeo_unlisted_link_preserves_privacy_hash (backend.tests.pilot.test_learning.VideoContract.test_vimeo_unlisted_link_preserves_privacy_hash) ... ok
+test_youtube_link_is_normalized_to_provider_and_id (backend.tests.pilot.test_learning.VideoContract.test_youtube_link_is_normalized_to_provider_and_id) ... ok
+
+======================================================================
+ERROR: test_owner_permission_editor_exposes_scoped_versions_and_pending_counts (backend.tests.pilot.test_learning.LearningAPI.test_owner_permission_editor_exposes_scoped_versions_and_pending_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_learning.py", line 199, in test_owner_permission_editor_exposes_scoped_versions_and_pending_counts
+    self.assertEqual(detail["access_exceptions"], [{"user_id": "a-other", "display_name": "a-other", "decision": "deny", "version": 1}])
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'access_exceptions'
+
+======================================================================
+FAIL: test_team_access_resolves_pending_except_individual_deny (backend.tests.pilot.test_learning.LearningAPI.test_team_access_resolves_pending_except_individual_deny)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_learning.py", line 193, in test_team_access_resolves_pending_except_individual_deny
+    self.assertEqual(self.call("GET", "/access-requests/mine", user="a-other")["items"][0]["status"], "resolved_by_team_access")
+AssertionError: 'pending' != 'resolved_by_team_access'
+- pending
++ resolved_by_team_access
+
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.372s
+
+FAILED (failures=1, errors=1)
