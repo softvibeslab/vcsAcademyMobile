@@ -14,7 +14,7 @@ El usuario ordenó expresamente crear todas las cuentas por perfil, enviarlas a 
 
 **Criterios:** AC01 dos roles correctos; AC02 claves de 10 aleatorias; AC03 cambio de 10 aceptado / 9 rechazado; AC04 frontend permite 10; AC05 correo enviado al destinatario explícito; AC06 acceso previo sigue válido.
 
-## Criterios de aceptación
+## Criterios de aceptación (Acceptance Criteria)
 
 - AC-01: crear una cuenta nueva owner y otra representative en la organización activa; cada una inicia sesión con su rol correcto.
 - AC-02: entregar dos claves temporales distintas de exactamente diez caracteres, generadas criptográficamente y almacenadas como hash en la base.
@@ -32,3 +32,9 @@ El usuario ordenó expresamente crear todas las cuentas por perfil, enviarlas a 
 ## Seguridad
 
 El destino del correo fue indicado por el usuario y coincide con la cuenta Gmail conectada. La autorización de enviar las claves no habilita otros destinatarios. Permisos heredados se inicializan vacíos; el rol del piloto proviene del servidor. No se crean cuentas de administrador global ni se habilitan endpoints demo. Las contraseñas existentes y datos comerciales no se modifican.
+
+## Requisitos funcionales
+
+- REQ-01: provisionar una cuenta por cada perfil vigente mediante el operador, con credenciales temporales de diez caracteres.
+- REQ-02: aceptar la nueva contraseña de diez en API y formulario sin modificar sesiones, permisos ni cuentas anteriores.
+- REQ-03: verificar ambos accesos y enviar sus credenciales al correo expresamente indicado.
