@@ -11,6 +11,15 @@ from . import db
 from .errors import fail
 
 
+def temporary_password():
+    """Ten random characters, omitting visually ambiguous letters and digits."""
+    alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789'
+    while True:
+        value = ''.join(secrets.choice(alphabet) for _ in range(10))
+        if any(c.isupper() for c in value) and any(c.islower() for c in value) and any(c.isdigit() for c in value):
+            return value
+
+
 def create_organization(name, slug):
     from . import bootstrap, learning
     if not name.strip() or len(name) > 60 or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,59}', slug):
@@ -45,7 +54,7 @@ def create_account(organization_id, email, display_name, role, credential_file, 
     email = email.strip().lower()
     if role not in {'representative','owner'} or not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',email) or len(email)>254 or not display_name.strip() or len(display_name)>120:
         fail(422, 'invalid_account')
-    password = secrets.token_urlsafe(32)
+    password = temporary_password()
     password_hash = hash_password(password)
     target, fd = reserve_credentials(credential_file)
     try:
@@ -67,8 +76,8 @@ def create_account(organization_id, email, display_name, role, credential_file, 
                     (organization_id,role,display_name.strip(),password_hash,time.time()+48*3600,db.now(),user_id))
             else:
                 conn.execute('''INSERT INTO users (id,email,display_name,password_hash,created_at,updated_at,
-                    organization_id,pilot_role,locale,must_change_password,password_expires_at)
-                    VALUES (?,?,?,?,?,?,?,?,'en',1,?)''', (user_id,email,display_name.strip(),password_hash,db.now(),db.now(),organization_id,role,time.time()+48*3600))
+                    organization_id,pilot_role,locale,must_change_password,password_expires_at,roles_json,permissions_json)
+                    VALUES (?,?,?,?,?,?,?,?,'en',1,?,'[]','[]')''', (user_id,email,display_name.strip(),password_hash,db.now(),db.now(),organization_id,role,time.time()+48*3600))
             conn.execute('''INSERT INTO pilot_allowed_emails (id,organization_id,email_normalized,role,user_id,created_at,updated_at)
                 VALUES (?,?,?,?,?,?,?)''',(db.new_id(),organization_id,email,role,user_id,db.now(),db.now()))
             conn.execute('UPDATE pilot_sessions SET revoked_at=? WHERE user_id=?',(time.time(),user_id))
@@ -92,7 +101,7 @@ def revoke_account(organization_id, email):
 
 
 def reset_account(organization_id, email, credential_file):
-    password = secrets.token_urlsafe(32)
+    password = temporary_password()
     target, fd = reserve_credentials(credential_file)
     try:
         with os.fdopen(fd,'w') as output:

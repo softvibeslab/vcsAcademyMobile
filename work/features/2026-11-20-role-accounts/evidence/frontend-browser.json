@@ -1,0 +1,14 @@
+{
+  "environment": "Isolated Chromium; loopback real API; disposable synthetic account",
+  "viewport": "390x844",
+  "passed": 6,
+  "reports": [
+    "Ten-character temporary login reaches password-change form.",
+    "Nine-character password is blocked before any change-password request.",
+    "Mismatched ten-character confirmation stays blocked.",
+    "Matching ten-character password is saved through the real API and enters Home.",
+    "Saved ten-character password signs in again after logout.",
+    "Spanish account form displays the same ten-character minimum."
+  ],
+  "browser_errors": []
+}

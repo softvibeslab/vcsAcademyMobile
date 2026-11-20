@@ -1,0 +1,14 @@
+{
+  "sent": true,
+  "recipient_matches_explicit_request": true,
+  "profiles": [
+    "owner",
+    "representative"
+  ],
+  "password_length_each": 10,
+  "provider_labels": [
+    "SENT",
+    "INBOX"
+  ],
+  "private_receipt_saved": true
+}

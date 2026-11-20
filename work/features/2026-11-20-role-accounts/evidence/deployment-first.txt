@@ -1,0 +1,15 @@
+{"backup": "daily-20261120T182346Z.tar.gz", "integrity": "ok", "restore": "verified", "assets_verified": 0, "retention_days": 7, "expired_files_removed": 0}
+d89f574b45774d661826be06c2ea8797f6bafffdc9e5cfa5b1b35a514a1dc8e0
+curl: (56) Recv failure: Connection reset by peer
+curl: (56) Recv failure: Connection reset by peer
+{"success":true,"data":{"status":"ready","mode":"private_pilot","version":"1.0.0"},"message":null}nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+{"success":true,"data":{"status":"ready","mode":"private_pilot","version":"1.0.0"},"message":null}Traceback (most recent call last):
+  File "/tools/pilot/provision.py", line 55, in <module>
+    args=parser.parse_args();print(json.dumps(provision(args.manifest,args.credentials_dir)))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tools/pilot/provision.py", line 48, in provision
+    identity.create_account(org['id'],account['email'],account['name'],account['role'],credential_root/(account['credential_name']+'.json'),adopt_existing=True)
+  File "/app/backend/app/pilot/identity.py", line 78, in create_account
+    conn.execute('''INSERT INTO users (id,email,display_name,password_hash,created_at,updated_at,
+sqlite3.IntegrityError: NOT NULL constraint failed: users.roles_json

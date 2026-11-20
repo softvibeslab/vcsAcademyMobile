@@ -1,0 +1,14 @@
+Cambio de interfaz: App.jsx usa minLength=10 para contraseña nueva y confirmación; conserva maxLength=128 y muestra ayuda EN/ES con mínimo10.
+
+Excepción TDD: ajuste declarativo de atributos HTML y copy, sin nueva lógica de negocio. La política del servidor tiene RED→GREEN independiente. No se añadieron tests unitarios que duplicaran los atributos.
+
+Verificación ejecutada:
+- npm run build:web: PASS, 935ms (frontend-build.txt).
+- node --test frontend/src/pilot-v5/*.test.mjs: 12/12 PASS (frontend-models.txt).
+- Chromium aislado, viewport390×844, Vite4199 y API real8031, SQLite temporal /tmp: 6 comprobaciones PASS, cero excepcionesJS (frontend-browser.json).
+- Temporal10 entra al formulario; nueva9 bloqueada por navegador sin POST; confirmación distinta bloqueada; nueva10 guardada con HTTP200; reingreso con10 correcto; ayudaES y ambos campos aceptan mínimo10.
+- Captura password-form-mobile.png inspeccionada: campos/ayuda/acciones visibles sin desbordamiento y sin credenciales en imagen.
+
+La primera expectativa del test usó el nombre completo en saludo; la UI usa primer nombre. Corregido el locator sin cambiar producto. Un segundo intento no esperó a que abriera la guía inicial; corregida la sincronización para cerrarla explícitamente antes de usar Mi cuenta. La corrida final pasó completa.
+
+No se usaron cuentas, credenciales ni datos comerciales reales; no se invocó producción ni correo.

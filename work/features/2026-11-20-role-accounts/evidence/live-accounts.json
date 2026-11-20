@@ -1,0 +1,20 @@
+{
+  "accounts": [
+    {
+      "profile": "owner",
+      "password_length": 10,
+      "login": "passed",
+      "temporary_change_required": true,
+      "logout": "passed"
+    },
+    {
+      "profile": "representative",
+      "password_length": 10,
+      "login": "passed",
+      "temporary_change_required": true,
+      "logout": "passed"
+    }
+  ],
+  "frontend_matches_build": true,
+  "new_secrets_absent_from_tracked_files": true
+}

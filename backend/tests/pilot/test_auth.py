@@ -66,6 +66,20 @@ class AuthTests(unittest.TestCase):
         self.assertEqual(response.status_code,200,response.text)
         self.assertNotIn('reset_token',response.text)
 
+    def test_ten_character_password_change_and_shorter_rejection(self):
+        response = self.login()
+        self.assertEqual(response.status_code, 200)
+        headers = {'X-CSRF-Token':response.json()['data']['csrf_token']}
+        payload = {'current_password':'TestPassword123!', 'new_password':'Short123!'}
+        self.assertEqual(self.client.post('/api/auth/change-password', json=payload, headers=headers).status_code, 422)
+        payload['new_password'] = 'NewPass123'
+        self.assertEqual(len(payload['new_password']), 10)
+        changed = self.client.post('/api/auth/change-password', json=payload, headers=headers)
+        self.assertEqual(changed.status_code, 200, changed.text)
+        self.assertFalse(changed.json()['data']['must_change_password'])
+        login = self.client.post('/api/auth/login', json={'email':'rep@example.invalid','password':'NewPass123'})
+        self.assertEqual(login.status_code, 200)
+
     def test_origin_and_failed_login_rate_limit(self):
         response=self.client.post('/api/auth/login',json={'email':'rep@example.invalid','password':'bad'},headers={'Origin':'https://attacker.invalid'})
         self.assertEqual(response.status_code,403)

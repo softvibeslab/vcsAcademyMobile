@@ -747,10 +747,10 @@ function PasswordForm({ required = false, onDone }) {
       />
       <Field
         label={t("New password", "Nueva contraseña")}
-        hint={t("12–128 characters.", "De 12 a 128 caracteres.")}
+        hint={t("At least 10 characters.", "Al menos 10 caracteres.")}
         type={show ? "text" : "password"}
         required
-        minLength={12}
+        minLength={10}
         maxLength={128}
         autoComplete="new-password"
         value={next}
@@ -763,7 +763,7 @@ function PasswordForm({ required = false, onDone }) {
         label={t("Confirm new password", "Confirmar nueva contraseña")}
         type={show ? "text" : "password"}
         required
-        minLength={12}
+        minLength={10}
         maxLength={128}
         autoComplete="new-password"
         value={confirm}

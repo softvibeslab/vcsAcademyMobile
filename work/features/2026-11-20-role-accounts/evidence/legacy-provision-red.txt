@@ -1,0 +1,15 @@
+E
+======================================================================
+ERROR: test_new_accounts_on_legacy_users_schema_without_json_defaults (backend.tests.pilot.test_identity.MigrationTests.test_new_accounts_on_legacy_users_schema_without_json_defaults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/pilot/test_identity.py", line 24, in test_new_accounts_on_legacy_users_schema_without_json_defaults
+    identity.create_account(org['id'], role+'@example.invalid', role, role, Path(directory)/(role+'.json'))
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/pilot/identity.py", line 78, in create_account
+    conn.execute('''INSERT INTO users (id,email,display_name,password_hash,created_at,updated_at,
+sqlite3.IntegrityError: NOT NULL constraint failed: users.roles_json
+
+----------------------------------------------------------------------
+Ran 1 test in 0.054s
+
+FAILED (errors=1)
