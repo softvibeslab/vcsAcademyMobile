@@ -1,0 +1,98 @@
+{
+  "target": "https://aisalesv1.softvibes.pro/",
+  "startedAt": "2026-11-22T23:51:58.051Z",
+  "resolution": "system DNS",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Private V5 baseline via GET only",
+      "passed": true,
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    },
+    {
+      "name": "Public V1 HTML exactly matches local build",
+      "passed": true,
+      "htmlSha256": "1c4c946a7132c8c7b0ed497ee6042515e62fb60b093233029cde82f771e33c6c"
+    },
+    {
+      "name": "Public asset exactly matches local V1 build",
+      "passed": true,
+      "asset": "/assets/pilot-D349lf_J.js",
+      "sha256": "512fd08f19c5a2a2b226496bc994030d45e3973b7fffda54799074f8ae0ab04d"
+    },
+    {
+      "name": "Public asset exactly matches local V1 build",
+      "passed": true,
+      "asset": "/assets/pilot-0JMcyTXr.css",
+      "sha256": "e5264b75e5a999617bc31a6a68d2f0c2df7c017dca5b6a76b8900be87b9f1d0e"
+    },
+    {
+      "name": "V1 legacy API remains ready",
+      "passed": true
+    },
+    {
+      "name": "mobile390: trusted HTTPS, public demo login, monthly shell/selection/month/Today/filter, direct future follow-up prefill without save and logout",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 884
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 884
+      },
+      "today": "2026-11-22",
+      "apiRequests": 13,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "desktop1440: trusted HTTPS, public demo login, monthly shell/selection/month/Today/filter, direct future follow-up prefill without save and logout",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "frame": {
+        "x": 505,
+        "y": 34,
+        "width": 430,
+        "height": 932
+      },
+      "today": "2026-11-22",
+      "apiRequests": 13,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "Private V5 unchanged after public smoke",
+      "passed": true,
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "mobile390",
+      "file": "mobile390-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop1440",
+      "file": "desktop1440-agenda.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "finishedAt": "2026-11-22T23:52:09.320Z"
+}

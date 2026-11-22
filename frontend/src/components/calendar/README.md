@@ -1,4 +1,28 @@
-# Calendario semanal reutilizable
+# Calendarios reutilizables
+
+## Vista mensual
+
+`MonthlyCalendar` implementa la cuadrícula mensual usada por la agenda de V1. Es controlado y no depende de API, rutas, autenticación ni guardado. Recibe fechas civiles válidas `YYYY-MM-DD` y eventos con `id`, `date` y `title`.
+
+```jsx
+<MonthlyCalendar
+  selectedDate={selectedDate}
+  today={today}
+  events={events}
+  onSelectDate={setSelectedDate}
+  renderEvent={(event, selected) => (
+    <span className={selected ? "selected" : ""}>{event.title}</span>
+  )}
+/>
+```
+
+Genera 42 días, de domingo a sábado, incluyendo los días adyacentes. Muestra hasta tres eventos por celda y el contador de adicionales. Las etiquetas accesibles incluyen fecha y cantidad de registros; las flechas mueven uno o siete días, Home/End el inicio/final de fila y PageUp/PageDown un mes, ajustando el día al último válido. El foco acompaña la selección por teclado.
+
+El consumidor aporta `renderEvent` y los estilos de `.sa-month-matrix`, `.sa-month-week`, `.sa-month-day`, `.sa-day-number`, `.sa-day-events` y `.sa-day-more`. La composición `frontend/src/pilot/SmartAgenda.jsx` y su CSS reproducen el diseño adjunto; el componente de cuadrícula no contiene acciones de negocio. `smart-agenda-model.mjs` adapta Goal Sheet y recordatorios sin fabricar campos ausentes.
+
+Pruebas: `node --test frontend/src/components/calendar/month-model.test.mjs frontend/src/pilot/smart-agenda-model.test.mjs`. Integración con API local y datos simulados: `work/features/2026-11-22-v1-monthly-agenda-design/verify-monthly.cjs`.
+
+## Vista semanal
 
 `Calendar` es un componente controlado, independiente de Sales Academy, rutas, API y autenticación. Recibe fechas civiles `YYYY-MM-DD`; no convierte días a horas ni mantiene datos en almacenamiento global.
 
@@ -28,11 +52,11 @@ const [selectedDate, setSelectedDate] = useState(today);
 
 Semana de lunes a domingo. Botones anterior/siguiente desplazan siete días; Hoy usa la fecha del consumidor. Las flechas del teclado cambian día/semana, Home/End inicio/fin de semana, PageUp/PageDown siete días. La fecha seleccionada es el único botón de la tira en el orden de Tab; el foco acompaña cambios hechos con teclado.
 
-El contador del día se anuncia en su etiqueta, además del indicador visual. `aria-current=date` identifica hoy y `aria-pressed` la selección. No depende del color para comunicar selección o actividad. Las fechas inválidas no entran al calendario; el adaptador debe conservarlas en una lista de revisión si corresponden a registros editables, como hace Agenda.
+El contador del día se anuncia en su etiqueta, además del indicador visual. `aria-current=date` identifica hoy y `aria-pressed` la selección. No depende del color para comunicar selección o actividad. Las fechas inválidas no entran al calendario; corresponde al consumidor decidir cómo revisar datos inválidos de su fuente.
 
 Los estilos se limitan a `.sv-calendar`. Se pueden personalizar las variables `--calendar-bg`, `--calendar-panel`, `--calendar-raised`, `--calendar-line`, `--calendar-text`, `--calendar-muted`, `--calendar-accent` y `--calendar-ink`; por defecto heredan tokens existentes y tienen valores de respaldo.
 
-En Sales Academy, `Agenda` normaliza `follow_up_date` y `note`, y conserva `entry_date` para editar el Goal Sheet correcto. No se inventan horarios, estados de tours ni asignaciones de asesores.
+La agenda semanal anterior normalizaba `follow_up_date` y `note`, y conservaba `entry_date` para editar el Goal Sheet correcto. La agenda mensual mantiene esa edición desde el título de cada seguimiento. No se inventan horarios, estados de tours ni asignaciones de asesores.
 
 Pruebas: `node --test frontend/src/components/calendar/calendar-model.test.mjs`. Integración con API real: `work/features/2026-11-22-v1-agenda-calendar/verify-calendar.cjs`.
 

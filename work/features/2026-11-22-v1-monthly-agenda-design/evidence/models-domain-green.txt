@@ -1,0 +1,33 @@
+✔ date keys validate real civil dates, including leap-year century rules (0.777416ms)
+✔ adding civil days crosses months, leap days and years in either direction (1.512375ms)
+✔ a week always runs Monday through Sunday across month and year boundaries (1.344917ms)
+✔ grouping preserves event order and objects without mutating the input (0.21675ms)
+✔ finding nearby activity prefers the first later date, otherwise the latest earlier date (0.148708ms)
+✔ formatting uses locale options while preserving the calendar day in UTC (9.69675ms)
+✔ civil date arithmetic and labels do not change across host time zones or DST (1.779667ms)
+✔ November 2026 starts on Sunday and places the sixth on Friday in a 42-day grid (2.7735ms)
+✔ month grids include adjacent month dates across leap days and year boundaries (1.13ms)
+✔ month navigation clamps the selected day while preserving month and year intent (0.1575ms)
+✔ monthly date keys remain stable across host time zones and DST (2.168167ms)
+✔ month metrics exclude other periods and reuse canonical qualified-tour denominator (2.598458ms)
+✔ weekly range starts Monday and excludes future entries (0.628084ms)
+✔ no-sale form clears stale volume, validates input and never adds unsupported channel fields (0.238458ms)
+✔ role preference cannot grant manager access (0.063542ms)
+✔ notebook storage is scoped to authenticated identity (0.140583ms)
+✔ agenda maps existing sales, no-sale days, no-tour days and dated follow-ups without inventing fields (1.442792ms)
+✔ missing data does not create a sale, an amount or a dated event (0.644ms)
+✔ daily and monthly summaries reuse canonical metrics and preserve absent financial fields as null (0.272792ms)
+✔ a future follow-up selects today's origin form without changing the follow-up date or creating a record (0.054666ms)
+✔ Blueprint keeps the canonical 11-step order (0.807209ms)
+✔ GoalSheet metrics avoid division by zero (0.370292ms)
+✔ GoalSheet validation catches inconsistent sales outcome (0.162541ms)
+✔ Sensitive resources require explicit access or admin role (0.087166ms)
+✔ Smart Agent refuses hidden-fee coaching (0.241708ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66.830583

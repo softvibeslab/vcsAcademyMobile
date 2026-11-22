@@ -1,0 +1,199 @@
+✖ November 2026 starts on Sunday and places the sixth on Friday in a 42-day grid (0.804ms)
+✖ month grids include adjacent month dates across leap days and year boundaries (0.135417ms)
+✖ month navigation clamps the selected day while preserving month and year intent (0.089917ms)
+✖ monthly date keys remain stable across host time zones and DST (0.867375ms)
+✖ agenda maps existing sales, no-sale days, no-tour days and dated follow-ups without inventing fields (0.5665ms)
+✖ missing data does not create a sale, an amount or a dated event (0.117959ms)
+✖ daily and monthly summaries reuse canonical metrics and preserve absent financial fields as null (0.863042ms)
+✖ a future follow-up selects today's origin form without changing the follow-up date or creating a record (0.08975ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39.493
+
+✖ failing tests:
+
+test at frontend/src/components/calendar/month-model.test.mjs:5:1
+✖ November 2026 starts on Sunday and places the sixth on Friday in a 42-day grid (0.804ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 42
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/month-model.test.mjs:7:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 42,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/month-model.test.mjs:14:1
+✖ month grids include adjacent month dates across leap days and year boundaries (0.135417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - '2024-01-28'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/month-model.test.mjs:16:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '2024-01-28',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/month-model.test.mjs:27:1
+✖ month navigation clamps the selected day while preserving month and year intent (0.089917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + null
+  - '2026-02-28'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/month-model.test.mjs:28:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: '2026-02-28',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/month-model.test.mjs:43:1
+✖ monthly date keys remain stable across host time zones and DST (0.867375ms)
+  AssertionError [ERR_ASSERTION]: America/Cancun
+  + actual - expected
+
+  + undefined
+  - '2026-11-01'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/month-model.test.mjs:48:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '2026-11-01',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/smart-agenda-model.test.mjs:11:1
+✖ agenda maps existing sales, no-sale days, no-tour days and dated follow-ups without inventing fields (0.5665ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 4
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/smart-agenda-model.test.mjs:15:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 4,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/smart-agenda-model.test.mjs:39:1
+✖ missing data does not create a sale, an amount or a dated event (0.117959ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 3
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/smart-agenda-model.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/smart-agenda-model.test.mjs:54:1
+✖ daily and monthly summaries reuse canonical metrics and preserve absent financial fields as null (0.863042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + {}
+  - {
+  -   commission: null,
+  -   deposit: null,
+  -   sales: 2,
+  -   spiffs: null,
+  -   tours: 2,
+  -   volume: 8000
+  - }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/smart-agenda-model.test.mjs:60:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: {},
+    expected: { tours: 2, sales: 2, volume: 8000, commission: null, spiffs: null, deposit: null },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/smart-agenda-model.test.mjs:69:1
+✖ a future follow-up selects today's origin form without changing the follow-up date or creating a record (0.08975ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + null
+  - '2026-11-22'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/smart-agenda-model.test.mjs:70:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: '2026-11-22',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

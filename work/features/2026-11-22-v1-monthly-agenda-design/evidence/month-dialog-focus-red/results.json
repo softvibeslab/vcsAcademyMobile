@@ -1,0 +1,54 @@
+{
+  "phase": "green",
+  "pageURL": "http://127.0.0.1:4198/v1.html",
+  "apiURL": "http://127.0.0.1:18926",
+  "startedAt": "2026-11-22T23:49:15.482Z",
+  "passed": false,
+  "checks": [
+    {
+      "name": "Real local API has one USD8000 sale on Nov6, a note and one follow-up on Nov23",
+      "passed": true
+    },
+    {
+      "name": "mobile390: 42 civil dates, Sunday start, Friday Nov6, narrow reference shell and only real amounts",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 884
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 884
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "mobile390-before-monthly-assertion",
+      "file": "mobile390-before-monthly-assertion.png"
+    },
+    {
+      "name": "mobile390-monthly-reference",
+      "file": "mobile390-monthly-reference.png"
+    },
+    {
+      "name": "mobile390-failure",
+      "file": "mobile390-failure.png"
+    }
+  ],
+  "failure": {
+    "name": "mobile390",
+    "message": "expect(locator).toBeFocused() failed\n\nLocator:  getByRole('region', { name: 'Calendario mensual', exact: true }).getByRole('button', { name: 'Elegir mes y año', exact: true })\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeFocused\" getByRole('region', { name: 'Calendario mensual', exact: true }).getByRole('button', { name: 'Elegir mes y año', exact: true }) with timeout 5000ms\n  - waiting for getByRole('region', { name: 'Calendario mensual', exact: true }).getByRole('button', { name: 'Elegir mes y año', exact: true })\n    14 × locator resolved to <button type=\"button\" class=\"sa-year-button\" aria-label=\"Elegir mes y año\">…</button>\n       - unexpected value \"inactive\"\n",
+    "runtimeErrors": [],
+    "mutations": [
+      {
+        "path": "/api/auth/login",
+        "method": "POST"
+      }
+    ]
+  },
+  "error": "expect(locator).toBeFocused() failed\n\nLocator:  getByRole('region', { name: 'Calendario mensual', exact: true }).getByRole('button', { name: 'Elegir mes y año', exact: true })\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeFocused\" getByRole('region', { name: 'Calendario mensual', exact: true }).getByRole('button', { name: 'Elegir mes y año', exact: true }) with timeout 5000ms\n  - waiting for getByRole('region', { name: 'Calendario mensual', exact: true }).getByRole('button', { name: 'Elegir mes y año', exact: true })\n    14 × locator resolved to <button type=\"button\" class=\"sa-year-button\" aria-label=\"Elegir mes y año\">…</button>\n       - unexpected value \"inactive\"\n",
+  "finishedAt": "2026-11-22T23:49:21.424Z"
+}

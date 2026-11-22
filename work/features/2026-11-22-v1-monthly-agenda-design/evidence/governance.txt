@@ -1,0 +1,5 @@
+Verificando gobierno del ecosistema: /Users/rogergv/Documents/SoftvibesLab/px-onboarding-mob-gen
+Validando perfil: /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/.ecosystem360/team-bootstrap/project-profile.local.yml
+Validando iniciativa: /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/work/features/2026-11-22-v1-monthly-agenda-design
+OK: adapters sincronizados con la fuente neutral (16 agentes, 13 skills, 6 rules, 7 bloques multi-herramienta).
+OK: metodologia y plantillas de gobierno completas.

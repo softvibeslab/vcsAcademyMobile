@@ -1,0 +1,10 @@
+2026/11/22 23:51:42 [warn] 3359504#3359504: could not build optimal server_names_hash, you should increase either server_names_hash_max_size: 512 or server_names_hash_bucket_size: 64; ignoring server_names_hash_bucket_size
+2026/11/22 23:51:42 [warn] 3359504#3359504: could not build optimal server_names_hash, you should increase either server_names_hash_max_size: 512 or server_names_hash_bucket_size: 64; ignoring server_names_hash_bucket_size
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+    root /srv/aisales-v1-release-20261122-monthly/web;
+/srv/aisales-release-20261120-role-accounts
+2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d  /etc/nginx/sites-available/aisales.softvibes.pro.conf
+8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4  /srv/aisales/current/web/index.html
+aisales-v1-20261122 aisales-api:20261114c 127.0.0.1:18824->8001/tcp
+aisales-pilot-20261120-accounts-r2 aisales-pilot:20261120-accounts-r2 127.0.0.1:18823->8001/tcp

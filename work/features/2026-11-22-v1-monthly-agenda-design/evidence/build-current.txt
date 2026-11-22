@@ -1,0 +1,25 @@
+
+> vcsa-academy@0.1.0 build:web
+> npm --workspace frontend run build
+
+
+> vcsa-webapp@0.1.0 build
+> vite build
+
+vite v7.3.2 building client environment for production...
+transforming...
+✓ 1583 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                       0.48 kB │ gzip:  0.30 kB
+dist/pilot.html                       1.01 kB │ gzip:  0.49 kB
+dist/assets/dm-sans-3-BQ0abr9c.ttf   48.20 kB
+dist/assets/dm-sans-0-CB7WfZ8W.ttf   48.28 kB
+dist/assets/dm-sans-2-CYvJJk-g.ttf   48.28 kB
+dist/assets/dm-sans-1-DCQhiIS7.ttf   48.31 kB
+dist/assets/index-B2lZmxDi.css        4.51 kB │ gzip:  1.45 kB
+dist/assets/pilot-ByDm4Yha.css       33.95 kB │ gzip:  7.94 kB
+dist/assets/index-Cv0zIjxO.js        16.79 kB │ gzip:  4.99 kB
+dist/assets/pilot--4VY4Veb.js       102.67 kB │ gzip: 30.87 kB
+dist/assets/users-DOJ6Gf64.js       187.31 kB │ gzip: 59.40 kB
+✓ built in 673ms

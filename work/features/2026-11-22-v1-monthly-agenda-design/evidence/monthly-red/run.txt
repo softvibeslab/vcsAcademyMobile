@@ -1,0 +1,12 @@
+MONTHLY_QA_PHASE=red node work/features/2026-11-22-v1-monthly-agenda-design/verify-monthly.cjs
+Exit code: 1
+expect(locator).toBeVisible() failed
+
+Locator: getByRole('region', { name: 'Calendario mensual', exact: true })
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" getByRole('region', { name: 'Calendario mensual', exact: true }) with timeout 5000ms
+  - waiting for getByRole('region', { name: 'Calendario mensual', exact: true })

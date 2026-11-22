@@ -1,0 +1,16 @@
+✔ November 2026 starts on Sunday and places the sixth on Friday in a 42-day grid (1.083541ms)
+✔ month grids include adjacent month dates across leap days and year boundaries (0.6035ms)
+✔ month navigation clamps the selected day while preserving month and year intent (0.099042ms)
+✔ monthly date keys remain stable across host time zones and DST (1.710042ms)
+✔ agenda maps existing sales, no-sale days, no-tour days and dated follow-ups without inventing fields (0.618167ms)
+✔ missing data does not create a sale, an amount or a dated event (0.590708ms)
+✔ daily and monthly summaries reuse canonical metrics and preserve absent financial fields as null (0.277834ms)
+✔ a future follow-up selects today's origin form without changing the follow-up date or creating a record (0.054083ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.777917

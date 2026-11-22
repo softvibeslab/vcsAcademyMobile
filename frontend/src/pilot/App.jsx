@@ -22,7 +22,8 @@ import { GuideSheet, GuideCard, GuideProfileCard } from "./Guide";
 import { guideKey, emptyGuide, shouldAutoOpen, markGuide, routeEvent } from "./guide-model.mjs";
 import { planError, itemAccess } from "./access-model.mjs";
 import { Header, Loading, ErrorBox, Button } from "./ui";
-import { canManage, roleLabel } from "./model.mjs";
+import { canManage, localDate, roleLabel } from "./model.mjs";
+import { followupOriginDate } from "./smart-agenda-model.mjs";
 import { HomeView, GoalSheet, Agenda, Profile, Calculators } from "./Workspace";
 import {
   Roadmap,
@@ -61,6 +62,11 @@ function App() {
     [revision, setRevision] = useState(0),
     [route, setRoute] = useState(() => location.hash.slice(1) || "home");
   const [unlock, setUnlock] = useState(null);
+  const [followupDate, setFollowupDate] = useState(null);
+  useEffect(() => {
+    if (route.split("/")[0] !== "goalsheet") setFollowupDate(null);
+  }, [route]);
+  useEffect(() => { setFollowupDate(null); }, [user?.id]);
   const [guide, setGuideState] = useState(null),
     [guideOpen, setGuideOpen] = useState(false);
   const [guest, setGuest] = useState(false),
@@ -322,6 +328,11 @@ function App() {
     data,
     refresh,
     revision,
+    followupDate,
+    onAddFollowup: (date) => {
+      setFollowupDate(date);
+      location.hash = "goalsheet/" + followupOriginDate(date, localDate());
+    },
     onLocked: (level) => setUnlock({ level }),
     onGuideEvent: (event) => guide && setGuide(markGuide(guide, event)),
   };
@@ -425,7 +436,7 @@ function App() {
       );
   }
   return (
-    <div className="app-shell">
+    <div className={"app-shell" + (page === "agenda" ? " app-shell--smart-agenda" : "")}>
       <aside className="sidebar">
         <a className="brand" href="#home">
           <span className="brand-mark">sa</span>

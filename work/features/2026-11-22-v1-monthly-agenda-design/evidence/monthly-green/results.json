@@ -1,0 +1,178 @@
+{
+  "phase": "green",
+  "pageURL": "http://127.0.0.1:4198/v1.html",
+  "apiURL": "http://127.0.0.1:18926",
+  "startedAt": "2026-11-22T23:50:01.851Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Real local API has one USD8000 sale on Nov6, a note and one follow-up on Nov23",
+      "passed": true
+    },
+    {
+      "name": "mobile390: 42 civil dates, Sunday start, Friday Nov6, narrow reference shell and only real amounts",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 884
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 884
+      }
+    },
+    {
+      "name": "mobile390: month picker, Escape/focus return, civil-date keyboard navigation and Today work",
+      "passed": true
+    },
+    {
+      "name": "mobile390: search, existing month history, reference navigation and collapsible detail work",
+      "passed": true
+    },
+    {
+      "name": "mobile390: sale filter keeps real record; Spiffs filter is empty without invented rewards",
+      "passed": true
+    },
+    {
+      "name": "mobile390: scrolling reaches final month-grid cells beyond the bottom sheet",
+      "passed": true
+    },
+    {
+      "name": "mobile390: existing follow-up opens its original record without implicit writes",
+      "passed": true
+    },
+    {
+      "name": "mobile390: sole FAB opens existing form directly, uses today as record date and selected future follow-up date, focuses Action without saving",
+      "passed": true
+    },
+    {
+      "name": "mobile390: no JavaScript errors, no horizontal overflow and no implicit data writes",
+      "passed": true
+    },
+    {
+      "name": "mobile320: 42 civil dates, Sunday start, Friday Nov6, narrow reference shell and only real amounts",
+      "passed": true,
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 740
+      }
+    },
+    {
+      "name": "mobile320: month picker, Escape/focus return, civil-date keyboard navigation and Today work",
+      "passed": true
+    },
+    {
+      "name": "mobile320: search, existing month history, reference navigation and collapsible detail work",
+      "passed": true
+    },
+    {
+      "name": "mobile320: sale filter keeps real record; Spiffs filter is empty without invented rewards",
+      "passed": true
+    },
+    {
+      "name": "mobile320: scrolling reaches final month-grid cells beyond the bottom sheet",
+      "passed": true
+    },
+    {
+      "name": "mobile320: existing follow-up opens its original record without implicit writes",
+      "passed": true
+    },
+    {
+      "name": "mobile320: sole FAB opens existing form directly, uses today as record date and selected future follow-up date, focuses Action without saving",
+      "passed": true
+    },
+    {
+      "name": "mobile320: no JavaScript errors, no horizontal overflow and no implicit data writes",
+      "passed": true
+    },
+    {
+      "name": "desktop1440: 42 civil dates, Sunday start, Friday Nov6, narrow reference shell and only real amounts",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "frame": {
+        "x": 505,
+        "y": 34,
+        "width": 430,
+        "height": 932
+      }
+    },
+    {
+      "name": "desktop1440: month picker, Escape/focus return, civil-date keyboard navigation and Today work",
+      "passed": true
+    },
+    {
+      "name": "desktop1440: search, existing month history, reference navigation and collapsible detail work",
+      "passed": true
+    },
+    {
+      "name": "desktop1440: sale filter keeps real record; Spiffs filter is empty without invented rewards",
+      "passed": true
+    },
+    {
+      "name": "desktop1440: scrolling reaches final month-grid cells beyond the bottom sheet",
+      "passed": true
+    },
+    {
+      "name": "desktop1440: existing follow-up opens its original record without implicit writes",
+      "passed": true
+    },
+    {
+      "name": "desktop1440: sole FAB opens existing form directly, uses today as record date and selected future follow-up date, focuses Action without saving",
+      "passed": true
+    },
+    {
+      "name": "desktop1440: no JavaScript errors, no horizontal overflow and no implicit data writes",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "mobile390-before-monthly-assertion",
+      "file": "mobile390-before-monthly-assertion.png"
+    },
+    {
+      "name": "mobile390-monthly-reference",
+      "file": "mobile390-monthly-reference.png"
+    },
+    {
+      "name": "mobile390-final",
+      "file": "mobile390-final.png"
+    },
+    {
+      "name": "mobile320-before-monthly-assertion",
+      "file": "mobile320-before-monthly-assertion.png"
+    },
+    {
+      "name": "mobile320-monthly-reference",
+      "file": "mobile320-monthly-reference.png"
+    },
+    {
+      "name": "mobile320-final",
+      "file": "mobile320-final.png"
+    },
+    {
+      "name": "desktop1440-before-monthly-assertion",
+      "file": "desktop1440-before-monthly-assertion.png"
+    },
+    {
+      "name": "desktop1440-monthly-reference",
+      "file": "desktop1440-monthly-reference.png"
+    },
+    {
+      "name": "desktop1440-final",
+      "file": "desktop1440-final.png"
+    }
+  ],
+  "finishedAt": "2026-11-22T23:50:06.656Z"
+}

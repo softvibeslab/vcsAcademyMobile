@@ -1,0 +1,3 @@
+1c4c946a7132c8c7b0ed497ee6042515e62fb60b093233029cde82f771e33c6c  /srv/aisales-v1-release-20261122-monthly/web/index.html
+512fd08f19c5a2a2b226496bc994030d45e3973b7fffda54799074f8ae0ab04d  /srv/aisales-v1-release-20261122-monthly/web/assets/pilot-D349lf_J.js
+e5264b75e5a999617bc31a6a68d2f0c2df7c017dca5b6a76b8900be87b9f1d0e  /srv/aisales-v1-release-20261122-monthly/web/assets/pilot-0JMcyTXr.css

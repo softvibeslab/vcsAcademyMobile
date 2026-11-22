@@ -1,0 +1,45 @@
+{
+  "phase": "regression-red",
+  "pageURL": "http://127.0.0.1:4198/v1.html",
+  "apiURL": "http://127.0.0.1:18926",
+  "startedAt": "2026-11-22T23:48:30.825Z",
+  "passed": false,
+  "checks": [
+    {
+      "name": "Real local API has one USD8000 sale on Nov6, a note and one follow-up on Nov23",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "mobile390-before-monthly-assertion",
+      "file": "mobile390-before-monthly-assertion.png"
+    },
+    {
+      "name": "mobile390-regression",
+      "file": "mobile390-regression.png"
+    },
+    {
+      "name": "mobile390-failure",
+      "file": "mobile390-failure.png"
+    }
+  ],
+  "regression": {
+    "accessibleCount": "viernes, 6 de noviembre de 2026",
+    "countIncluded": false,
+    "followupLinkExists": false
+  },
+  "failure": {
+    "name": "mobile390",
+    "message": "Existing follow-up must link to its original Goal Sheet\n\nfalse !== true\n",
+    "runtimeErrors": [],
+    "mutations": [
+      {
+        "path": "/api/auth/login",
+        "method": "POST"
+      }
+    ]
+  },
+  "error": "Existing follow-up must link to its original Goal Sheet\n\nfalse !== true\n",
+  "finishedAt": "2026-11-22T23:48:31.751Z"
+}

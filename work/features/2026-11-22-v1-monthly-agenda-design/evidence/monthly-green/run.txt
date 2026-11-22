@@ -1,0 +1,6 @@
+Command: MONTHLY_QA_PHASE=green node work/features/2026-11-22-v1-monthly-agenda-design/verify-monthly.cjs
+Exit code: 0
+Observed stdout:
+PASS: monthly reference shell, real data, 42 dates, filters, full grid access, direct future-date follow-up and no implicit writes at three viewports.
+Started: 2026-11-22T23:50:01.851Z
+Finished: 2026-11-22T23:50:06.656Z
