@@ -1,0 +1,15 @@
+✔ date keys validate real civil dates, including leap-year century rules (0.374333ms)
+✔ adding civil days crosses months, leap days and years in either direction (0.712416ms)
+✔ a week always runs Monday through Sunday across month and year boundaries (2.117167ms)
+✔ grouping preserves event order and objects without mutating the input (0.133125ms)
+✔ finding nearby activity prefers the first later date, otherwise the latest earlier date (0.087667ms)
+✔ formatting uses locale options while preserving the calendar day in UTC (7.257291ms)
+✔ civil date arithmetic and labels do not change across host time zones or DST (2.797333ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47.839417

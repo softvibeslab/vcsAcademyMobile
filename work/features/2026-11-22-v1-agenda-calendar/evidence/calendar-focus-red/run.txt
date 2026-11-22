@@ -1,0 +1,14 @@
+CALENDAR_QA_PHASE=focus-red node work/features/2026-11-22-v1-agenda-calendar/verify-calendar.cjs
+Exit code: 1
+expect(locator).toBeFocused() failed
+
+Locator:  getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \d+ seguimientos?$/ })
+Expected: focused
+Received: inactive
+Timeout:  5000ms
+
+Call log:
+  - Expect "toBeFocused" getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \d+ seguimientos?$/ }) with timeout 5000ms
+  - waiting for getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \d+ seguimientos?$/ })
+    14 × locator resolved to <button tabindex="0" type="button" aria-pressed="true" class="sv-calendar-date" aria-label="viernes, 20 de noviembre de 2026 · 1 seguimiento">…</button>
+       - unexpected value "inactive"

@@ -1,0 +1,185 @@
+✖ date keys validate real civil dates, including leap-year century rules (0.9685ms)
+✖ adding civil days crosses months, leap days and years in either direction (0.138834ms)
+✖ a week always runs Monday through Sunday across month and year boundaries (0.544833ms)
+✖ grouping preserves event order and objects without mutating the input (0.581ms)
+✖ finding nearby activity prefers the first later date, otherwise the latest earlier date (0.099584ms)
+✖ formatting uses locale options while preserving the calendar day in UTC (0.061792ms)
+✖ civil date arithmetic and labels do not change across host time zones or DST (0.981542ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40.777583
+
+✖ failing tests:
+
+test at frontend/src/components/calendar/calendar-model.test.mjs:12:1
+✖ date keys validate real civil dates, including leap-year century rules (0.9685ms)
+  AssertionError [ERR_ASSERTION]: 2026-11-22
+
+  false !== true
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/calendar-model.test.mjs:14:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/calendar-model.test.mjs:21:1
+✖ adding civil days crosses months, leap days and years in either direction (0.138834ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + null
+  - '2026-12-01'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/calendar-model.test.mjs:22:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: '2026-12-01',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/calendar-model.test.mjs:38:1
+✖ a week always runs Monday through Sunday across month and year boundaries (0.544833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + []
+  - [
+  -   '2026-11-16',
+  -   '2026-11-17',
+  -   '2026-11-18',
+  -   '2026-11-19',
+  -   '2026-11-20',
+  -   '2026-11-21',
+  -   '2026-11-22'
+  - ]
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/calendar-model.test.mjs:40:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ '2026-11-16', '2026-11-17', '2026-11-18', '2026-11-19', '2026-11-20', '2026-11-21', '2026-11-22' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/calendar-model.test.mjs:48:1
+✖ grouping preserves event order and objects without mutating the input (0.581ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + []
+  - [
+  -   '2026-11-24',
+  -   '2026-11-22'
+  - ]
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/calendar-model.test.mjs:55:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ '2026-11-24', '2026-11-22' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/calendar-model.test.mjs:64:1
+✖ finding nearby activity prefers the first later date, otherwise the latest earlier date (0.099584ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + null
+  - '2026-11-24'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/calendar-model.test.mjs:74:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: '2026-11-24',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/calendar-model.test.mjs:84:1
+✖ formatting uses locale options while preserving the calendar day in UTC (0.061792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + ''
+  - 'domingo, 22 de noviembre'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/calendar-model.test.mjs:85:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'domingo, 22 de noviembre',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/components/calendar/calendar-model.test.mjs:93:1
+✖ civil date arithmetic and labels do not change across host time zones or DST (0.981542ms)
+  AssertionError [ERR_ASSERTION]: America/Cancun
+  + actual - expected
+
+  + null
+  - '2026-03-09'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/components/calendar/calendar-model.test.mjs:98:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: '2026-03-09',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

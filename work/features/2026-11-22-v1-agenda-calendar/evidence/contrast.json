@@ -1,0 +1,170 @@
+[
+  {
+    "name": "light-selected",
+    "result": {
+      "foreground": "#181a1b",
+      "background": "#76d406",
+      "foreground_hex": "#181a1b",
+      "background_hex": "#76d406",
+      "ratio": 9.31,
+      "results": [
+        {
+          "level": "AA Normal Text",
+          "required": 4.5,
+          "ratio": 9.31,
+          "pass": true
+        },
+        {
+          "level": "AA Large Text",
+          "required": 3.0,
+          "ratio": 9.31,
+          "pass": true
+        },
+        {
+          "level": "AA UI Components",
+          "required": 3.0,
+          "ratio": 9.31,
+          "pass": true
+        },
+        {
+          "level": "AAA Normal Text",
+          "required": 7.0,
+          "ratio": 9.31,
+          "pass": true
+        },
+        {
+          "level": "AAA Large Text",
+          "required": 4.5,
+          "ratio": 9.31,
+          "pass": true
+        }
+      ]
+    }
+  },
+  {
+    "name": "dark-selected",
+    "result": {
+      "foreground": "#0d0f12",
+      "background": "#00e676",
+      "foreground_hex": "#0d0f12",
+      "background_hex": "#00e676",
+      "ratio": 11.5,
+      "results": [
+        {
+          "level": "AA Normal Text",
+          "required": 4.5,
+          "ratio": 11.5,
+          "pass": true
+        },
+        {
+          "level": "AA Large Text",
+          "required": 3.0,
+          "ratio": 11.5,
+          "pass": true
+        },
+        {
+          "level": "AA UI Components",
+          "required": 3.0,
+          "ratio": 11.5,
+          "pass": true
+        },
+        {
+          "level": "AAA Normal Text",
+          "required": 7.0,
+          "ratio": 11.5,
+          "pass": true
+        },
+        {
+          "level": "AAA Large Text",
+          "required": 4.5,
+          "ratio": 11.5,
+          "pass": true
+        }
+      ]
+    }
+  },
+  {
+    "name": "light-secondary",
+    "result": {
+      "foreground": "#636a70",
+      "background": "#ffffff",
+      "foreground_hex": "#636a70",
+      "background_hex": "#ffffff",
+      "ratio": 5.49,
+      "results": [
+        {
+          "level": "AA Normal Text",
+          "required": 4.5,
+          "ratio": 5.49,
+          "pass": true
+        },
+        {
+          "level": "AA Large Text",
+          "required": 3.0,
+          "ratio": 5.49,
+          "pass": true
+        },
+        {
+          "level": "AA UI Components",
+          "required": 3.0,
+          "ratio": 5.49,
+          "pass": true
+        },
+        {
+          "level": "AAA Normal Text",
+          "required": 7.0,
+          "ratio": 5.49,
+          "pass": false
+        },
+        {
+          "level": "AAA Large Text",
+          "required": 4.5,
+          "ratio": 5.49,
+          "pass": true
+        }
+      ]
+    }
+  },
+  {
+    "name": "dark-secondary",
+    "result": {
+      "foreground": "#9ba3af",
+      "background": "#1a1f26",
+      "foreground_hex": "#9ba3af",
+      "background_hex": "#1a1f26",
+      "ratio": 6.51,
+      "results": [
+        {
+          "level": "AA Normal Text",
+          "required": 4.5,
+          "ratio": 6.51,
+          "pass": true
+        },
+        {
+          "level": "AA Large Text",
+          "required": 3.0,
+          "ratio": 6.51,
+          "pass": true
+        },
+        {
+          "level": "AA UI Components",
+          "required": 3.0,
+          "ratio": 6.51,
+          "pass": true
+        },
+        {
+          "level": "AAA Normal Text",
+          "required": 7.0,
+          "ratio": 6.51,
+          "pass": false
+        },
+        {
+          "level": "AAA Large Text",
+          "required": 4.5,
+          "ratio": 6.51,
+          "pass": true
+        }
+      ]
+    }
+  }
+]

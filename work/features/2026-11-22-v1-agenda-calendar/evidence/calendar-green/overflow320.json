@@ -1,0 +1,45 @@
+{
+  "viewport": 320,
+  "document": 331,
+  "calendar": {
+    "left": 20,
+    "right": 300,
+    "width": 280,
+    "scrollWidth": 280,
+    "clientWidth": 280
+  },
+  "overflows": [
+    {
+      "tag": "DIV",
+      "classes": "top-actions",
+      "ariaLabel": null,
+      "left": 141.96875,
+      "right": 331.390625,
+      "width": 189.421875
+    },
+    {
+      "tag": "BUTTON",
+      "classes": "",
+      "ariaLabel": "Cambiar tema",
+      "left": 299.390625,
+      "right": 331.390625,
+      "width": 32
+    },
+    {
+      "tag": "svg",
+      "classes": {},
+      "ariaLabel": null,
+      "left": 305.390625,
+      "right": 325.390625,
+      "width": 20
+    },
+    {
+      "tag": "path",
+      "classes": {},
+      "ariaLabel": null,
+      "left": 307.890625,
+      "right": 322.890625,
+      "width": 15
+    }
+  ]
+}

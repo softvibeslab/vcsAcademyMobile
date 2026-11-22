@@ -1,0 +1,4 @@
+CALENDAR_QA_PHASE=green node work/features/2026-11-22-v1-agenda-calendar/verify-calendar.cjs
+Exit code: 0
+PASS: real API, date selection, weeks, keyboard and focus after jump, Goal Sheet actions, empty states, three viewports and two themes.
+Known limit: existing topbar at320px overflows document by11px; calendar itself fits.

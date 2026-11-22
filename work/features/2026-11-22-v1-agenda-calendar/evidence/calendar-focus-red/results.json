@@ -1,0 +1,34 @@
+{
+  "phase": "focus-red",
+  "pageURL": "http://127.0.0.1:4198/v1.html",
+  "apiURL": "http://127.0.0.1:18926",
+  "startedAt": "2026-11-22T23:27:06.013Z",
+  "passed": false,
+  "checks": [
+    {
+      "name": "Real API seeded with five reminders over four dates",
+      "passed": true
+    },
+    {
+      "name": "mobile390: day grouping, multiple follow-ups and original action links",
+      "passed": true,
+      "timezoneId": "America/Cancun",
+      "theme": "dark"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "mobile390-today-dark",
+      "file": "mobile390-today-dark.png",
+      "calendarHorizontalOverflow": false,
+      "documentHorizontalOverflow": false
+    }
+  ],
+  "failure": {
+    "name": "mobile390",
+    "message": "expect(locator).toBeFocused() failed\n\nLocator:  getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \\d+ seguimientos?$/ })\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeFocused\" getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \\d+ seguimientos?$/ }) with timeout 5000ms\n  - waiting for getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \\d+ seguimientos?$/ })\n    14 × locator resolved to <button tabindex=\"0\" type=\"button\" aria-pressed=\"true\" class=\"sv-calendar-date\" aria-label=\"viernes, 20 de noviembre de 2026 · 1 seguimiento\">…</button>\n       - unexpected value \"inactive\"\n",
+    "runtimeErrors": []
+  },
+  "error": "expect(locator).toBeFocused() failed\n\nLocator:  getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \\d+ seguimientos?$/ })\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeFocused\" getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \\d+ seguimientos?$/ }) with timeout 5000ms\n  - waiting for getByRole('region', { name: 'Calendario de seguimientos', exact: true }).getByRole('button', { name: /^viernes, 20 de noviembre de 2026 · \\d+ seguimientos?$/ })\n    14 × locator resolved to <button tabindex=\"0\" type=\"button\" aria-pressed=\"true\" class=\"sv-calendar-date\" aria-label=\"viernes, 20 de noviembre de 2026 · 1 seguimiento\">…</button>\n       - unexpected value \"inactive\"\n",
+  "finishedAt": "2026-11-22T23:27:11.988Z"
+}

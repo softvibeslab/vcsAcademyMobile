@@ -1,0 +1,7 @@
+/srv/aisales-release-20261120-role-accounts
+2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d  /etc/nginx/sites-available/aisales.softvibes.pro.conf
+8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4  /srv/aisales/current/web/index.html
+f863c5bc837b78fbb7d8b2346f63a9c18db57b64c0ca84166b3f058e2378bf55  /etc/nginx/sites-available/aisalesv1.softvibes.pro.conf
+dddc4ced52304b37b25b47a98a7d7acdbcfbd9d384ccb034802f676229a7b173  /srv/aisales-release-20261116a/web/index.html
+8d3406537f80f7fe90afc22d1596eb80bb9c93cb0c8ab29de98ec484dfa5b57e /srv/aisales-v1/data:/data
+{"success":true,"data":{"status":"ready","checks":{"database":true,"seed_users":true,"seed_resources":true}},"message":null}

@@ -1,0 +1,11 @@
+{
+  "route": "#home",
+  "viewport": 320,
+  "document": 331,
+  "topActions": {
+    "left": 141.96875,
+    "right": 331.390625,
+    "width": 189.421875
+  },
+  "calendarPresent": false
+}

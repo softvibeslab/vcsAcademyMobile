@@ -1,0 +1,12 @@
+CALENDAR_QA_PHASE=red node work/features/2026-11-22-v1-agenda-calendar/verify-calendar.cjs
+Exit code: 1
+expect(locator).toBeVisible() failed
+
+Locator: getByRole('region', { name: 'Calendario de seguimientos', exact: true })
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" getByRole('region', { name: 'Calendario de seguimientos', exact: true }) with timeout 5000ms
+  - waiting for getByRole('region', { name: 'Calendario de seguimientos', exact: true })

@@ -1,0 +1,7 @@
+2026/11/22 23:31:44 [warn] 3327408#3327408: could not build optimal server_names_hash, you should increase either server_names_hash_max_size: 512 or server_names_hash_bucket_size: 64; ignoring server_names_hash_bucket_size
+2026/11/22 23:31:44 [warn] 3327408#3327408: could not build optimal server_names_hash, you should increase either server_names_hash_max_size: 512 or server_names_hash_bucket_size: 64; ignoring server_names_hash_bucket_size
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+    <script type="module" crossorigin src="/assets/pilot-VEf5AdlK.js"></script>
+{"success":true,"data":{"status":"ready","checks":{"database":true,"seed_users":true,"seed_resources":true}},"message":null}5b516c645e6f6fb431d09925e9a5c527a1530691b5ecb3cfaf8ce5ca175e6821  /srv/aisales-v1-release-20261122-calendar/web/assets/pilot-VEf5AdlK.js
+72db73c054039f99c8f9433e6c551234c44334d771c5559e15d77fedbd50c41e  /srv/aisales-v1-release-20261122-calendar/web/assets/pilot-2EC2p-Ez.css

@@ -1,0 +1,50 @@
+{
+  "phase": "green",
+  "pageURL": "http://127.0.0.1:4198/v1.html",
+  "apiURL": "http://127.0.0.1:18926",
+  "startedAt": "2026-11-22T23:25:48.832Z",
+  "passed": false,
+  "checks": [
+    {
+      "name": "Real API seeded with five reminders over four dates",
+      "passed": true
+    },
+    {
+      "name": "mobile390: day grouping, multiple follow-ups and original action links",
+      "passed": true,
+      "timezoneId": "America/Cancun",
+      "theme": "dark"
+    },
+    {
+      "name": "mobile390: past dates, empty day, upcoming shortcut and previous/next week",
+      "passed": true
+    },
+    {
+      "name": "mobile390: keyboard arrows, Home/End, PageUp/PageDown and visible focus",
+      "passed": true
+    },
+    {
+      "name": "mobile390: real Goal Sheet destinations, no runtime errors and no horizontal overflow",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "mobile390-today-dark",
+      "file": "mobile390-today-dark.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "mobile390-final",
+      "file": "mobile390-final.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "failure": {
+    "name": "mobile320",
+    "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+    "runtimeErrors": []
+  },
+  "error": "expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+  "finishedAt": "2026-11-22T23:25:55.455Z"
+}

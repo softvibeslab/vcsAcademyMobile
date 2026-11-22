@@ -1,0 +1,86 @@
+{
+  "target": "https://aisalesv1.softvibes.pro/",
+  "startedAt": "2026-11-22T23:31:59.348Z",
+  "resolution": "system DNS",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Private V5 baseline via GET only",
+      "passed": true,
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    },
+    {
+      "name": "Public V1 HTML exactly matches local build",
+      "passed": true,
+      "htmlSha256": "41c726496a3837ba2c91823115a2f82a893514c9ce868430dd5239829572afcb"
+    },
+    {
+      "name": "Public asset exactly matches local V1 build",
+      "passed": true,
+      "asset": "/assets/pilot-VEf5AdlK.js",
+      "sha256": "5b516c645e6f6fb431d09925e9a5c527a1530691b5ecb3cfaf8ce5ca175e6821"
+    },
+    {
+      "name": "Public asset exactly matches local V1 build",
+      "passed": true,
+      "asset": "/assets/pilot-2EC2p-Ez.css",
+      "sha256": "72db73c054039f99c8f9433e6c551234c44334d771c5559e15d77fedbd50c41e"
+    },
+    {
+      "name": "V1 legacy API remains ready",
+      "passed": true
+    },
+    {
+      "name": "mobile390: trusted HTTPS, public demo login, calendar selection/weeks/Today and logout",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "today": "2026-11-22",
+      "apiRequests": 13,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "desktop1440: trusted HTTPS, public demo login, calendar selection/weeks/Today and logout",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "today": "2026-11-22",
+      "apiRequests": 13,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "Private V5 unchanged after public smoke",
+      "passed": true,
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "mobile390",
+      "file": "mobile390-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop1440",
+      "file": "desktop1440-agenda.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "finishedAt": "2026-11-22T23:32:10.208Z"
+}

@@ -1,0 +1,9 @@
+{
+  "ports": [
+    18926,
+    4198
+  ],
+  "listenersRemaining": 0,
+  "backendStoppedGracefully": true,
+  "viteInterrupted": true
+}

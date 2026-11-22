@@ -24,6 +24,9 @@ import {
   Tile,
 } from "./ui";
 import { PlanCard } from "./Access";
+import { Calendar } from "../components/calendar/Calendar";
+import { formatCalendarDate, isDateKey } from "../components/calendar/calendar-model.mjs";
+import "./agenda.css";
 import {
   periodEntries,
   metricsFor,
@@ -278,47 +281,51 @@ export function GoalSheet({ api, data, refresh, initialDate }) {
   );
 }
 export function Agenda({ data }) {
+  const today = localDate();
+  const [selectedDate, setSelectedDate] = useState(today);
+  const events = data.reminders.map((reminder) => ({
+    id: reminder.id,
+    date: reminder.follow_up_date,
+    title: reminder.note || "Seguimiento pendiente",
+    reminder,
+  }));
+  const undatedEvents = events.filter((event) => !isDateKey(event.date));
+  const renderEvent = (event) => (
+    <article className="pilot-agenda-event">
+      <div className="pilot-agenda-event-top">
+        <span className="pilot-agenda-event-type">Seguimiento</span>
+        <span className="pilot-agenda-event-status">{!isDateKey(event.date) ? "Revisar fecha" : event.date < today ? "Fecha pasada" : event.date === today ? "Hoy" : "Programado"}</span>
+      </div>
+      <h3>{event.title}</h3>
+      <p>Registro del {formatCalendarDate(event.reminder.entry_date, "es-MX", { day: "numeric", month: "long", year: "numeric" }) || event.reminder.entry_date}</p>
+      <a href={"#goalsheet/" + event.reminder.entry_date}>Editar en Goal Sheet <ArrowRight size={16} aria-hidden="true" /></a>
+    </article>
+  );
   return (
-    <>
+    <div className="pilot-agenda-page">
       <Header
         eyebrow="TU JORNADA"
         title="Agenda de seguimiento"
-        subtitle="Las próximas acciones registradas en tu Goal Sheet."
+        subtitle="Un día a la vez. Organiza las próximas acciones de tu Goal Sheet."
         action={
           <a className="button" href="#goalsheet">
             <Plus size={18} /> Agregar seguimiento
           </a>
         }
       />
-      <Card>
-        {data.reminders.length ? (
-          data.reminders.map((r) => (
-            <div className="list-row" key={r.id}>
-              <span className="date-tile">
-                {r.follow_up_date?.slice(8) || "—"}
-                <small>{r.follow_up_date?.slice(5, 7)}</small>
-              </span>
-              <div>
-                <strong>{r.note}</strong>
-                <small>
-                  Registro del {r.entry_date} ·{" "}
-                  {r.follow_up_date < localDate()
-                    ? "Fecha pasada"
-                    : "Programado"}
-                </small>
-              </div>
-              <a className="inline-link" href={"#goalsheet/" + r.entry_date}>
-                Editar en Goal Sheet <ArrowRight size={16} />
-              </a>
-            </div>
-          ))
-        ) : (
-          <Empty title="Tu agenda está despejada">
-            Agrega la próxima acción desde el registro de actividad.
-          </Empty>
-        )}
-      </Card>
-    </>
+      <div className="pilot-agenda-context"><strong><CalendarDays size={16} aria-hidden="true" /> Mi agenda</strong><span>{events.length} {events.length === 1 ? "seguimiento registrado" : "seguimientos registrados"}</span></div>
+      <Calendar
+        events={events}
+        selectedDate={selectedDate}
+        onSelectDate={setSelectedDate}
+        today={today}
+        ariaLabel="Calendario de seguimientos"
+        labels={{ singular: "seguimiento", plural: "seguimientos", nextEvent: "Ir al próximo seguimiento", previousEvent: "Ver seguimiento anterior" }}
+        renderEvent={renderEvent}
+        emptyState={<div className="sv-calendar-empty"><CalendarDays size={26} aria-hidden="true" /><h3>{events.length ? "Sin seguimientos para este día" : "Tu agenda está despejada"}</h3><p>{events.length ? "Elige otra fecha o agrega una próxima acción desde tu Goal Sheet." : "Agrega la próxima acción desde el registro de actividad."}</p></div>}
+      />
+      {undatedEvents.length > 0 && <section className="pilot-agenda-invalid" aria-label="Seguimientos sin fecha válida"><h2>Seguimientos por revisar</h2>{undatedEvents.map((event) => <React.Fragment key={event.id}>{renderEvent(event)}</React.Fragment>)}</section>}
+    </div>
   );
 }
 export function Profile({ user, data, api, logout, onUnlock, guideSlot }) {

@@ -9,6 +9,7 @@ node_modules/
 # Expo / React Native
 .expo/
 dist/
+dist-v1/
 dist-mobile-web/
 web-build/
 android/.gradle/
