@@ -1,0 +1,84 @@
+{
+  "target": "https://aisalesv1.softvibes.pro",
+  "release": "20261116a",
+  "startedAt": "2026-11-22T22:41:25.334Z",
+  "passed": false,
+  "resolution": {
+    "mode": "process-local DNS override",
+    "hostname": "aisalesv1.softvibes.pro",
+    "address": "76.13.231.12",
+    "reason": "macOS negative DNS cache; public DNS verified separately; TLS and SNI unchanged"
+  },
+  "checks": [
+    {
+      "name": "Current production remains a ready private pilot before QA",
+      "passed": true,
+      "origin": "https://aisales.softvibes.pro",
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    },
+    {
+      "name": "Legacy readiness and visitor catalog",
+      "passed": true
+    },
+    {
+      "name": "mobile: login, four-screen guide, Home and guide persistence",
+      "passed": true
+    },
+    {
+      "name": "mobile: all 11 roadmap steps",
+      "passed": true
+    },
+    {
+      "name": "mobile: real local Coach response rendered",
+      "passed": true
+    },
+    {
+      "name": "mobile: browser flow",
+      "passed": false,
+      "error": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'Abrir perfil', exact: true })\u001b[22m\n",
+      "runtimeErrors": []
+    }
+  ],
+  "screens": [
+    {
+      "viewport": "mobile",
+      "screen": "welcome",
+      "file": "mobile-welcome.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "login",
+      "file": "mobile-login.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "guide-use-cases",
+      "file": "mobile-guide-use-cases.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "home",
+      "file": "mobile-home.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "roadmap",
+      "file": "mobile-roadmap.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "coach",
+      "file": "mobile-coach.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "failure": "locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'Abrir perfil', exact: true })\u001b[22m\n",
+  "finishedAt": "2026-11-22T22:41:48.266Z"
+}

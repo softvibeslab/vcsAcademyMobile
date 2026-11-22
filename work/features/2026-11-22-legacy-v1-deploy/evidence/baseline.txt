@@ -1,0 +1,6 @@
+/srv/aisales-release-20261120-role-accounts
+2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d  /etc/nginx/sites-available/aisales.softvibes.pro.conf
+8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4  /srv/aisales/current/web/index.html
+bb6574ae827be1350f1a4bf931f9b001388dbf117fb2190683d0100fe2d938a8 /srv/aisales/data:/data /srv/aisales/private-assets:/private-assets
+{"success":true,"data":{"status":"ready","mode":"private_pilot","version":"1.0.0"},"message":null}dddc4ced52304b37b25b47a98a7d7acdbcfbd9d384ccb034802f676229a7b173  /srv/aisales-release-20261116a/web/index.html
+652ab98d88ceebf5c6568fb583d2240aceb313488fe034374ca9bf9d5e5bc28b  /srv/aisales-release-20261116a/web/assets/pilot-BbSXMpJ7.js

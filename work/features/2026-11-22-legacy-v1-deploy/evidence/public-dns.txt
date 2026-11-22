@@ -1,0 +1,11 @@
+
+; <<>> DiG 9.10.6 <<>> @1.1.1.1 aisalesv1.softvibes.pro A +noall +answer
+; (1 server found)
+;; global options: +cmd
+aisalesv1.softvibes.pro. 165	IN	A	76.13.231.12
+
+
+; <<>> DiG 9.10.6 <<>> @8.8.8.8 aisalesv1.softvibes.pro A +noall +answer
+; (1 server found)
+;; global options: +cmd
+aisalesv1.softvibes.pro. 15	IN	A	76.13.231.12

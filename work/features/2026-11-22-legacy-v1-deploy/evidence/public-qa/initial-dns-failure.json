@@ -1,0 +1,19 @@
+{
+  "target": "https://aisalesv1.softvibes.pro",
+  "release": "20261116a",
+  "startedAt": "2026-11-22T22:39:37.953Z",
+  "passed": false,
+  "checks": [
+    {
+      "name": "Current production remains a ready private pilot before QA",
+      "passed": true,
+      "origin": "https://aisales.softvibes.pro",
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    }
+  ],
+  "screens": [],
+  "failure": "apiRequestContext.get: getaddrinfo ENOTFOUND aisalesv1.softvibes.pro\nCall log:\n\u001b[2m  - → GET https://aisalesv1.softvibes.pro/api/ready\u001b[22m\n\u001b[2m    - user-agent: Playwright/1.63.0 (arm64; macOS 27.0) node/24.15\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n",
+  "finishedAt": "2026-11-22T22:39:38.809Z"
+}

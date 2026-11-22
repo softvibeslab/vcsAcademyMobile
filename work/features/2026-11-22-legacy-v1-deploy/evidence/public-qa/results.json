@@ -1,0 +1,175 @@
+{
+  "target": "https://aisalesv1.softvibes.pro",
+  "release": "20261116a",
+  "startedAt": "2026-11-22T22:41:59.977Z",
+  "passed": true,
+  "resolution": {
+    "mode": "process-local DNS override",
+    "hostname": "aisalesv1.softvibes.pro",
+    "address": "76.13.231.12",
+    "reason": "macOS negative DNS cache; public DNS verified separately; TLS and SNI unchanged"
+  },
+  "checks": [
+    {
+      "name": "Current production remains a ready private pilot before QA",
+      "passed": true,
+      "origin": "https://aisales.softvibes.pro",
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    },
+    {
+      "name": "Legacy readiness and visitor catalog",
+      "passed": true
+    },
+    {
+      "name": "mobile: login, four-screen guide, Home and guide persistence",
+      "passed": true
+    },
+    {
+      "name": "mobile: all 11 roadmap steps",
+      "passed": true
+    },
+    {
+      "name": "mobile: real local Coach response rendered",
+      "passed": true
+    },
+    {
+      "name": "mobile: profile, guide reopening, logout, no runtime errors and isolated API",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "apiRequests": 24
+    },
+    {
+      "name": "desktop: login, four-screen guide, Home and guide persistence",
+      "passed": true
+    },
+    {
+      "name": "desktop: all 11 roadmap steps",
+      "passed": true
+    },
+    {
+      "name": "desktop: real local Coach response rendered",
+      "passed": true
+    },
+    {
+      "name": "desktop: profile, guide reopening, logout, no runtime errors and isolated API",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "apiRequests": 24
+    },
+    {
+      "name": "Current production unchanged after QA",
+      "passed": true,
+      "origin": "https://aisales.softvibes.pro",
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    }
+  ],
+  "screens": [
+    {
+      "viewport": "mobile",
+      "screen": "welcome",
+      "file": "mobile-welcome.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "login",
+      "file": "mobile-login.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "guide-use-cases",
+      "file": "mobile-guide-use-cases.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "home",
+      "file": "mobile-home.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "roadmap",
+      "file": "mobile-roadmap.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "coach",
+      "file": "mobile-coach.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "profile",
+      "file": "mobile-profile.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "mobile",
+      "screen": "logout",
+      "file": "mobile-logout.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "screen": "welcome",
+      "file": "desktop-welcome.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "screen": "login",
+      "file": "desktop-login.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "screen": "guide-use-cases",
+      "file": "desktop-guide-use-cases.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "screen": "home",
+      "file": "desktop-home.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "screen": "roadmap",
+      "file": "desktop-roadmap.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "screen": "coach",
+      "file": "desktop-coach.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "screen": "profile",
+      "file": "desktop-profile.png",
+      "horizontalOverflow": false
+    },
+    {
+      "viewport": "desktop",
+      "screen": "logout",
+      "file": "desktop-logout.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "finishedAt": "2026-11-22T22:42:14.060Z"
+}
