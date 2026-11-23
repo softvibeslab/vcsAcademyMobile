@@ -1,0 +1,30 @@
+{
+  "archive": "/var/folders/st/6m6rs6vd4dx8mv_52r4c1d8w0000gn/T/sa-tour-release-t2i1cott/v1-tours.tar.gz",
+  "sha256": "ed28c7473c919439b6ca47d9421718780976ce18a21fd9dc814089ace065404d",
+  "files": {
+    "Dockerfile.api": "b33fdead8426f695ecfeed755dc49fbccd319c297e53797950ca4c24672291d6",
+    "api/coach_hermes.py": "1119b67cc92073e9e40fb3155c8cba57b97f87d20ecd50b1a198e74e8ce875bd",
+    "api/main.py": "293c2360fca2253999693a84422a2ed479498daf2e0906cb1906733a3188c035",
+    "api/tour_visits.py": "663fda7c4768c340436300e88c128ff3567bf136f33f448e1509ad08a40fa0b4",
+    "deploy-release.py": "ac3c8b32ae44b1ce54e47d7cc8183d65665226356868ebd72131e00e0b4aea95",
+    "legacy_deploy.py": "c5ea7a24088e16ee3d37f6d1d9ec8bf6cfc1e05fec18cdba6a475732553a465d",
+    "maintenance.py": "d1be6c6473593398a7b2fb4dd2fe3c7b7f951ad11bee4988cee18e1ceb051117",
+    "web/assets/coach-intro-cWnOMky2.svg": "51b19679d7a09253b75c3d07b7a7b7a7b805dc35701d93edc2bd086b7fece332",
+    "web/assets/coach-welcome-BBnch_VM.svg": "4df89625e7c8168528691350a38bbe674edd2f0b70cd63c4905b69ffbc85334f",
+    "web/assets/dm-sans-0-CB7WfZ8W.ttf": "b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9",
+    "web/assets/dm-sans-1-DCQhiIS7.ttf": "376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae",
+    "web/assets/dm-sans-2-CYvJJk-g.ttf": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
+    "web/assets/dm-sans-3-BQ0abr9c.ttf": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
+    "web/assets/pilot-DHIKivXN.css": "5d52720abc7d77d2919e94ac1c373b059ea34905007b70c8bc195b47712a06f4",
+    "web/assets/pilot-Daf_vyiR.js": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd",
+    "web/icons/apple-touch-icon.png": "77d498c5bdacfee6112393c28ba74413a355e32eab161dee43c8cd3e3d90fa35",
+    "web/icons/favicon-32.png": "f7f7d422ee26350e738717dc9d0fa3b96eb5e976f5cb11c62ff7e7eb0bdfe76e",
+    "web/icons/icon-192.png": "003ce7a4a9068c91e1b50332ca5aeb37448f0408ed3060e0f21b0391c3e27f8a",
+    "web/icons/icon-512.png": "8abdd1fedb7cbc15cf12b0396397ed59ee7c7c8b3b9ae47518e3a7a250e4285e",
+    "web/icons/icon-maskable-512.png": "8aab21cff343edacec42f239062c2ad08983d13d12266ce9780a7c0fff497adb",
+    "web/manifest.webmanifest": "1a6bd09de5afd0dd0fbca3cdceb90c5663e4f75812e300b8e71b41d933e83810",
+    "web/offline.html": "4b55cc26e6b16bb9de832fdf692dfe93105e8089cc4479724cedfe6dd973939d",
+    "web/sw.js": "0ce6216454d87fc0b412f48a5858d029c498f4fc2d8bfe91c64d11335ee08c73",
+    "web/v1.html": "05cf488d62298881d59879fc8c534e107869232ee602c79553cae66fe0b64d97"
+  }
+}

@@ -4,14 +4,14 @@ import os
 import time
 from datetime import date, datetime
 from typing import Any, Literal
-from uuid import uuid4
+from uuid import UUID, uuid4
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Request, Response
+from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from backend.app import access, persistence
+from backend.app import access, persistence, tour_visits, coach_hermes
 from backend.app.smart_agent import get_provider
 from backend.app.coach_hermes import CoachUnavailable, normalize_history
 
@@ -176,6 +176,7 @@ class CoachChatIn(ChatIn):
     model_config = ConfigDict(extra="forbid")
     message: str = Field(min_length=1, max_length=1200, strict=True)
     conversation_history: list[dict[str, str]] = Field(default_factory=list)
+    tour_id: UUID | None = None
 
     @field_validator("message")
     @classmethod
@@ -259,10 +260,12 @@ class CertificationDecisionIn(BaseModel):
 def startup() -> None:
     persistence.init_db()
     access.init_schema(BLUEPRINT_STEPS, ROLEPLAY_SCENARIOS)
+    tour_visits.init_schema()
 
 
 persistence.init_db()
 access.init_schema(BLUEPRINT_STEPS, ROLEPLAY_SCENARIOS)
+tour_visits.init_schema()
 
 
 def envelope(data: Any = None, message: str | None = None) -> dict[str, Any]:
@@ -811,9 +814,18 @@ def reminders_upcoming(user: dict[str, Any] = Depends(require_item("function:goa
 
 @app.post("/api/smart-agent/chat")
 def smart_agent_chat(payload: CoachChatIn, user: dict[str, Any] = Depends(require_item("function:coach"))) -> dict[str, Any]:
+    visit = None
+    if payload.tour_id:
+        check_access("function:goalsheet", user)
+        visit = tour_visits.get_visit(user["id"], str(payload.tour_id))
     provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
     try:
-        result = provider.answer(payload.message, payload.mode, user, smart_agent_knowledge(user), payload.conversation_history)
+        if visit:
+            if not isinstance(provider, coach_hermes.HermesCoachProvider):
+                raise CoachUnavailable()
+            result = provider.answer(payload.message, payload.mode, user, smart_agent_knowledge(user), payload.conversation_history, tour_context=visit)
+        else:
+            result = provider.answer(payload.message, payload.mode, user, smart_agent_knowledge(user), payload.conversation_history)
     except CoachUnavailable as error:
         raise HTTPException(status_code=error.status, detail={"code": error.code, "message": error.message}) from None
     audit(user, "smart_agent_chat", "ai_conversation", str(uuid4()), "blocked" if result.risk_flags else "success", {"risk_flags": result.risk_flags, "provider": result.provider})
@@ -823,10 +835,81 @@ def smart_agent_chat(payload: CoachChatIn, user: dict[str, Any] = Depends(requir
         "recommended_actions": result.recommended_actions,
         "risk_flags": result.risk_flags,
         "provider": result.provider,
+        "tour_action_prompt": coach_hermes.tour_action_prompt(payload.message, visit),
     }
     if result.confidence is not None:
         data["confidence"] = result.confidence
     return envelope(data)
+
+
+@app.get("/api/tour-visits")
+def tour_visit_list(
+    start: date = Query(alias="from"), end: date = Query(alias="to"),
+    limit: int = Query(default=50, ge=1, le=100), cursor: str | None = Query(default=None, max_length=2000),
+    user: dict[str, Any] = Depends(require_item("function:goalsheet")),
+) -> dict[str, Any]:
+    return envelope(tour_visits.list_visits(user["id"], start, end, limit, cursor))
+
+
+@app.post("/api/tour-visits")
+def tour_visit_create(payload: tour_visits.CreateVisit, response: Response, user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
+    visit, created = tour_visits.create_visit(user["id"], payload)
+    response.status_code = 201 if created else 200
+    audit(user, "tour_visit_created", "tour_visit", visit["id"], "success")
+    return envelope({"visit": visit})
+
+
+@app.get("/api/tour-visits/{visit_id}")
+def tour_visit_detail(visit_id: UUID, user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
+    return envelope({"visit": tour_visits.get_visit(user["id"], str(visit_id))})
+
+
+@app.patch("/api/tour-visits/{visit_id}")
+def tour_visit_update(visit_id: UUID, payload: tour_visits.UpdateVisit, user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
+    visit = tour_visits.update_visit(user["id"], str(visit_id), payload)
+    audit(user, "tour_visit_updated", "tour_visit", str(visit_id), "success", {"action": payload.action})
+    return envelope({"visit": visit})
+
+
+@app.delete("/api/tour-visits/{visit_id}")
+def tour_visit_delete(visit_id: UUID, payload: tour_visits.Mutation, user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
+    result = tour_visits.delete_visit(user["id"], str(visit_id), payload)
+    audit(user, "tour_visit_deleted", "tour_visit", str(visit_id), "success")
+    return envelope(result)
+
+
+@app.post("/api/tour-visits/{visit_id}/analysis")
+def tour_visit_analyze(visit_id: UUID, payload: tour_visits.Mutation, user: dict[str, Any] = Depends(require_item("function:goalsheet"))) -> dict[str, Any]:
+    check_access("function:coach", user)
+    visit_id = str(visit_id)
+    visit, lease, cached = tour_visits.begin_analysis(user["id"], visit_id, payload)
+    if cached is not None:
+        return envelope({"visit_id": visit_id, "analysis": cached})
+    steps = [
+        {"step_id": step["id"], "title": step["title"], "order": step["step_number"]}
+        for step in visible_steps(user, persistence.get_completed_step_ids(user["id"]))
+        if step["allowed"] and not step["lock"]
+    ]
+    try:
+        result = coach_hermes.generate_visit_analysis(visit, smart_agent_knowledge(user), steps)
+    except CoachUnavailable as error:
+        tour_visits.finish_analysis(user["id"], visit_id, visit["revision"], lease, None)
+        audit(user, "tour_visit_analysis", "tour_visit", visit_id, "unavailable")
+        raise HTTPException(status_code=error.status, detail={"code": error.code, "message": error.message}) from None
+    # A long model request may overlap a catalog/plan change. Never persist a
+    # recommendation that became inaccessible while inference was running.
+    current_user = persistence.get_user(user["id"])
+    current_steps = {
+        step["id"]: step for step in visible_steps(current_user, persistence.get_completed_step_ids(user["id"]))
+        if step["allowed"] and not step["lock"]
+    }
+    result["recommended_steps"] = [
+        {**item, "title": current_steps[item["step_id"]]["title"]}
+        for item in result["recommended_steps"] if item["step_id"] in current_steps
+    ]
+    result = tour_visits.finish_analysis(user["id"], visit_id, visit["revision"], lease, result)
+    audit(user, "tour_visit_analysis", "tour_visit", visit_id, "success")
+    return envelope({"visit_id": visit_id, "analysis": result})
 
 
 @app.post("/api/smart-agent/public-chat")

@@ -1,0 +1,24 @@
+// Delay a real dashboard response to reproduce the public loading-state overflow.
+// HTTPS installs the PWA worker; WebKit's page routing bypasses those controlled requests.
+// Block the worker only for this timing test so the real network response can be held.
+// The main public QA matrix exercises the default service-worker-enabled context.
+const {webkit,expect}=require('@playwright/test');
+const assert=require('node:assert/strict'),fs=require('node:fs/promises'),path=require('node:path');
+const{login,apiCall,cleanup,dateParts}=require('./verify-tours.cjs');
+(async()=>{const browser=await webkit.launch();const report={passed:true,serviceWorkers:'block',checks:[]};
+try{for(const theme of ['dark','light']){
+ const context=await browser.newContext({serviceWorkers:'block',viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,locale:'es-MX',timezoneId:'America/Cancun',reducedMotion:'reduce'}),page=await context.newPage(),created=[];page.setDefaultTimeout(20000);let release;const hold=new Promise(resolve=>release=resolve);let pending=0;const dashboardResponses=[];
+ page.on('response',response=>{if(new URL(response.url()).pathname==='/api/dashboard/rep')dashboardResponses.push({status:response.status(),fromServiceWorker:response.fromServiceWorker()})});
+ const workerState=()=>page.evaluate(async()=>({controller:navigator.serviceWorker?.controller?{scriptURL:navigator.serviceWorker.controller.scriptURL,state:navigator.serviceWorker.controller.state}:null,registrations:navigator.serviceWorker?(await navigator.serviceWorker.getRegistrations()).map(r=>({scope:r.scope,active:r.active?.state||null})):[]}));
+ const measure=()=>page.evaluate(()=>{const rects=Object.fromEntries(['.content','.refreshing','.smart-agenda-route','.sa-device','.sa-app-nav'].map(selector=>{const e=document.querySelector(selector);return[selector,e?e.getBoundingClientRect().toJSON():null]}));return{height:innerHeight,width:innerWidth,pageHeight:document.documentElement.scrollHeight,pageWidth:document.documentElement.scrollWidth,rects}});
+ try{
+  await login(page,theme);
+  await expect(page.locator('.refreshing')).toBeHidden();
+  await page.route('**/api/dashboard/rep',async route=>{pending++;const response=await route.fetch();await hold;await route.fulfill({response})});
+  await page.getByRole('button',{name:'Registrar visita',exact:true}).click();await page.getByRole('button',{name:'Programar tour',exact:true}).click();const form=page.getByRole('dialog',{name:'Registrar visita',exact:true});await form.getByLabel('Referencia · opcional',{exact:true}).fill('QA agenda actualizando '+theme);await form.getByLabel('Contexto de la visita',{exact:true}).fill('Caso sintético: actualización pendiente real.');await form.getByLabel('Fecha',{exact:true}).fill(dateParts(new Date(Date.now()+86400000)).date);await form.getByLabel('Hora',{exact:true}).fill('23:30');const saved=page.waitForResponse(r=>new URL(r.url()).pathname==='/api/tour-visits'&&r.request().method()==='POST');await form.getByRole('button',{name:'Guardar tour',exact:true}).click();const visit=(await(await saved).json()).data.visit;created.push(visit.id);await expect(form).toBeHidden();await page.getByRole('link',{name:'Ver en Agenda',exact:true}).click();await expect(page.getByRole('article',{name:'Detalle de visita',exact:true})).toContainText('QA agenda actualizando');await expect(page.locator('.refreshing')).toHaveText('Actualizando…');const loaded=await measure();
+  const evidence={theme,loading:loaded,pendingDashboard:pending,dashboardResponses,serviceWorker:await workerState()};report.checks.push(evidence);
+  assert(pending>0,'A real dashboard response is held');assert(loaded.pageHeight<=loaded.height+1,'Loading notice must remain inside Agenda viewport');assert(loaded.pageWidth<=loaded.width+1,'No horizontal overflow');assert(loaded.rects['.sa-app-nav'].bottom<=loaded.height+1,'Agenda navigation remains visible while refreshing');
+  release();await expect(page.locator('.refreshing')).toBeHidden();evidence.settled=await measure();assert(evidence.settled.pageHeight<=evidence.settled.height+1);evidence.passed=true;
+ }catch(error){report.passed=false;report.checks.push({theme,passed:false,error:error.message,pendingDashboard:pending,dashboardResponses,serviceWorker:await workerState(),dimensions:await measure()});}
+ finally{release();await page.unrouteAll({behavior:'wait'});await cleanup(page,created);await apiCall(page,'/api/auth/logout','POST',{});await context.close()}
+}}finally{await browser.close();const name=process.env.TOUR_REFRESH_EVIDENCE||'agenda-refresh.json';await fs.writeFile(path.join(__dirname,'evidence',name),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(!report.passed)process.exitCode=1}})().catch(error=>{console.error(error);process.exitCode=1});

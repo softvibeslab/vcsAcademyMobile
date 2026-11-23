@@ -1,6 +1,6 @@
 # Historia enriquecida · Tour, contexto y aprendizaje
 
-**Readiness:** EN REVISION
+**Readiness:** LISTA
 **ID:** HU-V1-TOUR-LEARNING
 **Solicitante:** Product Owner
 **Product Owner (aprueba):** Roger
@@ -97,7 +97,7 @@ Alternativas: cancelar no escribe; Hermes caído conserva registro; duplicado de
 
 ## 9. Diseno
 
-**Estado del diseno:** Borrador
+**Estado del diseno:** Aprobado
 **Fuente del diseno:** wireframe textual en work/features/2026-11-22-v1-tour-learning/cp2-spec.md, sección 1.
 
 | Pantalla/componente | Existe | Estados | Propuesta |
@@ -121,41 +121,41 @@ Alternativas: cancelar no escribe; Hermes caído conserva registro; duplicado de
 
 | ID | Origen | Criterio (Dado / Cuando / Entonces) | Tipo | Estado PO | Comentario PO |
 |---|---|---|---|---|---|
-| AC-01 | Propuesto IA | Dado un mensaje de tour sin visita activa, al enviarlo aparecen tres opciones; cancelar no guarda ni pierde el texto | positivo | Pendiente | REQ-01 |
-| AC-02 | Propuesto IA | Dadas dos visitas el mismo día, al guardarlas se crean IDs distintos; al reintentar el mismo request_id existe una sola por solicitud | borde | Pendiente | REQ-02/03 |
-| AC-03 | Propuesto IA | Dada una programación, al confirmar exige fecha/hora futura y se muestra el día Cancún correcto; iniciar/feedback conservan su fecha propia | borde | Pendiente | REQ-02/09 |
-| AC-04 | Propuesto IA | Dado un feedback confirmado, al guardar aparece en Diary/Agenda tras recarga; las notas locales previas siguen accesibles | positivo | Pendiente | REQ-04/08 |
-| AC-05 | Propuesto IA | Dada una visita propia, al retomar Coach tras recargar Hermes recibe su contexto; con ID ajeno/expirado no se llama al proveedor | negativo | Pendiente | REQ-06 |
-| AC-06 | Propuesto IA | Dado un registro guardado, al fallar Hermes sigue disponible con reintento; una respuesta para revisión antigua no reemplaza la vigente | negativo | Pendiente | REQ-04/05 |
-| AC-07 | Propuesto IA | Dado un análisis, al recomendar solo aparecen IDs reales y autorizados; abrirlos respeta plan/progreso y no cambia finalización | positivo | Pendiente | REQ-07 |
-| AC-08 | Propuesto IA | Dada Agenda con visitas y entradas existentes, al navegar en light/dark el calendario se mantiene en viewport y sus KPIs no cambian | regresion | Pendiente | REQ-08 |
-| AC-09 | Propuesto IA | Dada una visita eliminada o expirada, al consultarla no aparece registro/análisis ni se inyecta contexto; la purga y backups cumplen su plazo | negativo | Pendiente | REQ-09/10 |
-| AC-10 | Propuesto IA | Dada release candidata, al migrar dos veces y publicar conserva datos/cuentas V1, baseline V5 y permite inferencia real sintética contextual | regresion | Pendiente | Despliegue |
+| AC-01 | Propuesto IA | Dado un mensaje de tour sin visita activa, al enviarlo aparecen tres opciones; cancelar no guarda ni pierde el texto | positivo | Aceptado | REQ-01 |
+| AC-02 | Propuesto IA | Dadas dos visitas el mismo día, al guardarlas se crean IDs distintos; al reintentar el mismo request_id existe una sola por solicitud | borde | Aceptado | REQ-02/03 |
+| AC-03 | Propuesto IA | Dada una programación, al confirmar exige fecha/hora futura y se muestra el día Cancún correcto; iniciar/feedback conservan su fecha propia | borde | Aceptado | REQ-02/09 |
+| AC-04 | Propuesto IA | Dado un feedback confirmado, al guardar aparece en Diary/Agenda tras recarga; las notas locales previas siguen accesibles | positivo | Aceptado | REQ-04/08 |
+| AC-05 | Propuesto IA | Dada una visita propia, al retomar Coach tras recargar Hermes recibe su contexto; con ID ajeno/expirado no se llama al proveedor | negativo | Aceptado | REQ-06 |
+| AC-06 | Propuesto IA | Dado un registro guardado, al fallar Hermes sigue disponible con reintento; una respuesta para revisión antigua no reemplaza la vigente | negativo | Aceptado | REQ-04/05 |
+| AC-07 | Propuesto IA | Dado un análisis, al recomendar solo aparecen IDs reales y autorizados; abrirlos respeta plan/progreso y no cambia finalización | positivo | Aceptado | REQ-07 |
+| AC-08 | Propuesto IA | Dada Agenda con visitas y entradas existentes, al navegar en light/dark el calendario se mantiene en viewport y sus KPIs no cambian | regresion | Aceptado | REQ-08 |
+| AC-09 | Propuesto IA | Dada una visita eliminada o expirada, al consultarla no aparece registro/análisis ni se inyecta contexto; la purga y backups cumplen su plazo | negativo | Aceptado | REQ-09/10 |
+| AC-10 | Propuesto IA | Dada release candidata, al migrar dos veces y publicar conserva datos/cuentas V1, baseline V5 y permite inferencia real sintética contextual | regresion | Aceptado | Despliegue |
 
 ## 12. Escenarios De Prueba
 
 | ID | AC cubiertos | Tipo | Precondicion | Pasos | Resultado esperado | Datos | Nivel de prueba | Origen | Estado PO |
 |---|---|---|---|---|---|---|---|---|---|
-| ESC-01 | AC-01 | positivo | Coach sin contexto | Enviar relato, elegir/cancelar, continuar | Tres opciones; sin escritura al cancelar | DS-01 | e2e/UAT manual | Propuesto IA | Pendiente |
-| ESC-02 | AC-02 | borde | Cuenta fixture | Crear A/B mismo día, repetir A y alterar replay | Dos visitas; replay idéntico y conflicto si cambia | DS-02 | integration | Propuesto IA | Pendiente |
-| ESC-03 | AC-03 | borde | Reloj controlado | Programar sin hora/pasado, luego23:30; iniciar y editar | Validación, día correcto y fecha estable | DS-02 | integration/e2e | Propuesto IA | Pendiente |
-| ESC-04 | AC-04 | positivo | Diario local previo | Guardar feedback vinculado y recargar Agenda/Diary | Registro compartido; nota antigua intacta | DS-01 | e2e/UAT manual | Propuesto IA | Pendiente |
-| ESC-05 | AC-05 | negativo | Usuarios A/B y fake bridge | Recuperar propia y pedir ajena/expirada | Sólo contexto propio; cero llamadas prohibidas | DS-03 | integration | Propuesto IA | Pendiente |
-| ESC-06 | AC-06 | negativo | Bridge controlado | Fallar, reintentar, editar durante respuesta demorada | Registro no perdido; análisis vigente no sobrescrito | DS-03 | integration/e2e | Propuesto IA | Pendiente |
-| ESC-07 | AC-07 | negativo | Catálogo/planes fixture | Responder ID válido/inventado/bloqueado; abrir | Enlaces válidos, bloqueo conservado | DS-04 | integration/e2e | Propuesto IA | Pendiente |
-| ESC-08 | AC-08 | regresion | Agenda con fuentes combinadas | Abrir tres viewports/light-dark, elegir fecha y detalle | Sin overflow de página, KPIs idénticos | DS-02 | e2e | Propuesto IA | Pendiente |
-| ESC-09 | AC-09 | borde | Fechas fijas y copia fixture | Eliminar, avanzar30/31d, purgar y simular restore | Registro inaccesible; borrado coordinado, backup7d | DS-05 | integration | Propuesto IA | Pendiente |
-| ESC-10 | AC-10 | regresion | Copia SQLite sintética y release | Migrar dos veces, suites, smoke real, comparar V5 | Compatibilidad, continuidad, rollback documentado | DS-01 | integration/e2e | Propuesto IA | Pendiente |
+| ESC-01 | AC-01 | positivo | Coach sin contexto | Enviar relato, elegir/cancelar, continuar | Tres opciones; sin escritura al cancelar | DS-01 | e2e/UAT manual | Propuesto IA | Aceptado |
+| ESC-02 | AC-02 | borde | Cuenta fixture | Crear A/B mismo día, repetir A y alterar replay | Dos visitas; replay idéntico y conflicto si cambia | DS-02 | integration | Propuesto IA | Aceptado |
+| ESC-03 | AC-03 | borde | Reloj controlado | Programar sin hora/pasado, luego23:30; iniciar y editar | Validación, día correcto y fecha estable | DS-02 | integration/e2e | Propuesto IA | Aceptado |
+| ESC-04 | AC-04 | positivo | Diario local previo | Guardar feedback vinculado y recargar Agenda/Diary | Registro compartido; nota antigua intacta | DS-01 | e2e/UAT manual | Propuesto IA | Aceptado |
+| ESC-05 | AC-05 | negativo | Usuarios A/B y fake bridge | Recuperar propia y pedir ajena/expirada | Sólo contexto propio; cero llamadas prohibidas | DS-03 | integration | Propuesto IA | Aceptado |
+| ESC-06 | AC-06 | negativo | Bridge controlado | Fallar, reintentar, editar durante respuesta demorada | Registro no perdido; análisis vigente no sobrescrito | DS-03 | integration/e2e | Propuesto IA | Aceptado |
+| ESC-07 | AC-07 | negativo | Catálogo/planes fixture | Responder ID válido/inventado/bloqueado; abrir | Enlaces válidos, bloqueo conservado | DS-04 | integration/e2e | Propuesto IA | Aceptado |
+| ESC-08 | AC-08 | regresion | Agenda con fuentes combinadas | Abrir tres viewports/light-dark, elegir fecha y detalle | Sin overflow de página, KPIs idénticos | DS-02 | e2e | Propuesto IA | Aceptado |
+| ESC-09 | AC-09 | borde | Fechas fijas y copia fixture | Eliminar, avanzar30/31d, purgar y simular restore | Registro inaccesible; borrado coordinado, backup7d | DS-05 | integration | Propuesto IA | Aceptado |
+| ESC-10 | AC-10 | regresion | Copia SQLite sintética y release | Migrar dos veces, suites, smoke real, comparar V5 | Compatibilidad, continuidad, rollback documentado | DS-01 | integration/e2e | Propuesto IA | Aceptado |
 
 ## 13. Datos De Prueba
 
 | ID | Descripcion | Origen | Registros | Por que aplica | Validado PO | Comentario PO |
 |---|---|---|---|---|---|---|
-| DS-01 | Relato y diario ficticios | Simulado IA | 1 visita,1 nota | AC-01/04/10 | Pendiente | Sin personas reales |
-| DS-02 | Dos visitas, replay y fechas | Simulado IA | 2 visitas,1 Goal Sheet | AC-02/03/08 | Pendiente | Congelar reloj |
-| DS-03 | Propiedad, fallo y revisión | Simulado IA | 2 usuarios,2 visitas | AC-05/06 | Pendiente | Sin credenciales reales |
-| DS-04 | Recomendaciones | Simulado IA | 3 IDs | AC-07 | Pendiente | Catálogo fixture |
-| DS-05 | Caducidad | Simulado IA | 4 estados,2 backups | AC-09 | Pendiente | Reloj controlado |
+| DS-01 | Relato y diario ficticios | Simulado IA | 1 visita,1 nota | AC-01/04/10 | Si | Sin personas reales |
+| DS-02 | Dos visitas, replay y fechas | Simulado IA | 2 visitas,1 Goal Sheet | AC-02/03/08 | Si | Congelar reloj |
+| DS-03 | Propiedad, fallo y revisión | Simulado IA | 2 usuarios,2 visitas | AC-05/06 | Si | Sin credenciales reales |
+| DS-04 | Recomendaciones | Simulado IA | 3 IDs | AC-07 | Si | Catálogo fixture |
+| DS-05 | Caducidad | Simulado IA | 4 estados,2 backups | AC-09 | Si | Reloj controlado |
 
 ### Valores concretos
 
@@ -200,7 +200,7 @@ Casos: entrada vacía, sin fecha/hora, varios tours, doble envío, revisión con
 
 | ID | Tipo | Categoria | Pregunta o supuesto | Recomendacion IA | Impacto si se decide mal | Bloquea | Para quien | Respuesta / decision | Estado |
 |---|---|---|---|---|---|---|---|---|---|
-| Q-01 | Pregunta | Contrato | Aprobar v1 con interpretación de tres caminos, contexto revisado, retención y datos propuestos | Aprobar CP2 tal como está o indicar ajustes | Cambia UX/persistencia/alcance | Si | PO | Pendiente | Abierta |
+| Q-01 | Pregunta | Contrato | Aprobar v1 con interpretación de tres caminos, contexto revisado, retención y datos propuestos | Aprobar CP2 tal como está o indicar ajustes | Cambia UX/persistencia/alcance | Si | PO | Aprobado: «si hazlo !» | Respondida |
 
 ## 18. Dependencias Y Riesgos
 
@@ -239,13 +239,13 @@ Plan por pares T01–T08 en CP3. No hay implementación antes de aprobación y g
 
 ## 22. Aprobacion Del Product Owner
 
-**Decision del PO:** Pendiente
-**Aprobado por (nombre y rol):** -
-**Fecha de aprobacion:** -
-**Evidencia de aprobacion (cita y canal):** -
-**Version aprobada:** ninguna todavía.
+**Decision del PO:** Aprobada
+**Aprobado por (nombre y rol):** Roger, Product Owner
+**Fecha de aprobacion:** 2026-11-22
+**Evidencia de aprobacion (cita y canal):** «si hazlo !», conversación, respuesta directa a la SPEC completa y solicitud de aprobación para desarrollar y publicar.
+**Version aprobada:** v1, incluidos diseño, criterios, escenarios, datos simulados y retención propuesta.
 
-La instrucción funcional inicia esta propuesta; no se reutiliza la aprobación de la feature Coach anterior para estos contratos nuevos.
+La aprobación es nueva y específica para esta v1; no se reutiliza la aprobación de la feature Coach anterior.
 
 ## 23. Revisiones
 

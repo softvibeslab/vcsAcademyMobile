@@ -1,0 +1,177 @@
+✖ calendar dates use Cancun instead of UTC or device timezone (3.261166ms)
+✖ schedule requires an explicit future time and normalizes the offset (0.165542ms)
+✖ start never submits a client timestamp and reflects preserve their own date (0.193209ms)
+✖ feedback enforces meaningful narrative, retention and complete payload budget (0.103333ms)
+✖ tour prompts never duplicate a linked or dismissed context and validate server controls (0.17475ms)
+✖ visit events keep independent identities and never look like sales/Goal Sheet entries (0.127167ms)
+✖ lesson links use current catalog and preserve plan/progress restrictions (0.093042ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.121083
+
+✖ failing tests:
+
+test at frontend/src/pilot/tour-model.test.mjs:7:1
+✖ calendar dates use Cancun instead of UTC or device timezone (3.261166ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    {
+  +   date: '2026-11-23',
+  +   time: '02:30'
+  -   date: '2026-11-22',
+  -   time: '21:30'
+    }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:8:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { date: '2026-11-23', time: '02:30' },
+    expected: { date: '2026-11-22', time: '21:30' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/tour-model.test.mjs:10:1
+✖ schedule requires an explicit future time and normalizes the offset (0.165542ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:11:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /hora/i,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/tour-model.test.mjs:15:1
+✖ start never submits a client timestamp and reflects preserve their own date (0.193209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    {
+      context: 'Contexto confirmado',
+  +   date: '2026-11-23',
+  +   happened: 'Expuse la propuesta',
+  +   improve_next: 'Una pregunta abierta',
+      intent: 'start',
+  +   time: '10:00',
+  +   title: ' Visita mañana ',
+  +   worked: 'Escuchar'
+  -   title: 'Visita mañana'
+    }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:16:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { title: ' Visita mañana ', date: '2026-11-23', time: '10:00', context: 'Contexto confirmado', happened: 'Expuse la propuesta', worked: 'Escuchar', improve_next: 'Una pregunta abierta', intent: 'start' },
+    expected: { intent: 'start', title: 'Visita mañana', context: 'Contexto confirmado' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/tour-model.test.mjs:23:1
+✖ feedback enforces meaningful narrative, retention and complete payload budget (0.103333ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:24:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /pasó/i,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/tour-model.test.mjs:28:1
+✖ tour prompts never duplicate a linked or dismissed context and validate server controls (0.17475ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  true !== false
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:30:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/tour-model.test.mjs:36:1
+✖ visit events keep independent identities and never look like sales/Goal Sheet entries (0.127167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - 'visit-in_progress'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:39:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'visit-in_progress',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/tour-model.test.mjs:41:1
+✖ lesson links use current catalog and preserve plan/progress restrictions (0.093042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'inventado'
+  - 'Meet & Greet'
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:44:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'inventado',
+    expected: 'Meet & Greet',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

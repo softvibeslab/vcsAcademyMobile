@@ -1,6 +1,6 @@
 # CP0 · Tour, agenda y aprendizaje desde el Coach
 
-**Status:** contrato en revisión; sin implementación.
+**Status:** CP2 aprobado; implementación autorizada.
 **Fecha:** 2026-11-22 (America/Cancun)
 **Carril:** Contrato CP0–CP5; frontend, backend, datos e infraestructura.
 **Historia:** work/stories/2026-11-22-v1-tour-learning.md
@@ -21,4 +21,4 @@ Interpretación propuesta para aprobación: tres caminos, «Iniciar visita», «
 - Coach mantiene conversación en memoria de React; se pierde al desmontar la pantalla.
 - Roadmap tiene 11 pasos y restricciones de plan/progreso. Las recomendaciones deben usar esos contenidos existentes.
 
-La aprobación del Coach anterior excluía expresamente nuevas tablas, datos de tours y persistencia. Esta petición requiere un nuevo contrato CP2. La historia y el diseño están propuestos, no aprobados.
+La aprobación del Coach anterior excluía expresamente nuevas tablas, datos de tours y persistencia. Esta petición requiere un nuevo contrato CP2. El PO aprobó historia, diseño y CP2 con «si hazlo !» el 2026-11-22.

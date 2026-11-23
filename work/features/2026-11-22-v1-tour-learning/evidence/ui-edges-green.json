@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "manual-registration-from-roleplay",
+      "passed": true
+    },
+    {
+      "name": "open-visit-expands-agenda",
+      "passed": true
+    }
+  ]
+}

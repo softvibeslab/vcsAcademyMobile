@@ -35,6 +35,7 @@ import {
   LockedPanel,
 } from "./Learning";
 import { Coach, Feedback } from "./Coach";
+import { TourDiary } from "./TourVisits";
 import { Team, Admin } from "./Management";
 import "./styles.css";
 import "./fonts.css";
@@ -231,7 +232,7 @@ function App() {
     setToken(value);
     setGuest(false);
     location.hash =
-      /^(home|roadmap|coach|roleplay|vault|profile|goalsheet|notebook|diary|resources|resources\/(guides|scripts|audio)|calculators|team|admin|lesson\/[a-zA-Z0-9_-]+|resource\/[a-zA-Z0-9_-]+)$/.test(
+      /^(home|roadmap|coach|roleplay|vault|profile|goalsheet|notebook|diary|resources|resources\/(guides|scripts|audio)|calculators|team|admin|lesson\/[a-zA-Z0-9_-]+|resource\/[a-zA-Z0-9_-]+|(?:coach|agenda|diary)\/[0-9a-fA-F-]{36})$/.test(
         destination,
       )
         ? destination
@@ -368,6 +369,7 @@ function App() {
         <Coach
           {...props}
           initialTab={page === "roleplay" ? "practice" : "chat"}
+          tourId={page === "coach" ? id : null}
         />
       );
       break;
@@ -385,7 +387,7 @@ function App() {
       );
       break;
     case "agenda":
-      content = <Agenda {...props} />;
+      content = <Agenda {...props} visitId={id} />;
       break;
     case "profile":
       content = (
@@ -398,10 +400,10 @@ function App() {
       );
       break;
     case "notebook":
+      content = gate("function:notebook") || <Notebook key={page + user.id} {...props} />;
+      break;
     case "diary":
-      content = gate("function:notebook") || (
-        <Notebook key={page + user.id} {...props} diary={page === "diary"} />
-      );
+      content = <TourDiary {...props} visitId={id} renderLegacyNotes={onCopyNote => gate("function:notebook") || <Notebook key={"legacy-diary" + user.id} {...props} diary onCopyNote={onCopyNote} />} />;
       break;
     case "resources":
       content = <Resources {...props} kind={id} />;

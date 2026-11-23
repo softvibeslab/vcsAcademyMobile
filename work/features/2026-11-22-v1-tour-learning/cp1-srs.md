@@ -1,6 +1,6 @@
 # CP1 · Requerimiento
 
-**Status:** propuesta para revisión.
+**Status:** aprobado con CP2; implementado en V1.
 
 Como asesor con acceso a Goal Sheet y Coach, quiero convertir una conversación sobre una visita en un registro consultable, para continuar la atención y aprender de lo ocurrido sin transcribirlo de nuevo.
 

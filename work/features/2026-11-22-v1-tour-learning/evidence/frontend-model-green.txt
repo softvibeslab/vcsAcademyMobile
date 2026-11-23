@@ -1,0 +1,18 @@
+✔ calendar dates use Cancun instead of UTC or device timezone (13.724417ms)
+✔ schedule requires an explicit future time and normalizes the offset (0.525292ms)
+✔ start never submits a client timestamp and reflects preserve their own date (0.56175ms)
+✔ feedback enforces meaningful narrative, retention and complete payload budget (0.383042ms)
+✔ tour prompts never duplicate a linked or dismissed context and validate server controls (0.191833ms)
+✔ visit events keep independent identities and never look like sales/Goal Sheet entries (0.336209ms)
+✔ lesson links use current catalog and preserve plan/progress restrictions (0.225209ms)
+✔ finalizing a visit in its starting minute uses the actual confirmed instant (0.316959ms)
+✔ an explicitly edited completion time is not silently replaced by now (0.176958ms)
+✔ finalization at the exact starting minute preserves actual elapsed seconds (0.289916ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74.793041

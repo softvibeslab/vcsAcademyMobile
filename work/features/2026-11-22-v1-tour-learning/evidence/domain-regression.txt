@@ -1,0 +1,17 @@
+
+> vcsa-academy@0.1.0 test
+> node --test packages/domain/test/*.test.mjs
+
+✔ Blueprint keeps the canonical 11-step order (1.272708ms)
+✔ GoalSheet metrics avoid division by zero (0.206292ms)
+✔ GoalSheet validation catches inconsistent sales outcome (0.144958ms)
+✔ Sensitive resources require explicit access or admin role (0.109042ms)
+✔ Smart Agent refuses hidden-fee coaching (0.222042ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 56.908583

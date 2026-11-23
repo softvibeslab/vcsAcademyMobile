@@ -1,0 +1,37 @@
+✔ calendar dates use Cancun instead of UTC or device timezone (13.555834ms)
+✔ schedule requires an explicit future time and normalizes the offset (1.456625ms)
+✔ start never submits a client timestamp and reflects preserve their own date (0.286084ms)
+✔ feedback enforces meaningful narrative, retention and complete payload budget (0.2315ms)
+✔ tour prompts never duplicate a linked or dismissed context and validate server controls (0.176917ms)
+✔ visit events keep independent identities and never look like sales/Goal Sheet entries (0.263875ms)
+✔ lesson links use current catalog and preserve plan/progress restrictions (0.204959ms)
+✔ finalizing a visit in its starting minute uses the actual confirmed instant (0.241292ms)
+✖ an explicitly edited completion time is not silently replaced by now (0.41525ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68.572375
+
+✖ failing tests:
+
+test at frontend/src/pilot/tour-model.test.mjs:58:1
+✖ an explicitly edited completion time is not silently replaced by now (0.41525ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:59:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /anterior al inicio/,
+    operator: 'throws',
+    diff: 'simple'
+  }

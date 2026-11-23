@@ -27,6 +27,7 @@ import {
 import { noteKey, localDate } from "./model.mjs";
 import { LevelTag } from "./Access";
 import { stepAction, premiumLockedCount } from "./access-model.mjs";
+import { LatestVisitLearning } from "./TourVisits";
 
 /** Panel cuando el servidor responde «requiere plan»: explica y ofrece desbloquear. */
 export function LockedPanel({ level, onLocked, back = "roadmap", backLabel = "Roadmap" }) {
@@ -42,7 +43,7 @@ export function LockedPanel({ level, onLocked, back = "roadmap", backLabel = "Ro
     </>
   );
 }
-export function Roadmap({ data, onLocked }) {
+export function Roadmap({ api, data, revision, onLocked }) {
   const completed=data.steps.filter(s=>s.status==='completed').length;
   const next=data.steps.find(s=>s.status!=='completed'&&stepAction(s).kind==='open')||data.steps.find(s=>s.status!=='completed')||data.steps[0];
   const lockedCount=premiumLockedCount(data.steps);
@@ -53,6 +54,7 @@ export function Roadmap({ data, onLocked }) {
       <div className="pilot-roadmap-overview"><div className="pilot-progress-ring" style={{'--progress':percent+'%'}}><strong>{percent}%</strong><small>{percent===100?'COMPLETADO':'AVANZANDO'}</small></div><div><span className="pilot-tag">TU PROGRESO EN EL MÉTODO</span><h2>{next?.title||'Tu camino a Top Producer.'}</h2><p>{completed===data.steps.length?'Completaste todos los módulos. Puedes volver a practicarlos.':'Tu siguiente lección está lista para comenzar.'}</p></div></div>
       <div className="pilot-roadmap-summary-footer"><div><div className="progress"><span style={{width:percent+'%'}}/></div><small>{completed} de {data.steps.length} módulos completados</small></div><a className="button" href={next?'#lesson/'+next.id:'#home'}>{completed?'Continuar':'Comenzar Lección 1'} <ArrowRight size={16}/></a></div>
     </section>
+    <LatestVisitLearning api={api} data={data} revision={revision} />
     <div className="pilot-list-heading"><h2>TU BLUEPRINT DE {data.steps.length} MÓDULOS</h2><span>{completed} / {data.steps.length} listos</span></div>
     <div className="roadmap">{data.steps.map((step,i)=>{const act=stepAction(step);const cls='roadmap-step '+(step.status==='completed'?'completed':'')+(step===next?' current':'')+(act.kind!=='open'?' locked lock-'+act.kind:'');const inner=<><span className="step-number">{step.status==='completed'?<Check size={18}/>:act.kind==='plan'?<Lock size={16}/>:i+1}</span><div><h2>{i+1}. {step.title}</h2><small>{step.status==='completed'?'COMPLETADO':act.kind==='progress'?'COMPLETA EL PASO ANTERIOR':act.kind==='plan'?'BLOQUEADO':'DISPONIBLE'} <LevelTag level={step.level} allowed={act.kind!=='plan'}/></small><p>{step.description}</p></div><span className="pilot-step-action">{act.label}</span></>;return act.kind==='open'?<a className={cls} href={'#lesson/'+step.id} key={step.id}>{inner}</a>:act.kind==='plan'?<button type="button" className={cls} key={step.id} onClick={()=>onLocked?.(act.level)}>{inner}</button>:<div className={cls} key={step.id} aria-disabled="true">{inner}</div>})}</div>
     {lockedCount>0&&<section className="pilot-unlock-cta"><div><strong>{lockedCount} {lockedCount===1?'paso más':'pasos más'} con Premium</strong><small>Activa tu licencia con el código de tu academia.</small></div><button className="button" onClick={()=>onLocked?.('premium')}>Desbloquear premium</button></section>}
@@ -190,7 +192,7 @@ export function ResourceDetail({ api, id, onLocked }) {
     </>
   );
 }
-export function Notebook({ user, diary }) {
+export function Notebook({ user, diary, onCopyNote }) {
   const key = noteKey(user.id) + (diary ? ".diary" : "");
   const [notes, setNotes] = useState(() => {
       try {
@@ -289,6 +291,7 @@ export function Notebook({ user, diary }) {
                 <small>{n.date}</small>
                 <h2>{n.title}</h2>
                 <p className="preserve">{n.body}</p>
+                {onCopyNote && <Button secondary onClick={() => onCopyNote(`${n.title}\n\n${n.body}`)}>Usar en registro de visita</Button>}
                 <Button
                   secondary
                   onClick={() => {

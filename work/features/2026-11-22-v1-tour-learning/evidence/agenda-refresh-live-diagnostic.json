@@ -1,0 +1,159 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "theme": "dark",
+      "passed": false,
+      "error": "expect(locator).toHaveText(expected) failed\n\nLocator: locator('.refreshing')\nExpected: \"Actualizando…\"\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toHaveText\" locator('.refreshing') with timeout 5000ms\n  - waiting for locator('.refreshing')\n",
+      "pendingDashboard": 0,
+      "dashboardResponses": [
+        {
+          "status": 200,
+          "fromServiceWorker": false
+        },
+        {
+          "status": 200,
+          "fromServiceWorker": false
+        }
+      ],
+      "serviceWorker": {
+        "controller": {
+          "scriptURL": "https://aisalesv1.softvibes.pro/sw.js",
+          "state": "activated"
+        },
+        "registrations": [
+          {
+            "scope": "https://aisalesv1.softvibes.pro/",
+            "active": "activated"
+          }
+        ]
+      },
+      "dimensions": {
+        "height": 844,
+        "width": 390,
+        "pageHeight": 844,
+        "pageWidth": 390,
+        "rects": {
+          ".content": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".refreshing": null,
+          ".smart-agenda-route": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-device": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-app-nav": {
+            "x": 0,
+            "y": 788,
+            "width": 390,
+            "height": 56,
+            "top": 788,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          }
+        }
+      }
+    },
+    {
+      "theme": "light",
+      "passed": false,
+      "error": "expect(locator).toHaveText(expected) failed\n\nLocator: locator('.refreshing')\nExpected: \"Actualizando…\"\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toHaveText\" locator('.refreshing') with timeout 5000ms\n  - waiting for locator('.refreshing')\n",
+      "pendingDashboard": 0,
+      "dashboardResponses": [
+        {
+          "status": 200,
+          "fromServiceWorker": false
+        },
+        {
+          "status": 200,
+          "fromServiceWorker": false
+        }
+      ],
+      "serviceWorker": {
+        "controller": {
+          "scriptURL": "https://aisalesv1.softvibes.pro/sw.js",
+          "state": "activated"
+        },
+        "registrations": [
+          {
+            "scope": "https://aisalesv1.softvibes.pro/",
+            "active": "activated"
+          }
+        ]
+      },
+      "dimensions": {
+        "height": 844,
+        "width": 390,
+        "pageHeight": 844,
+        "pageWidth": 390,
+        "rects": {
+          ".content": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".refreshing": null,
+          ".smart-agenda-route": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-device": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-app-nav": {
+            "x": 0,
+            "y": 788,
+            "width": 390,
+            "height": 56,
+            "top": 788,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          }
+        }
+      }
+    }
+  ]
+}

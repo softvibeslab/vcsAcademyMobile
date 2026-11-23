@@ -1,0 +1,35 @@
+{
+  "containers": {
+    "aisales-v1-tours-20261122": {
+      "id": "c1c8218d0e5f9695757d37841a5d04ff59b11aef79d4c09ffbcaeefd5786bfbf",
+      "image": "sha256:fca7efccd615e61adde9c395893fe40125c767cb99a72936b210081ab4d66a00",
+      "running": true
+    },
+    "aisales-pilot-20261120-accounts-r2": {
+      "id": "bb6574ae827be1350f1a4bf931f9b001388dbf117fb2190683d0100fe2d938a8",
+      "image": "sha256:c8f3fc47861568675f3a6a92ac00c1e2f0462f4409c3aed20b1216b3f9813556",
+      "running": true
+    }
+  },
+  "v5": {
+    "nginxSha256": "2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d",
+    "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4"
+  },
+  "maintenance": {
+    "timerActive": "active",
+    "lastExitStatus": 0,
+    "nextRun": "Mon 2026-11-23 09:15:00 UTC",
+    "scriptSha256": "8cbaab8ac5dd633519dc13bf0406435cbab9241e1415b75a3e4dcb9312fdcabf"
+  },
+  "backups": {
+    "count": 2,
+    "directoryMode": "0700",
+    "fileMode": "0600",
+    "latestQuickCheck": "ok"
+  },
+  "database": {
+    "quickCheck": "ok",
+    "qaRecordsRemaining": 0,
+    "orphanAnalyses": 0
+  }
+}

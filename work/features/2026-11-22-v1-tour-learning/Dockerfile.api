@@ -1,0 +1,2 @@
+FROM aisales-v1-api:20261122-coach
+COPY api/ /app/backend/app/

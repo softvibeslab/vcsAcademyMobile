@@ -1,0 +1,123 @@
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:563: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow()
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/main.py:591: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat(),
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:455: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow().isoformat()
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:210: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE users SET plan = ?, plan_expires_at = ?, updated_at = ? WHERE id = ?", (plan, expires_at, datetime.utcnow().isoformat(), user_id))
+test_chat_rejects_foreign_context_before_provider (__main__.TourVisitsContract.test_chat_rejects_foreign_context_before_provider) ... FAIL
+test_create_replay_conflict_and_multiple_visits_do_not_touch_goalsheet (__main__.TourVisitsContract.test_create_replay_conflict_and_multiple_visits_do_not_touch_goalsheet) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:585: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  (token, datetime.utcnow().isoformat()),
+FAIL
+test_delete_tombstone_prevents_recreation (__main__.TourVisitsContract.test_delete_tombstone_prevents_recreation) ... FAIL
+test_expiry_read_and_purge_preserve_future_visits (__main__.TourVisitsContract.test_expiry_read_and_purge_preserve_future_visits) ... ERROR
+test_list_cursor_owner_range_and_detail (__main__.TourVisitsContract.test_list_cursor_owner_range_and_detail) ... FAIL
+test_migration_repeated_keeps_existing_rows (__main__.TourVisitsContract.test_migration_repeated_keeps_existing_rows) ... ERROR
+test_offset_cancun_and_invalid_or_old_times (__main__.TourVisitsContract.test_offset_cancun_and_invalid_or_old_times) ... ERROR
+test_owner_and_permissions_apply_to_every_operation (__main__.TourVisitsContract.test_owner_and_permissions_apply_to_every_operation) ... FAIL
+test_payload_limits_and_unapproved_fields (__main__.TourVisitsContract.test_payload_limits_and_unapproved_fields) ... FAIL
+test_revision_transition_and_completed_feedback_preserves_date (__main__.TourVisitsContract.test_revision_transition_and_completed_feedback_preserves_date) ... FAIL
+
+======================================================================
+ERROR: test_expiry_read_and_purge_preserve_future_visits (__main__.TourVisitsContract.test_expiry_read_and_purge_preserve_future_visits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 154, in test_expiry_read_and_purge_preserve_future_visits
+    from backend.app import tour_visits
+ImportError: cannot import name 'tour_visits' from 'backend.app' (/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/__init__.py)
+
+======================================================================
+ERROR: test_migration_repeated_keeps_existing_rows (__main__.TourVisitsContract.test_migration_repeated_keeps_existing_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 179, in test_migration_repeated_keeps_existing_rows
+    from backend.app import tour_visits
+ImportError: cannot import name 'tour_visits' from 'backend.app' (/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/__init__.py)
+
+======================================================================
+ERROR: test_offset_cancun_and_invalid_or_old_times (__main__.TourVisitsContract.test_offset_cancun_and_invalid_or_old_times)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 104, in test_offset_cancun_and_invalid_or_old_times
+    from backend.app import tour_visits
+ImportError: cannot import name 'tour_visits' from 'backend.app' (/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/__init__.py)
+
+======================================================================
+FAIL: test_chat_rejects_foreign_context_before_provider (__main__.TourVisitsContract.test_chat_rejects_foreign_context_before_provider)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 169, in test_chat_rejects_foreign_context_before_provider
+    visit, _ = self.create()
+               ^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 54, in create
+    self.assertEqual(result.status_code, 201, result.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_create_replay_conflict_and_multiple_visits_do_not_touch_goalsheet (__main__.TourVisitsContract.test_create_replay_conflict_and_multiple_visits_do_not_touch_goalsheet)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 62, in test_create_replay_conflict_and_multiple_visits_do_not_touch_goalsheet
+    visit, payload = self.create()
+                     ^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 54, in create
+    self.assertEqual(result.status_code, 201, result.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_delete_tombstone_prevents_recreation (__main__.TourVisitsContract.test_delete_tombstone_prevents_recreation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 141, in test_delete_tombstone_prevents_recreation
+    visit, create = self.create()
+                    ^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 54, in create
+    self.assertEqual(result.status_code, 201, result.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_list_cursor_owner_range_and_detail (__main__.TourVisitsContract.test_list_cursor_owner_range_and_detail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 124, in test_list_cursor_owner_range_and_detail
+    visit, _ = self.create()
+               ^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 54, in create
+    self.assertEqual(result.status_code, 201, result.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_owner_and_permissions_apply_to_every_operation (__main__.TourVisitsContract.test_owner_and_permissions_apply_to_every_operation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 76, in test_owner_and_permissions_apply_to_every_operation
+    visit, _ = self.create()
+               ^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 54, in create
+    self.assertEqual(result.status_code, 201, result.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+======================================================================
+FAIL: test_payload_limits_and_unapproved_fields (__main__.TourVisitsContract.test_payload_limits_and_unapproved_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 119, in test_payload_limits_and_unapproved_fields
+    self.assertEqual(result.status_code, 422)
+AssertionError: 404 != 422
+
+======================================================================
+FAIL: test_revision_transition_and_completed_feedback_preserves_date (__main__.TourVisitsContract.test_revision_transition_and_completed_feedback_preserves_date)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 90, in test_revision_transition_and_completed_feedback_preserves_date
+    visit, _ = self.create(intent="schedule", scheduled_at=instant(2))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_visits.py", line 54, in create
+    self.assertEqual(result.status_code, 201, result.text)
+AssertionError: 404 != 201 : {"detail":"Not Found"}
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.091s
+
+FAILED (failures=7, errors=3)

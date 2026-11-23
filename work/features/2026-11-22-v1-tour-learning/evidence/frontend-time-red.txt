@@ -1,0 +1,30 @@
+✔ calendar dates use Cancun instead of UTC or device timezone (41.438041ms)
+✔ schedule requires an explicit future time and normalizes the offset (1.342208ms)
+✔ start never submits a client timestamp and reflects preserve their own date (0.119292ms)
+✔ feedback enforces meaningful narrative, retention and complete payload budget (0.798ms)
+✔ tour prompts never duplicate a linked or dismissed context and validate server controls (0.724458ms)
+✔ visit events keep independent identities and never look like sales/Goal Sheet entries (0.619208ms)
+✔ lesson links use current catalog and preserve plan/progress restrictions (0.291833ms)
+✖ finalizing a visit in its starting minute uses the actual confirmed instant (0.15925ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107.235834
+
+✖ failing tests:
+
+test at frontend/src/pilot/tour-model.test.mjs:50:1
+✖ finalizing a visit in its starting minute uses the actual confirmed instant (0.15925ms)
+  Error: La hora de finalización no puede ser anterior al inicio.
+      at buildVisitPayload (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.mjs:36:414)
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:53:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7)

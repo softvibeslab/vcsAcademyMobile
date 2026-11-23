@@ -1,0 +1,97 @@
+/* Visit capture and learning reuse the application's semantic light/dark tokens. */
+.tour-dialog, .tour-detail, .tour-diary-page, .tour-registration-prompt, .tour-roadmap-learning, .coach-tour-context { --tour-action: #00e676; color: var(--text); }
+html[data-theme="light"] :is(.tour-dialog, .tour-detail, .tour-diary-page, .tour-registration-prompt, .tour-roadmap-learning, .coach-tour-context) { --tour-action: #276900; }
+.tour-dialog { box-sizing: border-box; width: min(560px, calc(100% - 24px)); max-width: none; max-height: calc(100dvh - 28px); padding: 0; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); box-shadow: 0 16px 60px #0006; overflow: hidden; }
+.tour-dialog[open] { display: flex; flex-direction: column; }
+.tour-dialog::backdrop { background: #080d16aa; }
+.tour-dialog > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex: 0 0 auto; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.tour-dialog h2 { margin: 0; font-size: 20px; }
+.tour-dialog > header p { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+.tour-dialog > header > button, .tour-detail > header > button { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); padding: 8px; }
+.tour-dialog form { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.tour-form-scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 16px; }
+.tour-dialog .field { margin-bottom: 14px; }
+.tour-dialog :is(input, textarea, select) { font-size: 16px; min-height: 44px; max-width: 100%; color: var(--text); background: var(--bg); }
+.tour-dialog textarea { resize: vertical; min-height: 76px; max-height: 260px; }
+.tour-dialog :is(input, textarea)::placeholder { color: var(--muted); opacity: 1; }
+.tour-dialog input[readonly] { color: var(--muted); }
+.tour-date-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); gap: 10px; }
+.tour-date-fields .field { min-width: 0; }
+.tour-help { font-size: 12px; line-height: 1.55; color: var(--muted); margin: 8px 0 12px; overflow-wrap: anywhere; }
+.tour-existing-context { border: 1px solid var(--line); padding: 12px; border-radius: 10px; margin-bottom: 14px; background: var(--bg); }
+.tour-existing-context p { font-size: 13px; line-height: 1.5; white-space: pre-wrap; margin: 6px 0 0; overflow-wrap: anywhere; }
+.tour-dialog form > footer { display: flex; justify-content: flex-end; flex: 0 0 auto; gap: 8px; padding: 12px 16px max(12px, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--panel); }
+.tour-dialog form > footer button { min-height: 44px; padding: 9px 14px; border: 1px solid var(--tour-action); border-radius: 10px; background: var(--tour-action); color: #08150d; font-size: 14px; font-weight: 650; }
+html[data-theme="light"] .tour-dialog form > footer button:not(.tour-secondary):not(:disabled) { color: #fff; }
+.tour-dialog form > footer .tour-secondary { color: var(--text); background: var(--bg); border-color: var(--line); }
+.tour-dialog form > footer button:disabled { color: var(--muted); background: var(--raised); border-color: var(--line); opacity: 1; }
+.tour-status { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin: 10px 0; }
+.tour-registration-prompt { flex-shrink: 0; padding: 12px; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; font-size: 13px; }
+.tour-registration-prompt > strong { display: block; margin-bottom: 8px; }
+.tour-registration-prompt > div { display: flex; gap: 6px; flex-wrap: wrap; }
+.tour-registration-prompt button, .tour-secondary, .tour-record-actions :is(button, a), .tour-confirm button, .tour-diary-tabs button { min-height: 44px; font-size: 13px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); color: var(--text); }
+.tour-registration-prompt > div button { color: var(--tour-action); }
+.tour-registration-prompt .tour-text-button { border: 0; background: transparent; padding-inline: 0; color: var(--muted); }
+.coach-topline > div { min-width: 0; flex: 1; }
+.coach-topline p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.coach-topline > a { margin-left: 0; flex-shrink: 0; }
+.coach-register-button { min-height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; gap: 3px; padding: 5px 7px; background: var(--raised); color: var(--text); border: 1px solid var(--line); border-radius: 9px; font-size: 12px; }
+.coach-tour-context { flex: 0 0 auto; border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; background: var(--bg); font-size: 13px; }
+.coach-tour-context > strong, .coach-tour-context > small { display: block; }
+.coach-tour-context > small { color: var(--muted); margin: 4px 0; }
+.coach-tour-context summary, .coach-tour-context a { min-height: 44px; padding-block: 11px; cursor: pointer; }
+.coach-tour-context > a { display: inline-flex; align-items: center; margin-right: 14px; color: var(--tour-action); }
+.coach-tour-context p { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.5; }
+.tour-detail { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); margin: 0 0 16px; padding: 14px; }
+.tour-detail > header { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
+.tour-detail > header h2 { font-size: 19px; margin: 8px 0 4px; overflow-wrap: anywhere; }
+.tour-detail > header p { color: var(--muted); font-size: 12px; margin: 0 0 10px; }
+.tour-status-chip { display: inline-block; padding: 4px 8px; font-size: 11px; border-radius: 20px; background: var(--raised); color: var(--text); border: 1px solid var(--line); }
+.tour-status-chip.is-completed, .tour-status-chip.is-in_progress { border-color: var(--tour-action); color: var(--tour-action); }
+.tour-detail-body { font-size: 14px; line-height: 1.6; }
+.tour-preserve { white-space: pre-wrap; overflow-wrap: anywhere; margin: 5px 0 12px; }
+.tour-feedback { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 12px; }
+.tour-feedback h3, .tour-analysis h3 { font-size: 16px; margin: 0 0 10px; }
+.tour-analysis { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 12px; }
+.tour-analysis-content summary { min-height: 44px; padding: 10px 0; cursor: pointer; color: var(--tour-action); }
+.tour-analysis-content p { margin: 4px 0 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.tour-analysis-content small { color: var(--muted); font-size: 11px; }
+.tour-recommendations { display: grid; gap: 8px; margin: 12px 0; }
+.tour-recommendations a { display: flex; flex-direction: column; gap: 5px; padding: 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--bg); min-height: 44px; }
+.tour-recommendations a strong { font-size: 14px; color: var(--text); }
+.tour-recommendations a span { font-size: 13px; line-height: 1.5; }
+.tour-recommendations a small { font-size: 12px; color: var(--muted); }
+.tour-recommendations .tour-link-label { display: flex; align-items: center; gap: 5px; color: var(--tour-action); font-weight: 650; margin-top: 4px; }
+.tour-record-actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0; }
+.tour-record-actions a { display: inline-flex; align-items: center; color: var(--tour-action); }
+.tour-confirm { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--bg); margin-bottom: 12px; }
+.tour-confirm p { margin: 0 0 10px; }
+.tour-confirm button + button { margin-left: 8px; }
+.tour-detail.is-compact { padding: 10px; margin: 0; border-radius: 12px; }
+.tour-detail.is-compact > header h2 { font-size: 15px; }
+.tour-detail.is-compact .tour-detail-body { font-size: 13px; }
+.sa-visit-card > button { display: flex; width: 100%; min-height: 44px; justify-content: space-between; align-items: center; gap: 12px; text-align: left; border: 0; background: transparent; color: var(--sa-text); padding: 4px 0; font-size: 12px; }
+.sa-visit-card > button > span:first-child { display: flex; flex-direction: column; min-width: 0; gap: 5px; }
+.sa-visit-card strong { overflow-wrap: anywhere; }
+.sa-visit-card small { color: var(--sa-muted); }
+.sa-visit-card > button > span:last-child { flex-shrink: 0; }
+.sa-event-chip[class*="sa-event-visit-"] { color: var(--sa-followup-text); background: var(--sa-followup-bg); }
+.sa-event-visit-completed { border: 1px solid var(--sa-positive-text); }
+.sa-event-visit-cancelled { text-decoration: line-through; }
+.sa-visit-load-error { margin: 0; font-size: 12px; }
+.sa-visit-load-error button { min-height: 44px; color: inherit; background: transparent; border: 0; text-decoration: underline; }
+.tour-diary-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
+.tour-diary-tabs button[aria-pressed="true"] { border-color: var(--tour-action); color: var(--tour-action); }
+.tour-diary-list { display: grid; gap: 10px; margin-top: 16px; }
+.tour-diary-list > a { display: flex; gap: 10px; align-items: center; padding: 14px; min-height: 44px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+.tour-diary-list > a > span { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.tour-diary-list strong { font-size: 15px; overflow-wrap: anywhere; }
+.tour-diary-list small { color: var(--muted); font-size: 12px; }
+.tour-legacy-notes { margin-top: 18px; }
+.tour-legacy-notes .page-heading h1 { font-size: 21px; }
+.tour-roadmap-learning { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 16px; margin: 18px 0; }
+.tour-roadmap-learning h2 { font-size: 17px; margin: 0; }
+.tour-origin-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--tour-action); font-size: 13px; }
+:is(.tour-dialog, .tour-detail, .tour-diary-page, .tour-registration-prompt, .tour-roadmap-learning, .coach-tour-context) :is(button, a, input, textarea, select, summary):focus-visible { outline: 2px solid var(--tour-action); outline-offset: 2px; }
+@media(max-width:420px) { .coach-topline { gap: 6px; } .coach-topline .coach-avatar { display: none; } .tour-dialog form > footer { padding-inline: 12px; } .tour-dialog form > footer button { flex: 1; padding-inline: 10px; } }
+@media(prefers-reduced-motion:reduce) { :is(.tour-dialog,.tour-detail) .spin { animation: none; } }

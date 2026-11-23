@@ -1,0 +1,105 @@
+{
+  "passed": true,
+  "live": false,
+  "checks": [
+    {
+      "name": "android-dark: scheduled visit keeps Cancun date, agenda fits, cancellation persists",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark"
+    },
+    {
+      "name": "android-dark: full Coach→feedback→analysis→Roadmap→reload→Diary edit/delete; context survives, stale analysis invalidates, deleted context blocked",
+      "passed": true,
+      "externalInference": "fixture with503 retry"
+    },
+    {
+      "name": "android-dark: Goal Sheet metrics unchanged and no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "iphone-dark: scheduled visit keeps Cancun date, agenda fits, cancellation persists",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark"
+    },
+    {
+      "name": "iphone-dark: Goal Sheet metrics unchanged and no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "desktop-dark: scheduled visit keeps Cancun date, agenda fits, cancellation persists",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark"
+    },
+    {
+      "name": "desktop-dark: Goal Sheet metrics unchanged and no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "android-light: scheduled visit keeps Cancun date, agenda fits, cancellation persists",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "light"
+    },
+    {
+      "name": "android-light: Goal Sheet metrics unchanged and no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "iphone-light: scheduled visit keeps Cancun date, agenda fits, cancellation persists",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    },
+    {
+      "name": "iphone-light: Goal Sheet metrics unchanged and no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "desktop-light: scheduled visit keeps Cancun date, agenda fits, cancellation persists",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "light"
+    },
+    {
+      "name": "desktop-light: Goal Sheet metrics unchanged and no JavaScript errors",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "android-dark-schedule-form.png",
+    "android-dark-agenda-visit.png",
+    "android-dark-learning.png",
+    "android-dark-resumed-context.png",
+    "iphone-dark-schedule-form.png",
+    "iphone-dark-agenda-visit.png",
+    "desktop-dark-schedule-form.png",
+    "desktop-dark-agenda-visit.png",
+    "android-light-schedule-form.png",
+    "android-light-agenda-visit.png",
+    "iphone-light-schedule-form.png",
+    "iphone-light-agenda-visit.png",
+    "desktop-light-schedule-form.png",
+    "desktop-light-agenda-visit.png"
+  ]
+}

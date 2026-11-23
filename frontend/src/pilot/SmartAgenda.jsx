@@ -3,14 +3,16 @@ import { CalendarDays, ChartNoAxesColumnIncreasing, Clock3, GraduationCap, Plus,
 import { MonthlyCalendar } from "../components/calendar/MonthlyCalendar";
 import { formatCalendarDate } from "../components/calendar/calendar-model.mjs";
 import { agendaEvents, followupOriginDate, summaryFor } from "./smart-agenda-model.mjs";
-import { localDate } from "./model.mjs";
+import { TourVisitDetail, useTourVisit, useTourVisits } from "./TourVisits";
+import { cancunParts, shiftDate, TOUR_STATUS, visitEvents, visitLabel } from "./tour-model.mjs";
 import "./smart-agenda.css";
 
 const amount = (value, compact = false) => new Intl.NumberFormat("en-US", { notation: compact ? "compact" : "standard", maximumFractionDigits: compact ? 1 : 2 }).format(value).replace("K", "k");
 const dayTitle = (date) => `${formatCalendarDate(date, "es-MX", { weekday: "long" })}, ${Number(date.slice(-2))} ${formatCalendarDate(date, "es-MX", { month: "short" }).replace(/\.$/, "")}`;
 
-function EntryCard({ event }) {
+function EntryCard({ event, onOpenVisit }) {
   if (!event) return <div className="sa-detail-card sa-empty-day"><p>Sin registros para este día.</p></div>;
+  if (event.visitId) return <article className="sa-detail-card sa-visit-card"><button type="button" onClick={() => onOpenVisit(event.visitId)} aria-label={`Ver visita ${visitLabel(event.visit)}`}><span><strong>{event.title}</strong><small>{TOUR_STATUS[event.visit.status]}{event.visit.analysis_status === "ready" ? " · Análisis disponible" : ""}</small></span><span>Ver detalle →</span></button></article>;
   const followup = event.kind === "followup";
   return <article className="sa-detail-card">
     <header className="sa-detail-title"><span className={`sa-detail-dot ${followup ? "is-followup" : ""}`} /><strong>{followup ? event.entryDate ? <a href={`#goalsheet/${event.entryDate}`}>Seguimiento</a> : "Seguimiento" : event.kind === "sale" ? "Venta registrada" : event.title}</strong><span className="sa-detail-amount">{event.amount === null ? "—" : `USD ${amount(event.amount)}`}</span></header>
@@ -19,8 +21,8 @@ function EntryCard({ event }) {
   </article>;
 }
 
-export function SmartAgenda({ data, onAddFollowup }) {
-  const today = localDate();
+export function SmartAgenda({ api, data, revision, refresh, visitId, onAddFollowup }) {
+  const today = cancunParts().date;
   const [selectedDate, setSelectedDate] = useState(today);
   const [filter, setFilter] = useState("all");
   const [listView, setListView] = useState(false);
@@ -29,8 +31,14 @@ export function SmartAgenda({ data, onAddFollowup }) {
   const [collapsed, setCollapsed] = useState(false);
   const [monthOpen, setMonthOpen] = useState(false);
   const [monthValue, setMonthValue] = useState(today.slice(0, 7));
+  const [openVisitId, setOpenVisitId] = useState(visitId || null);
+  const selectedVisit = useTourVisit(api, visitId, revision);
+  const monthStart = selectedDate.slice(0, 7) + "-01";
+  const visitList = useTourVisits(api, shiftDate(monthStart, -7), shiftDate(monthStart, 42), revision, !data.goalsheetLocked);
+  useEffect(() => { setOpenVisitId(visitId || null); if (visitId) setCollapsed(false); }, [visitId]);
+  useEffect(() => { if (selectedVisit.visit) setSelectedDate(selectedVisit.visit.event_date); }, [selectedVisit.visit?.id, selectedVisit.visit?.event_date]);
   const scrollArea = useRef(null), monthTrigger = useRef(null), monthInput = useRef(null), searchInput = useRef(null), monthDialog = useRef(null);
-  const events = useMemo(() => agendaEvents(data.entries, data.reminders), [data.entries, data.reminders]);
+  const events = useMemo(() => [...agendaEvents(data.entries, data.reminders), ...visitEvents(visitList.visits)], [data.entries, data.reminders, visitList.visits]);
   const filtered = events.filter((event) => (filter === "all" || (filter === "sales" && event.kind === "sale")) && `${event.title} ${event.note || ""}`.toLocaleLowerCase("es").includes(query.trim().toLocaleLowerCase("es")));
   const dayEvents = filtered.filter((event) => event.date === selectedDate);
   const monthEvents = filtered.filter((event) => event.date.slice(0, 7) === selectedDate.slice(0, 7)).sort((a, b) => a.date.localeCompare(b.date));
@@ -39,15 +47,17 @@ export function SmartAgenda({ data, onAddFollowup }) {
   useEffect(() => { if (searchOpen) searchInput.current?.focus(); }, [searchOpen]);
   useEffect(() => { if (monthOpen) { monthDialog.current?.showModal(); monthInput.current?.focus(); } }, [monthOpen]);
 
-  function selectDate(date) { setSelectedDate(date); }
-  function goToday() { setSelectedDate(today); scrollArea.current?.scrollTo({ top: 0 }); }
+  function selectDate(date) { setSelectedDate(date); setOpenVisitId(null); if (visitId) location.hash = "agenda"; }
+  function goToday() { selectDate(today); scrollArea.current?.scrollTo({ top: 0 }); }
+  function openVisit(id) { setCollapsed(false); setOpenVisitId(id); location.hash = `agenda/${id}`; }
+  function closeVisit() { setOpenVisitId(null); location.hash = "agenda"; }
   function closeMonth() {
     monthDialog.current?.close();
     setMonthOpen(false);
     monthTrigger.current?.focus();
   }
   const renderChip = (event, selected) => <span className={`sa-event-chip sa-event-${event.kind}${selected ? " selected" : ""}`} title={event.title}>
-    {event.kind === "sale" ? `🟢 ${event.title}${event.amount !== null ? ` $${amount(event.amount, true)}` : ""}` : event.kind === "followup" ? `↗ ${event.title}` : event.kind === "no-sale" ? `🔴 ${event.title}` : `⚪ ${event.title}`}
+    {event.visitId ? `◷ ${event.title}` : event.kind === "sale" ? `🟢 ${event.title}${event.amount !== null ? ` $${amount(event.amount, true)}` : ""}` : event.kind === "followup" ? `↗ ${event.title}` : event.kind === "no-sale" ? `🔴 ${event.title}` : `⚪ ${event.title}`}
   </span>;
 
   return <div className="smart-agenda-route">
@@ -62,6 +72,7 @@ export function SmartAgenda({ data, onAddFollowup }) {
           </div>
         </div>
         <div className="sa-month-heading"><h1>{formatCalendarDate(selectedDate, "es-MX", { month: "long" })}</h1><span className="sa-month-kpi"><i />{month.tours} {month.tours === 1 ? "tour" : "tours"} · USD {amount(month.volume, true)}</span></div>
+        {visitList.error && <p className="sa-visit-load-error" role="alert">No pudimos cargar las visitas. <button type="button" onClick={visitList.retry}>Reintentar</button></p>}
         {searchOpen && <div className="sa-search"><input ref={searchInput} type="search" aria-label="Buscar en el mes" placeholder="Buscar eventos" value={query} onChange={(event) => setQuery(event.target.value)} /><button type="button" aria-label="Cerrar búsqueda" onClick={() => { setSearchOpen(false); setQuery(""); }}><X size={18} /></button></div>}
         <div className="sa-weekdays" aria-hidden="true">{["D", "L", "M", "M", "J", "V", "S"].map((letter, i) => <span key={i}>{letter}</span>)}</div>
       </header>
@@ -76,7 +87,7 @@ export function SmartAgenda({ data, onAddFollowup }) {
             <div className="sa-selected-summary"><div><h2>{dayTitle(selectedDate)}</h2><span className="sa-pending" title="Estado no registrado">—</span></div><p>{day.tours} {day.tours === 1 ? "tour" : "tours"} · {day.sales} {day.sales === 1 ? "venta cerrada" : "ventas cerradas"} · USD {amount(day.volume)}</p></div>
             <div className="sa-commission"><span>Comisión</span><strong>—</strong></div>
           </header>
-          {!collapsed && <div className="sa-detail-scroll">{dayEvents.length ? dayEvents.map((event) => <EntryCard key={event.id} event={event} />) : <EntryCard />}</div>}
+          {!collapsed && <div className="sa-detail-scroll">{openVisitId ? <TourVisitDetail key={openVisitId} api={api} visitId={openVisitId} revision={revision} onChanged={refresh} onDeleted={closeVisit} onClose={closeVisit} compact /> : dayEvents.length ? dayEvents.map((event) => <EntryCard key={event.id} event={event} onOpenVisit={openVisit} />) : <EntryCard />}</div>}
         </div>
         <div className="sa-sheet-toolbar">
           <button type="button" className="sa-today" onClick={goToday}><i />Hoy</button>

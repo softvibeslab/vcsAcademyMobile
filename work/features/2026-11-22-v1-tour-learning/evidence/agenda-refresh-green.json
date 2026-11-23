@@ -1,0 +1,229 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "theme": "dark",
+      "loading": {
+        "height": 844,
+        "width": 390,
+        "pageHeight": 844,
+        "pageWidth": 390,
+        "rects": {
+          ".content": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".refreshing": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 14,
+            "top": 0,
+            "right": 390,
+            "bottom": 14,
+            "left": 0
+          },
+          ".smart-agenda-route": {
+            "x": 0,
+            "y": 24,
+            "width": 390,
+            "height": 820,
+            "top": 24,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-device": {
+            "x": 0,
+            "y": 24,
+            "width": 390,
+            "height": 820,
+            "top": 24,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-app-nav": {
+            "x": 0,
+            "y": 788,
+            "width": 390,
+            "height": 56,
+            "top": 788,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          }
+        }
+      },
+      "pendingDashboard": 1,
+      "settled": {
+        "height": 844,
+        "width": 390,
+        "pageHeight": 844,
+        "pageWidth": 390,
+        "rects": {
+          ".content": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".refreshing": null,
+          ".smart-agenda-route": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-device": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-app-nav": {
+            "x": 0,
+            "y": 788,
+            "width": 390,
+            "height": 56,
+            "top": 788,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          }
+        }
+      },
+      "passed": true
+    },
+    {
+      "theme": "light",
+      "loading": {
+        "height": 844,
+        "width": 390,
+        "pageHeight": 844,
+        "pageWidth": 390,
+        "rects": {
+          ".content": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".refreshing": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 14,
+            "top": 0,
+            "right": 390,
+            "bottom": 14,
+            "left": 0
+          },
+          ".smart-agenda-route": {
+            "x": 0,
+            "y": 24,
+            "width": 390,
+            "height": 820,
+            "top": 24,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-device": {
+            "x": 0,
+            "y": 24,
+            "width": 390,
+            "height": 820,
+            "top": 24,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-app-nav": {
+            "x": 0,
+            "y": 788,
+            "width": 390,
+            "height": 56,
+            "top": 788,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          }
+        }
+      },
+      "pendingDashboard": 1,
+      "settled": {
+        "height": 844,
+        "width": 390,
+        "pageHeight": 844,
+        "pageWidth": 390,
+        "rects": {
+          ".content": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".refreshing": null,
+          ".smart-agenda-route": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-device": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-app-nav": {
+            "x": 0,
+            "y": 788,
+            "width": 390,
+            "height": 56,
+            "top": 788,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          }
+        }
+      },
+      "passed": true
+    }
+  ]
+}

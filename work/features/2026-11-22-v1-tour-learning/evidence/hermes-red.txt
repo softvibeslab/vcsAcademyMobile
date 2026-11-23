@@ -1,0 +1,211 @@
+EEEEEEEEEEEEEEEEEEEEEE.E
+======================================================================
+ERROR: test_analysis_is_validated_sorted_and_titled_from_allowed_catalog (__main__.TourAnalysisTests.test_analysis_is_validated_sorted_and_titled_from_allowed_catalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 136, in test_analysis_is_validated_sorted_and_titled_from_allowed_catalog
+    result = coach.generate_visit_analysis(data, KNOWLEDGE, CATALOG)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_duplicate_json_keys_are_not_silently_accepted (__main__.TourAnalysisTests.test_duplicate_json_keys_are_not_silently_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 186, in test_duplicate_json_keys_are_not_silently_accepted
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='not JSON')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='```json\n{"summary": "La visita dej\\u00f3 una objeci\\u00f3n p')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "La visita dej\\u00f3 una objeci\\u00f3n por explo')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "", "strengths": "Escuchaste antes de responder.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "La visita dej\\u00f3 una objeci\\u00f3n por explo')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "La visita dej\\u00f3 una objeci\\u00f3n por explo')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "La visita dej\\u00f3 una objeci\\u00f3n por explo')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "La visita dej\\u00f3 una objeci\\u00f3n por explo')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "La visita dej\\u00f3 una objeci\\u00f3n por explo')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='{"summary": "Missing fields"}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_invalid_json_schema_size_or_html_returns_503_without_fake_result (__main__.TourAnalysisTests.test_invalid_json_schema_size_or_html_returns_503_without_fake_result) (output='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 178, in test_invalid_json_schema_size_or_html_returns_503_without_fake_result
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_no_justified_recommendation_is_valid_without_invention (__main__.TourAnalysisTests.test_no_justified_recommendation_is_valid_without_invention)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 160, in test_no_justified_recommendation_is_valid_without_invention
+    result = coach.generate_visit_analysis(visit(), [], [])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_provider_failure_is_propagated_without_local_analysis (__main__.TourAnalysisTests.test_provider_failure_is_propagated_without_local_analysis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 191, in test_provider_failure_is_propagated_without_local_analysis
+    coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_unknown_blocked_or_duplicate_steps_never_become_links (__main__.TourAnalysisTests.test_unknown_blocked_or_duplicate_steps_never_become_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 152, in test_unknown_blocked_or_duplicate_steps_never_become_links
+    result = coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'generate_visit_analysis'
+
+======================================================================
+ERROR: test_budget_removes_old_whole_turns_before_sources_without_cutting_visit (__main__.TourContextTests.test_budget_removes_old_whole_turns_before_sources_without_cutting_visit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 88, in test_budget_removes_old_whole_turns_before_sources_without_cutting_visit
+    result = coach.HermesCoachProvider().answer('Practicar objeción; mensaje actual íntegro.', 'general_coach', {'roles': ['sales_rep']}, knowledge, history, tour_context=data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: HermesCoachProvider.answer() got an unexpected keyword argument 'tour_context'
+
+======================================================================
+ERROR: test_budget_then_removes_low_relevance_sources_before_inference (__main__.TourContextTests.test_budget_then_removes_low_relevance_sources_before_inference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 105, in test_budget_then_removes_low_relevance_sources_before_inference
+    result = coach.HermesCoachProvider().answer('Practicar objeción.', 'general_coach', {'roles': ['sales_rep']}, knowledge, history, tour_context=data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: HermesCoachProvider.answer() got an unexpected keyword argument 'tour_context'
+
+======================================================================
+ERROR: test_chat_receives_complete_selected_visit_but_no_owner_or_prior_analysis (__main__.TourContextTests.test_chat_receives_complete_selected_visit_but_no_owner_or_prior_analysis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 53, in test_chat_receives_complete_selected_visit_but_no_owner_or_prior_analysis
+    result = coach.HermesCoachProvider().answer('¿Qué puedo mejorar?', 'general_coach', {'roles': ['sales_rep'], 'email': 'private-email-marker'}, KNOWLEDGE, [], tour_context=data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: HermesCoachProvider.answer() got an unexpected keyword argument 'tour_context'
+
+======================================================================
+ERROR: test_context_instruction_injection_remains_data (__main__.TourContextTests.test_context_instruction_injection_remains_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 77, in test_context_instruction_injection_remains_data
+    coach.HermesCoachProvider().answer('Ayúdame a practicar.', 'general_coach', {'roles': ['sales_rep']}, [], tour_context=visit(context=narrative))
+TypeError: HermesCoachProvider.answer() got an unexpected keyword argument 'tour_context'
+
+======================================================================
+ERROR: test_impossible_context_size_fails_explicitly_before_model (__main__.TourContextTests.test_impossible_context_size_fails_explicitly_before_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 115, in test_impossible_context_size_fails_explicitly_before_model
+    with self.assertRaises(coach.CoachContextTooLarge) as caught:
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'CoachContextTooLarge'
+
+======================================================================
+ERROR: test_tour_mention_returns_only_server_defined_actions_and_does_not_write (__main__.TourContextTests.test_tour_mention_returns_only_server_defined_actions_and_does_not_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 124, in test_tour_mention_returns_only_server_defined_actions_and_does_not_write
+    self.assertEqual(coach.tour_action_prompt(text), expected)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'backend.app.coach_hermes' has no attribute 'tour_action_prompt'
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.018s
+
+FAILED (errors=23)

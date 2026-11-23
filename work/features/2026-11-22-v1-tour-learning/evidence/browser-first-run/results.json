@@ -1,0 +1,22 @@
+{
+  "passed": false,
+  "live": false,
+  "checks": [
+    {
+      "name": "android-dark: scheduled visit keeps Cancun date, agenda fits, cancellation persists",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark"
+    }
+  ],
+  "screenshots": [
+    "android-dark-schedule-form.png",
+    "android-dark-agenda-visit.png",
+    "android-dark-learning.png",
+    "android-dark-resumed-context.png",
+    "android-dark-failure.png"
+  ]
+}

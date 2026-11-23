@@ -1,6 +1,6 @@
 # CP3 · Plan por capas
 
-**Status:** plan propuesto; no iniciado.
+**Status:** T01–T08 implementadas, publicadas y verificadas.
 
 ## Repo Paths
 
@@ -8,7 +8,7 @@
 |---|---|
 | Frontend | frontend/src/pilot/Coach.jsx, Learning.jsx, SmartAgenda.jsx, App.jsx; componente y modelo de visitas nuevos |
 | API | backend/app/main.py; módulo nuevo tour_visits.py |
-| Datos | backend/app/persistence.py; migración aditiva y almacenamiento de visitas separado |
+| Datos | backend/app/tour_visits.py; esquema aditivo y almacenamiento separado, sin modificar persistence.py |
 | Hermes | backend/app/coach_hermes.py y backend/deploy/coach-v1/SOUL.md; sin memoria global |
 | Infra | backend/deploy y scripts de publicación de la nueva feature; limpieza y respaldos V1 |
 | Evidencia | work/features/2026-11-22-v1-tour-learning/evidence |

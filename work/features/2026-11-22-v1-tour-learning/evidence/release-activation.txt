@@ -1,0 +1,14 @@
+Building derived legacy image
+Candidate API passed; hermes_answered
+{"maintenance": "verified", "retention_days": 30, "backup_retention_days": 7, "timer": "salesacademy-v1-tours-maintenance.timer"}
+{
+  "release": "/srv/aisales-v1-release-20261122-tours",
+  "image": "sha256:fca7efccd615e61adde9c395893fe40125c767cb99a72936b210081ab4d66a00",
+  "container": "aisales-v1-tours-20261122",
+  "candidate": "hermes_answered",
+  "live": "hermes_answered",
+  "databaseShapeUnchanged": true,
+  "v5Unchanged": true,
+  "htmlSha256": "05cf488d62298881d59879fc8c534e107869232ee602c79553cae66fe0b64d97",
+  "backup": "/srv/aisales-v1/ops/20261122-tours/academy-before.sqlite3"
+}

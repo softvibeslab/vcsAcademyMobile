@@ -1,0 +1,28 @@
+{
+  "aisales-v1-coach-20261122": {
+    "id": "542bc57c4f5f388c51f4fed12d1899298e0c6820663323b6b4de181427e7c364",
+    "image": "sha256:628d264b850131875af34cbb97cee979b22ea2b2fd997538664e45120990073e",
+    "running": true
+  },
+  "aisales-pilot-20261120-accounts-r2": {
+    "id": "bb6574ae827be1350f1a4bf931f9b001388dbf117fb2190683d0100fe2d938a8",
+    "image": "sha256:c8f3fc47861568675f3a6a92ac00c1e2f0462f4409c3aed20b1216b3f9813556",
+    "running": true
+  },
+  "aisalesv1": {
+    "nginxSha256": "0b6560a3c7b4e2fcf7e6230aa359077c9013ca5d3d73758e47491ef9ae651144",
+    "roots": [
+      "/var/www/softvibes-recovery-acme",
+      "/srv/aisales-v1-release-20261122-coach-r2/web"
+    ],
+    "htmlSha256": "09d2f55d34942296c244be148651f8c4c24024d23fc2eae2d962cc4e122eb119"
+  },
+  "aisales": {
+    "nginxSha256": "2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d",
+    "roots": [
+      "/var/www/softvibes-recovery-acme",
+      "/srv/aisales-release-20261120-role-accounts/web"
+    ],
+    "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "realInference": true,
+  "schemaValid": true,
+  "provider": "hermes",
+  "durationSeconds": 11.98,
+  "recommendations": [
+    "step_1"
+  ],
+  "profile": "sales-academy-coach-v1",
+  "host": "2.25.231.154"
+}

@@ -1,0 +1,44 @@
+✔ calendar dates use Cancun instead of UTC or device timezone (15.189542ms)
+✔ schedule requires an explicit future time and normalizes the offset (0.835417ms)
+✔ start never submits a client timestamp and reflects preserve their own date (0.272ms)
+✔ feedback enforces meaningful narrative, retention and complete payload budget (0.216916ms)
+✔ tour prompts never duplicate a linked or dismissed context and validate server controls (0.281209ms)
+✔ visit events keep independent identities and never look like sales/Goal Sheet entries (0.317958ms)
+✔ lesson links use current catalog and preserve plan/progress restrictions (0.23325ms)
+✔ finalizing a visit in its starting minute uses the actual confirmed instant (0.302625ms)
+✔ an explicitly edited completion time is not silently replaced by now (0.2275ms)
+✖ finalization at the exact starting minute preserves actual elapsed seconds (0.784666ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.551959
+
+✖ failing tests:
+
+test at frontend/src/pilot/tour-model.test.mjs:62:1
+✖ finalization at the exact starting minute preserves actual elapsed seconds (0.784666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + '2026-11-22T21:30:00-05:00'
+  - '2026-11-23T02:30:45.000Z'
+              ^
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-model.test.mjs:65:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-11-22T21:30:00-05:00',
+    expected: '2026-11-23T02:30:45.000Z',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

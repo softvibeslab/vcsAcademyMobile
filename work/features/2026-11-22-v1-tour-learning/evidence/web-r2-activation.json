@@ -1,0 +1,8 @@
+{
+  "root": "/srv/aisales-v1-release-20261122-tours-r2/web",
+  "htmlSha256": "6dae5f970221bbf3ddca2d0cbbb5d69efe3bc6cbf60a9fb51660444aa8b1381e",
+  "archiveSha256": "e09e6afa3296221021399d0b192bb620df232d62335fac0811160b8b6fc1ecb3",
+  "filesVerified": 17,
+  "v5AndContainersUnchanged": true,
+  "rollbackConfig": "/srv/aisales-v1/ops/20261122-tours/nginx-before-r2.conf"
+}

@@ -1,0 +1,13 @@
+AssertionError [ERR_ASSERTION]: Coach and Agenda stay within the viewport
+    at fits (/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/work/features/2026-11-22-v1-tour-learning/verify-tours.cjs:22:2)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async runCase (/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/work/features/2026-11-22-v1-tour-learning/verify-tours.cjs:81:3)
+    at async main (/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/work/features/2026-11-22-v1-tour-learning/verify-tours.cjs:138:3) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

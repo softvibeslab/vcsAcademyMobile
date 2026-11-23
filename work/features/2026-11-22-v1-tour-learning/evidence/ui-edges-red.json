@@ -1,0 +1,15 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "name": "manual-registration-from-roleplay",
+      "passed": false,
+      "error": "expect(locator).toBeVisible() failed"
+    },
+    {
+      "name": "open-visit-expands-agenda",
+      "passed": false,
+      "error": "expect(locator).toBeVisible() failed"
+    }
+  ]
+}

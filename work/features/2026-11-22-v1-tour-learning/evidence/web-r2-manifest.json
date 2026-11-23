@@ -1,0 +1,23 @@
+{
+  "archive": "/var/folders/st/6m6rs6vd4dx8mv_52r4c1d8w0000gn/T/sa-tour-web-r2-hlqdi2lz/web-r2.tar.gz",
+  "sha256": "e09e6afa3296221021399d0b192bb620df232d62335fac0811160b8b6fc1ecb3",
+  "files": {
+    "web/assets/coach-intro-cWnOMky2.svg": "51b19679d7a09253b75c3d07b7a7b7a7b805dc35701d93edc2bd086b7fece332",
+    "web/assets/coach-welcome-BBnch_VM.svg": "4df89625e7c8168528691350a38bbe674edd2f0b70cd63c4905b69ffbc85334f",
+    "web/assets/dm-sans-0-CB7WfZ8W.ttf": "b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9",
+    "web/assets/dm-sans-1-DCQhiIS7.ttf": "376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae",
+    "web/assets/dm-sans-2-CYvJJk-g.ttf": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
+    "web/assets/dm-sans-3-BQ0abr9c.ttf": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
+    "web/assets/pilot-0qeZez03.js": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd",
+    "web/assets/pilot-Bd1Z49dQ.css": "3bb5fd68cee547de13376fe4b2c5250c247350f88a2583d43831e01b5c2185ae",
+    "web/icons/apple-touch-icon.png": "77d498c5bdacfee6112393c28ba74413a355e32eab161dee43c8cd3e3d90fa35",
+    "web/icons/favicon-32.png": "f7f7d422ee26350e738717dc9d0fa3b96eb5e976f5cb11c62ff7e7eb0bdfe76e",
+    "web/icons/icon-192.png": "003ce7a4a9068c91e1b50332ca5aeb37448f0408ed3060e0f21b0391c3e27f8a",
+    "web/icons/icon-512.png": "8abdd1fedb7cbc15cf12b0396397ed59ee7c7c8b3b9ae47518e3a7a250e4285e",
+    "web/icons/icon-maskable-512.png": "8aab21cff343edacec42f239062c2ad08983d13d12266ce9780a7c0fff497adb",
+    "web/manifest.webmanifest": "1a6bd09de5afd0dd0fbca3cdceb90c5663e4f75812e300b8e71b41d933e83810",
+    "web/offline.html": "4b55cc26e6b16bb9de832fdf692dfe93105e8089cc4479724cedfe6dd973939d",
+    "web/sw.js": "0ce6216454d87fc0b412f48a5858d029c498f4fc2d8bfe91c64d11335ee08c73",
+    "web/v1.html": "6dae5f970221bbf3ddca2d0cbbb5d69efe3bc6cbf60a9fb51660444aa8b1381e"
+  }
+}

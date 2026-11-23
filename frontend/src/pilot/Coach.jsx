@@ -1,7 +1,9 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Bot, Send, ArrowDown, LoaderCircle } from "lucide-react";
+import { Bot, Send, ArrowDown, LoaderCircle, Plus } from "lucide-react";
 import { Header, Card, Field, Button, Empty, Loading, ErrorBox, useRemote, useAction, ActionStatus } from "./ui";
 import { boundedHistory, compactReply, safeCoachActions, updateCoachTurn } from "./coach-model.mjs";
+import { TourRegistrationPrompt, TourVisitDialog, useTourVisit } from "./TourVisits";
+import { promptIsValid, shouldOfferTour, TOUR_STATUS, visitLabel } from "./tour-model.mjs";
 
 const STARTERS = [
   ["Presentación", "Ayúdame a preparar mi presentación."],
@@ -25,7 +27,7 @@ function CoachReply({ turn }) {
   );
 }
 
-export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEvent }) {
+export function Coach({ api, data, revision, tourId, refresh, initialTab = "chat", onLocked, onGuideEvent }) {
   const [tab, setTab] = useState(initialTab);
   const [turns, setTurns] = useState([]);
   const [drafts, setDrafts] = useState({ chat: "", practice: "" });
@@ -35,6 +37,9 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
   const [submitted, setSubmitted] = useState(false);
   const [practicePending, setPracticePending] = useState(null);
   const [hasLatest, setHasLatest] = useState(false);
+  const [registration, setRegistration] = useState(null), [tourForm, setTourForm] = useState(null);
+  const dismissedTour = useRef(false), conversationEpoch = useRef(0);
+  const linkedVisit = useTourVisit(api, tourId, revision);
   const r = useRemote(api, "/api/roleplay/scenarios"), action = useAction();
   const requestRef = useRef(null), inputRef = useRef(null), logRef = useRef(null);
   const alive = useRef(true), nearBottom = useRef(true), activeTab = useRef(tab);
@@ -42,9 +47,21 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
   const message = drafts[tab] || "";
   const scenario = r.data?.scenarios.find(item => item.id === scenarioId);
   const busy = !!busyMode || action.busy;
+  const contextUnavailable = !!tourId && (!linkedVisit.visit || !!linkedVisit.error);
   const visibleContent = tab === "chat" ? turns : session?.turns;
   const visiblePending = tab === "practice" ? practicePending : null;
 
+  useEffect(() => {
+    conversationEpoch.current += 1;
+    requestRef.current?.controller.abort(); requestRef.current = null; setBusyMode(null);
+    setTurns([]); setDrafts({ chat: "", practice: "" }); setRegistration(null); dismissedTour.current = false;
+  }, [tourId]);
+  useEffect(() => {
+    if (linkedVisit.code === "visit_not_found") {
+      conversationEpoch.current += 1; requestRef.current?.controller.abort(); requestRef.current = null; setBusyMode(null);
+      setTurns([]); setDrafts({ chat: "", practice: "" }); setRegistration(null); dismissedTour.current = true;
+    }
+  }, [linkedVisit.code]);
   useEffect(() => {
     nearBottom.current = true;
     setHasLatest(false);
@@ -74,7 +91,7 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
     if (!log) return;
     if (nearBottom.current) { log.scrollTop = log.scrollHeight; setHasLatest(false); }
     else setHasLatest(true);
-  }, [visibleContent, visiblePending, tab]);
+  }, [visibleContent, visiblePending, tab, registration, linkedVisit.visit]);
   useEffect(() => {
     const log = logRef.current;
     if (!log || typeof ResizeObserver === "undefined") return;
@@ -106,16 +123,19 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
   }
   async function submitText(text, mode, retryTurn = null) {
     text = text.trim();
-    if (!text || text.length > 1200 || requestRef.current || action.busy) return;
+    if (!text || text.length > 1200 || requestRef.current || action.busy || (mode === "chat" && contextUnavailable)) return;
     if (mode === "practice" && session?.status !== "active") return;
     const controller = new AbortController();
-    const request = { controller, mode, timedOut: false };
+    const request = { controller, mode, timedOut: false, epoch: conversationEpoch.current };
     requestRef.current = request;
     setBusyMode(mode);
     const id = retryTurn?.id || crypto.randomUUID();
     const history = retryTurn?.history || boundedHistory(turns);
     const turn = { id, question: text, history, status: "pending", error: "" };
-    if (mode === "chat") setTurns(previous => updateCoachTurn(previous, turn));
+    if (mode === "chat") {
+      setTurns(previous => updateCoachTurn(previous, turn));
+      if (shouldOfferTour(text, !!tourId, dismissedTour.current)) setRegistration(previous => previous || { context: text });
+    }
     else setPracticePending(turn);
     setDrafts(previous => ({ ...previous, [mode]: previous[mode].trim() === text ? "" : previous[mode] }));
     if (activeTab.current === mode) nearBottom.current = true;
@@ -124,25 +144,27 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
       if (mode === "chat") {
         const result = await api("/api/smart-agent/chat", {
           method: "POST", signal: controller.signal,
-          body: JSON.stringify({ message: text, mode: "general_coach", conversation_history: history }),
+          body: JSON.stringify({ message: text, mode: "general_coach", conversation_history: history, ...(tourId ? { tour_id: tourId } : {}) }),
         });
-        if (!alive.current) return;
+        if (!alive.current || request.epoch !== conversationEpoch.current) return;
         if (typeof result.response !== "string" || !result.response.trim()) throw new Error("El Coach no pudo completar la respuesta. Inténtalo de nuevo.");
         setTurns(previous => updateCoachTurn(previous, {
           id, status: "sent", answer: result.response, citations: result.citations,
           actions: result.recommended_actions, provider: result.provider || "local",
         }));
+        if (!tourId && !dismissedTour.current && promptIsValid(result.tour_action_prompt)) setRegistration(previous => previous || { context: text });
         onGuideEvent?.("coach");
       } else {
         const result = await api(`/api/roleplay/sessions/${session.id}/turn`, {
           method: "POST", signal: controller.signal, body: JSON.stringify({ message: text }),
         });
-        if (!alive.current) return;
+        if (!alive.current || request.epoch !== conversationEpoch.current) return;
         setSession(result.session);
         setPracticePending(null);
       }
     } catch (error) {
-      if (!alive.current) return;
+      if (!alive.current || request.epoch !== conversationEpoch.current) return;
+      if (mode === "chat" && tourId && (error.code === "visit_not_found" || error.status === 404)) { setTurns([]); setDrafts({ chat: "", practice: "" }); linkedVisit.retry(); return; }
       const errorText = request.timedOut
         ? "El Coach tardó demasiado. Tu mensaje sigue aquí; puedes reintentar."
         : error.message || "No pudimos enviar tu mensaje. Puedes reintentar.";
@@ -151,8 +173,7 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
       setDrafts(previous => ({ ...previous, [mode]: previous[mode] || text }));
     } finally {
       clearTimeout(timer);
-      if (requestRef.current === request) requestRef.current = null;
-      if (alive.current) setBusyMode(null);
+      if (requestRef.current === request) { requestRef.current = null; if (alive.current) setBusyMode(null); }
     }
   }
   function send(event) {
@@ -163,6 +184,11 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
     submitText(message, tab, failed);
   }
   function retry(turn, mode) { submitText(turn.question, mode, turn); }
+  function registerVisit(intent) {
+    if (data?.goalsheetLocked) { onLocked?.("premium"); return; }
+    const existing = intent === "reflect" ? linkedVisit.visit : null;
+    setTourForm({ intent: existing?.status === "completed" ? "edit" : intent, visit: existing, context: registration?.context || "" });
+  }
   function pendingMessage(turn, mode) {
     return turn && <React.Fragment key={turn.id}>
       <div className="message user"><small>TÚ</small><p>{turn.question}</p></div>
@@ -176,6 +202,7 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
         <span className="coach-avatar" aria-hidden="true"><Bot size={22} /></span>
         <div><h1>AI Coach</h1><p>Tu siguiente paso, más claro.</p></div>
         <a href="#feedback">Evaluaciones</a>
+        <button type="button" className="coach-register-button" aria-label="Registrar visita" title="Registrar visita" onClick={() => { if (data?.goalsheetLocked) { onLocked?.("premium"); return; } dismissedTour.current = false; changeTab("chat"); setRegistration({ context: tourId ? "" : turns.at(-1)?.question || "" }); latest(); }}><Plus size={16} />Visita</button>
       </header>
       <div className="coach-tabs" role="group" aria-label="Modo de entrenamiento">
         <button type="button" aria-pressed={tab === "chat"} onClick={() => changeTab("chat")}>Conversar</button>
@@ -202,6 +229,7 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
         <div className="coach-conversation">
           {tab === "practice" && <div className="coach-practice-heading"><strong>{scenario?.title || "Práctica en curso"}</strong><span>Simulación por texto</span></div>}
           <div className="coach-log" ref={logRef} onScroll={trackScroll} role="log" aria-label={tab === "chat" ? "Conversación con el Coach" : "Conversación de práctica"} aria-live="polite" aria-relevant="additions text" tabIndex={0}>
+            {tab === "chat" && tourId && <section className="coach-tour-context" aria-label="Contexto de visita">{linkedVisit.visit ? <><strong>{visitLabel(linkedVisit.visit)}</strong><small>{TOUR_STATUS[linkedVisit.visit.status]} · {linkedVisit.visit.event_date}</small><details><summary>Contexto guardado</summary><p>{linkedVisit.visit.context || "Sin contexto adicional."}</p></details><a href={`#agenda/${tourId}`}>Ver en Agenda</a></> : linkedVisit.busy ? <p role="status">Cargando contexto de la visita…</p> : <><p role="alert">{linkedVisit.error || "Esta visita no está disponible."}</p><a href="#agenda">Volver a Agenda</a></>}<a href="#coach">Nueva conversación</a></section>}
             {tab === "chat" ? (turns.length ? turns.map(turn => <React.Fragment key={turn.id}>
               {pendingMessage(turn, "chat")}
               {turn.status === "sent" && <CoachReply turn={turn} />}
@@ -213,6 +241,7 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
               {!(session.turns || []).length && !practicePending && <div className="coach-empty"><h2>Tú abres la conversación</h2><p>Presenta tu primera pregunta al cliente.</p></div>}
               {pendingMessage(practicePending, "practice")}
             </>}
+            {tab === "chat" && registration && <TourRegistrationPrompt onChoose={registerVisit} onDismiss={() => { dismissedTour.current = true; setRegistration(null); }} />}
             {busyMode === tab && <div className="coach-thinking" role="status"><LoaderCircle size={16} className="spin" aria-hidden="true" />{tab === "chat" ? "Coach está respondiendo…" : "Preparando respuesta…"}</div>}
           </div>
           {hasLatest && <button type="button" className="coach-latest" onClick={latest}><ArrowDown size={16} />Ir al último mensaje</button>}
@@ -221,7 +250,7 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
             <textarea id="coach-message" ref={inputRef} rows={1} maxLength={1200} value={message} onChange={event => setDrafts(previous => ({ ...previous, [tab]: event.target.value }))} placeholder="Escribe tu mensaje…" enterKeyHint="send" onKeyDown={event => {
               if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); send(event); }
             }} />
-            <button type="submit" aria-label="Enviar mensaje" disabled={busy || !message.trim()}><Send size={20} /></button>
+            <button type="submit" aria-label="Enviar mensaje" disabled={busy || !message.trim() || (tab === "chat" && contextUnavailable)}><Send size={20} /></button>
             {message.length > 1000 && <small className="coach-character-count">{message.length}/1200</small>}
           </form>}
           {tab === "practice" && <div className="coach-practice-controls">
@@ -240,6 +269,7 @@ export function Coach({ api, refresh, initialTab = "chat", onLocked, onGuideEven
           </div>}
         </div>
       )}
+      {tourForm && <TourVisitDialog api={api} intent={tourForm.intent} visit={tourForm.visit} initialContext={tourForm.context} onClose={() => setTourForm(null)} onChanged={refresh} onSaved={visit => { setTourForm(null); setRegistration(null); setTurns([]); dismissedTour.current = true; location.hash = `coach/${visit.id}`; linkedVisit.retry(); refresh(); }} />}
     </section>
   );
 }

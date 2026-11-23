@@ -1,6 +1,6 @@
 # CP2 · Visitas con contexto y aprendizaje
 
-**Status:** propuesta v1; pendiente de aprobación explícita.
+**Status:** aprobada v1; el PO respondió «si hazlo !» el 2026-11-22, autorizando desarrollar y publicar.
 **Product:** Sales Academy V1 · aisalesv1.softvibes.pro
 **Owner:** Product Owner
 **Date:** 2026-11-22 (America/Cancun)
@@ -144,7 +144,7 @@ Capas del perfil: frontend React/Vite, backend FastAPI, data SQLite, infra Docke
 
 - [x] Historia, propuesta UX, contratos, datos y pruebas escritos antes de código.
 - [x] Hechos actuales separados de contratos propuestos.
-- [ ] PO aprueba esta v1, el wireframe, criterios/datos y retención propuesta.
-- [ ] Historia LISTA y verify-story ejecutado con resultado satisfactorio.
+- [x] PO aprueba esta v1, el wireframe, criterios/datos y retención propuesta: «si hazlo !».
+- [x] Historia LISTA y verify-story satisfactorio; evidence/readiness-approved.txt.
 
-La solicitud autoriza preparar el cambio; la aprobación de la feature anterior no aprueba estos contratos nuevos. No hay código productivo modificado en esta fase.
+Aprobación citable del PO: «si hazlo !», conversación del 2026-11-22 en respuesta al contrato v1. Se autoriza implementar, probar y publicar.

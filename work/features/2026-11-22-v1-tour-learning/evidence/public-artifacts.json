@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "checked_at": "2026-11-23T02:09:48.875315+00:00",
+  "scope": "public_artifacts_only",
+  "https_certificate_verification": true,
+  "checks": [
+    {
+      "name": "local_html_matches_manifest",
+      "passed": true,
+      "expected_sha256": "6dae5f970221bbf3ddca2d0cbbb5d69efe3bc6cbf60a9fb51660444aa8b1381e",
+      "actual_sha256": "6dae5f970221bbf3ddca2d0cbbb5d69efe3bc6cbf60a9fb51660444aa8b1381e"
+    },
+    {
+      "name": "local_asset_inventory_matches_manifest",
+      "passed": true,
+      "manifest_assets": 2,
+      "local_assets": 2,
+      "html_asset_references": 2
+    },
+    {
+      "name": "v1_public_html",
+      "path": "/",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "6dae5f970221bbf3ddca2d0cbbb5d69efe3bc6cbf60a9fb51660444aa8b1381e",
+      "actual_sha256": "6dae5f970221bbf3ddca2d0cbbb5d69efe3bc6cbf60a9fb51660444aa8b1381e",
+      "bytes": 929,
+      "local_sha256": "6dae5f970221bbf3ddca2d0cbbb5d69efe3bc6cbf60a9fb51660444aa8b1381e"
+    },
+    {
+      "name": "local_asset_matches_manifest",
+      "path": "/assets/pilot-0qeZez03.js",
+      "passed": true,
+      "expected_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd",
+      "actual_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd"
+    },
+    {
+      "name": "v1_public_asset",
+      "path": "/assets/pilot-0qeZez03.js",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd",
+      "actual_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd",
+      "bytes": 356157,
+      "local_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd"
+    },
+    {
+      "name": "local_asset_matches_manifest",
+      "path": "/assets/pilot-Bd1Z49dQ.css",
+      "passed": true,
+      "expected_sha256": "3bb5fd68cee547de13376fe4b2c5250c247350f88a2583d43831e01b5c2185ae",
+      "actual_sha256": "3bb5fd68cee547de13376fe4b2c5250c247350f88a2583d43831e01b5c2185ae"
+    },
+    {
+      "name": "v1_public_asset",
+      "path": "/assets/pilot-Bd1Z49dQ.css",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "3bb5fd68cee547de13376fe4b2c5250c247350f88a2583d43831e01b5c2185ae",
+      "actual_sha256": "3bb5fd68cee547de13376fe4b2c5250c247350f88a2583d43831e01b5c2185ae",
+      "bytes": 86908,
+      "local_sha256": "3bb5fd68cee547de13376fe4b2c5250c247350f88a2583d43831e01b5c2185ae"
+    },
+    {
+      "name": "v1_public_ready",
+      "passed": true,
+      "http_status": 200,
+      "checks": {
+        "database": true,
+        "seed_users": true,
+        "seed_resources": true
+      }
+    },
+    {
+      "name": "v5_public_html_unchanged",
+      "path": "/",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "actual_sha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "bytes": 1010
+    }
+  ],
+  "release_manifest_sha256": "755f1f701a5e465b971a9f62a490839f12a2e33aad9aa7d03aa8e9b8ce464ea5"
+}

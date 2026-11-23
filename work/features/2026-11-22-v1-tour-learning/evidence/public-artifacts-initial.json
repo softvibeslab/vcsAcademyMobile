@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "checked_at": "2026-11-23T02:04:56.529837+00:00",
+  "scope": "public_artifacts_only",
+  "https_certificate_verification": true,
+  "checks": [
+    {
+      "name": "local_html_matches_manifest",
+      "passed": true,
+      "expected_sha256": "05cf488d62298881d59879fc8c534e107869232ee602c79553cae66fe0b64d97",
+      "actual_sha256": "05cf488d62298881d59879fc8c534e107869232ee602c79553cae66fe0b64d97"
+    },
+    {
+      "name": "local_asset_inventory_matches_manifest",
+      "passed": true,
+      "manifest_assets": 2,
+      "local_assets": 2,
+      "html_asset_references": 2
+    },
+    {
+      "name": "v1_public_html",
+      "path": "/",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "05cf488d62298881d59879fc8c534e107869232ee602c79553cae66fe0b64d97",
+      "actual_sha256": "05cf488d62298881d59879fc8c534e107869232ee602c79553cae66fe0b64d97",
+      "bytes": 929,
+      "local_sha256": "05cf488d62298881d59879fc8c534e107869232ee602c79553cae66fe0b64d97"
+    },
+    {
+      "name": "local_asset_matches_manifest",
+      "path": "/assets/pilot-DHIKivXN.css",
+      "passed": true,
+      "expected_sha256": "5d52720abc7d77d2919e94ac1c373b059ea34905007b70c8bc195b47712a06f4",
+      "actual_sha256": "5d52720abc7d77d2919e94ac1c373b059ea34905007b70c8bc195b47712a06f4"
+    },
+    {
+      "name": "v1_public_asset",
+      "path": "/assets/pilot-DHIKivXN.css",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "5d52720abc7d77d2919e94ac1c373b059ea34905007b70c8bc195b47712a06f4",
+      "actual_sha256": "5d52720abc7d77d2919e94ac1c373b059ea34905007b70c8bc195b47712a06f4",
+      "bytes": 86628,
+      "local_sha256": "5d52720abc7d77d2919e94ac1c373b059ea34905007b70c8bc195b47712a06f4"
+    },
+    {
+      "name": "local_asset_matches_manifest",
+      "path": "/assets/pilot-Daf_vyiR.js",
+      "passed": true,
+      "expected_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd",
+      "actual_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd"
+    },
+    {
+      "name": "v1_public_asset",
+      "path": "/assets/pilot-Daf_vyiR.js",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd",
+      "actual_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd",
+      "bytes": 356157,
+      "local_sha256": "492afd28f39c162e7c6d8224ddc97cb5ac4f59a00e841797e2d289bf2603becd"
+    },
+    {
+      "name": "v1_public_ready",
+      "passed": true,
+      "http_status": 200,
+      "checks": {
+        "database": true,
+        "seed_users": true,
+        "seed_resources": true
+      }
+    },
+    {
+      "name": "v5_public_html_unchanged",
+      "path": "/",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "actual_sha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "bytes": 1010
+    }
+  ],
+  "release_manifest_sha256": "10de015a96bb3f793474097df714adfb0af2b0e4528b87db60611942ee4a673f"
+}

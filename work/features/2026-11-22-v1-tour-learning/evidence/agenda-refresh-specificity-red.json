@@ -1,0 +1,139 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "theme": "dark",
+      "loading": {
+        "height": 844,
+        "width": 390,
+        "pageHeight": 868,
+        "pageWidth": 390,
+        "rects": {
+          ".content": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".refreshing": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 14,
+            "top": 0,
+            "right": 390,
+            "bottom": 14,
+            "left": 0
+          },
+          ".smart-agenda-route": {
+            "x": 0,
+            "y": 24,
+            "width": 390,
+            "height": 820,
+            "top": 24,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-device": {
+            "x": 0,
+            "y": 24,
+            "width": 390,
+            "height": 844,
+            "top": 24,
+            "right": 390,
+            "bottom": 868,
+            "left": 0
+          },
+          ".sa-app-nav": {
+            "x": 0,
+            "y": 812,
+            "width": 390,
+            "height": 56,
+            "top": 812,
+            "right": 390,
+            "bottom": 868,
+            "left": 0
+          }
+        }
+      },
+      "pendingDashboard": 1
+    },
+    {
+      "theme": "dark",
+      "passed": false,
+      "error": "Loading notice must remain inside Agenda viewport"
+    },
+    {
+      "theme": "light",
+      "loading": {
+        "height": 844,
+        "width": 390,
+        "pageHeight": 868,
+        "pageWidth": 390,
+        "rects": {
+          ".content": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".refreshing": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 14,
+            "top": 0,
+            "right": 390,
+            "bottom": 14,
+            "left": 0
+          },
+          ".smart-agenda-route": {
+            "x": 0,
+            "y": 24,
+            "width": 390,
+            "height": 820,
+            "top": 24,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          ".sa-device": {
+            "x": 0,
+            "y": 24,
+            "width": 390,
+            "height": 844,
+            "top": 24,
+            "right": 390,
+            "bottom": 868,
+            "left": 0
+          },
+          ".sa-app-nav": {
+            "x": 0,
+            "y": 812,
+            "width": 390,
+            "height": 56,
+            "top": 812,
+            "right": 390,
+            "bottom": 868,
+            "left": 0
+          }
+        }
+      },
+      "pendingDashboard": 1
+    },
+    {
+      "theme": "light",
+      "passed": false,
+      "error": "Loading notice must remain inside Agenda viewport"
+    }
+  ]
+}

@@ -48,7 +48,11 @@
 }
 /* Approved monthly layout. Palette follows the existing App theme preference. */
 .app-shell--smart-agenda .topbar, .app-shell--smart-agenda .app-footer, .app-shell--smart-agenda > .bottom-nav, .app-shell--smart-agenda > .sidebar { display: none; }
-.app-shell--smart-agenda .content { padding: 0; max-width: none; margin: 0; }
+/* Global refresh notices share the viewport with Agenda rather than extending it. */
+.app-shell--smart-agenda .content { padding: 0; max-width: none; margin: 0; height: 100dvh; min-height: 0; display: flex; flex-direction: column; }
+.app-shell--smart-agenda .content > :is(.refreshing, .error) { flex-shrink: 0; }
+.app-shell--smart-agenda .smart-agenda-route { flex: 1; min-height: 0; }
+.app-shell--smart-agenda .smart-agenda-route .sa-device { height: auto; min-height: 0; }
 .app-shell--smart-agenda .main { margin: 0; width: 100%; }
 .smart-agenda-route { --sa-gutter: 16px; min-height: 100dvh; display: flex; justify-content: center; align-items: stretch; background: var(--sa-canvas); color: var(--sa-text); font-family: "DM Sans", Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.5; color-scheme: light; }
 .smart-agenda-route *, .smart-agenda-route *::before, .smart-agenda-route *::after { box-sizing: border-box; }

@@ -1,0 +1,32 @@
+{
+  "passed": false,
+  "live": true,
+  "checks": [
+    {
+      "name": "android-dark: scheduled visit keeps Cancun date, agenda fits, cancellation persists",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark"
+    },
+    {
+      "name": "android-dark: full Coach→feedback→analysis→Roadmap→reload→Diary edit/delete; context survives, stale analysis invalidates, deleted context blocked",
+      "passed": true,
+      "externalInference": "real Hermes"
+    },
+    {
+      "name": "android-dark: Goal Sheet metrics unchanged and no JavaScript errors",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "android-dark-schedule-form.png",
+    "android-dark-agenda-visit.png",
+    "android-dark-learning.png",
+    "android-dark-resumed-context.png",
+    "iphone-dark-schedule-form.png",
+    "iphone-dark-failure.png"
+  ]
+}

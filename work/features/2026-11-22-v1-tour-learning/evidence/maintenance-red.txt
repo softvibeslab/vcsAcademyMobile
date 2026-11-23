@@ -1,0 +1,41 @@
+test_backup_copies_committed_wal_and_is_private (__main__.MaintenanceTests.test_backup_copies_committed_wal_and_is_private) ... FAIL
+test_missing_database_does_not_create_empty_backup (__main__.MaintenanceTests.test_missing_database_does_not_create_empty_backup) ... FAIL
+test_prune_does_not_follow_symlinks (__main__.MaintenanceTests.test_prune_does_not_follow_symlinks) ... FAIL
+test_prune_only_owned_backups_older_than_seven_days (__main__.MaintenanceTests.test_prune_only_owned_backups_older_than_seven_days) ... FAIL
+
+======================================================================
+FAIL: test_backup_copies_committed_wal_and_is_private (__main__.MaintenanceTests.test_backup_copies_committed_wal_and_is_private)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_maintenance.py", line 20, in setUp
+    self.assertIsNotNone(module, 'Tour maintenance behavior has not been implemented')
+AssertionError: unexpectedly None : Tour maintenance behavior has not been implemented
+
+======================================================================
+FAIL: test_missing_database_does_not_create_empty_backup (__main__.MaintenanceTests.test_missing_database_does_not_create_empty_backup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_maintenance.py", line 20, in setUp
+    self.assertIsNotNone(module, 'Tour maintenance behavior has not been implemented')
+AssertionError: unexpectedly None : Tour maintenance behavior has not been implemented
+
+======================================================================
+FAIL: test_prune_does_not_follow_symlinks (__main__.MaintenanceTests.test_prune_does_not_follow_symlinks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_maintenance.py", line 20, in setUp
+    self.assertIsNotNone(module, 'Tour maintenance behavior has not been implemented')
+AssertionError: unexpectedly None : Tour maintenance behavior has not been implemented
+
+======================================================================
+FAIL: test_prune_only_owned_backups_older_than_seven_days (__main__.MaintenanceTests.test_prune_only_owned_backups_older_than_seven_days)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_maintenance.py", line 20, in setUp
+    self.assertIsNotNone(module, 'Tour maintenance behavior has not been implemented')
+AssertionError: unexpectedly None : Tour maintenance behavior has not been implemented
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=4)

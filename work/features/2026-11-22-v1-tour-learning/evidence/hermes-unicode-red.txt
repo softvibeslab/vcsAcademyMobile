@@ -1,0 +1,41 @@
+.FFFF............
+======================================================================
+FAIL: test_analysis_rejects_isolated_unicode_surrogates_as_unavailable (__main__.TourAnalysisTests.test_analysis_rejects_isolated_unicode_surrogates_as_unavailable) (output="{'summary': 'Invalid \\ud800', 'strengths': 'Escuchaste antes de responder.', 'improvement': 'Pregunta qué necesitan aclarar.', 'next_practice': 'Practica una pregunta abierta y espera la respuesta.', 'recommended_steps': [{'step_id': 'step_9', 'reason': 'Ayuda a aclarar la objeción.'}, {'step_id': 'step_4', 'reason': 'Practica escuchar la motivación.'}]}")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 202, in test_analysis_rejects_isolated_unicode_surrogates_as_unavailable
+    with self.assertRaises(coach.CoachUnavailable) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CoachUnavailable not raised
+
+======================================================================
+FAIL: test_analysis_rejects_isolated_unicode_surrogates_as_unavailable (__main__.TourAnalysisTests.test_analysis_rejects_isolated_unicode_surrogates_as_unavailable) (output="{'summary': 'La visita dejó una objeción por explorar.', 'strengths': 'Escuchaste antes de responder.', 'improvement': 'Pregunta qué necesitan aclarar.', 'next_practice': 'Practica una pregunta abierta y espera la respuesta.', 'recommended_steps': [{'step_id': 'step_4', 'reason': '\\udfff'}]}")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 202, in test_analysis_rejects_isolated_unicode_surrogates_as_unavailable
+    with self.assertRaises(coach.CoachUnavailable) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CoachUnavailable not raised
+
+======================================================================
+FAIL: test_analysis_rejects_isolated_unicode_surrogates_as_unavailable (__main__.TourAnalysisTests.test_analysis_rejects_isolated_unicode_surrogates_as_unavailable) (output="{'summary': 'La visita dejó una objeción por explorar.', 'strengths': 'Escuchaste antes de responder.', 'improvement': 'Pregunta qué necesitan aclarar.', 'next_practice': 'Practica una pregunta abierta y espera la respuesta.', 'recommended_steps': [{'step_id': '\\ud800', 'reason': 'Unknown step'}]}")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 202, in test_analysis_rejects_isolated_unicode_surrogates_as_unavailable
+    with self.assertRaises(coach.CoachUnavailable) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CoachUnavailable not raised
+
+======================================================================
+FAIL: test_chat_transport_rejects_isolated_unicode_surrogate_in_reply (__main__.TourAnalysisTests.test_chat_transport_rejects_isolated_unicode_surrogate_in_reply)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_tour_hermes.py", line 212, in test_chat_transport_rejects_isolated_unicode_surrogate_in_reply
+    with self.assertRaises(coach.CoachUnavailable) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CoachUnavailable not raised
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.025s
+
+FAILED (failures=4)

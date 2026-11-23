@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "Light dialog primary and Cancel text meet contrast4.5",
+      "passed": true,
+      "contrast": [
+        {
+          "name": "Cancelar",
+          "ratio": 16.58804694317083
+        },
+        {
+          "name": "Guardar e iniciar",
+          "ratio": 6.759155329173377
+        }
+      ]
+    },
+    {
+      "name": "Registration remains usable at reduced keyboard-height viewport",
+      "passed": true
+    },
+    {
+      "name": "Start then immediate feedback completes the same visit with valid time precision",
+      "passed": true
+    },
+    {
+      "name": "Historical Diary stays local and unchanged when copying is cancelled",
+      "passed": true
+    },
+    {
+      "name": "Explicit confirmation copies a local note into one linked visit without deleting its original",
+      "passed": true
+    }
+  ]
+}
