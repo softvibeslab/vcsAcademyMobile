@@ -1,0 +1,37 @@
+Verificando gobierno del ecosistema: /Users/rogergv/Documents/SoftvibesLab/px-onboarding-mob-gen
+Validando perfil: /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/.ecosystem360/team-bootstrap/project-profile.local.yml
+Validando iniciativa: /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/work/features/2026-11-22-v1-tour-learning
+Strict: cp2-spec sin criterios de aceptacion
+Strict (aviso): cp2-spec sin requisitos no funcionales (NFR-...).
+Strict: cp1-srs sin necesidades/problema
+Strict: la historia work/stories/2026-11-22-v1-tour-learning.md no esta LISTA para desarrollo:
+  FALTA: punto abierto bloqueante sin resolver: Q-01 (Aprobar v1 con interpretación de tres caminos, contexto revisado, retención y datos propuestos)
+  FALTA: Readiness es "en revision"; debe ser LISTA (solo tras la aprobacion del PO)
+  FALTA: Estado del diseno es "borrador"; debe ser Aprobado o No aplica
+  FALTA: criterio AC-01 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-02 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-03 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-04 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-05 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-06 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-07 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-08 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-09 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: criterio AC-10 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: ningun criterio de aceptacion fue Aceptado por el PO
+  FALTA: escenario ESC-01 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-02 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-03 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-04 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-05 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-06 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-07 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-08 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-09 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: escenario ESC-10 con Estado PO "pendiente" (debe ser Aceptado o Descartado)
+  FALTA: Decision del PO es "pendiente"; debe ser Aprobada
+  FALTA: falta quien aprobo (nombre y rol)
+  FALTA: fecha de aprobacion invalida: "-" (yyyy-mm-dd)
+  FALTA: falta la evidencia de aprobacion (cita textual y canal)
+OK: adapters sincronizados con la fuente neutral (16 agentes, 13 skills, 6 rules, 7 bloques multi-herramienta).
+RESULTADO: gobierno INCOMPLETO.
