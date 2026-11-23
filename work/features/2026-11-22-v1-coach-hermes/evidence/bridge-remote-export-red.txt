@@ -1,0 +1,14 @@
+.......E.
+======================================================================
+ERROR: test_authoritative_export_uses_existing_store_and_configured_model (__main__.CoachProviderExportTests.test_authoritative_export_uses_existing_store_and_configured_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 166, in test_authoritative_export_uses_existing_store_and_configured_model
+    exported = module.load_runtime()
+               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'coach_export_provider' has no attribute 'load_runtime'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.560s
+
+FAILED (errors=1)

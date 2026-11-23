@@ -1,0 +1,13 @@
+......F.
+======================================================================
+FAIL: test_worker_preserves_history_and_closes_agent_without_persistence (__main__.CoachBridgeTests.test_worker_preserves_history_and_closes_agent_without_persistence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 154, in test_worker_preserves_history_and_closes_agent_without_persistence
+    self.assertTrue(observed['closed'], 'An agent failing isolation must still be closed')
+AssertionError: False is not true : An agent failing isolation must still be closed
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.540s
+
+FAILED (failures=1)

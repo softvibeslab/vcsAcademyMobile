@@ -1,0 +1,51 @@
+{
+  "v1": {
+    "container": "aisales-v1-20261122",
+    "image": "sha256:c0371abac3955d972e754854227584ff8a1992ee059b1c0256ac335831a5dea7",
+    "imageTag": "aisales-api:20261114c",
+    "status": "running",
+    "network": "bridge",
+    "mounts": [
+      {
+        "source": "/srv/aisales-v1/data",
+        "destination": "/data"
+      }
+    ],
+    "root": "/srv/aisales-v1-release-20261122-agenda-viewport/web",
+    "nginxSha256": "ecd78d1b26fcf8b49f9f8af5995883202d1179c32ec78687fb4ac1c100af0e50",
+    "htmlSha256": "c970803b4d5962d16401112046bd74dcac5612340af9ea91731d9521ce732853",
+    "ready": {
+      "status": "ready",
+      "checks": {
+        "database": true,
+        "seed_users": true,
+        "seed_resources": true
+      }
+    }
+  },
+  "v5": {
+    "container": "aisales-pilot-20261120-accounts-r2",
+    "image": "sha256:c8f3fc47861568675f3a6a92ac00c1e2f0462f4409c3aed20b1216b3f9813556",
+    "imageTag": "aisales-pilot:20261120-accounts-r2",
+    "status": "running",
+    "network": "bridge",
+    "mounts": [
+      {
+        "source": "/srv/aisales/data",
+        "destination": "/data"
+      },
+      {
+        "source": "/srv/aisales/private-assets",
+        "destination": "/private-assets"
+      }
+    ],
+    "root": "/srv/aisales-release-20261120-role-accounts/web",
+    "nginxSha256": "2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d",
+    "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+    "ready": {
+      "status": "ready",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    }
+  }
+}

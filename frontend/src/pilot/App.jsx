@@ -41,6 +41,7 @@ import "./fonts.css";
 import "./training-design.css";
 import "./access.css";
 import "./guide.css";
+import "./coach.css";
 const SESSION = "sa.pilot.session",
   BASE = (import.meta.env.VITE_PILOT_API_BASE_URL || "").replace(/\/$/, "");
 const nav = [
@@ -436,7 +437,7 @@ function App() {
       );
   }
   return (
-    <div className={"app-shell" + (page === "agenda" ? " app-shell--smart-agenda" : "")}>
+    <div className={"app-shell" + (page === "agenda" ? " app-shell--smart-agenda" : ["coach", "roleplay"].includes(page) ? " app-shell--coach" : "")}>
       <aside className="sidebar">
         <a className="brand" href="#home">
           <span className="brand-mark">sa</span>

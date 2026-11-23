@@ -1,0 +1,4 @@
+95add59b0ac638f2286bcae2a56726d5fcf2f7ee3d4c26a9609a9476c012d8cd  /opt/salesacademy-coach-v1/bridge.py
+a61dd3d32fb1656f0de195a55f73c45b8d5196bf396549dc522cd6a5c21cfd5b  /opt/salesacademy-coach-v1/worker.py
+396fb121c08b99caf33ade1641b54031ac3b1aa1cba78f7c5ea132964cf9275f  /opt/salesacademy-coach-v1/export_provider.py
+5f31a245300f4cc7e637d7bd5a36f2886b67899e843423ad9f1553192552f125  /opt/salesacademy-coach-v1/SOUL.md

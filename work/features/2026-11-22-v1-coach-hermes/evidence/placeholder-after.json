@@ -1,0 +1,146 @@
+[
+  {
+    "engine": "chromium",
+    "theme": "dark",
+    "placeholder": {
+      "color": "rgb(155, 163, 175)",
+      "opacity": "1",
+      "background": "rgb(16, 19, 25)",
+      "fg": [
+        155,
+        163,
+        175
+      ],
+      "bg": [
+        16,
+        19,
+        25
+      ],
+      "ratio": 7.307
+    },
+    "disabledSend": {
+      "color": "rgb(155, 163, 175)",
+      "opacity": "1",
+      "background": "rgb(30, 35, 43)",
+      "fg": [
+        155,
+        163,
+        175
+      ],
+      "bg": [
+        30,
+        35,
+        43
+      ],
+      "ratio": 6.202
+    }
+  },
+  {
+    "engine": "chromium",
+    "theme": "light",
+    "placeholder": {
+      "color": "rgb(99, 106, 112)",
+      "opacity": "1",
+      "background": "rgb(250, 249, 246)",
+      "fg": [
+        99,
+        106,
+        112
+      ],
+      "bg": [
+        250,
+        249,
+        246
+      ],
+      "ratio": 5.213
+    },
+    "disabledSend": {
+      "color": "rgb(99, 106, 112)",
+      "opacity": "1",
+      "background": "rgb(243, 243, 240)",
+      "fg": [
+        99,
+        106,
+        112
+      ],
+      "bg": [
+        243,
+        243,
+        240
+      ],
+      "ratio": 4.937
+    }
+  },
+  {
+    "engine": "webkit",
+    "theme": "dark",
+    "placeholder": {
+      "color": "rgb(155, 163, 175)",
+      "opacity": "1",
+      "background": "rgb(16, 19, 25)",
+      "fg": [
+        155,
+        163,
+        175
+      ],
+      "bg": [
+        16,
+        19,
+        25
+      ],
+      "ratio": 7.307
+    },
+    "disabledSend": {
+      "color": "rgb(155, 163, 175)",
+      "opacity": "1",
+      "background": "rgb(30, 35, 43)",
+      "fg": [
+        155,
+        163,
+        175
+      ],
+      "bg": [
+        30,
+        35,
+        43
+      ],
+      "ratio": 6.202
+    }
+  },
+  {
+    "engine": "webkit",
+    "theme": "light",
+    "placeholder": {
+      "color": "rgb(99, 106, 112)",
+      "opacity": "1",
+      "background": "rgb(250, 249, 246)",
+      "fg": [
+        99,
+        106,
+        112
+      ],
+      "bg": [
+        250,
+        249,
+        246
+      ],
+      "ratio": 5.213
+    },
+    "disabledSend": {
+      "color": "rgb(99, 106, 112)",
+      "opacity": "1",
+      "background": "rgb(243, 243, 240)",
+      "fg": [
+        99,
+        106,
+        112
+      ],
+      "bg": [
+        243,
+        243,
+        240
+      ],
+      "ratio": 4.937
+    }
+  }
+]

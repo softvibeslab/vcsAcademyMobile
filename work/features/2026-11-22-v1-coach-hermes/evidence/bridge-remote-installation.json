@@ -1,0 +1,19 @@
+{
+  "aiHost": "2.25.231.154",
+  "siteHost": "76.13.231.12",
+  "profile": "sales-academy-coach-v1",
+  "service": "salesacademy-coach-v1.service",
+  "listener": "127.0.0.1:18643",
+  "credentialMode": "authoritative-hermes-resolver",
+  "configuredModelAtInstall": "gpt-6.1-sol",
+  "inferenceCode": "/opt/salesacademy-advisor/hermes-agent-0.20.1",
+  "rootExporterCode": "/root/.hermes/hermes-agent",
+  "transportKeyMatchesSiteHost": true,
+  "keyTransfer": "encrypted SSH streams; no local persistence or displayed value",
+  "clientKeyMode": "root:root 0600",
+  "providerMode": "root:sa-coach-v1 0640",
+  "serviceCannotReadRootAuthStore": true,
+  "existingAdvisorAndContainersUnchanged": true,
+  "secretValuesPrinted": false,
+  "realTwoTurnInferencePassed": true
+}

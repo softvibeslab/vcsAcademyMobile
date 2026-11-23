@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "permittedDestinationAccessible": true,
+    "commandSessionRejected": true,
+    "otherDestinationRejected": true,
+    "remoteForwardRejected": true,
+    "ptySessionRejected": true
+  },
+  "passed": true,
+  "keyNeverExported": true,
+  "secretValuesPrinted": false
+}

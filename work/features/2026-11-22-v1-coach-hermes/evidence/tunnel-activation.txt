@@ -1,0 +1,21 @@
+{"freshInference": {"port": 18644, "health": true, "profile": "sales-academy-coach-v1", "inferenceTested": true, "authenticatedTransport": true, "inferenceAvailable": true, "httpStatus": 200, "elapsedSeconds": 7.76}}
+{
+  "active": {
+    "port": 18643,
+    "health": true,
+    "profile": "sales-academy-coach-v1",
+    "inferenceTested": false,
+    "authenticatedTransport": true
+  },
+  "listener": {
+    "loopbackOnly": true,
+    "process": "ssh",
+    "port": 18643
+  },
+  "nonRootService": true,
+  "oldBridgeDisabled": true,
+  "oldDedicatedTimerDisabled": true,
+  "rollback": "python3 tunnel_service.py rollback"
+}
+
+{"unrelatedServicesUnchanged": true, "rollbackCommand": "python3 /opt/salesacademy-coach-tunnel/tunnel_service.py rollback"}

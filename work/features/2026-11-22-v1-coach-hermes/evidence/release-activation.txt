@@ -1,0 +1,13 @@
+Building derived legacy image
+Candidate API passed; hermes_answered
+{
+  "release": "/srv/aisales-v1-release-20261122-coach",
+  "image": "sha256:628d264b850131875af34cbb97cee979b22ea2b2fd997538664e45120990073e",
+  "container": "aisales-v1-coach-20261122",
+  "candidate": "hermes_answered",
+  "live": "hermes_answered",
+  "databaseShapeUnchanged": true,
+  "v5Unchanged": true,
+  "htmlSha256": "f7163f3d93ae0076fd8d9cbc4a48481753d20dff0e602d9653d79df65c61d4b0",
+  "backup": "/srv/aisales-v1/ops/20261122-coach/academy-before.sqlite3"
+}

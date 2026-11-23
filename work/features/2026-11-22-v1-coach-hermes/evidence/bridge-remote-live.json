@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "health": true,
+    "missingKeyRejected": true,
+    "invalidRoleRejected": true,
+    "notesRouteAbsent": true,
+    "permanentProfileUnchanged": true,
+    "keyRootOnly": true,
+    "nonRootService": true,
+    "advisorStillActive": true
+  },
+  "transportPassed": true,
+  "inference": {
+    "httpStatus": 200,
+    "elapsedSeconds": 8.87,
+    "available": true,
+    "replyCharacters": 81,
+    "secondTurnHttpStatus": 200,
+    "continuityVerified": true
+  },
+  "secretValuesPrinted": false,
+  "realUserDataUsed": false
+}

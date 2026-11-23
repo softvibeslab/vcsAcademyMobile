@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "health": true,
+    "missingKeyRejected": true,
+    "invalidRoleRejected": true,
+    "notesRouteAbsent": true,
+    "permanentProfileUnchanged": true,
+    "keyRootOnly": true,
+    "nonRootService": true,
+    "advisorStillActive": true
+  },
+  "transportPassed": true,
+  "inference": {
+    "checked": false,
+    "available": false,
+    "reason": "transport-only probe; authentication pending"
+  },
+  "secretValuesPrinted": false,
+  "realUserDataUsed": false
+}

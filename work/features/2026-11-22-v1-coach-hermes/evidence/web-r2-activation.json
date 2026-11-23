@@ -1,0 +1,6 @@
+{
+  "root": "/srv/aisales-v1-release-20261122-coach-r2/web",
+  "htmlSha256": "09d2f55d34942296c244be148651f8c4c24024d23fc2eae2d962cc4e122eb119",
+  "v5AndContainersUnchanged": true,
+  "rollbackConfig": "/srv/aisales-v1/ops/20261122-coach/nginx-before-r2.conf"
+}

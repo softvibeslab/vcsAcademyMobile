@@ -1,0 +1,45 @@
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:563: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow()
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/main.py:591: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat(),
+test_esc01_admin_changes_level_and_non_admin_gets_403 (__main__.AccessTiers.test_esc01_admin_changes_level_and_non_admin_gets_403) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:585: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  (token, datetime.utcnow().isoformat()),
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:179: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE access_items SET level = ?, updated_at = ? WHERE id = ?", (level, datetime.utcnow().isoformat(), item_id))
+ok
+test_esc02_public_catalog_hides_locked_content_and_hidden_items (__main__.AccessTiers.test_esc02_public_catalog_hides_locked_content_and_hidden_items) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:181: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE access_items SET visible = ?, updated_at = ? WHERE id = ?", (1 if visible else 0, datetime.utcnow().isoformat(), item_id))
+ok
+test_esc03_register_free_and_duplicate (__main__.AccessTiers.test_esc03_register_free_and_duplicate) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:455: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow().isoformat()
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:210: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE users SET plan = ?, plan_expires_at = ?, updated_at = ? WHERE id = ?", (plan, expires_at, datetime.utcnow().isoformat(), user_id))
+ok
+test_esc04_redeem_codes (__main__.AccessTiers.test_esc04_redeem_codes) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:269: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  (code_id, _hash(code), code[-4:], plan_days, max_uses, expires_at, created_by, datetime.utcnow().isoformat()),
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:317: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("INSERT INTO license_redemptions (code_id, user_id, redeemed_at) VALUES (?, ?, ?)", (row["id"], user["id"], datetime.utcnow().isoformat()))
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:321: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE users SET plan = 'premium', plan_expires_at = ?, updated_at = ? WHERE id = ?", (expires, datetime.utcnow().isoformat(), user["id"]))
+ok
+test_esc05_expiry_progress_lock_and_staff (__main__.AccessTiers.test_esc05_expiry_progress_lock_and_staff) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:608: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow().isoformat()
+ok
+test_functions_and_resources_follow_levels (__main__.AccessTiers.test_functions_and_resources_follow_levels) ... ok
+test_rate_limit_ignores_spoofed_forwarded_for (__main__.AccessTiers.test_rate_limit_ignores_spoofed_forwarded_for) ... ok
+test_rate_limit_on_register (__main__.AccessTiers.test_rate_limit_on_register) ... ok
+test_review_admin_plan_change_survives_restart (__main__.AccessTiers.test_review_admin_plan_change_survives_restart) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow().isoformat()
+ok
+test_review_code_hash_is_keyed (__main__.AccessTiers.test_review_code_hash_is_keyed) ... ok
+test_review_goalsheet_gate_covers_reminders_and_insights (__main__.AccessTiers.test_review_goalsheet_gate_covers_reminders_and_insights) ... ok
+test_review_hidden_lesson_not_in_knowledge (__main__.AccessTiers.test_review_hidden_lesson_not_in_knowledge) ... ok
+test_review_limiter_prunes_stale_keys (__main__.AccessTiers.test_review_limiter_prunes_stale_keys) ... ok
+test_review_progress_order_enforced_on_complete (__main__.AccessTiers.test_review_progress_order_enforced_on_complete) ... ok
+test_review_redeem_rules (__main__.AccessTiers.test_review_redeem_rules) ... ok
+test_review_smart_agent_knowledge_respects_tier (__main__.AccessTiers.test_review_smart_agent_knowledge_respects_tier) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.462s
+
+OK

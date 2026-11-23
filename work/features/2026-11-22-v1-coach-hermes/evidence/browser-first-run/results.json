@@ -1,0 +1,105 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "name": "android-dark: viewport, theme, suggestions and accessible message contrast",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark",
+      "colors": {
+        "foreground": [
+          241,
+          243,
+          245
+        ],
+        "background": [
+          24,
+          49,
+          45
+        ],
+        "ratio": 12.452648631895382
+      },
+      "geometry": {
+        "width": 360,
+        "height": 800,
+        "pageWidth": 360,
+        "pageHeight": 800,
+        "input": {
+          "top": 675,
+          "bottom": 719,
+          "left": 21,
+          "right": 287,
+          "width": 266,
+          "height": 44
+        },
+        "inputFont": "16px",
+        "nav": {
+          "top": 738,
+          "bottom": 800,
+          "left": 0,
+          "right": 360,
+          "width": 360,
+          "height": 62
+        },
+        "log": {
+          "top": 177,
+          "bottom": 666,
+          "left": 13,
+          "right": 347,
+          "width": 334,
+          "height": 489
+        },
+        "targets": [
+          {
+            "name": "Conversar",
+            "top": 120,
+            "bottom": 164,
+            "left": 16,
+            "right": 178,
+            "width": 162,
+            "height": 44
+          },
+          {
+            "name": "Roleplay",
+            "top": 120,
+            "bottom": 164,
+            "left": 182,
+            "right": 344,
+            "width": 162,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "android-dark: pending state, recoverable503 and retry without duplicates",
+      "passed": true
+    },
+    {
+      "name": "android-dark: in-flight answer returns to original chat and retains context",
+      "passed": true
+    },
+    {
+      "name": "android-dark: separate drafts and full Roleplay/evaluation with real temporary API",
+      "passed": true
+    },
+    {
+      "name": "android-dark: full long answer accessible without clipping page or composer",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "android-dark-empty.png",
+    "android-dark-chat.png",
+    "android-dark-long-response.png",
+    "android-dark-failure.png"
+  ],
+  "failure": {
+    "name": "android-dark",
+    "message": "Normal Coach fits viewport without page scrolling",
+    "errors": []
+  }
+}

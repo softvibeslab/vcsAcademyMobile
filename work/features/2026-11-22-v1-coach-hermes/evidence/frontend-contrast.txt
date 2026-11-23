@@ -1,0 +1,10 @@
+Semantic token contrast verification using a11y-audit contrast_checker.py
+light muted / panel: 5.49:1
+light muted / bg: 5.21:1
+light action / panel: 6.76:1
+light focus / raised: 6.08:1
+dark muted / panel: 6.51:1
+dark muted / bg: 7.31:1
+dark action / panel: 9.92:1
+dark focus / raised: 9.46:1
+User bubbles are separately checked using browser computed colors in root QA.

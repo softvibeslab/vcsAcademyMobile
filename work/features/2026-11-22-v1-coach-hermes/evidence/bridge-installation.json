@@ -1,0 +1,16 @@
+{
+  "installation": "complete",
+  "service": "salesacademy-coach-v1.service",
+  "profile": "sales-academy-coach-v1",
+  "listener": "127.0.0.1:18643",
+  "existingAdvisorUnitsUnchanged": true,
+  "existingV1V5ContainersUnchanged": true,
+  "existingV5NginxAndHTMLUnchanged": true,
+  "clientKeyMode": "root:root 0600",
+  "bridgeEnvMode": "root:root 0600",
+  "providerMode": "root:sa-coach-v1 0640",
+  "serviceCannotReadAdvisorBridgeKey": true,
+  "secretValuesPrinted": false,
+  "serviceCannotReadAdvisorProvider": true,
+  "deployedSourceHashesMatch": true
+}

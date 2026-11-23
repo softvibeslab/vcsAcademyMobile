@@ -9,10 +9,11 @@ from uuid import uuid4
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from backend.app import access, persistence
 from backend.app.smart_agent import get_provider
+from backend.app.coach_hermes import CoachUnavailable, normalize_history
 
 
 app = FastAPI(title="VCSA Academy API", version="0.1.0")
@@ -168,6 +169,25 @@ class ChatIn(BaseModel):
     mode: str = "general_coach"
     module_area: str | None = None
     conversation_history: list[dict[str, str]] = []
+
+
+class CoachChatIn(ChatIn):
+    """Authenticated Coach validation leaves the historic public chat unchanged."""
+    model_config = ConfigDict(extra="forbid")
+    message: str = Field(min_length=1, max_length=1200, strict=True)
+    conversation_history: list[dict[str, str]] = Field(default_factory=list)
+
+    @field_validator("message")
+    @classmethod
+    def nonempty_message(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("Escribe un mensaje antes de enviarlo.")
+        return value.strip()
+
+    @field_validator("conversation_history", mode="before")
+    @classmethod
+    def validated_history(cls, value):
+        return normalize_history(value)
 
 
 class RoleplaySessionIn(BaseModel):
@@ -790,19 +810,23 @@ def reminders_upcoming(user: dict[str, Any] = Depends(require_item("function:goa
 
 
 @app.post("/api/smart-agent/chat")
-def smart_agent_chat(payload: ChatIn, user: dict[str, Any] = Depends(require_item("function:coach"))) -> dict[str, Any]:
+def smart_agent_chat(payload: CoachChatIn, user: dict[str, Any] = Depends(require_item("function:coach"))) -> dict[str, Any]:
     provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
-    result = provider.answer(payload.message, payload.mode, user, smart_agent_knowledge(user))
-    audit(user, "smart_agent_chat", "ai_conversation", str(uuid4()), "blocked" if result.risk_flags else "success", {"risk_flags": result.risk_flags, "provider": "local"})
-    return envelope(
-        {
-            "response": result.response,
-            "citations": result.citations,
-            "recommended_actions": result.recommended_actions,
-            "risk_flags": result.risk_flags,
-            "confidence": result.confidence,
-        }
-    )
+    try:
+        result = provider.answer(payload.message, payload.mode, user, smart_agent_knowledge(user), payload.conversation_history)
+    except CoachUnavailable as error:
+        raise HTTPException(status_code=error.status, detail={"code": error.code, "message": error.message}) from None
+    audit(user, "smart_agent_chat", "ai_conversation", str(uuid4()), "blocked" if result.risk_flags else "success", {"risk_flags": result.risk_flags, "provider": result.provider})
+    data = {
+        "response": result.response,
+        "citations": result.citations,
+        "recommended_actions": result.recommended_actions,
+        "risk_flags": result.risk_flags,
+        "provider": result.provider,
+    }
+    if result.confidence is not None:
+        data["confidence"] = result.confidence
+    return envelope(data)
 
 
 @app.post("/api/smart-agent/public-chat")
@@ -817,7 +841,7 @@ def public_smart_agent_chat(payload: ChatIn) -> dict[str, Any]:
         "permissions": [],
         "status": "active",
     }
-    provider = get_provider(os.environ.get("VCSA_SMART_AGENT_PROVIDER", "local"))
+    provider = get_provider("local")
     result = provider.answer(payload.message, "welcome_intake", anonymous_user, smart_agent_knowledge(None))
     return envelope(
         {
@@ -827,6 +851,7 @@ def public_smart_agent_chat(payload: ChatIn) -> dict[str, Any]:
             "risk_flags": result.risk_flags,
             "confidence": result.confidence,
             "requires_login": True,
+            "provider": result.provider,
         }
     )
 

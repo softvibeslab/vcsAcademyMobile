@@ -1,0 +1,533 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "android-dark: viewport, theme, suggestions and accessible message contrast",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark",
+      "colors": {
+        "foreground": [
+          241,
+          243,
+          245
+        ],
+        "background": [
+          24,
+          49,
+          45
+        ],
+        "ratio": 12.452648631895382
+      },
+      "geometry": {
+        "width": 360,
+        "height": 800,
+        "pageWidth": 360,
+        "pageHeight": 800,
+        "input": {
+          "top": 675,
+          "bottom": 719,
+          "left": 21,
+          "right": 287,
+          "width": 266,
+          "height": 44
+        },
+        "inputFont": "16px",
+        "nav": {
+          "top": 738,
+          "bottom": 800,
+          "left": 0,
+          "right": 360,
+          "width": 360,
+          "height": 62
+        },
+        "log": {
+          "top": 177,
+          "bottom": 666,
+          "left": 13,
+          "right": 347,
+          "width": 334,
+          "height": 489
+        },
+        "targets": [
+          {
+            "name": "Conversar",
+            "top": 120,
+            "bottom": 164,
+            "left": 16,
+            "right": 178,
+            "width": 162,
+            "height": 44
+          },
+          {
+            "name": "Roleplay",
+            "top": 120,
+            "bottom": 164,
+            "left": 182,
+            "right": 344,
+            "width": 162,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "android-dark: pending state, recoverable503 and retry without duplicates",
+      "passed": true
+    },
+    {
+      "name": "android-dark: in-flight answer returns to original chat and retains context",
+      "passed": true
+    },
+    {
+      "name": "android-dark: separate drafts and full Roleplay/evaluation with real temporary API",
+      "passed": true
+    },
+    {
+      "name": "android-dark: full long answer accessible without clipping page or composer",
+      "passed": true
+    },
+    {
+      "name": "android-dark: synchronous double click sends once; reader position preserved until latest action",
+      "passed": true
+    },
+    {
+      "name": "android-dark: reduced-height viewport keeps composer accessible (keyboard approximation)",
+      "passed": true
+    },
+    {
+      "name": "android-dark: theme control remains reachable and no JS errors",
+      "passed": true
+    },
+    {
+      "name": "iphone-dark: viewport, theme, suggestions and accessible message contrast",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "colors": {
+        "foreground": [
+          241,
+          243,
+          245
+        ],
+        "background": [
+          24,
+          49,
+          45
+        ],
+        "ratio": 12.452648631895382
+      },
+      "geometry": {
+        "width": 390,
+        "height": 844,
+        "pageWidth": 390,
+        "pageHeight": 844,
+        "input": {
+          "top": 719,
+          "bottom": 763,
+          "left": 21,
+          "right": 317,
+          "width": 296,
+          "height": 44
+        },
+        "inputFont": "16px",
+        "nav": {
+          "top": 782,
+          "bottom": 844,
+          "left": 0,
+          "right": 390,
+          "width": 390,
+          "height": 62
+        },
+        "log": {
+          "top": 177,
+          "bottom": 710,
+          "left": 13,
+          "right": 377,
+          "width": 364,
+          "height": 533
+        },
+        "targets": [
+          {
+            "name": "Conversar",
+            "top": 120,
+            "bottom": 164,
+            "left": 16,
+            "right": 193,
+            "width": 177,
+            "height": 44
+          },
+          {
+            "name": "Roleplay",
+            "top": 120,
+            "bottom": 164,
+            "left": 197,
+            "right": 374,
+            "width": 177,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "iphone-dark: theme control remains reachable and no JS errors",
+      "passed": true
+    },
+    {
+      "name": "desktop-dark: viewport, theme, suggestions and accessible message contrast",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "colors": {
+        "foreground": [
+          241,
+          243,
+          245
+        ],
+        "background": [
+          24,
+          49,
+          45
+        ],
+        "ratio": 12.452648631895382
+      },
+      "geometry": {
+        "width": 1440,
+        "height": 900,
+        "pageWidth": 1440,
+        "pageHeight": 900,
+        "input": {
+          "top": 775,
+          "bottom": 819,
+          "left": 331,
+          "right": 1057,
+          "width": 726,
+          "height": 44
+        },
+        "inputFont": "16px",
+        "nav": {
+          "top": 838,
+          "bottom": 900,
+          "left": 310,
+          "right": 1130,
+          "width": 820,
+          "height": 62
+        },
+        "log": {
+          "top": 177,
+          "bottom": 766,
+          "left": 323,
+          "right": 1117,
+          "width": 794,
+          "height": 589
+        },
+        "targets": [
+          {
+            "name": "Conversar",
+            "top": 120,
+            "bottom": 164,
+            "left": 326,
+            "right": 718,
+            "width": 392,
+            "height": 44
+          },
+          {
+            "name": "Roleplay",
+            "top": 120,
+            "bottom": 164,
+            "left": 722,
+            "right": 1114,
+            "width": 392,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "desktop-dark: theme control remains reachable and no JS errors",
+      "passed": true
+    },
+    {
+      "name": "android-light: viewport, theme, suggestions and accessible message contrast",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "light",
+      "colors": {
+        "foreground": [
+          24,
+          26,
+          27
+        ],
+        "background": [
+          236,
+          242,
+          232
+        ],
+        "ratio": 15.329611356709764
+      },
+      "geometry": {
+        "width": 360,
+        "height": 800,
+        "pageWidth": 360,
+        "pageHeight": 800,
+        "input": {
+          "top": 675,
+          "bottom": 719,
+          "left": 21,
+          "right": 287,
+          "width": 266,
+          "height": 44
+        },
+        "inputFont": "16px",
+        "nav": {
+          "top": 738,
+          "bottom": 800,
+          "left": 0,
+          "right": 360,
+          "width": 360,
+          "height": 62
+        },
+        "log": {
+          "top": 177,
+          "bottom": 666,
+          "left": 13,
+          "right": 347,
+          "width": 334,
+          "height": 489
+        },
+        "targets": [
+          {
+            "name": "Conversar",
+            "top": 120,
+            "bottom": 164,
+            "left": 16,
+            "right": 178,
+            "width": 162,
+            "height": 44
+          },
+          {
+            "name": "Roleplay",
+            "top": 120,
+            "bottom": 164,
+            "left": 182,
+            "right": 344,
+            "width": 162,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "android-light: theme control remains reachable and no JS errors",
+      "passed": true
+    },
+    {
+      "name": "iphone-light: viewport, theme, suggestions and accessible message contrast",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "colors": {
+        "foreground": [
+          24,
+          26,
+          27
+        ],
+        "background": [
+          236,
+          242,
+          232
+        ],
+        "ratio": 15.329611356709764
+      },
+      "geometry": {
+        "width": 390,
+        "height": 844,
+        "pageWidth": 390,
+        "pageHeight": 844,
+        "input": {
+          "top": 719,
+          "bottom": 763,
+          "left": 21,
+          "right": 317,
+          "width": 296,
+          "height": 44
+        },
+        "inputFont": "16px",
+        "nav": {
+          "top": 782,
+          "bottom": 844,
+          "left": 0,
+          "right": 390,
+          "width": 390,
+          "height": 62
+        },
+        "log": {
+          "top": 177,
+          "bottom": 710,
+          "left": 13,
+          "right": 377,
+          "width": 364,
+          "height": 533
+        },
+        "targets": [
+          {
+            "name": "Conversar",
+            "top": 120,
+            "bottom": 164,
+            "left": 16,
+            "right": 193,
+            "width": 177,
+            "height": 44
+          },
+          {
+            "name": "Roleplay",
+            "top": 120,
+            "bottom": 164,
+            "left": 197,
+            "right": 374,
+            "width": 177,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "iphone-light: pending state, recoverable503 and retry without duplicates",
+      "passed": true
+    },
+    {
+      "name": "iphone-light: in-flight answer returns to original chat and retains context",
+      "passed": true
+    },
+    {
+      "name": "iphone-light: separate drafts and full Roleplay/evaluation with real temporary API",
+      "passed": true
+    },
+    {
+      "name": "iphone-light: full long answer accessible without clipping page or composer",
+      "passed": true
+    },
+    {
+      "name": "iphone-light: synchronous double click sends once; reader position preserved until latest action",
+      "passed": true
+    },
+    {
+      "name": "iphone-light: reduced-height viewport keeps composer accessible (keyboard approximation)",
+      "passed": true
+    },
+    {
+      "name": "iphone-light: theme control remains reachable and no JS errors",
+      "passed": true
+    },
+    {
+      "name": "desktop-light: viewport, theme, suggestions and accessible message contrast",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "light",
+      "colors": {
+        "foreground": [
+          24,
+          26,
+          27
+        ],
+        "background": [
+          236,
+          242,
+          232
+        ],
+        "ratio": 15.329611356709764
+      },
+      "geometry": {
+        "width": 1440,
+        "height": 900,
+        "pageWidth": 1440,
+        "pageHeight": 900,
+        "input": {
+          "top": 775,
+          "bottom": 819,
+          "left": 331,
+          "right": 1057,
+          "width": 726,
+          "height": 44
+        },
+        "inputFont": "16px",
+        "nav": {
+          "top": 838,
+          "bottom": 900,
+          "left": 310,
+          "right": 1130,
+          "width": 820,
+          "height": 62
+        },
+        "log": {
+          "top": 177,
+          "bottom": 766,
+          "left": 323,
+          "right": 1117,
+          "width": 794,
+          "height": 589
+        },
+        "targets": [
+          {
+            "name": "Conversar",
+            "top": 120,
+            "bottom": 164,
+            "left": 326,
+            "right": 718,
+            "width": 392,
+            "height": 44
+          },
+          {
+            "name": "Roleplay",
+            "top": 120,
+            "bottom": 164,
+            "left": 722,
+            "right": 1114,
+            "width": 392,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "desktop-light: theme control remains reachable and no JS errors",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "android-dark-empty.png",
+    "android-dark-chat.png",
+    "android-dark-long-response.png",
+    "android-dark-reduced-height.png",
+    "iphone-dark-empty.png",
+    "iphone-dark-chat.png",
+    "desktop-dark-empty.png",
+    "desktop-dark-chat.png",
+    "android-light-empty.png",
+    "android-light-chat.png",
+    "iphone-light-empty.png",
+    "iphone-light-chat.png",
+    "iphone-light-long-response.png",
+    "iphone-light-reduced-height.png",
+    "desktop-light-empty.png",
+    "desktop-light-chat.png"
+  ]
+}

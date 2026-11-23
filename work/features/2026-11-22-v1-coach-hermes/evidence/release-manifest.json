@@ -1,0 +1,16 @@
+{
+  "web/assets/pilot-Db2QSxyZ.js": "5e9225833575f45cfd44a02a52c7c4c5dd9a8bf4e1b6636251dd6f58614cbe05",
+  "web/assets/coach-intro-cWnOMky2.svg": "51b19679d7a09253b75c3d07b7a7b7a7b805dc35701d93edc2bd086b7fece332",
+  "web/assets/coach-welcome-BBnch_VM.svg": "4df89625e7c8168528691350a38bbe674edd2f0b70cd63c4905b69ffbc85334f",
+  "web/assets/dm-sans-1-DCQhiIS7.ttf": "376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae",
+  "web/assets/dm-sans-2-CYvJJk-g.ttf": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
+  "web/assets/pilot-B1deK2Gw.css": "c577d26b77028ba3c33771772ec35d866c3fdca90a656746bed9cba97e0d63d9",
+  "web/assets/dm-sans-3-BQ0abr9c.ttf": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
+  "web/assets/dm-sans-0-CB7WfZ8W.ttf": "b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9",
+  "web/v1.html": "f7163f3d93ae0076fd8d9cbc4a48481753d20dff0e602d9653d79df65c61d4b0",
+  "api/main.py": "66dfa9f5e856269dece3c20073bdcf69cda975c4dac789913f609fa6278c5ea5",
+  "api/smart_agent.py": "e7c8677708b4ec4a8eb09af6308330c4111bc478473c063b9c0ef348bce6eb52",
+  "api/coach_hermes.py": "dca73ac2f8bcc94f7c695187fc44699c971a997fc60f8cf065ceb8443557f1f8",
+  "Dockerfile.api": "fcd61aba9b0cc4e23bf5f22c40f7bcbd4837324adc4d4cc15657ca7806185217",
+  "deploy-release.py": "c5ea7a24088e16ee3d37f6d1d9ec8bf6cfc1e05fec18cdba6a475732553a465d"
+}

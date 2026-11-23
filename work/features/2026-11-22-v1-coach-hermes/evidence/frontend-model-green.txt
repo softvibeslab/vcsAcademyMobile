@@ -1,0 +1,13 @@
+✔ history contains only complete successful exchanges, in chronological order (0.483291ms)
+✔ history drops whole oldest exchanges to keep six turns and 12000 characters (0.140083ms)
+✔ retry updates the same optimistic turn without duplicating it (0.545834ms)
+✔ navigation accepts only local approved actions, ignoring model URLs and params (0.087041ms)
+✔ short replies stay intact; long replies keep complete sentences and full detail (0.447583ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34.532583

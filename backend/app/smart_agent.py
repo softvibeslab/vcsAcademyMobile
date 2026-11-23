@@ -20,16 +20,17 @@ class SmartAgentResult:
     citations: list[str]
     recommended_actions: list[dict[str, Any]]
     risk_flags: list[str]
-    confidence: float
+    confidence: float | None
+    provider: str = "local"
 
 
 class SmartAgentProvider:
-    def answer(self, message: str, mode: str, user: dict[str, Any], knowledge: list[dict[str, Any]]) -> SmartAgentResult:
+    def answer(self, message: str, mode: str, user: dict[str, Any], knowledge: list[dict[str, Any]], conversation_history: list[dict[str, str]] | None = None) -> SmartAgentResult:
         raise NotImplementedError
 
 
 class LocalKnowledgeProvider(SmartAgentProvider):
-    def answer(self, message: str, mode: str, user: dict[str, Any], knowledge: list[dict[str, Any]]) -> SmartAgentResult:
+    def answer(self, message: str, mode: str, user: dict[str, Any], knowledge: list[dict[str, Any]], conversation_history: list[dict[str, str]] | None = None) -> SmartAgentResult:
         text = message.lower()
         risk_flags = self.detect_risks(text)
         matches = self.retrieve(text, knowledge)
@@ -142,6 +143,7 @@ class LocalKnowledgeProvider(SmartAgentProvider):
 
 
 def get_provider(name: str = "local") -> SmartAgentProvider:
-    if name != "local":
-        return LocalKnowledgeProvider()
+    if name == "hermes":
+        from backend.app.coach_hermes import HermesCoachProvider
+        return HermesCoachProvider()
     return LocalKnowledgeProvider()

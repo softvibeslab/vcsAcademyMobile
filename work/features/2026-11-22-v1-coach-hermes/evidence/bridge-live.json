@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "health": true,
+    "missingKeyRejected": true,
+    "invalidRoleRejected": true,
+    "notesRouteAbsent": true,
+    "permanentProfileUnchanged": true,
+    "keyRootOnly": true,
+    "nonRootService": true,
+    "advisorStillActive": true
+  },
+  "transportPassed": true,
+  "inference": {
+    "httpStatus": 503,
+    "elapsedSeconds": 2.95,
+    "available": false,
+    "errorCode": "coach_unavailable"
+  },
+  "secretValuesPrinted": false,
+  "realUserDataUsed": false
+}

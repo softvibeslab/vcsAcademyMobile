@@ -1,0 +1,170 @@
+✖ history contains only complete successful exchanges, in chronological order (1.295875ms)
+✖ history drops whole oldest exchanges to keep six turns and 12000 characters (0.14175ms)
+✖ retry updates the same optimistic turn without duplicating it (0.064334ms)
+✖ navigation accepts only local approved actions, ignoring model URLs and params (0.434875ms)
+✖ short replies stay intact; long replies keep complete sentences and full detail (4.337416ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42.647958
+
+✖ failing tests:
+
+test at frontend/src/pilot/coach-model.test.mjs:5:1
+✖ history contains only complete successful exchanges, in chronological order (1.295875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    [
+      {
+        content: 'Primera pregunta',
+        role: 'user'
+      },
+  ...
+      },
+  +   {
+  +     content: 'Pendiente',
+  +     role: 'user'
+  +   },
+  +   {
+  +     content: undefined,
+  +     role: 'assistant'
+  +   },
+  +   {
+  +     content: 'Falló',
+  +     role: 'user'
+  +   },
+  +   {
+  +     content: undefined,
+  +     role: 'assistant'
+  +   }
+    ]
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/coach-model.test.mjs:11:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { role: 'user', content: 'Primera pregunta' }, { role: 'assistant', content: 'Primera respuesta' }, { role: 'user', content: 'Pendiente' }, { role: 'assistant', content: undefined }, { role: 'user', content: 'Falló' }, { role: 'assistant', content: undefined } ],
+    expected: [ { role: 'user', content: 'Primera pregunta' }, { role: 'assistant', content: 'Primera respuesta' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/coach-model.test.mjs:16:1
+✖ history drops whole oldest exchanges to keep six turns and 12000 characters (0.14175ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  20 !== 12
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/coach-model.test.mjs:19:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 20,
+    expected: 12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/coach-model.test.mjs:27:1
+✖ retry updates the same optimistic turn without duplicating it (0.064334ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  4 !== 1
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/coach-model.test.mjs:32:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/coach-model.test.mjs:38:1
+✖ navigation accepts only local approved actions, ignoring model URLs and params (0.434875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      {
+  -     href: '#roleplay',
+        label: 'Practicar',
+  +     params: {
+  +       url: 'https://evil.invalid'
+  +     },
+  +     route: 'RoleplayLive'
+      },
+      {
+  -     href: '#roadmap',
+        label: 'Ver ruta',
+  +     route: 'Roadmap'
+      },
+  +   {
+  +     label: 'Abrir',
+  +     route: 'https://evil.invalid'
+  +   },
+  +   {
+  +     label: 'Abrir',
+  +     route: 'constructor'
+  +   },
+  +   {
+  +     label: 'Otro',
+  +     route: 'RoleplayLive'
+  +   }
+    ]
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/coach-model.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { label: 'Practicar', route: 'RoleplayLive', params: [Object] }, { label: 'Ver ruta', route: 'Roadmap' }, { label: 'Abrir', route: 'https://evil.invalid' }, { label: 'Abrir', route: 'constructor' }, { label: 'Otro', route: 'RoleplayLive' } ],
+    expected: [ { label: 'Practicar', href: '#roleplay' }, { label: 'Ver ruta', href: '#roadmap' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at frontend/src/pilot/coach-model.test.mjs:50:1
+✖ short replies stay intact; long replies keep complete sentences and full detail (4.337416ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert(result.preview.split(/\s+/).length <= 90)
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/coach-model.test.mjs:56:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

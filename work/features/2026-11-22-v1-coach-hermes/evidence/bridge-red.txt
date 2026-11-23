@@ -1,0 +1,93 @@
+FFFFFFFF
+======================================================================
+FAIL: test_agent_has_no_tools_memory_state_or_trajectories (__main__.CoachBridgeTests.test_agent_has_no_tools_memory_state_or_trajectories)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 30, in setUp
+    self.bridge = load('bridge')
+                  ^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 21, in load
+    raise AssertionError('The isolated Coach V1 ' + name + ' must exist')
+AssertionError: The isolated Coach V1 bridge must exist
+
+======================================================================
+FAIL: test_deadline_no_shell_and_disposable_profile_success_timeout (__main__.CoachBridgeTests.test_deadline_no_shell_and_disposable_profile_success_timeout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 30, in setUp
+    self.bridge = load('bridge')
+                  ^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 21, in load
+    raise AssertionError('The isolated Coach V1 ' + name + ' must exist')
+AssertionError: The isolated Coach V1 bridge must exist
+
+======================================================================
+FAIL: test_http_auth_routes_errors_and_two_request_limit (__main__.CoachBridgeTests.test_http_auth_routes_errors_and_two_request_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 30, in setUp
+    self.bridge = load('bridge')
+                  ^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 21, in load
+    raise AssertionError('The isolated Coach V1 ' + name + ' must exist')
+AssertionError: The isolated Coach V1 bridge must exist
+
+======================================================================
+FAIL: test_key_empty_fails_closed (__main__.CoachBridgeTests.test_key_empty_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 30, in setUp
+    self.bridge = load('bridge')
+                  ^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 21, in load
+    raise AssertionError('The isolated Coach V1 ' + name + ' must exist')
+AssertionError: The isolated Coach V1 bridge must exist
+
+======================================================================
+FAIL: test_provider_errors_and_invalid_replies_are_sanitized (__main__.CoachBridgeTests.test_provider_errors_and_invalid_replies_are_sanitized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 30, in setUp
+    self.bridge = load('bridge')
+                  ^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 21, in load
+    raise AssertionError('The isolated Coach V1 ' + name + ' must exist')
+AssertionError: The isolated Coach V1 bridge must exist
+
+======================================================================
+FAIL: test_valid_history_and_strict_private_contract (__main__.CoachBridgeTests.test_valid_history_and_strict_private_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 30, in setUp
+    self.bridge = load('bridge')
+                  ^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 21, in load
+    raise AssertionError('The isolated Coach V1 ' + name + ' must exist')
+AssertionError: The isolated Coach V1 bridge must exist
+
+======================================================================
+FAIL: test_worker_preserves_history_and_closes_agent_without_persistence (__main__.CoachBridgeTests.test_worker_preserves_history_and_closes_agent_without_persistence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 30, in setUp
+    self.bridge = load('bridge')
+                  ^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 21, in load
+    raise AssertionError('The isolated Coach V1 ' + name + ' must exist')
+AssertionError: The isolated Coach V1 bridge must exist
+
+======================================================================
+FAIL: test_minimal_export_never_clones_refresh_tokens (__main__.CoachProviderExportTests.test_minimal_export_never_clones_refresh_tokens)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 154, in test_minimal_export_never_clones_refresh_tokens
+    module = load('export_provider')
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/test_coach_bridge.py", line 21, in load
+    raise AssertionError('The isolated Coach V1 ' + name + ' must exist')
+AssertionError: The isolated Coach V1 export_provider must exist
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+FAILED (failures=8)

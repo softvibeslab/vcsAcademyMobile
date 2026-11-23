@@ -1,0 +1,310 @@
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:563: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow()
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/main.py:571: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat(),
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:455: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow().isoformat()
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:210: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE users SET plan = ?, plan_expires_at = ?, updated_at = ? WHERE id = ?", (plan, expires_at, datetime.utcnow().isoformat(), user_id))
+test_authenticated_context_history_provider_and_audit (__main__.CoachContract.test_authenticated_context_history_provider_and_audit) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:585: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  (token, datetime.utcnow().isoformat()),
+FAIL
+test_history_retires_complete_old_turns_to_fit_bounds (__main__.CoachContract.test_history_retires_complete_old_turns_to_fit_bounds) ... FAIL
+test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) ...
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['message']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['message']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['profile']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['provider']) ... FAIL
+  test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['system']) ... FAIL
+test_legacy_mobile_pairs_are_chronological (__main__.CoachContract.test_legacy_mobile_pairs_are_chronological) ... FAIL
+test_local_explicit_mode_remains_compatible (__main__.CoachContract.test_local_explicit_mode_remains_compatible) ... FAIL
+test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) ...
+  test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='bytes') ... FAIL
+  test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='dict') ... FAIL
+  test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='dict') ... FAIL
+  test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='dict') ... FAIL
+  test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='dict') ... FAIL
+  test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='bytes') ... FAIL
+test_material_is_only_selected_authorized_context (__main__.CoachContract.test_material_is_only_selected_authorized_context) ... FAIL
+test_missing_key_or_nonprivate_destination_fails_without_request (__main__.CoachContract.test_missing_key_or_nonprivate_destination_fails_without_request) ...
+  test_missing_key_or_nonprivate_destination_fails_without_request (__main__.CoachContract.test_missing_key_or_nonprivate_destination_fails_without_request) (url='http://127.0.0.1:64532/chat') ... FAIL
+  test_missing_key_or_nonprivate_destination_fails_without_request (__main__.CoachContract.test_missing_key_or_nonprivate_destination_fails_without_request) (url='https://example.invalid/chat') ... FAIL
+test_no_permission_or_session_never_calls_bridge (__main__.CoachContract.test_no_permission_or_session_never_calls_bridge) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:179: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE access_items SET level = ?, updated_at = ? WHERE id = ?", (level, datetime.utcnow().isoformat(), item_id))
+ok
+test_public_chat_stays_local_with_hermes_configured (__main__.CoachContract.test_public_chat_stays_local_with_hermes_configured) ... FAIL
+test_redirect_cannot_forward_bridge_key (__main__.CoachContract.test_redirect_cannot_forward_bridge_key) ... FAIL
+test_timeout_is_sanitized_and_has_fixed_deadline (__main__.CoachContract.test_timeout_is_sanitized_and_has_fixed_deadline) ... FAIL
+test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) ...
+  test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) (upstream=401) ... FAIL
+  test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) (upstream=500) ... FAIL
+  test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) (upstream=504) ... FAIL
+  test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) (upstream=429) ... FAIL
+
+======================================================================
+FAIL: test_authenticated_context_history_provider_and_audit (__main__.CoachContract.test_authenticated_context_history_provider_and_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 97, in test_authenticated_context_history_provider_and_audit
+    self.assertEqual(data.get("provider"), "hermes")
+AssertionError: None != 'hermes'
+
+======================================================================
+FAIL: test_history_retires_complete_old_turns_to_fit_bounds (__main__.CoachContract.test_history_retires_complete_old_turns_to_fit_bounds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 129, in test_history_retires_complete_old_turns_to_fit_bounds
+    self.assertEqual(len(BridgeHandler.requests), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['message'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['message'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['conversation_history'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['profile'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['provider'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_invalid_message_history_and_client_configuration_never_calls_bridge (__main__.CoachContract.test_invalid_message_history_and_client_configuration_never_calls_bridge) (fields=['system'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 154, in test_invalid_message_history_and_client_configuration_never_calls_bridge
+    self.assertEqual(response.status_code, 422)
+AssertionError: 200 != 422
+
+======================================================================
+FAIL: test_legacy_mobile_pairs_are_chronological (__main__.CoachContract.test_legacy_mobile_pairs_are_chronological)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 122, in test_legacy_mobile_pairs_are_chronological
+    self.assertEqual(len(BridgeHandler.requests), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_local_explicit_mode_remains_compatible (__main__.CoachContract.test_local_explicit_mode_remains_compatible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 182, in test_local_explicit_mode_remains_compatible
+    self.assertEqual(data.get("provider"), "local")
+AssertionError: None != 'local'
+
+======================================================================
+FAIL: test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 204, in test_malformed_empty_and_oversized_bridge_reply_are_unavailable
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='dict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 204, in test_malformed_empty_and_oversized_bridge_reply_are_unavailable
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='dict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 204, in test_malformed_empty_and_oversized_bridge_reply_are_unavailable
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='dict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 204, in test_malformed_empty_and_oversized_bridge_reply_are_unavailable
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='dict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 204, in test_malformed_empty_and_oversized_bridge_reply_are_unavailable
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_malformed_empty_and_oversized_bridge_reply_are_unavailable (__main__.CoachContract.test_malformed_empty_and_oversized_bridge_reply_are_unavailable) (kind='bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 204, in test_malformed_empty_and_oversized_bridge_reply_are_unavailable
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_material_is_only_selected_authorized_context (__main__.CoachContract.test_material_is_only_selected_authorized_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 230, in test_material_is_only_selected_authorized_context
+    self.assertEqual(len(BridgeHandler.requests), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_missing_key_or_nonprivate_destination_fails_without_request (__main__.CoachContract.test_missing_key_or_nonprivate_destination_fails_without_request) (url='http://127.0.0.1:64532/chat')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 220, in test_missing_key_or_nonprivate_destination_fails_without_request
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_missing_key_or_nonprivate_destination_fails_without_request (__main__.CoachContract.test_missing_key_or_nonprivate_destination_fails_without_request) (url='https://example.invalid/chat')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 220, in test_missing_key_or_nonprivate_destination_fails_without_request
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_public_chat_stays_local_with_hermes_configured (__main__.CoachContract.test_public_chat_stays_local_with_hermes_configured)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 172, in test_public_chat_stays_local_with_hermes_configured
+    self.assertEqual(data.get("provider"), "local")
+AssertionError: None != 'local'
+
+======================================================================
+FAIL: test_redirect_cannot_forward_bridge_key (__main__.CoachContract.test_redirect_cannot_forward_bridge_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 211, in test_redirect_cannot_forward_bridge_key
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_timeout_is_sanitized_and_has_fixed_deadline (__main__.CoachContract.test_timeout_is_sanitized_and_has_fixed_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 238, in test_timeout_is_sanitized_and_has_fixed_deadline
+    self.assertEqual(response.status_code, 503)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) (upstream=401)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 193, in test_upstream_errors_are_sanitized_and_do_not_expire_app_session
+    self.assertEqual(response.status_code, expected)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) (upstream=500)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 193, in test_upstream_errors_are_sanitized_and_do_not_expire_app_session
+    self.assertEqual(response.status_code, expected)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) (upstream=504)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 193, in test_upstream_errors_are_sanitized_and_do_not_expire_app_session
+    self.assertEqual(response.status_code, expected)
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_upstream_errors_are_sanitized_and_do_not_expire_app_session (__main__.CoachContract.test_upstream_errors_are_sanitized_and_do_not_expire_app_session) (upstream=429)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/tests/coach_hermes.py", line 193, in test_upstream_errors_are_sanitized_and_do_not_expire_app_session
+    self.assertEqual(response.status_code, expected)
+AssertionError: 200 != 429
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.510s
+
+FAILED (failures=32)

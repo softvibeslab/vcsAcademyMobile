@@ -1,0 +1,4 @@
+FROM aisales-api:20261114c
+COPY api/main.py /app/backend/app/main.py
+COPY api/smart_agent.py /app/backend/app/smart_agent.py
+COPY api/coach_hermes.py /app/backend/app/coach_hermes.py

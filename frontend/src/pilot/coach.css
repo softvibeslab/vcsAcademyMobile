@@ -1,0 +1,114 @@
+/* Coach-only viewport. Other modules retain their own shell and spacing. */
+.app-shell--coach {
+  --coach-action: #00e676;
+  --coach-focus: #00e676;
+  height: min(100dvh, var(--coach-viewport-height, 100dvh));
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+html[data-theme="light"] .app-shell--coach { --coach-action: #276900; --coach-focus: #276900; }
+.app-shell--coach .main { min-height: 0; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.app-shell--coach .topbar {
+  width: 100%; max-width: 820px; height: auto; min-height: 56px;
+  margin: 0 auto; padding: max(4px, env(safe-area-inset-top)) 12px 4px;
+  flex: 0 0 auto;
+}
+.app-shell--coach .mobile-brand.brand { gap: 8px; font-size: 12px; min-height: 44px; letter-spacing: .5px; }
+.app-shell--coach .mobile-brand .brand-mark { width: 32px; height: 32px; font-size: 10px; color: var(--coach-action); }
+.app-shell--coach .pilot-brand-subtitle,
+.app-shell--coach .pilot-method-link,
+.app-shell--coach .top-actions .avatar,
+.app-shell--coach .top-actions > :first-child { display: none; }
+.app-shell--coach .top-actions .pilot-method-link { display: none; }
+.app-shell--coach .top-actions { gap: 2px; }
+.app-shell--coach .top-actions a,
+.app-shell--coach .top-actions button { min-width: 44px; min-height: 44px; padding: 10px; display: inline-flex; align-items: center; justify-content: center; }
+.app-shell--coach .top-actions > :first-child { display: none; }
+.app-shell--coach .content {
+  max-width: 820px; width: 100%; flex: 1; min-height: 0;
+  display: flex; flex-direction: column; margin: 0 auto; padding: 8px 12px 10px;
+}
+.app-shell--coach .content > .error { margin: 0 0 6px; flex-shrink: 0; }
+.app-shell--coach .app-footer { display: none; }
+.app-shell--coach > .bottom-nav {
+  position: static; inset: auto; flex: 0 0 auto; width: 100%; max-width: 820px;
+  min-height: 62px; margin: 0 auto; border-radius: 0; border-left: 0; border-right: 0;
+  padding: 5px 8px max(6px, env(safe-area-inset-bottom));
+}
+.app-shell--coach .bottom-nav a { min-height: 48px; min-width: 48px; padding: 4px; gap: 3px; font-size: 10px; }
+.app-shell--coach .bottom-nav a.active::after { bottom: -3px; height: 3px; width: 12px; border-radius: 3px; box-shadow: none; background: var(--coach-action); }
+.app-shell--coach .bottom-nav a.active,
+html[data-theme="light"] .app-shell--coach .bottom-nav a.active { color: var(--coach-action); }
+.coach-page { display: flex; flex-direction: column; flex: 1; min-height: 0; min-width: 0; gap: 8px; }
+.coach-topline { display: flex; gap: 8px; align-items: center; flex: 0 0 auto; min-height: 44px; }
+.coach-topline .coach-avatar { display: flex; align-items: center; justify-content: center; flex: 0 0 36px; width: 36px; height: 36px; background: var(--panel); border: 1px solid var(--line); color: var(--coach-action); border-radius: 11px; }
+.coach-topline h1 { font-size: 19px; line-height: 1.2; margin: 0; letter-spacing: -.4px; }
+.coach-topline p { font-size: 12px; color: var(--muted); margin: 3px 0 0; line-height: 1.3; }
+.coach-topline > a { margin-left: auto; min-height: 44px; display: inline-flex; align-items: center; padding: 8px; font-size: 12px; font-weight: 600; color: var(--text); border-radius: 9px; }
+.coach-topline > a:hover { background: var(--raised); }
+.coach-tabs { display: flex; flex: 0 0 auto; padding: 3px; gap: 4px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); }
+.coach-tabs button { flex: 1; border: 0; border-radius: 9px; background: transparent; color: var(--muted); min-height: 44px; font: inherit; font-size: 13px; font-weight: 600; padding: 8px 12px; }
+.coach-tabs button[aria-pressed="true"] { color: var(--text); background: var(--raised); box-shadow: 0 1px 3px #00000014; }
+.coach-conversation { flex: 1; min-height: 0; min-width: 0; display: flex; flex-direction: column; position: relative; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); overflow: hidden; }
+.coach-log { flex: 1; min-height: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 14px 12px; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scroll-padding: 12px; scrollbar-width: thin; }
+.coach-log .message { max-width: 91%; flex: 0 0 auto; padding: 10px 12px; font-size: 15px; line-height: 1.5; }
+.coach-log .message small { font-size: 10px; line-height: 1.4; color: var(--muted); letter-spacing: .4px; }
+.coach-log .message p { margin: 5px 0 0; overflow-wrap: anywhere; }
+.coach-log .message.user { background: color-mix(in srgb, var(--coach-action) 9%, var(--panel)); border-color: color-mix(in srgb, var(--coach-action) 35%, var(--line)); color: var(--text); }
+.coach-log .message.user small { color: var(--text); }
+.coach-log .message.assistant { background: var(--bg); color: var(--text); }
+.coach-empty { padding: 2px 0 0; }
+.coach-empty h2 { margin: 0 0 12px; font-size: 17px; line-height: 1.4; letter-spacing: -.3px; }
+.coach-empty > p { color: var(--muted); font-size: 14px; margin: 0; }
+.coach-starters { display: flex; flex-wrap: wrap; gap: 6px; }
+.coach-starters button { min-height: 44px; border: 1px solid var(--line); padding: 8px 10px; border-radius: 10px; font: inherit; font-size: 13px; color: var(--text); background: var(--bg); }
+.coach-starters button:hover { border-color: var(--coach-action); }
+.coach-thinking { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; min-height: 28px; flex: 0 0 auto; }
+.coach-composer { display: grid; grid-template-columns: minmax(0, 1fr) 44px; align-items: end; flex: 0 0 auto; gap: 8px; padding: 8px; border-top: 1px solid var(--line); background: var(--panel); }
+.coach-composer textarea { width: 100%; min-height: 44px; max-height: 120px; margin: 0; padding: 10px 12px; line-height: 24px; font-size: 16px; resize: none; border: 1px solid var(--line); border-radius: 11px; background: var(--bg); color: var(--text); overflow-y: auto; }
+.coach-composer textarea::placeholder { color: var(--muted); opacity: 1; }
+.coach-composer > button { width: 44px; height: 44px; border: 0; padding: 0; border-radius: 11px; background: var(--coach-action); color: #08150d; display: flex; align-items: center; justify-content: center; }
+html[data-theme="light"] .coach-composer > button { color: #fff; }
+.coach-composer > button:disabled { opacity: 1; background: var(--raised); color: var(--muted); cursor: not-allowed; }
+html[data-theme="light"] .coach-composer > button:disabled { color: var(--muted); }
+.coach-character-count { grid-column: 1 / -1; font-size: 11px; color: var(--muted); text-align: right; }
+.coach-send-error { border: 1px solid var(--line); background: var(--bg); color: var(--text); border-radius: 11px; padding: 8px 10px; font-size: 13px; flex: 0 0 auto; }
+.coach-send-error p { margin: 0; line-height: 1.5; }
+.coach-send-error button { display: inline-flex; align-items: center; min-height: 44px; border: 0; background: transparent; color: var(--coach-action); font: inherit; font-weight: 650; padding: 8px 4px; }
+.coach-send-error button:disabled { color: var(--muted); }
+.coach-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.coach-actions a { display: inline-flex; min-height: 44px; align-items: center; border: 1px solid var(--line); border-radius: 9px; padding: 8px 10px; color: var(--coach-action); font-size: 12px; font-weight: 600; }
+.coach-detail, .coach-sources { margin-top: 4px; }
+.coach-detail summary, .coach-sources summary { min-height: 44px; padding: 12px 0; font-size: 12px; color: var(--muted); cursor: pointer; }
+.coach-detail summary { color: var(--coach-action); font-weight: 600; }
+.coach-sources ul { margin: 0; padding: 0 0 6px 18px; color: var(--muted); font-size: 12px; }
+.coach-sources li { margin-top: 5px; overflow-wrap: anywhere; }
+.coach-latest { align-self: center; margin: 0 8px 6px; min-height: 44px; flex-shrink: 0; display: flex; align-items: center; gap: 7px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 24px; background: var(--bg); color: var(--text); font-size: 12px; }
+.coach-scenarios { flex: 1; min-height: 0; margin: 0; padding: 16px; overflow-y: auto; }
+.coach-scenarios h2 { font-size: 18px; margin: 0 0 16px; }
+.coach-scenarios select { font-size: 16px; min-height: 44px; max-width: 100%; }
+.coach-scenario-context { font-size: 14px; line-height: 1.5; margin-bottom: 12px; }
+.coach-scenario-context p { margin: 8px 0; }
+.coach-practice-heading { flex: 0 0 auto; padding: 9px 12px; display: flex; flex-direction: column; gap: 3px; border-bottom: 1px solid var(--line); }
+.coach-practice-heading strong { font-size: 13px; }
+.coach-practice-heading span { color: var(--muted); font-size: 11px; }
+.coach-practice-controls { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: 6px; padding: 8px; border-top: 1px solid var(--line); max-height: min(32dvh, 210px); overflow-y: auto; align-items: center; }
+.coach-page .button { min-height: 44px; font-size: 13px; padding: 9px 12px; }
+.coach-page .text-button { min-height: 44px; color: var(--coach-action); }
+.coach-practice-controls .button + .button { margin-left: 0; }
+.coach-practice-controls .success, .coach-practice-controls .error { width: 100%; margin: 2px 0 0; font-size: 12px; }
+.coach-page :is(button, a, textarea, select, summary):focus-visible { outline: 2px solid var(--coach-focus); outline-offset: 2px; }
+.coach-log:focus-visible { outline: 2px solid var(--coach-focus); outline-offset: -3px; }
+.coach-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@media (max-height: 540px) {
+  .app-shell--coach .topbar { min-height: 48px; padding-top: 0; padding-bottom: 0; }
+  .app-shell--coach .content { padding-top: 3px; padding-bottom: 3px; }
+  .coach-page { gap: 4px; }
+  .coach-topline p { display: none; }
+  .coach-tabs { padding: 0; }
+  .coach-log { padding: 8px 10px; }
+  .app-shell--coach > .bottom-nav { min-height: 52px; padding-top: 0; padding-bottom: max(2px, env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) { .coach-page .spin { animation: none; } }

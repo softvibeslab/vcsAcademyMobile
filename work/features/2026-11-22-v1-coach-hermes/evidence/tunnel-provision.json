@@ -1,0 +1,41 @@
+{
+  "source": {
+    "sourcePrepared": true,
+    "account": "sa-coach-tunnel",
+    "keyGeneratedOnSourceOnly": true,
+    "keyFingerprint": "SHA256:kOFZGafVfm3yEQFxI9b8qwsjRR+xKcUo+fkkfiylQjk",
+    "hostFingerprint": "SHA256:60cjycbenLy0+xBtZOe3nPpGpu1aiMFj3r/595gGCIo",
+    "secretValuesPrinted": false
+  },
+  "target": {
+    "targetPrepared": true,
+    "account": "sa-coach-tunnel",
+    "keyFingerprint": "SHA256:kOFZGafVfm3yEQFxI9b8qwsjRR+xKcUo+fkkfiylQjk",
+    "sourceRestriction": "76.13.231.12",
+    "effectivePolicy": {
+      "authenticationmethods": "publickey",
+      "pubkeyauthentication": "yes",
+      "passwordauthentication": "no",
+      "kbdinteractiveauthentication": "no",
+      "allowtcpforwarding": "local",
+      "allowstreamlocalforwarding": "no",
+      "permitopen": "127.0.0.1:18643",
+      "permitlisten": "none",
+      "allowagentforwarding": "no",
+      "x11forwarding": "no",
+      "permittty": "no",
+      "permituserrc": "no",
+      "permittunnel": "no",
+      "gatewayports": "no",
+      "forcecommand": "/usr/sbin/nologin",
+      "maxsessions": "0"
+    },
+    "rootPolicyUnchanged": true,
+    "otherPolicyUnchanged": true,
+    "configValidated": true,
+    "secretValuesPrinted": false
+  },
+  "freshRootAccessAfterReload": true,
+  "sourceStage": "/root/coach-tunnel-stage.1Bf6Yx",
+  "targetStage": "/root/coach-tunnel-stage.UR0jT5"
+}

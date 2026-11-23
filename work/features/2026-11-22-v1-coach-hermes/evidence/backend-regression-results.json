@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      ".venv/bin/python",
+      "backend/tests/coach_hermes.py"
+    ],
+    "exitCode": 0,
+    "evidence": "backend-green.txt"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "backend/tests/access_tiers.py"
+    ],
+    "exitCode": 0,
+    "evidence": "backend-access.txt"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "backend/tests/e2e_smoke.py"
+    ],
+    "exitCode": 0,
+    "evidence": "backend-legacy-smoke.txt"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "backend/tests/pilot",
+      "-p",
+      "test_*.py"
+    ],
+    "exitCode": 0,
+    "evidence": "backend-pilot.txt"
+  }
+]

@@ -1,0 +1,1243 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "Public V1 HTML matches build",
+      "passed": true,
+      "sha256": "f7163f3d93ae0076fd8d9cbc4a48481753d20dff0e602d9653d79df65c61d4b0"
+    },
+    {
+      "name": "Published asset matches build",
+      "passed": true,
+      "asset": "/assets/pilot-Db2QSxyZ.js",
+      "sha256": "5e9225833575f45cfd44a02a52c7c4c5dd9a8bf4e1b6636251dd6f58614cbe05"
+    },
+    {
+      "name": "Published asset matches build",
+      "passed": true,
+      "asset": "/assets/pilot-B1deK2Gw.css",
+      "sha256": "c577d26b77028ba3c33771772ec35d866c3fdca90a656746bed9cba97e0d63d9"
+    },
+    {
+      "name": "Two synthetic real Hermes turns verify provider and continuity",
+      "passed": true
+    },
+    {
+      "name": "android-dark: HTTPS, compact Coach, themes, Roleplay selection, evaluations, Home, agenda and logout",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark",
+      "geometry": {
+        "inputTop": 675,
+        "inputBottom": 719,
+        "navTop": 738,
+        "navBottom": 800,
+        "height": 800,
+        "pageHeight": 800,
+        "pageWidth": 360,
+        "width": 360
+      },
+      "agenda": {
+        "height": 800,
+        "pageHeight": 800,
+        "viewport": 800,
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "monthScroll": false
+      },
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/smart-agent/chat",
+        "/api/smart-agent/chat",
+        "/api/auth/logout"
+      ],
+      "errors": []
+    },
+    {
+      "name": "iphone-dark: HTTPS, compact Coach, themes, Roleplay selection, evaluations, Home, agenda and logout",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "geometry": {
+        "inputTop": 719,
+        "inputBottom": 763,
+        "navTop": 782,
+        "navBottom": 844,
+        "height": 844,
+        "pageHeight": 844,
+        "pageWidth": 390,
+        "width": 390
+      },
+      "agenda": {
+        "height": 844,
+        "pageHeight": 844,
+        "viewport": 844,
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "monthScroll": false
+      },
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "errors": []
+    },
+    {
+      "name": "desktop-dark: HTTPS, compact Coach, themes, Roleplay selection, evaluations, Home, agenda and logout",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "geometry": {
+        "inputTop": 775,
+        "inputBottom": 819,
+        "navTop": 838,
+        "navBottom": 900,
+        "height": 900,
+        "pageHeight": 900,
+        "pageWidth": 1440,
+        "width": 1440
+      },
+      "agenda": {
+        "height": 900,
+        "pageHeight": 900,
+        "viewport": 900,
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "monthScroll": false
+      },
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "errors": []
+    },
+    {
+      "name": "android-light: HTTPS, compact Coach, themes, Roleplay selection, evaluations, Home, agenda and logout",
+      "passed": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "light",
+      "geometry": {
+        "inputTop": 675,
+        "inputBottom": 719,
+        "navTop": 738,
+        "navBottom": 800,
+        "height": 800,
+        "pageHeight": 800,
+        "pageWidth": 360,
+        "width": 360
+      },
+      "agenda": {
+        "height": 800,
+        "pageHeight": 800,
+        "viewport": 800,
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "monthScroll": false
+      },
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "errors": []
+    },
+    {
+      "name": "iphone-light: HTTPS, compact Coach, themes, Roleplay selection, evaluations, Home, agenda and logout",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "geometry": {
+        "inputTop": 719,
+        "inputBottom": 763,
+        "navTop": 782,
+        "navBottom": 844,
+        "height": 844,
+        "pageHeight": 844,
+        "pageWidth": 390,
+        "width": 390
+      },
+      "agenda": {
+        "height": 844,
+        "pageHeight": 844,
+        "viewport": 844,
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "monthScroll": false
+      },
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "errors": []
+    },
+    {
+      "name": "desktop-light: HTTPS, compact Coach, themes, Roleplay selection, evaluations, Home, agenda and logout",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "light",
+      "geometry": {
+        "inputTop": 775,
+        "inputBottom": 819,
+        "navTop": 838,
+        "navBottom": 900,
+        "height": 900,
+        "pageHeight": 900,
+        "pageWidth": 1440,
+        "width": 1440
+      },
+      "agenda": {
+        "height": 900,
+        "pageHeight": 900,
+        "viewport": 900,
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "monthScroll": false
+      },
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "errors": []
+    },
+    {
+      "name": "Private V5 public snapshot unchanged",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "android-dark-coach.png",
+    "android-dark-inference-state.png",
+    "iphone-dark-coach.png",
+    "desktop-dark-coach.png",
+    "android-light-coach.png",
+    "iphone-light-coach.png",
+    "desktop-light-coach.png"
+  ],
+  "inferenceAvailable": true,
+  "continuityVerified": true
+}
