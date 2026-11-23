@@ -1,0 +1,1019 @@
+{
+  "snapshots": [
+    {
+      "stage": "detail-loaded",
+      "at": 3913,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 0,
+      "scrollHeight": 1565,
+      "lastAction": {
+        "x": 16,
+        "y": 1533.75,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1533.75,
+        "right": 129.015625,
+        "bottom": 1577.75,
+        "left": 16
+      },
+      "recommendationLinks": 0,
+      "catalogBusy": true,
+      "globalScroll": 0
+    },
+    {
+      "stage": "before-scroll",
+      "at": 3964,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 0,
+      "scrollHeight": 1565,
+      "lastAction": {
+        "x": 16,
+        "y": 1533.75,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1533.75,
+        "right": 129.015625,
+        "bottom": 1577.75,
+        "left": 16
+      },
+      "recommendationLinks": 0,
+      "catalogBusy": true,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-scroll",
+      "at": 4035,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1565,
+      "lastAction": {
+        "x": 16,
+        "y": 747.75,
+        "width": 113.015625,
+        "height": 44,
+        "top": 747.75,
+        "right": 129.015625,
+        "bottom": 791.75,
+        "left": 16
+      },
+      "recommendationLinks": 0,
+      "catalogBusy": true,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-100ms",
+      "at": 4137,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-200ms",
+      "at": 4240,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-300ms",
+      "at": 4344,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-400ms",
+      "at": 4448,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-500ms",
+      "at": 4552,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-600ms",
+      "at": 4656,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-700ms",
+      "at": 4759,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-800ms",
+      "at": 4863,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-900ms",
+      "at": 4970,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1000ms",
+      "at": 5074,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1100ms",
+      "at": 5177,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1200ms",
+      "at": 5280,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1300ms",
+      "at": 5383,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1400ms",
+      "at": 5486,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1500ms",
+      "at": 5589,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1600ms",
+      "at": 5692,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1700ms",
+      "at": 5796,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1800ms",
+      "at": 5901,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-1900ms",
+      "at": 6006,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    },
+    {
+      "stage": "after-2000ms",
+      "at": 6110,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "content": {
+        "x": 0,
+        "y": 65,
+        "width": 390,
+        "height": 779,
+        "top": 65,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      },
+      "scrollTop": 786,
+      "scrollHeight": 1835,
+      "lastAction": {
+        "x": 16,
+        "y": 1017.9375,
+        "width": 113.015625,
+        "height": 44,
+        "top": 1017.9375,
+        "right": 129.015625,
+        "bottom": 1061.9375,
+        "left": 16
+      },
+      "recommendationLinks": 2,
+      "catalogBusy": false,
+      "globalScroll": 0
+    }
+  ],
+  "requests": [
+    {
+      "at": 2509,
+      "path": "/api/blueprint/steps"
+    },
+    {
+      "at": 3894,
+      "path": "/api/blueprint/steps"
+    }
+  ],
+  "responses": [
+    {
+      "at": 2709,
+      "path": "/api/blueprint/steps",
+      "status": 200
+    },
+    {
+      "at": 4100,
+      "path": "/api/blueprint/steps",
+      "status": 200
+    }
+  ],
+  "writes": [],
+  "actionStayedVisible": false,
+  "visibilityError": "expect(locator).toBeInViewport() failed\n\nLocator:  getByRole('dialog', { name: 'Detalle de visita', exact: true }).getByRole('button', { name: 'Eliminar visita', exact: true })\nExpected: in viewport\nReceived: viewport ratio 0\nTimeout:  1000ms\n\nCall log:\n  - Expect \"toBeInViewport\" getByRole('dialog', { name: 'Detalle de visita', exact: true }).getByRole('button', { name: 'Eliminar visita', exact: true }) with timeout 1000ms\n  - waiting for getByRole('dialog', { name: 'Detalle de visita', exact: true }).getByRole('button', { name: 'Eliminar visita', exact: true })\n    11 × locator resolved to <button type=\"button\">Eliminar visita</button>\n       - unexpected value \"viewport ratio 0\"\n",
+  "unchanged": true
+}

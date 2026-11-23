@@ -1,0 +1,96 @@
+{
+  "passed": true,
+  "phase": "live-iphone-catalog-green",
+  "cases": [
+    {
+      "name": "iphone-dark",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "passed": true,
+      "opened": {
+        "width": 390,
+        "height": 844,
+        "documentWidth": 390,
+        "documentHeight": 844,
+        "pageScroll": 0,
+        "dialog": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "nativeModal": true,
+        "content": {
+          "x": 0,
+          "y": 65,
+          "width": 390,
+          "height": 779,
+          "top": 65,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "contentScroll": 0,
+        "oldPanel": {
+          "x": 16,
+          "y": 529,
+          "width": 358,
+          "height": 188,
+          "top": 529,
+          "right": 374,
+          "bottom": 717,
+          "left": 16
+        }
+      },
+      "catalogReadyBeforeScroll": {
+        "recommendationCount": 2
+      },
+      "scrolled": {
+        "width": 390,
+        "height": 844,
+        "documentWidth": 390,
+        "documentHeight": 844,
+        "pageScroll": 0,
+        "dialog": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "nativeModal": true,
+        "content": {
+          "x": 0,
+          "y": 65,
+          "width": 390,
+          "height": 779,
+          "top": 65,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "contentScroll": 1056,
+        "oldPanel": {
+          "x": 16,
+          "y": 529,
+          "width": 358,
+          "height": 188,
+          "top": 529,
+          "right": 374,
+          "bottom": 717,
+          "left": 16
+        }
+      }
+    }
+  ]
+}

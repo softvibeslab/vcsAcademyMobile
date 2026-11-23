@@ -1,0 +1,22 @@
+{
+  "root": "/srv/aisales-v1-release-20261122-visit-modal/web",
+  "htmlSha256": "dd2f6076901db266ea3b8a9cfdb159056cff13ede96ba17adfab640254d9c6aa",
+  "archiveSha256": "eda2e795b63facfe59055d9bb193cdb34c46562388a0bb6701e4fd7a2d4607f3",
+  "filesVerified": 17,
+  "v5AndContainersUnchanged": true,
+  "containers": {
+    "aisales-v1-tours-20261122": {
+      "id": "c1c8218d0e5f9695757d37841a5d04ff59b11aef79d4c09ffbcaeefd5786bfbf",
+      "image": "sha256:fca7efccd615e61adde9c395893fe40125c767cb99a72936b210081ab4d66a00",
+      "running": true,
+      "startedAt": "2026-11-23T02:03:56.494379239Z"
+    },
+    "aisales-pilot-20261120-accounts-r2": {
+      "id": "bb6574ae827be1350f1a4bf931f9b001388dbf117fb2190683d0100fe2d938a8",
+      "image": "sha256:c8f3fc47861568675f3a6a92ac00c1e2f0462f4409c3aed20b1216b3f9813556",
+      "running": true,
+      "startedAt": "2026-11-20T18:25:07.022636776Z"
+    }
+  },
+  "rollbackConfig": "/srv/aisales-v1/ops/20261122-visit-modal/nginx-before.conf"
+}

@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "checked_at": "2026-11-23T03:19:20.230717+00:00",
+  "scope": "public_artifacts_only",
+  "https_certificate_verification": true,
+  "checks": [
+    {
+      "name": "local_html_matches_manifest",
+      "passed": true,
+      "expected_sha256": "dd2f6076901db266ea3b8a9cfdb159056cff13ede96ba17adfab640254d9c6aa",
+      "actual_sha256": "dd2f6076901db266ea3b8a9cfdb159056cff13ede96ba17adfab640254d9c6aa"
+    },
+    {
+      "name": "local_asset_inventory_matches_manifest",
+      "passed": true,
+      "manifest_assets": 2,
+      "local_assets": 2,
+      "html_asset_references": 2
+    },
+    {
+      "name": "v1_public_html",
+      "path": "/",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "dd2f6076901db266ea3b8a9cfdb159056cff13ede96ba17adfab640254d9c6aa",
+      "actual_sha256": "dd2f6076901db266ea3b8a9cfdb159056cff13ede96ba17adfab640254d9c6aa",
+      "bytes": 929,
+      "local_sha256": "dd2f6076901db266ea3b8a9cfdb159056cff13ede96ba17adfab640254d9c6aa"
+    },
+    {
+      "name": "local_asset_matches_manifest",
+      "path": "/assets/pilot-CTNG9uK1.css",
+      "passed": true,
+      "expected_sha256": "922d80f1678153cd036e7146f78801ae931f914a63c505f9fdc1390faca7c837",
+      "actual_sha256": "922d80f1678153cd036e7146f78801ae931f914a63c505f9fdc1390faca7c837"
+    },
+    {
+      "name": "v1_public_asset",
+      "path": "/assets/pilot-CTNG9uK1.css",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "922d80f1678153cd036e7146f78801ae931f914a63c505f9fdc1390faca7c837",
+      "actual_sha256": "922d80f1678153cd036e7146f78801ae931f914a63c505f9fdc1390faca7c837",
+      "bytes": 88356,
+      "local_sha256": "922d80f1678153cd036e7146f78801ae931f914a63c505f9fdc1390faca7c837"
+    },
+    {
+      "name": "local_asset_matches_manifest",
+      "path": "/assets/pilot-D5HfZQ6J.js",
+      "passed": true,
+      "expected_sha256": "60a346e0933c42ba8ddac7765d404bc866192797c1cbec8d144a8cc8f7fb2710",
+      "actual_sha256": "60a346e0933c42ba8ddac7765d404bc866192797c1cbec8d144a8cc8f7fb2710"
+    },
+    {
+      "name": "v1_public_asset",
+      "path": "/assets/pilot-D5HfZQ6J.js",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "60a346e0933c42ba8ddac7765d404bc866192797c1cbec8d144a8cc8f7fb2710",
+      "actual_sha256": "60a346e0933c42ba8ddac7765d404bc866192797c1cbec8d144a8cc8f7fb2710",
+      "bytes": 357367,
+      "local_sha256": "60a346e0933c42ba8ddac7765d404bc866192797c1cbec8d144a8cc8f7fb2710"
+    },
+    {
+      "name": "v1_public_ready",
+      "passed": true,
+      "http_status": 200,
+      "checks": {
+        "database": true,
+        "seed_users": true,
+        "seed_resources": true
+      }
+    },
+    {
+      "name": "v5_public_html_unchanged",
+      "path": "/",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "actual_sha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "bytes": 1010
+    }
+  ],
+  "release_manifest_sha256": "ea07f3b77d78ee146aaa5a9dad416130b0fe1a37c04f898fe77d46d231545eb3"
+}

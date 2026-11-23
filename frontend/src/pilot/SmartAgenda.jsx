@@ -12,13 +12,38 @@ const dayTitle = (date) => `${formatCalendarDate(date, "es-MX", { weekday: "long
 
 function EntryCard({ event, onOpenVisit }) {
   if (!event) return <div className="sa-detail-card sa-empty-day"><p>Sin registros para este día.</p></div>;
-  if (event.visitId) return <article className="sa-detail-card sa-visit-card"><button type="button" onClick={() => onOpenVisit(event.visitId)} aria-label={`Ver visita ${visitLabel(event.visit)}`}><span><strong>{event.title}</strong><small>{TOUR_STATUS[event.visit.status]}{event.visit.analysis_status === "ready" ? " · Análisis disponible" : ""}</small></span><span>Ver detalle →</span></button></article>;
+  if (event.visitId) return <article className="sa-detail-card sa-visit-card"><button type="button" onClick={click => { click.currentTarget.focus({ preventScroll: true }); onOpenVisit(event.visitId); }} aria-label={`Ver visita ${visitLabel(event.visit)}`}><span><strong>{event.title}</strong><small>{TOUR_STATUS[event.visit.status]}{event.visit.analysis_status === "ready" ? " · Análisis disponible" : ""}</small></span><span>Ver detalle →</span></button></article>;
   const followup = event.kind === "followup";
   return <article className="sa-detail-card">
     <header className="sa-detail-title"><span className={`sa-detail-dot ${followup ? "is-followup" : ""}`} /><strong>{followup ? event.entryDate ? <a href={`#goalsheet/${event.entryDate}`}>Seguimiento</a> : "Seguimiento" : event.kind === "sale" ? "Venta registrada" : event.title}</strong><span className="sa-detail-amount">{event.amount === null ? "—" : `USD ${amount(event.amount)}`}</span></header>
     {!followup && <div className="sa-detail-fields"><div><span>Enganche</span><strong>—</strong></div><div><span>Spiff de Cierre</span><strong className="sa-spiff">⭐ —</strong></div></div>}
     <footer className="sa-detail-note"><span>Nota: <em>{event.note || (followup ? event.title : "Sin notas")}</em></span><time dateTime={event.date}>{Number(event.date.slice(-2))} {formatCalendarDate(event.date, "es-MX", { month: "short" }).replace(/\.$/, "")}</time></footer>
   </article>;
+}
+
+function AgendaVisitDialog({ children, onClose }) {
+  const dialog = useRef(null), closeButton = useRef(null);
+  useEffect(() => {
+    const element = dialog.current;
+    const trigger = document.activeElement;
+    if (!element.open) element.showModal();
+    closeButton.current?.focus({ preventScroll: true });
+    return () => {
+      element.close();
+      // Deep links have no card trigger; return to the selected calendar day.
+      if (location.hash.split("/")[0] !== "#agenda") return;
+      const target = trigger instanceof HTMLElement && trigger !== document.body && trigger.isConnected
+        ? trigger : document.querySelector(".sa-month-day.is-selected");
+      if (target?.isConnected) target.focus({ preventScroll: true });
+    };
+  }, []);
+  return <dialog ref={dialog} className="sa-visit-dialog" aria-label="Detalle de visita" onCancel={event => {
+    if (event.target !== event.currentTarget) return;
+    event.preventDefault(); event.stopPropagation(); onClose();
+  }}>
+    <header className="sa-visit-dialog-header"><h2>Detalle de visita</h2><button ref={closeButton} type="button" className="sa-visit-dialog-close" aria-label="Cerrar detalle de visita" onClick={onClose}><X size={22} aria-hidden="true" /></button></header>
+    <div className="sa-visit-dialog-content" role="region" aria-label="Contenido de la visita" tabIndex={0}>{children}</div>
+  </dialog>;
 }
 
 export function SmartAgenda({ api, data, revision, refresh, visitId, onAddFollowup }) {
@@ -35,7 +60,7 @@ export function SmartAgenda({ api, data, revision, refresh, visitId, onAddFollow
   const selectedVisit = useTourVisit(api, visitId, revision);
   const monthStart = selectedDate.slice(0, 7) + "-01";
   const visitList = useTourVisits(api, shiftDate(monthStart, -7), shiftDate(monthStart, 42), revision, !data.goalsheetLocked);
-  useEffect(() => { setOpenVisitId(visitId || null); if (visitId) setCollapsed(false); }, [visitId]);
+  useEffect(() => { setOpenVisitId(visitId || null); }, [visitId]);
   useEffect(() => { if (selectedVisit.visit) setSelectedDate(selectedVisit.visit.event_date); }, [selectedVisit.visit?.id, selectedVisit.visit?.event_date]);
   const scrollArea = useRef(null), monthTrigger = useRef(null), monthInput = useRef(null), searchInput = useRef(null), monthDialog = useRef(null);
   const events = useMemo(() => [...agendaEvents(data.entries, data.reminders), ...visitEvents(visitList.visits)], [data.entries, data.reminders, visitList.visits]);
@@ -49,7 +74,7 @@ export function SmartAgenda({ api, data, revision, refresh, visitId, onAddFollow
 
   function selectDate(date) { setSelectedDate(date); setOpenVisitId(null); if (visitId) location.hash = "agenda"; }
   function goToday() { selectDate(today); scrollArea.current?.scrollTo({ top: 0 }); }
-  function openVisit(id) { setCollapsed(false); setOpenVisitId(id); location.hash = `agenda/${id}`; }
+  function openVisit(id) { setOpenVisitId(id); location.hash = `agenda/${id}`; }
   function closeVisit() { setOpenVisitId(null); location.hash = "agenda"; }
   function closeMonth() {
     monthDialog.current?.close();
@@ -87,7 +112,7 @@ export function SmartAgenda({ api, data, revision, refresh, visitId, onAddFollow
             <div className="sa-selected-summary"><div><h2>{dayTitle(selectedDate)}</h2><span className="sa-pending" title="Estado no registrado">—</span></div><p>{day.tours} {day.tours === 1 ? "tour" : "tours"} · {day.sales} {day.sales === 1 ? "venta cerrada" : "ventas cerradas"} · USD {amount(day.volume)}</p></div>
             <div className="sa-commission"><span>Comisión</span><strong>—</strong></div>
           </header>
-          {!collapsed && <div className="sa-detail-scroll">{openVisitId ? <TourVisitDetail key={openVisitId} api={api} visitId={openVisitId} revision={revision} onChanged={refresh} onDeleted={closeVisit} onClose={closeVisit} compact /> : dayEvents.length ? dayEvents.map((event) => <EntryCard key={event.id} event={event} onOpenVisit={openVisit} />) : <EntryCard />}</div>}
+          {!collapsed && <div className="sa-detail-scroll">{dayEvents.length ? dayEvents.map((event) => <EntryCard key={event.id} event={event} onOpenVisit={openVisit} />) : <EntryCard />}</div>}
         </div>
         <div className="sa-sheet-toolbar">
           <button type="button" className="sa-today" onClick={goToday}><i />Hoy</button>
@@ -107,6 +132,7 @@ export function SmartAgenda({ api, data, revision, refresh, visitId, onAddFollow
           <h2 id="sa-month-dialog-title">Elegir mes y año</h2><label>Mes<input ref={monthInput} type="month" required min="0001-01" max="9998-12" value={monthValue} onChange={(event) => setMonthValue(event.target.value)} /></label><div><button type="button" onClick={closeMonth}>Cancelar</button><button type="submit">Ver mes</button></div>
         </form>
       </dialog>}
+      {openVisitId && <AgendaVisitDialog key={openVisitId} onClose={closeVisit}><TourVisitDetail api={api} visitId={openVisitId} revision={revision} onChanged={refresh} onDeleted={closeVisit} /></AgendaVisitDialog>}
     </section>
   </div>;
 }

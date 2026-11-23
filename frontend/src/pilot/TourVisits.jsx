@@ -79,7 +79,7 @@ export function TourVisitDialog({ api, intent, visit = null, initialContext = ""
   useEffect(() => {
     mounted.current = true; trigger.current = document.activeElement; dialog.current?.showModal();
     dialog.current?.querySelector("input:not([readonly]), select, textarea, button")?.focus();
-    return () => { mounted.current = false; dialog.current?.close(); if (trigger.current?.isConnected) trigger.current.focus(); };
+    return () => { mounted.current = false; dialog.current?.close(); if (trigger.current?.isConnected) trigger.current.focus({ preventScroll: true }); };
   }, []);
   function finish(value) { if (!finished.current) { finished.current = true; onSaved(value); } }
   function close() { if (saved) finish(saved); else if (!busy) onClose(); }
@@ -112,7 +112,7 @@ export function TourVisitDialog({ api, intent, visit = null, initialContext = ""
     } finally { inFlight.current = false; if (mounted.current) { setBusy(false); setPhase(""); } }
   }
   const count = (readExisting ? chosen?.context || "" : fields.context).length + (feedbackVisible ? fields.happened.length + fields.worked.length + fields.improve_next.length : 0);
-  return <dialog className="tour-dialog" ref={dialog} aria-labelledby={titleId} onCancel={event => { event.preventDefault(); close(); }}>
+  return <dialog className="tour-dialog" ref={dialog} aria-labelledby={titleId} onCancel={event => { event.preventDefault(); event.stopPropagation(); close(); }}>
     <header><div><h2 id={titleId}>{formTitle}</h2><p>{intent === "edit" ? "Revisa los datos guardados." : TOUR_INTENTS.find(([value]) => value === intent)?.[1]}</p></div><button type="button" aria-label="Cerrar registro de visita" disabled={busy && !saved} onClick={close}><X size={20} /></button></header>
     <form onSubmit={submit}>
       <div className="tour-form-scroll">
@@ -192,8 +192,8 @@ export function TourVisitDetail({ api, visitId, revision = 0, onChanged, onDelet
       <TourAnalysis key={`${visit.id}:${visit.revision}`} api={api} visit={visit} onChanged={changed} />
       <div className="tour-record-actions"><a href={`#coach/${visit.id}`}>Continuar con el Coach</a>
         {visit.status === "scheduled" && <button type="button" disabled={busy} onClick={() => mutate("start")}>Iniciar visita</button>}
-        {["scheduled", "in_progress"].includes(visit.status) && <button type="button" disabled={busy} onClick={() => setForm("reflect")}>Registrar cómo me fue</button>}
-        {visit.status !== "cancelled" && <button type="button" disabled={busy} onClick={() => setForm("edit")}>Editar visita</button>}
+        {["scheduled", "in_progress"].includes(visit.status) && <button type="button" disabled={busy} onClick={event => { event.currentTarget.focus({ preventScroll: true }); setForm("reflect"); }}>Registrar cómo me fue</button>}
+        {visit.status !== "cancelled" && <button type="button" disabled={busy} onClick={event => { event.currentTarget.focus({ preventScroll: true }); setForm("edit"); }}>Editar visita</button>}
         {["scheduled", "in_progress"].includes(visit.status) && <button type="button" disabled={busy} onClick={() => setConfirm("cancel")}>Cancelar visita</button>}
         <button type="button" disabled={busy} onClick={() => setConfirm("delete")}>Eliminar visita</button>
       </div>

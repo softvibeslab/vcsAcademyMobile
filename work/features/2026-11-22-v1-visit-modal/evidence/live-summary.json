@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "android-light",
+      "passed": true,
+      "evidence": "live-catalog-first-run/results.json"
+    },
+    {
+      "name": "desktop-light",
+      "passed": true,
+      "evidence": "live-catalog-first-run/results.json"
+    },
+    {
+      "name": "iphone-dark",
+      "passed": true,
+      "evidence": "live-iphone-catalog-green/results.json"
+    }
+  ],
+  "note": "Observed passing cases across runs; catalog readiness synchronization is documented in catalog-scroll/cause.md."
+}
