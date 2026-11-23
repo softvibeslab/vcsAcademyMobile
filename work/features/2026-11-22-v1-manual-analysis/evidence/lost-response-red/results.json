@@ -1,0 +1,11 @@
+{
+  "passed": false,
+  "transportFault": "drop response after real PATCH commit",
+  "savedRevision": 3,
+  "contributionOccurrences": 2,
+  "patchRequestIds": [
+    "4e59bb64-29f3-4dd2-bf48-ea2c66f7ce46",
+    "b686c530-9f90-417c-8892-abf6ac35b01a"
+  ],
+  "error": "Retry after lost PATCH response must not duplicate contribution\n\n2 !== 1\n"
+}

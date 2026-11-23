@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "live": true,
+  "cases": [
+    {
+      "name": "android-dark",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark",
+      "passed": true,
+      "analysisRequests": 2,
+      "geometry": {
+        "width": 360,
+        "height": 800,
+        "scrollWidth": 360,
+        "scrollHeight": 800
+      },
+      "summary": "La práctica señala la necesidad de confirmar tiempo, expectativas y prioridades de vacaciones antes de presentar la propuesta.",
+      "steps": [
+        "Mantén la escucha con calma y deja que la pareja termine su respuesta antes de intervenir en tu próxima visita.",
+        "Confirma al comenzar cuánto tiempo tienen disponible y qué esperan conocer antes de presentar la propuesta.",
+        "Practica la pregunta «¿Qué es lo más importante para ustedes al planear sus vacaciones?» y confirma lo entendido antes de presentar."
+      ]
+    },
+    {
+      "name": "iphone-light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "passed": true,
+      "analysisRequests": 1,
+      "geometry": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844
+      },
+      "summary": "La práctica ficticia señala la necesidad de explorar vacaciones y confirmar expectativas antes de explicar la propuesta, manteniendo la escucha calmada.",
+      "steps": [
+        "Mantén la escucha calmada y deja que la pareja termine de responder antes de intervenir en tu próxima visita.",
+        "Confirma qué esperan de sus vacaciones y valida lo que entendiste antes de presentar la propuesta en tu próxima visita.",
+        "Practica esta pregunta al iniciar tu próxima visita: «¿Cómo les gustaría que fueran sus próximas vacaciones?» y profundiza a partir de su respuesta."
+      ]
+    },
+    {
+      "name": "desktop-dark",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "passed": true,
+      "analysisRequests": 1,
+      "geometry": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900
+      },
+      "summary": "La práctica muestra la necesidad de explorar las vacaciones y confirmar expectativas antes de presentar la propuesta.",
+      "steps": [
+        "Mantén la escucha calmada y deja que la pareja termine de explicar lo que busca en sus vacaciones.",
+        "Confirma las prioridades con un breve resumen y pide validación antes de presentar la propuesta.",
+        "Practica en tu próxima bienvenida esta pregunta abierta: «¿Qué les gustaría disfrutar en sus próximas vacaciones?» y escucha antes de explicar."
+      ]
+    }
+  ]
+}

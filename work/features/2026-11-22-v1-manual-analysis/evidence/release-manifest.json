@@ -1,0 +1,27 @@
+{
+  "archive": "/var/folders/st/6m6rs6vd4dx8mv_52r4c1d8w0000gn/T/sa-manual-analysis-release-6wmvu8zv/v1-manual-analysis.tar.gz",
+  "sha256": "ec5616e92c4fd368efe5b43db3d529d54bf5a3f99ab2fc777f9cdb1fce87459c",
+  "files": {
+    "Dockerfile.api": "a1f525e305ec9febafbdcad09e334c563a1c4482795d63a620799f290091ec6d",
+    "api/coach_hermes.py": "ab5722fd2904c596d942eab6623b07bbe222bae82c76d0d65b1ce84e966e4426",
+    "deploy-release.py": "c4adb987420f43084a5da5c06f7c0d3627d77f90a5e4859d0f2e5ac2971718ad",
+    "legacy_deploy.py": "c5ea7a24088e16ee3d37f6d1d9ec8bf6cfc1e05fec18cdba6a475732553a465d",
+    "web/assets/coach-intro-cWnOMky2.svg": "51b19679d7a09253b75c3d07b7a7b7a7b805dc35701d93edc2bd086b7fece332",
+    "web/assets/coach-welcome-BBnch_VM.svg": "4df89625e7c8168528691350a38bbe674edd2f0b70cd63c4905b69ffbc85334f",
+    "web/assets/dm-sans-0-CB7WfZ8W.ttf": "b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9",
+    "web/assets/dm-sans-1-DCQhiIS7.ttf": "376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae",
+    "web/assets/dm-sans-2-CYvJJk-g.ttf": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
+    "web/assets/dm-sans-3-BQ0abr9c.ttf": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
+    "web/assets/pilot-D3RWLa06.css": "6f52338c98f5e037a1776f089e7da14d2c17a0f07fe98fd68e9e385b1cde1b47",
+    "web/assets/pilot-DVnIRFNF.js": "377e596ed10cc8cf7b22d611f3c28aaa64fe5647f10e1a2fe6b37d5a801c55a0",
+    "web/icons/apple-touch-icon.png": "77d498c5bdacfee6112393c28ba74413a355e32eab161dee43c8cd3e3d90fa35",
+    "web/icons/favicon-32.png": "f7f7d422ee26350e738717dc9d0fa3b96eb5e976f5cb11c62ff7e7eb0bdfe76e",
+    "web/icons/icon-192.png": "003ce7a4a9068c91e1b50332ca5aeb37448f0408ed3060e0f21b0391c3e27f8a",
+    "web/icons/icon-512.png": "8abdd1fedb7cbc15cf12b0396397ed59ee7c7c8b3b9ae47518e3a7a250e4285e",
+    "web/icons/icon-maskable-512.png": "8aab21cff343edacec42f239062c2ad08983d13d12266ce9780a7c0fff497adb",
+    "web/manifest.webmanifest": "1a6bd09de5afd0dd0fbca3cdceb90c5663e4f75812e300b8e71b41d933e83810",
+    "web/offline.html": "4b55cc26e6b16bb9de832fdf692dfe93105e8089cc4479724cedfe6dd973939d",
+    "web/sw.js": "0ce6216454d87fc0b412f48a5858d029c498f4fc2d8bfe91c64d11335ee08c73",
+    "web/v1.html": "46e49361252e0531d28a819e95441cbeea39ef83391f2ca17b1ac1025b76a871"
+  }
+}

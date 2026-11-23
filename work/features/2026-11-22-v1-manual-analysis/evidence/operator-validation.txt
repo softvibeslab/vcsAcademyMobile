@@ -1,0 +1,5 @@
+deploy-release.py: syntax OK
+package-release.py: syntax OK
+Valid synthetic archive: {"archiveVerified": true, "filesVerified": 5, "activationAttempted": false}
+Incorrect archive SHA256: rejected before activation
+No SSH, Docker, production file access or deployment was executed.

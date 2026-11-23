@@ -1,0 +1,19 @@
+{
+  "release": "/srv/aisales-v1-release-20261122-manual-analysis",
+  "root": "/srv/aisales-v1-release-20261122-manual-analysis/web",
+  "container": "aisales-v1-manual-analysis-20261122",
+  "image": "sha256:ed2da844f2d1588dff0e0dcc687e6ffb1587f42f0cfba33cf43636b13817830d",
+  "candidate": "hermes_answered",
+  "live": "ready",
+  "archiveSha256": "ec5616e92c4fd368efe5b43db3d529d54bf5a3f99ab2fc777f9cdb1fce87459c",
+  "filesVerified": 21,
+  "htmlSha256": "46e49361252e0531d28a819e95441cbeea39ef83391f2ca17b1ac1025b76a871",
+  "databaseShapeUnchanged": true,
+  "persistentDemoUnchanged": true,
+  "demoSha256": "9f669f3cba4eda416fa441c3e9fcf48018d75ac4a48a484603e072d3d18df6ab",
+  "v5Unchanged": true,
+  "maintenanceUnchanged": true,
+  "productionDatabaseCopied": false,
+  "candidateDataRemoved": true,
+  "rollbackConfig": "/srv/aisales-v1/ops/20261122-manual-analysis/nginx-before.conf"
+}

@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "transportFault": "drop response after real PATCH commit",
+  "savedRevision": 2,
+  "contributionOccurrences": 1,
+  "patchRequestIds": [
+    "4c583cc0-0df0-4f97-901a-98dae83c0ead",
+    "4c583cc0-0df0-4f97-901a-98dae83c0ead"
+  ]
+}

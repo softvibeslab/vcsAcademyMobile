@@ -8,6 +8,8 @@
 **Fecha:** 2026-11-22
 **Version:** v1
 
+**Ajuste posterior del PO:** «cambia la funcionalidad para que el aprendizaje con ia solo lo haga si el usuario le da click en analizar y que igual haya un campo de texto para que agregue algo que aportar y que la respuesta sea mas breve y concisa en pasos a seguir» (conversación, 2026-11-22). La instrucción cambia el disparo automático por análisis bajo demanda, reutiliza la edición de contexto y conserva los contratos de datos aprobados. Especificación y pruebas del ajuste: `work/features/2026-11-22-v1-manual-analysis/cp2-spec.md`. Las descripciones siguientes documentan el flujo base; donde mencionan análisis automático rige ese ajuste explícito.
+
 ## 1. Resumen Ejecutivo
 
 - **Qué se hará:** registrar visitas desde el Coach, consultar su detalle y aprendizaje en Agenda, recuperar contexto en Hermes y recomendar lecciones existentes del Roadmap.

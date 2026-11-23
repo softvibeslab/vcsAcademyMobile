@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "checked_at": "2026-11-23T04:16:51.669834+00:00",
+  "scope": "public_artifacts_only",
+  "https_certificate_verification": true,
+  "checks": [
+    {
+      "name": "local_html_matches_manifest",
+      "passed": true,
+      "expected_sha256": "46e49361252e0531d28a819e95441cbeea39ef83391f2ca17b1ac1025b76a871",
+      "actual_sha256": "46e49361252e0531d28a819e95441cbeea39ef83391f2ca17b1ac1025b76a871"
+    },
+    {
+      "name": "local_asset_inventory_matches_manifest",
+      "passed": true,
+      "manifest_assets": 2,
+      "local_assets": 2,
+      "html_asset_references": 2
+    },
+    {
+      "name": "v1_public_html",
+      "path": "/",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "46e49361252e0531d28a819e95441cbeea39ef83391f2ca17b1ac1025b76a871",
+      "actual_sha256": "46e49361252e0531d28a819e95441cbeea39ef83391f2ca17b1ac1025b76a871",
+      "bytes": 929,
+      "local_sha256": "46e49361252e0531d28a819e95441cbeea39ef83391f2ca17b1ac1025b76a871"
+    },
+    {
+      "name": "local_asset_matches_manifest",
+      "path": "/assets/pilot-D3RWLa06.css",
+      "passed": true,
+      "expected_sha256": "6f52338c98f5e037a1776f089e7da14d2c17a0f07fe98fd68e9e385b1cde1b47",
+      "actual_sha256": "6f52338c98f5e037a1776f089e7da14d2c17a0f07fe98fd68e9e385b1cde1b47"
+    },
+    {
+      "name": "v1_public_asset",
+      "path": "/assets/pilot-D3RWLa06.css",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "6f52338c98f5e037a1776f089e7da14d2c17a0f07fe98fd68e9e385b1cde1b47",
+      "actual_sha256": "6f52338c98f5e037a1776f089e7da14d2c17a0f07fe98fd68e9e385b1cde1b47",
+      "bytes": 89366,
+      "local_sha256": "6f52338c98f5e037a1776f089e7da14d2c17a0f07fe98fd68e9e385b1cde1b47"
+    },
+    {
+      "name": "local_asset_matches_manifest",
+      "path": "/assets/pilot-DVnIRFNF.js",
+      "passed": true,
+      "expected_sha256": "377e596ed10cc8cf7b22d611f3c28aaa64fe5647f10e1a2fe6b37d5a801c55a0",
+      "actual_sha256": "377e596ed10cc8cf7b22d611f3c28aaa64fe5647f10e1a2fe6b37d5a801c55a0"
+    },
+    {
+      "name": "v1_public_asset",
+      "path": "/assets/pilot-DVnIRFNF.js",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "377e596ed10cc8cf7b22d611f3c28aaa64fe5647f10e1a2fe6b37d5a801c55a0",
+      "actual_sha256": "377e596ed10cc8cf7b22d611f3c28aaa64fe5647f10e1a2fe6b37d5a801c55a0",
+      "bytes": 361965,
+      "local_sha256": "377e596ed10cc8cf7b22d611f3c28aaa64fe5647f10e1a2fe6b37d5a801c55a0"
+    },
+    {
+      "name": "v1_public_ready",
+      "passed": true,
+      "http_status": 200,
+      "checks": {
+        "database": true,
+        "seed_users": true,
+        "seed_resources": true
+      }
+    },
+    {
+      "name": "v5_public_html_unchanged",
+      "path": "/",
+      "passed": true,
+      "http_status": 200,
+      "expected_sha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "actual_sha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "bytes": 1010
+    }
+  ],
+  "release_manifest_sha256": "69c24a3a722e95a54403aec7fb987f6c797b9f2f588ff73939d96093198c36f4"
+}

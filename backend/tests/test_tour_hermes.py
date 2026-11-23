@@ -25,7 +25,7 @@ def visit(**changes):
 
 
 def model_analysis(**changes):
-    return {'summary': 'La visita dejó una objeción por explorar.', 'strengths': 'Escuchaste antes de responder.',
+    return {'summary': 'La visita dejó una objeción por explorar.', 'strengths': 'Sigue escuchando antes de responder.',
             'improvement': 'Pregunta qué necesitan aclarar.', 'next_practice': 'Practica una pregunta abierta y espera la respuesta.',
             'recommended_steps': [{'step_id': 'step_9', 'reason': 'Ayuda a aclarar la objeción.'}, {'step_id': 'step_4', 'reason': 'Practica escuchar la motivación.'}], **changes}
 
@@ -130,6 +130,40 @@ class TourContextTests(unittest.TestCase):
 
 
 class TourAnalysisTests(unittest.TestCase):
+    def test_new_analysis_rejects_overlong_summary_or_actions_without_truncation(self):
+        for field, limit in {'summary': 240, 'strengths': 180, 'improvement': 180, 'next_practice': 180}.items():
+            with self.subTest(field=field):
+                output = model_analysis(**{field: 'á' * (limit + 1)})
+                with patch.object(coach.HermesCoachProvider, '_request', return_value=json.dumps(output)):
+                    with self.assertRaises(coach.CoachUnavailable) as caught:
+                        coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+                self.assertEqual(caught.exception.status, 503)
+
+    def test_new_analysis_accepts_character_boundaries_and_preserves_public_fields(self):
+        fields = {'summary': 'á' * 240, 'strengths': 'á' * 180, 'improvement': 'á' * 180, 'next_practice': 'á' * 180}
+        with patch.object(coach.HermesCoachProvider, '_request', return_value=json.dumps(model_analysis(**fields))):
+            result = coach.generate_visit_analysis(visit(), KNOWLEDGE, CATALOG)
+        for field, text in fields.items():
+            self.assertEqual(result[field], text)
+        self.assertEqual(set(result), {'context_revision', 'status', 'summary', 'strengths', 'improvement', 'next_practice', 'recommended_steps', 'provider', 'generated_at'})
+
+    def test_analysis_prompt_requests_one_sentence_and_three_short_actionable_steps(self):
+        data = visit(context='Escenario ficticio.\n\nAporte para el análisis:\nQuiero practicar preguntas abiertas.', feedback=None)
+        with patch.object(coach.HermesCoachProvider, '_request', return_value=json.dumps(model_analysis())) as request:
+            coach.generate_visit_analysis(data, KNOWLEDGE, CATALOG)
+        messages = request.call_args.args[0]
+        instruction = messages[0]['content']
+        self.assertIn('summary: una sola frase', instruction)
+        self.assertIn('tres acciones concretas en imperativo', instruction)
+        self.assertIn('strengths: qué seguir haciendo', instruction)
+        self.assertIn('improvement: qué mejorar', instruction)
+        self.assertIn('next_practice: qué practicar a continuación', instruction)
+        self.assertIn('Si faltan datos, pide el dato útil', instruction)
+        self.assertIn('summary240, strengths180, improvement180, next_practice180', instruction)
+        self.assertIn('reason (texto de hasta120 caracteres)', instruction)
+        self.assertEqual(recorded_visit(messages)['context'], data['context'])
+        self.assertNotIn('Aporte para el análisis', messages[-1]['content'])
+
     def test_analysis_is_validated_sorted_and_titled_from_allowed_catalog(self):
         data = visit()
         with patch.object(coach.HermesCoachProvider, '_request', return_value=json.dumps(model_analysis(), ensure_ascii=False)) as request:

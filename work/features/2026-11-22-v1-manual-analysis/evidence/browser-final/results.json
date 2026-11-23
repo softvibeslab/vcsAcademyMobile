@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "live": false,
+  "cases": [
+    {
+      "name": "android-dark",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark",
+      "passed": true,
+      "analysisRequests": 3,
+      "geometry": {
+        "width": 360,
+        "height": 800,
+        "scrollWidth": 360,
+        "scrollHeight": 800
+      },
+      "summary": "Practicaron una bienvenida con escucha activa.",
+      "steps": [
+        "Preguntaste antes de explicar.",
+        "Confirma la prioridad antes de pasar a la propuesta.",
+        "Practica una pregunta abierta de bienvenida."
+      ]
+    },
+    {
+      "name": "iphone-light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "passed": true,
+      "analysisRequests": 2,
+      "geometry": {
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390,
+        "scrollHeight": 844
+      },
+      "summary": "Practicaron una bienvenida con escucha activa.",
+      "steps": [
+        "Preguntaste antes de explicar.",
+        "Confirma la prioridad antes de pasar a la propuesta.",
+        "Practica una pregunta abierta de bienvenida."
+      ]
+    },
+    {
+      "name": "desktop-dark",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "passed": true,
+      "analysisRequests": 2,
+      "geometry": {
+        "width": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollHeight": 900
+      },
+      "summary": "Practicaron una bienvenida con escucha activa.",
+      "steps": [
+        "Preguntaste antes de explicar.",
+        "Confirma la prioridad antes de pasar a la propuesta.",
+        "Practica una pregunta abierta de bienvenida."
+      ]
+    }
+  ]
+}

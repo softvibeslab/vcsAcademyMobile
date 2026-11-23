@@ -1,0 +1,20 @@
+{
+  "provider": "hermes",
+  "revision": 2,
+  "analysis": {
+    "context_revision": 2,
+    "status": "ready",
+    "summary": "La práctica mostró la importancia de confirmar las prioridades de viaje antes de presentar la propuesta.",
+    "strengths": "Mantén la escucha tranquila y deja que la pareja termine su respuesta antes de intervenir en tu próxima visita.",
+    "improvement": "Confirma qué es lo más importante para la pareja en sus vacaciones antes de explicar la propuesta.",
+    "next_practice": "Practica esta pregunta abierta al iniciar el descubrimiento: «¿Cómo serían unas vacaciones ideales para ustedes?»",
+    "recommended_steps": [],
+    "provider": "hermes",
+    "generated_at": "2026-11-23T04:16:34.684577+00:00"
+  },
+  "savedWithoutAnalysis": true,
+  "contributionReplayUnchanged": true,
+  "analysisReplayUnchanged": true,
+  "retentionUnchanged": true,
+  "goalSheetUnchanged": true
+}

@@ -1,0 +1,74 @@
+✔ optional contribution preserves context and uses its existing storage contract (0.383417ms)
+✔ contribution enforces context, combined characters, UTF-8 bytes and valid Unicode before writing (2.025708ms)
+✔ blank contribution analyzes explicitly without a PATCH, and finished tasks replay locally (0.21825ms)
+✔ contribution is saved before inference, which receives the returned revision and a separate UUID (0.574291ms)
+✔ a provider retry keeps the saved contribution and repeats only analysis with the same UUID (0.181708ms)
+✔ a lost PATCH response replays exactly the same payload without appending again (0.134875ms)
+✖ a refresh after a lost PATCH response preserves the pending request instead of appending again (0.726875ms)
+✔ a concurrent save conflict never invokes analysis (0.114ms)
+✔ a replay that now returns another edit stops before inference (0.099417ms)
+✔ double clicks share one in-flight operation (0.1475ms)
+✔ an existing ready result is preserved unless the user adds a contribution (0.158583ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43.255458
+
+✖ failing tests:
+
+test at frontend/src/pilot/tour-analysis.test.mjs:92:1
+✖ a refresh after a lost PATCH response preserves the pending request instead of appending again (0.726875ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be reference-equal to "expected":
+  + actual - expected
+
+    {
+      analysisRequestId: 'request-2',
+      contribution: 'Una pregunta abierta',
+      finished: false,
+      inFlight: null,
+      patchBody: {
+        action: 'edit',
+  +     context: 'Contexto ficticio\n' +
+  +       '\n' +
+  +       'Aporte para el análisis:\n' +
+  +       'Una pregunta abierta\n' +
+  +       '\n' +
+  +       'Aporte para el análisis:\n' +
+  +       'Una pregunta abierta',
+  +     expected_revision: 2,
+  -     context: 'Contexto ficticio\n\nAporte para el análisis:\nUna pregunta abierta',
+  -     expected_revision: 1,
+        request_id: 'request-1'
+      },
+      result: null,
+      savedVisit: null,
+      visit: {
+        analysis: null,
+  +     context: 'Contexto ficticio\n\nAporte para el análisis:\nUna pregunta abierta',
+  -     context: 'Contexto ficticio',
+        feedback: {
+          happened: 'Escuché sus prioridades',
+          improve_next: '',
+          worked: ''
+        },
+        id: 'visit-a',
+  +     revision: 2,
+  -     revision: 1,
+        status: 'completed'
+      }
+    }
+
+      at TestContext.<anonymous> (file:///Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/frontend/src/pilot/tour-analysis.test.mjs:100:10)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { visit: { id: 'visit-a', revision: 2, status: 'completed', context: 'Contexto ficticio\n\nAporte para el análisis:\nUna pregunta abierta', feedback: [Object], analysis: null }, contribution: 'Una pregunta abierta', patchBody: { action: 'edit', context: 'Contexto ficticio\n\nAporte para el análisis:\nUna pregunta abierta\n\nAporte para el análisis:\nUna pregunta abierta', expected_revision: 2, request_id: 'request-1' }, analysisRequestId: 'request-2', savedVisit: null, finished: false, result: null, inFlight: null },
+    expected: { visit: { id: 'visit-a', revision: 1, status: 'completed', context: 'Contexto ficticio', feedback: [Object], analysis: null }, contribution: 'Una pregunta abierta', patchBody: { action: 'edit', context: 'Contexto ficticio\n\nAporte para el análisis:\nUna pregunta abierta', expected_revision: 1, request_id: 'request-1' }, analysisRequestId: 'request-2', savedVisit: null, finished: false, result: null, inFlight: null },
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

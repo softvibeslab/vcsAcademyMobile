@@ -1,0 +1,18 @@
+✔ optional contribution preserves context and uses its existing storage contract (0.365667ms)
+✔ contribution enforces context, combined characters, UTF-8 bytes and valid Unicode before writing (1.921291ms)
+✔ blank contribution analyzes explicitly without a PATCH, and finished tasks replay locally (0.206375ms)
+✔ contribution is saved before inference, which receives the returned revision and a separate UUID (0.384958ms)
+✔ a provider retry keeps the saved contribution and repeats only analysis with the same UUID (0.18075ms)
+✔ a lost PATCH response replays exactly the same payload without appending again (0.168417ms)
+✔ a concurrent save conflict never invokes analysis (0.080042ms)
+✔ a replay that now returns another edit stops before inference (0.069916ms)
+✔ double clicks share one in-flight operation (0.089167ms)
+✔ an existing ready result is preserved unless the user adds a contribution (0.125333ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39.029625

@@ -56,6 +56,16 @@ html[data-theme="light"] .tour-dialog form > footer button:not(.tour-secondary):
 .tour-analysis-content summary { min-height: 44px; padding: 10px 0; cursor: pointer; color: var(--tour-action); }
 .tour-analysis-content p { margin: 4px 0 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
 .tour-analysis-content small { color: var(--muted); font-size: 11px; }
+.tour-analysis-content h4 { font-size: 14px; margin: 10px 0 6px; }
+.tour-analysis-steps { margin: 0 0 12px; padding-left: 23px; }
+.tour-analysis-steps li { padding-left: 3px; margin-bottom: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.tour-analysis-steps li::marker { color: var(--tour-action); font-weight: 700; }
+.tour-analysis-input { margin-top: 14px; }
+.tour-analysis-input textarea { display: block; box-sizing: border-box; width: 100%; min-height: 82px; max-height: 220px; resize: vertical; font-size: 16px; line-height: 1.5; border: 1px solid var(--line); border-radius: 10px; color: var(--text); background: var(--bg); padding: 10px; }
+.tour-analysis-input textarea::placeholder { color: var(--muted); opacity: 1; }
+.tour-analyze-button { min-height: 44px; padding: 10px 18px; border: 1px solid var(--tour-action); border-radius: 10px; background: var(--tour-action); color: #08150d; font-size: 14px; font-weight: 650; }
+html[data-theme="light"] .tour-analyze-button:not(:disabled) { color: #fff; }
+.tour-analyze-button:disabled { background: var(--raised); color: var(--muted); border-color: var(--line); }
 .tour-recommendations { display: grid; gap: 8px; margin: 12px 0; }
 .tour-recommendations a { display: flex; flex-direction: column; gap: 5px; padding: 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--bg); min-height: 44px; }
 .tour-recommendations a strong { font-size: 14px; color: var(--text); }

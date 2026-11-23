@@ -1,0 +1,2 @@
+FROM aisales-v1-api:20261122-tours
+COPY api/coach_hermes.py /app/backend/app/coach_hermes.py

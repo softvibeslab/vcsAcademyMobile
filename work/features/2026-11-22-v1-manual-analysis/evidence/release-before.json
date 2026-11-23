@@ -1,0 +1,26 @@
+{
+  "v5": {
+    "containerId": "bb6574ae827be1350f1a4bf931f9b001388dbf117fb2190683d0100fe2d938a8",
+    "image": "sha256:c8f3fc47861568675f3a6a92ac00c1e2f0462f4409c3aed20b1216b3f9813556",
+    "running": true,
+    "nginx": "2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d",
+    "html": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+    "startedAt": "2026-11-20T18:25:07.022636776Z"
+  },
+  "database": {
+    "schema": "4240882e62459e4fd28b19fb6c5b310887f1892b02d9ac5891f8afe530ec67f6",
+    "users": 8,
+    "securityDigests": {
+      "users": "09f9a01c2f4802c0f489f20a48628575465f8c20e0b15a86f5411124ce09eb92",
+      "access_items": "67e45aa3959079ff02754b343e17389634b7c60d0b073db947cb3238257d26a1",
+      "license_codes": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "license_redemptions": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "demoSha256": "9f669f3cba4eda416fa441c3e9fcf48018d75ac4a48a484603e072d3d18df6ab",
+  "maintenance": {
+    "/opt/salesacademy-v1-tours/maintenance.py": "8cbaab8ac5dd633519dc13bf0406435cbab9241e1415b75a3e4dcb9312fdcabf",
+    "/etc/systemd/system/salesacademy-v1-tours-maintenance.service": "86b2122c62ce905bc776d148cf649195a21d0b52867a21ff98f4f4f404042e28",
+    "/etc/systemd/system/salesacademy-v1-tours-maintenance.timer": "7d631279476c784bc955162f90e9d868cd767d3179086db028368ed7e33a8e2a"
+  }
+}

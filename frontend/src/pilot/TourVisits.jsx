@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import { X, LoaderCircle, CalendarDays, ArrowRight } from "lucide-react";
 import { Button, Card, ErrorBox, Field, Header, useRemote } from "./ui";
 import { buildVisitPayload, cancunParts, initialVisitFields, isVisitId, recommendationLinks, shiftDate, TOUR_INTENTS, TOUR_STATUS, visitInstant, visitLabel, visitTime } from "./tour-model.mjs";
+import { analysisTaskForVisit, contributionCapacity, runAnalysisTask } from "./tour-analysis.mjs";
 import "./tour-visits.css";
 
 export function useTourVisits(api, from, to, revision = 0, enabled = true) {
@@ -45,12 +46,6 @@ export function useTourVisit(api, id, revision = 0) {
   }, [api, id, revision, tick]);
   return { ...(state.id === (id || null) ? state : { id, visit: null, busy: !!id, error: "", code: null }), retry,
     replace: visit => setState({ id, visit, busy: false, error: "", code: null }) };
-}
-
-async function analysisRequest(api, visit, requestId) {
-  const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), 45000);
-  try { return await api(`/api/tour-visits/${visit.id}/analysis`, { method: "POST", signal: controller.signal, body: JSON.stringify({ expected_revision: visit.revision, request_id: requestId }) }); }
-  finally { clearTimeout(timer); }
 }
 
 export function TourRegistrationPrompt({ onChoose, onDismiss }) {
@@ -99,13 +94,8 @@ export function TourVisitDialog({ api, intent, visit = null, initialContext = ""
         body: JSON.stringify({ ...payload, request_id: requestId.current, ...(target ? { expected_revision: target.revision } : {}) }),
       });
       const value = result.visit;
-      if (mounted.current) { setSaved(value); setPhase(intent === "reflect" ? "Registro guardado. Generando análisis…" : "Registro guardado."); }
+      if (mounted.current) { setSaved(value); setPhase("Registro guardado."); }
       onChanged?.();
-      if (intent === "reflect") {
-        try { await analysisRequest(api, value, crypto.randomUUID()); }
-        catch { /* The visit is already saved; its detail exposes the recoverable analysis state. */ }
-        onChanged?.();
-      }
       finish(value);
     } catch (error) {
       if (mounted.current) setError(error.status === 409 ? `${error.message} Cierra y vuelve a abrir la visita para revisar su versión actual.` : error.message);
@@ -129,7 +119,7 @@ export function TourVisitDialog({ api, intent, visit = null, initialContext = ""
           <Field label="¿Qué mejorarías o harías después?"><textarea rows={2} maxLength={2000} value={fields.improve_next} disabled={busy} onChange={event => set("improve_next", event.target.value)} /></Field>
         </>}
         <p className="tour-help">{count.toLocaleString("es-MX")}/10 000 caracteres. Revisa el contexto antes de guardarlo.</p>
-        {intent === "reflect" && <p className="tour-help">Al guardar, este contexto y feedback se envían al Coach para generar tu análisis.</p>}
+        {intent === "reflect" && <p className="tour-help">Guardar no activa la IA. Después puedes pulsar Analizar desde el detalle de la visita.</p>}
         <ErrorBox error={error} />
         {phase && <p className="tour-status" role="status"><LoaderCircle size={16} className={busy ? "spin" : ""} />{phase}</p>}
       </div>
@@ -139,30 +129,61 @@ export function TourVisitDialog({ api, intent, visit = null, initialContext = ""
 }
 
 export function TourAnalysis({ api, visit, onChanged }) {
-  const [busy, setBusy] = useState(false), [error, setError] = useState("");
-  const request = useRef({ revision: null, id: null }), inFlight = useRef(false), alive = useRef(true);
+  const [busy, setBusy] = useState(false), [error, setError] = useState(""), [phase, setPhase] = useState("");
+  const [contribution, setContribution] = useState(""), [savedContribution, setSavedContribution] = useState(false), [conflict, setConflict] = useState(false);
+  const request = useRef(null), inFlight = useRef(false), alive = useRef(true);
+  const contributionHelpId = useId();
   const steps = useRemote(api, "/api/blueprint/steps", visit.revision);
   useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
   const analysis = visit.analysis;
   const stale = analysis?.status === "stale" || (analysis && analysis.context_revision !== visit.revision);
   const ready = analysis?.status === "ready" && !stale;
   const links = recommendationLinks(ready ? analysis : null, steps.data?.steps);
+  const capacity = contributionCapacity(visit);
   async function analyze() {
-    if (inFlight.current) return; inFlight.current = true; setBusy(true); setError("");
-    if (request.current.revision !== visit.revision) request.current = { revision: visit.revision, id: crypto.randomUUID() };
-    try { await analysisRequest(api, visit, request.current.id); }
-    catch (error) { if (alive.current) setError(error.message); }
-    finally { inFlight.current = false; if (alive.current) setBusy(false); onChanged?.(); }
+    if (inFlight.current || conflict || (ready && !contribution.trim())) return;
+    try { request.current = analysisTaskForVisit(request.current, visit, contribution); }
+    catch (error) { setError(error.message); return; }
+    const task = request.current;
+    inFlight.current = true; setBusy(true); setError("");
+    let updated = null;
+    try {
+      const result = await runAnalysisTask(api, task, {
+        onPhase: value => { if (alive.current) setPhase(value); },
+        onSaved: () => { if (alive.current) { setContribution(""); setSavedContribution(true); } },
+      });
+      updated = { ...(task.savedVisit || task.visit), analysis: result.analysis };
+    } catch (error) {
+      if (alive.current) {
+        setError(error.status === 409 ? "La visita cambió. Actualiza el detalle para revisarla antes de analizar." : task.savedVisit ? `Tu aporte está guardado. ${error.message}` : error.message);
+        if (error.status === 409) setConflict(true);
+      }
+    } finally {
+      inFlight.current = false;
+      if (alive.current) { setBusy(false); setPhase(""); onChanged?.(updated || task.savedVisit || undefined); }
+    }
+  }
+  async function refreshVisit() {
+    if (inFlight.current) return;
+    inFlight.current = true; setBusy(true);
+    try {
+      const result = await api(`/api/tour-visits/${visit.id}`);
+      if (alive.current) { request.current = null; setConflict(false); setError(""); onChanged?.(result.visit); }
+    } catch (error) { if (alive.current) setError(error.message); }
+    finally { inFlight.current = false; if (alive.current) setBusy(false); }
   }
   return <section className="tour-analysis" aria-label="Aprendizaje con IA">
     <h3>Aprendizaje con IA</h3>
     {stale && <p className="tour-help">Análisis desactualizado. Actualízalo con el contexto que acabas de guardar.</p>}
-    {(analysis?.summary || ready) && <details open={ready} className="tour-analysis-content"><summary>{stale ? "Ver análisis anterior" : "Ver análisis del Coach"}</summary><p>{analysis.summary}</p>{[["Algo que funcionó", "strengths"], ["Oportunidad de mejora", "improvement"], ["Siguiente práctica", "next_practice"]].map(([label, field]) => analysis[field] && <div key={field}><strong>{label}</strong><p>{analysis[field]}</p></div>)}<small>Generado por IA · {analysis.provider === "hermes" ? "Hermes" : "Coach"}{analysis.generated_at ? ` · ${cancunParts(new Date(analysis.generated_at)).date}` : ""}</small></details>}
+    {(analysis?.summary || ready) && <details open={ready} className="tour-analysis-content"><summary>{stale ? "Ver análisis anterior" : "Ver análisis del Coach"}</summary><p>{analysis.summary}</p><h4>Pasos a seguir</h4><ol className="tour-analysis-steps">{["strengths", "improvement", "next_practice"].map(field => analysis[field] && <li key={field}>{analysis[field]}</li>)}</ol><small>Generado por IA · {analysis.provider === "hermes" ? "Hermes" : "Coach"}{analysis.generated_at ? ` · ${cancunParts(new Date(analysis.generated_at)).date}` : ""}</small></details>}
     {!ready && !stale && !busy && <p className="tour-help">{analysis?.status === "failed" ? "Análisis no disponible. Puedes reintentar." : analysis?.status === "pending" ? "El análisis se está preparando. Si no termina, puedes reintentar." : "Aún no hay análisis de esta visita."}</p>}
     {ready && <div className="tour-recommendations">{steps.busy ? <p className="tour-help">Comprobando lecciones disponibles…</p> : steps.error ? <ErrorBox error={steps.error} retry={steps.retry} /> : links.length ? links.map(link => <a key={link.step_id} href={link.href}><strong>{link.title}</strong><span>{link.reason}</span>{link.notice && <small>{link.notice}</small>}<span className="tour-link-label">{link.notice ? "Ver requisitos en Roadmap" : "Abrir lección"} <ArrowRight size={14} /></span></a>) : <p className="tour-help">No hay una recomendación específica disponible para este caso.</p>}</div>}
+    {visit.status !== "cancelled" && <div className="tour-analysis-input"><Field label="¿Algo más que quieras aportar?"><textarea rows={3} value={contribution} disabled={busy || conflict || request.current?.saveUncertain || capacity === 0} aria-describedby={contributionHelpId} placeholder="Una duda, un detalle o algo que quieras practicar." onChange={event => { setContribution(event.target.value); setError(""); setSavedContribution(false); }} /></Field><p id={contributionHelpId} className="tour-help">Opcional. Tu aporte se guardará en el contexto de esta visita al pulsar Analizar.{capacity === 0 ? " El contexto alcanzó su límite; puedes editarlo desde Editar visita." : ` ${[...contribution].length.toLocaleString("es-MX")} de hasta ${capacity.toLocaleString("es-MX")} caracteres disponibles, según el texto.`}</p>{request.current?.saveUncertain && <p className="tour-help">Tu aporte puede haberse guardado. Reintenta para confirmarlo antes de cambiarlo.</p>}{ready && !contribution.trim() && <p className="tour-help">Añade un aporte si quieres generar un nuevo análisis.</p>}</div>}
+    {savedContribution && <p role="status" className="tour-status">Tu aporte está guardado en la visita.</p>}
     <ErrorBox error={error} />
-    {busy && <p role="status" className="tour-status"><LoaderCircle size={16} className="spin" />Analizando visita…</p>}
-    {!ready && visit.status !== "cancelled" && <button type="button" className="tour-secondary" disabled={busy} onClick={analyze}>{busy ? "Analizando…" : stale ? "Actualizar análisis" : ["failed", "pending"].includes(analysis?.status) || error ? "Reintentar análisis" : "Generar análisis con IA"}</button>}
+    {busy && <p role="status" className="tour-status"><LoaderCircle size={16} className="spin" />{phase === "saving" ? "Guardando tu aporte…" : phase === "analyzing" ? "Analizando visita…" : "Actualizando visita…"}</p>}
+    {conflict && <button type="button" className="tour-secondary" disabled={busy} onClick={refreshVisit}>Actualizar visita</button>}
+    {visit.status !== "cancelled" && <button type="button" className="tour-analyze-button" disabled={busy || conflict || (ready && !contribution.trim())} onClick={analyze}>{busy ? phase === "saving" ? "Guardando…" : "Analizando…" : ["failed", "pending"].includes(analysis?.status) || error ? "Reintentar análisis" : "Analizar"}</button>}
   </section>;
 }
 
@@ -171,7 +192,7 @@ export function TourVisitDetail({ api, visitId, revision = 0, onChanged, onDelet
   const [form, setForm] = useState(null), [confirm, setConfirm] = useState(null), [busy, setBusy] = useState(false), [error, setError] = useState("");
   const mutation = useRef(null), inFlight = useRef(false);
   const visit = detail.visit;
-  function changed() { detail.retry(); onChanged?.(); }
+  function changed(updatedVisit) { if (updatedVisit) detail.replace(updatedVisit); detail.retry(); onChanged?.(); }
   async function mutate(action) {
     if (!visit || inFlight.current) return;
     inFlight.current = true; setBusy(true); setError("");
@@ -189,7 +210,7 @@ export function TourVisitDetail({ api, visitId, revision = 0, onChanged, onDelet
     <header><div><span className={`tour-status-chip is-${visit.status}`}>{TOUR_STATUS[visit.status]}</span><h2>{visitLabel(visit)}</h2><p>{visit.event_date} · {visitTime(visit)} · Cancún</p></div>{onClose && <button type="button" aria-label="Cerrar detalle de visita" onClick={onClose}><X size={18} /></button>}</header>
     <div className="tour-detail-body"><strong>Contexto guardado</strong><p className="tour-preserve">{visit.context || "Sin contexto adicional."}</p>
       {visit.feedback && <section className="tour-feedback"><h3>Smart Diary</h3>{[["Qué pasó", "happened"], ["Qué funcionó", "worked"], ["Qué mejorarías o harías después", "improve_next"]].map(([label, field]) => visit.feedback[field] && <div key={field}><strong>{label}</strong><p className="tour-preserve">{visit.feedback[field]}</p></div>)}</section>}
-      <TourAnalysis key={`${visit.id}:${visit.revision}`} api={api} visit={visit} onChanged={changed} />
+      <TourAnalysis key={visit.id} api={api} visit={visit} onChanged={changed} />
       <div className="tour-record-actions"><a href={`#coach/${visit.id}`}>Continuar con el Coach</a>
         {visit.status === "scheduled" && <button type="button" disabled={busy} onClick={() => mutate("start")}>Iniciar visita</button>}
         {["scheduled", "in_progress"].includes(visit.status) && <button type="button" disabled={busy} onClick={event => { event.currentTarget.focus({ preventScroll: true }); setForm("reflect"); }}>Registrar cómo me fue</button>}

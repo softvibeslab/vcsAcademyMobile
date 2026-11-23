@@ -1,0 +1,38 @@
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:563: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow()
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/main.py:594: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat(),
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:455: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow().isoformat()
+/Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:210: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE users SET plan = ?, plan_expires_at = ?, updated_at = ? WHERE id = ?", (plan, expires_at, datetime.utcnow().isoformat(), user_id))
+test_analysis_failure_saved_then_retry_and_success_replay (__main__.TourVisitsContract.test_analysis_failure_saved_then_retry_and_success_replay) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/persistence.py:585: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  (token, datetime.utcnow().isoformat()),
+ok
+test_analysis_pending_lease_recovery_and_outdated_response (__main__.TourVisitsContract.test_analysis_pending_lease_recovery_and_outdated_response) ... ok
+test_analysis_revalidates_roadmap_access_after_inference (__main__.TourVisitsContract.test_analysis_revalidates_roadmap_access_after_inference) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:181: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE access_items SET visible = ?, updated_at = ? WHERE id = ?", (1 if visible else 0, datetime.utcnow().isoformat(), item_id))
+ok
+test_cancelled_visit_is_readonly_except_delete (__main__.TourVisitsContract.test_cancelled_visit_is_readonly_except_delete) ... ok
+test_chat_rejects_foreign_context_before_provider (__main__.TourVisitsContract.test_chat_rejects_foreign_context_before_provider) ... ok
+test_create_replay_conflict_and_multiple_visits_do_not_touch_goalsheet (__main__.TourVisitsContract.test_create_replay_conflict_and_multiple_visits_do_not_touch_goalsheet) ... ok
+test_delete_tombstone_prevents_recreation (__main__.TourVisitsContract.test_delete_tombstone_prevents_recreation) ... ok
+test_edit_or_delete_during_inference_never_restores_old_context (__main__.TourVisitsContract.test_edit_or_delete_during_inference_never_restores_old_context) ... ok
+test_expiry_read_and_purge_preserve_future_visits (__main__.TourVisitsContract.test_expiry_read_and_purge_preserve_future_visits) ... ok
+test_invalid_unicode_rejected_before_hash_or_persistence (__main__.TourVisitsContract.test_invalid_unicode_rejected_before_hash_or_persistence) ... ok
+test_list_cursor_owner_range_and_detail (__main__.TourVisitsContract.test_list_cursor_owner_range_and_detail) ... ok
+test_migration_repeated_keeps_existing_rows (__main__.TourVisitsContract.test_migration_repeated_keeps_existing_rows) ... ok
+test_offset_cancun_and_invalid_or_old_times (__main__.TourVisitsContract.test_offset_cancun_and_invalid_or_old_times) ... ok
+test_owner_and_permissions_apply_to_every_operation (__main__.TourVisitsContract.test_owner_and_permissions_apply_to_every_operation) ... /Users/rogergv/Documents/SoftvibesLab/SalesAcademyVibes/vcsAcademyMobile/backend/app/access.py:179: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  db.execute("UPDATE access_items SET level = ?, updated_at = ? WHERE id = ?", (level, datetime.utcnow().isoformat(), item_id))
+ok
+test_payload_limits_and_unapproved_fields (__main__.TourVisitsContract.test_payload_limits_and_unapproved_fields) ... ok
+test_purge_removes_analysis_and_tombstones_expire (__main__.TourVisitsContract.test_purge_removes_analysis_and_tombstones_expire) ... ok
+test_revision_transition_and_completed_feedback_preserves_date (__main__.TourVisitsContract.test_revision_transition_and_completed_feedback_preserves_date) ... ok
+test_simultaneous_create_request_only_creates_once (__main__.TourVisitsContract.test_simultaneous_create_request_only_creates_once) ... ok
+test_timestamp_contract_requires_iso_text_not_epoch_numbers (__main__.TourVisitsContract.test_timestamp_contract_requires_iso_text_not_epoch_numbers) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.322s
+
+OK

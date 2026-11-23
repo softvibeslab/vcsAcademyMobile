@@ -6,6 +6,8 @@
 **Date:** 2026-11-22 (America/Cancun)
 **Historia:** work/stories/2026-11-22-v1-tour-learning.md
 
+**Ajuste solicitado posteriormente por el PO (2026-11-22):** el análisis pasa a ser exclusivamente manual mediante **Analizar**, permite un aporte opcional guardado mediante la edición de contexto existente y presenta tres pasos breves. Ver `../2026-11-22-v1-manual-analysis/cp2-spec.md`. Esa instrucción sustituye el disparo después de guardar feedback descrito abajo; se conserva aquí el contrato originalmente aprobado y su historial.
+
 ## 1. Experiencia propuesta
 
 Cuando el asesor mencione un tour o una visita en el Coach, aparecerá una pregunta breve:
