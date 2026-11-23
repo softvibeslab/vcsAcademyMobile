@@ -118,11 +118,21 @@ Estados: vacío, borrador, guardando, guardado, analizando, análisis disponible
 - Publicación aislada en aisalesv1; V5 no se migra. La reversión de app no borra tablas ni restaura automáticamente una DB antigua. La tarea de expiración se conserva mientras existan registros nuevos, incluso si se revierte la interfaz.
 - Retención de nuevos respaldos diarios V1: 7 días, conforme a la preferencia previa del usuario. Por ello, una copia residual puede permanecer hasta 7 días adicionales tras su eliminación de la app. Toda restauración ejecuta expiración antes de habilitar tráfico. Verificar el mecanismo real antes de declarar esa retención implementada; no aplicar el plazo al histórico ajeno a esta feature.
 
-## 6. Aceptación y plan de pruebas
+## 6. Criterios de aceptacion y plan de pruebas
 
 La historia contiene 10 criterios AC-01–AC-10, 10 escenarios y 5 sets sintéticos. Trazabilidad completa en `work/stories/2026-11-22-v1-tour-learning.md`; pares TDD en CP3.
 
 Gates: registro y replay sin duplicados; visitas múltiples por día; fechas Cancún; contexto tras recargar; aislamiento entre cuentas; recomendaciones reales/autorizadas; errores Hermes con datos guardados; revisión antigua no sobrescribe; borrado/caducidad; regresión Goal Sheet/Agenda/Roleplay/V5; inferencia real con datos sintéticos.
+
+### Requisitos no funcionales
+
+| ID | Requisito | Evidencia prevista |
+|---|---|---|
+| NFR-01 | Contraste normal ≥4.5:1, targets44px, foco visible e input16px | Colores computados y QA de teclado/viewport |
+| NFR-02 | Guardado independiente de inferencia, límites de payload y timeout del Coach conservados | Bridge simulado lento/fallido y replay |
+| NFR-03 | Owner validado antes de leer o inferir; auditoría sin narrativa | Pruebas de acceso cruzado y logs sintéticos |
+| NFR-04 | Migración aditiva repetible, compatibilidad legacy y aislamiento V5 | Copia fixture, suites y snapshot de publicación |
+| NFR-05 | Fecha calendario Cancún e instantes UTC, incluidos bordes de día | Reloj controlado y DST/offset explícito |
 
 ## 7. RACI y capas
 

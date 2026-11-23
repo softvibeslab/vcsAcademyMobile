@@ -25,4 +25,4 @@ Excepcion TDD: esta entrega sólo prepara documentación y contratos. No se modi
 
 ## Evidencia de gates
 
-Ver `evidence/readiness-review.txt`: resultado esperado NO LISTA mientras el PO no apruebe. `evidence/governance-proposal.txt` comprueba la estructura documental; no sustituye la aprobación ni las pruebas funcionales.
+Ver `evidence/readiness-review.txt`: resultado NO LISTA con 28 pendientes ligados a aprobación humana, diseño/criterios/datos aún propuestos. `evidence/governance-proposal.txt` mantiene gobierno INCOMPLETO por ese gate; no se declara aprobado. La primera ejecución detectó encabezados de problema/aceptación y NFR no reconocibles por el verificador; se hicieron explícitos y se repitió el gate.

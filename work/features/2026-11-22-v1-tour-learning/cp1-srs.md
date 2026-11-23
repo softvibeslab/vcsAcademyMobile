@@ -4,6 +4,10 @@
 
 Como asesor con acceso a Goal Sheet y Coach, quiero convertir una conversación sobre una visita en un registro consultable, para continuar la atención y aprender de lo ocurrido sin transcribirlo de nuevo.
 
+## Problema y necesidades
+
+El contexto se pierde al salir del Coach y las notas del Diary no alimentan la Agenda. Se necesita una identidad por visita, recuperación por propietario y una recomendación de aprendizaje vinculada al mismo registro.
+
 ## Resultado esperado
 
 Hablar del tour → elegir propósito → revisar y guardar → consultar en Agenda → obtener aprendizaje y abrir un paso autorizado del Roadmap → retomar con el Coach conservando el contexto guardado.
