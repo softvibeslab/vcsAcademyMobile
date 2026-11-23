@@ -75,9 +75,9 @@
 .sa-month-kpi { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; background: var(--sa-raised); border: 1px solid var(--sa-border); border-radius: 999px; white-space: nowrap; font-size: 11px; line-height: 16.5px; font-weight: 500; color: var(--sa-secondary); }
 .sa-month-kpi i { width: 6px; height: 6px; border-radius: 50%; background: var(--sa-dot); flex-shrink: 0; }
 .sa-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; margin: 0 calc(0px - var(--sa-gutter)); padding: 4px 0 2px; border-bottom: 1px solid var(--sa-line); font-size: 11px; font-weight: 600; line-height: 16.5px; color: var(--sa-subtle); }
-.sa-month-scroll { flex: 1; min-height: 264px; overflow: hidden; background: var(--sa-surface); }
+.sa-month-scroll { flex: 1; min-height: 70px; overflow-y: auto; overscroll-behavior: contain; background: var(--sa-surface); }
 .sa-month-scroll.is-list-view { overflow-y: auto; overscroll-behavior: contain; }
-.sa-month-matrix { display: grid; grid-template-rows: repeat(6, minmax(0, 1fr)); height: 100%; min-height: 0; }
+.sa-month-matrix { display: grid; grid-template-rows: repeat(6, minmax(0, 1fr)); height: 100%; min-height: 264px; }
 .sa-month-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); min-height: 0; border-bottom: 1px solid var(--sa-grid-line); }
 .smart-agenda-route .sa-month-day { min-height: 0; min-width: 0; width: 100%; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 2px 4px; border: 0; border-right: 1px solid var(--sa-grid-line); background: var(--sa-surface); color: var(--sa-body-text); text-align: center; }
 .smart-agenda-route .sa-month-day:last-child { border-right: 0; }
@@ -94,11 +94,11 @@
 .sa-event-no-sale { background: var(--sa-negative-bg); color: var(--sa-negative-text); border: 1px solid var(--sa-negative-border); font-weight: 600; }
 .sa-event-followup { background: var(--sa-followup-bg); color: var(--sa-followup-text); border: 1px solid var(--sa-followup-border); }
 .sa-day-more { flex-shrink: 0; font-size: 9px; line-height: 14px; color: var(--sa-muted); font-weight: 700; }
-.sa-day-sheet { position: relative; flex: 0 1 auto; min-height: 0; background: var(--sa-sheet); backdrop-filter: blur(12px); border-top: 1px solid var(--sa-border); border-radius: 24px 24px 0 0; box-shadow: 0 -4px 16px #0000000f; z-index: 30; max-height: min(40dvh, 320px); display: flex; flex-direction: column; }
+.sa-day-sheet { position: relative; flex: 0 1 auto; min-height: 0; background: var(--sa-sheet); backdrop-filter: blur(12px); border-top: 1px solid var(--sa-border); border-radius: 24px 24px 0 0; box-shadow: 0 -4px 16px #0000000f; z-index: 30; max-height: min(50dvh, 360px); display: flex; flex-direction: column; }
 .smart-agenda-route .sa-sheet-handle { display: flex; width: 100%; justify-content: center; align-items: center; padding: 5px 0; border: 0; background: none; min-height: 16px; flex-shrink: 0; }
 .sa-sheet-handle span { width: 40px; height: 6px; border-radius: 999px; background: var(--sa-handle); }
 .sa-sheet-content { display: flex; flex-direction: column; flex: 1; padding: 2px var(--sa-gutter) 8px; min-height: 0; overflow: hidden; }
-.sa-detail-scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.sa-detail-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .sa-selected-day { display: flex; flex-shrink: 0; align-items: center; gap: 10px; }
 .sa-selected-number { width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--sa-red); color: #fff; font-size: 14px; font-weight: 700; }
 .sa-selected-summary { min-width: 0; flex: 1; }
@@ -234,4 +234,88 @@ html[data-theme="dark"] .smart-agenda-route {
 @media (max-height: 760px) {
   .sa-detail-fields > div { display: flex; align-items: baseline; justify-content: space-between; gap: 4px; }
   .sa-detail-note { font-size: 10px; line-height: 15px; }
+}
+
+/* A short phone keeps both scrollable regions and its actions inside the viewport. */
+@media (max-width: 759px) and (max-height: 650px) {
+  .sa-search { margin-block: 4px; }
+  .smart-agenda-route .sa-device:has(.sa-search) .sa-day-sheet { max-height: min(50dvh, calc(100dvh - 290px)); }
+}
+
+/* Portrait tablets retain the familiar stacked calendar, with a bounded canvas. */
+@media (min-width: 600px) and (max-width: 1023px) and (min-height: 601px) {
+  .smart-agenda-route { --sa-gutter: 20px; padding: 16px; }
+  .smart-agenda-route .sa-device { max-width: 840px; border: 1px solid var(--sa-line); border-radius: 20px; }
+  .smart-agenda-route .sa-month-heading h1 { font-size: 32px; line-height: 38px; }
+  .sa-month-heading { margin-block: 6px; }
+  .sa-month-kpi { font-size: 12px; line-height: 18px; }
+  .sa-weekdays { font-size: 12px; line-height: 20px; }
+  .sa-month-matrix { min-height: 300px; }
+  .sa-day-number { min-width: 26px; height: 26px; font-size: 14px; line-height: 20px; }
+  .sa-event-chip { font-size: 10px; line-height: 12px; padding-block: 1px; }
+  .sa-app-nav { height: calc(60px + env(safe-area-inset-bottom)); }
+  .smart-agenda-route .sa-app-nav > :is(a, button) { font-size: 11px; line-height: 14px; }
+}
+
+/* Wide screens use their width for a calendar and a readable daily detail panel. */
+@media (min-width: 1024px), (min-width: 760px) and (max-height: 600px) {
+  .smart-agenda-route { --sa-gutter: 24px; padding: clamp(16px, 2vw, 28px); }
+  .smart-agenda-route .sa-device {
+    max-width: 1440px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(320px, 32vw, 420px);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: "header detail" "calendar detail" "navigation navigation";
+    border: 1px solid var(--sa-line);
+    border-radius: 22px;
+  }
+  .sa-calendar-header { grid-area: header; min-width: 0; padding-top: max(12px, env(safe-area-inset-top)); }
+  .sa-month-heading { margin-block: 10px; gap: 12px; }
+  .smart-agenda-route .sa-month-heading h1 { font-size: 36px; line-height: 44px; }
+  .sa-month-kpi { font-size: 12px; line-height: 20px; padding: 3px 10px; }
+  .sa-weekdays { font-size: 13px; line-height: 20px; padding-block: 6px; }
+  .sa-month-scroll { grid-area: calendar; min-width: 0; min-height: 0; }
+  .sa-month-matrix { min-height: 360px; }
+  .smart-agenda-route .sa-month-day { padding: 4px 6px; }
+  .sa-day-number { min-width: 28px; height: 28px; margin-bottom: 3px; font-size: 15px; line-height: 22px; }
+  .sa-month-day.is-selected .sa-day-number { margin-bottom: 3px; }
+  .sa-day-events { min-height: 18px; }
+  .sa-event-chip { padding: 1px 4px; font-size: 11px; line-height: 14px; }
+  .sa-day-more { font-size: 11px; line-height: 18px; }
+  .sa-day-sheet { grid-area: detail; min-width: 0; max-height: none; border-top: 0; border-left: 1px solid var(--sa-line); border-radius: 0; box-shadow: none; }
+  .sa-sheet-content { padding: 8px 16px 16px; }
+  .sa-selected-day { align-items: flex-start; margin-bottom: 8px; }
+  .sa-selected-number { width: 36px; height: 36px; font-size: 16px; }
+  .smart-agenda-route .sa-selected-summary h2 { font-size: 17px; line-height: 25px; }
+  .smart-agenda-route .sa-selected-summary p { font-size: 13px; line-height: 20px; margin-top: 4px; }
+  .sa-detail-card { padding: 14px; border-radius: 14px; margin-top: 10px; }
+  .smart-agenda-route .sa-detail-title > strong { font-size: 14px; line-height: 21px; }
+  .sa-detail-amount { font-size: 13px; line-height: 20px; }
+  .sa-detail-fields { gap: 12px; margin-top: 10px; font-size: 13px; line-height: 20px; }
+  .sa-detail-fields span { font-size: 12px; line-height: 18px; }
+  .sa-detail-note { font-size: 12px; line-height: 18px; margin-top: 10px; padding-top: 8px; }
+  .sa-detail-note time { font-size: 11px; line-height: 18px; }
+  .smart-agenda-route .sa-visit-card > button { flex-wrap: wrap; gap: 8px; font-size: 14px; }
+  .smart-agenda-route .sa-visit-card > button > span:first-child { flex: 1 1 170px; }
+  .smart-agenda-route .sa-visit-card > button > span:last-child { margin-left: auto; font-size: 13px; }
+  .sa-visit-card small { font-size: 12px; line-height: 18px; }
+  .sa-sheet-toolbar { padding: 8px 12px 12px; }
+  .sa-app-nav { grid-area: navigation; height: calc(64px + env(safe-area-inset-bottom)); grid-template-columns: repeat(4, minmax(0, 140px)); justify-content: center; gap: 16px; }
+  .smart-agenda-route .sa-app-nav > :is(a, button) { font-size: 12px; line-height: 16px; gap: 3px; }
+}
+
+/* Phone landscape and compact windows need the full available height. */
+@media (min-width: 760px) and (max-height: 600px) {
+  .smart-agenda-route { --sa-gutter: 16px; padding: 0; }
+  .smart-agenda-route .sa-device { max-width: 1440px; border: 0; border-radius: 0; }
+  .sa-calendar-header { padding-top: max(4px, env(safe-area-inset-top)); }
+  .sa-month-heading { margin-block: 2px; }
+  .smart-agenda-route .sa-month-heading h1 { font-size: 28px; line-height: 34px; }
+  .sa-month-kpi { padding-block: 1px; font-size: 11px; }
+  .sa-weekdays { padding-block: 2px; font-size: 12px; }
+  .sa-sheet-content { padding-top: 2px; padding-bottom: 8px; }
+  .sa-selected-day { margin-bottom: 0; }
+  .sa-sheet-toolbar { padding-block: 4px 8px; }
+  .sa-app-nav { height: calc(56px + env(safe-area-inset-bottom)); }
+  .smart-agenda-route .sa-app-nav > :is(a, button) { font-size: 11px; line-height: 12px; }
 }

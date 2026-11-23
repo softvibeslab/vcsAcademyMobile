@@ -1,0 +1,22 @@
+{
+  "root": "/srv/aisales-v1-release-20261122-responsive-agenda/web",
+  "htmlSha256": "75300bd536ce2905cceee4a38fda9df63f0237cc8eee2ad9c52b19d52194ad01",
+  "archiveSha256": "3f815aac5d3fb6e263444d693fa44db67c635bd2c32d322881cfb1eed34e2209",
+  "filesVerified": 17,
+  "v5AndContainersUnchanged": true,
+  "containers": {
+    "aisales-v1-manual-analysis-20261122": {
+      "id": "15c7f3e29918cc32b0ec5c10516173728d31be2593c6518da2e42d43b95d4d80",
+      "image": "sha256:ed2da844f2d1588dff0e0dcc687e6ffb1587f42f0cfba33cf43636b13817830d",
+      "running": true,
+      "startedAt": "2026-11-23T04:16:37.04046738Z"
+    },
+    "aisales-pilot-20261120-accounts-r2": {
+      "id": "bb6574ae827be1350f1a4bf931f9b001388dbf117fb2190683d0100fe2d938a8",
+      "image": "sha256:c8f3fc47861568675f3a6a92ac00c1e2f0462f4409c3aed20b1216b3f9813556",
+      "running": true,
+      "startedAt": "2026-11-20T18:25:07.022636776Z"
+    }
+  },
+  "rollbackConfig": "/srv/aisales-v1/ops/20261122-responsive-agenda/nginx-before.conf"
+}

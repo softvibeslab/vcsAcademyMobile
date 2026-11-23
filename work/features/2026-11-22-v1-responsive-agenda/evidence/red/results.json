@@ -1,0 +1,104 @@
+{
+  "passed": false,
+  "cases": [
+    {
+      "name": "desktop-dark",
+      "width": 1512,
+      "height": 840,
+      "theme": "dark",
+      "passed": false,
+      "layout": {
+        "viewport": {
+          "width": 1512,
+          "height": 840
+        },
+        "document": {
+          "width": 1512,
+          "height": 840
+        },
+        "device": {
+          "x": 0,
+          "y": 0,
+          "width": 1512,
+          "height": 840,
+          "top": 0,
+          "right": 1512,
+          "bottom": 840,
+          "left": 0
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1512,
+          "height": 110.75,
+          "top": 0,
+          "right": 1512,
+          "bottom": 110.75,
+          "left": 0
+        },
+        "calendar": {
+          "x": 0,
+          "y": 110.75,
+          "width": 1512,
+          "height": 353.25,
+          "top": 110.75,
+          "right": 1512,
+          "bottom": 464,
+          "left": 0
+        },
+        "day": {
+          "x": 0,
+          "y": 464,
+          "width": 1512,
+          "height": 320,
+          "top": 464,
+          "right": 1512,
+          "bottom": 784,
+          "left": 0
+        },
+        "records": {
+          "x": 16,
+          "y": 525,
+          "width": 1480,
+          "height": 188,
+          "top": 525,
+          "right": 1496,
+          "bottom": 713,
+          "left": 16
+        },
+        "nav": {
+          "x": 0,
+          "y": 784,
+          "width": 1512,
+          "height": 56,
+          "top": 784,
+          "right": 1512,
+          "bottom": 840,
+          "left": 0
+        },
+        "toolbar": {
+          "x": 0,
+          "y": 721,
+          "width": 1512,
+          "height": 63,
+          "top": 721,
+          "right": 1512,
+          "bottom": 784,
+          "left": 0
+        },
+        "card": {
+          "x": 16,
+          "y": 533,
+          "width": 1480,
+          "height": 119,
+          "top": 533,
+          "right": 1496,
+          "bottom": 652,
+          "left": 16
+        },
+        "dayFont": 12
+      },
+      "error": "Wide screens place day details beside the calendar"
+    }
+  ]
+}

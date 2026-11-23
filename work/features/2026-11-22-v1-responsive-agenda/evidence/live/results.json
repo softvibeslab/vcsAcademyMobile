@@ -1,0 +1,1125 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "desktop-dark",
+      "width": 1512,
+      "height": 840,
+      "theme": "dark",
+      "passed": true,
+      "layout": {
+        "viewport": {
+          "width": 1512,
+          "height": 840
+        },
+        "document": {
+          "width": 1512,
+          "height": 840
+        },
+        "device": {
+          "x": 36,
+          "y": 28,
+          "width": 1440,
+          "height": 784,
+          "top": 28,
+          "right": 1476,
+          "bottom": 812,
+          "left": 36
+        },
+        "header": {
+          "x": 37,
+          "y": 29,
+          "width": 1018,
+          "height": 156,
+          "top": 29,
+          "right": 1055,
+          "bottom": 185,
+          "left": 37
+        },
+        "calendar": {
+          "x": 37,
+          "y": 185,
+          "width": 1018,
+          "height": 562,
+          "top": 185,
+          "right": 1055,
+          "bottom": 747,
+          "left": 37
+        },
+        "day": {
+          "x": 1055,
+          "y": 29,
+          "width": 420,
+          "height": 718,
+          "top": 29,
+          "right": 1475,
+          "bottom": 747,
+          "left": 1055
+        },
+        "records": {
+          "x": 1072,
+          "y": 110,
+          "width": 387,
+          "height": 550,
+          "top": 110,
+          "right": 1459,
+          "bottom": 660,
+          "left": 1072
+        },
+        "nav": {
+          "x": 37,
+          "y": 747,
+          "width": 1438,
+          "height": 64,
+          "top": 747,
+          "right": 1475,
+          "bottom": 811,
+          "left": 37
+        },
+        "toolbar": {
+          "x": 1056,
+          "y": 676,
+          "width": 419,
+          "height": 71,
+          "top": 676,
+          "right": 1475,
+          "bottom": 747,
+          "left": 1056
+        },
+        "card": {
+          "x": 1072,
+          "y": 120,
+          "width": 387,
+          "height": 146,
+          "top": 120,
+          "right": 1459,
+          "bottom": 266,
+          "left": 1072
+        },
+        "dayFont": 15
+      },
+      "openSearchLayout": {
+        "viewport": {
+          "width": 1512,
+          "height": 840
+        },
+        "document": {
+          "width": 1512,
+          "height": 840
+        },
+        "device": {
+          "x": 36,
+          "y": 28,
+          "width": 1440,
+          "height": 784,
+          "top": 28,
+          "right": 1476,
+          "bottom": 812,
+          "left": 36
+        },
+        "header": {
+          "x": 37,
+          "y": 29,
+          "width": 1018,
+          "height": 206,
+          "top": 29,
+          "right": 1055,
+          "bottom": 235,
+          "left": 37
+        },
+        "calendar": {
+          "x": 37,
+          "y": 235,
+          "width": 1018,
+          "height": 512,
+          "top": 235,
+          "right": 1055,
+          "bottom": 747,
+          "left": 37
+        },
+        "day": {
+          "x": 1055,
+          "y": 29,
+          "width": 420,
+          "height": 718,
+          "top": 29,
+          "right": 1475,
+          "bottom": 747,
+          "left": 1055
+        },
+        "records": {
+          "x": 1072,
+          "y": 110,
+          "width": 387,
+          "height": 550,
+          "top": 110,
+          "right": 1459,
+          "bottom": 660,
+          "left": 1072
+        },
+        "nav": {
+          "x": 37,
+          "y": 747,
+          "width": 1438,
+          "height": 64,
+          "top": 747,
+          "right": 1475,
+          "bottom": 811,
+          "left": 37
+        },
+        "toolbar": {
+          "x": 1056,
+          "y": 676,
+          "width": 419,
+          "height": 71,
+          "top": 676,
+          "right": 1475,
+          "bottom": 747,
+          "left": 1056
+        },
+        "card": {
+          "x": 1072,
+          "y": 120,
+          "width": 387,
+          "height": 146,
+          "top": 120,
+          "right": 1459,
+          "bottom": 266,
+          "left": 1072
+        },
+        "dayFont": 15
+      },
+      "searchLayout": {
+        "viewport": {
+          "width": 1512,
+          "height": 840
+        },
+        "document": {
+          "width": 1512,
+          "height": 840
+        },
+        "device": {
+          "x": 36,
+          "y": 28,
+          "width": 1440,
+          "height": 784,
+          "top": 28,
+          "right": 1476,
+          "bottom": 812,
+          "left": 36
+        },
+        "header": {
+          "x": 37,
+          "y": 29,
+          "width": 1018,
+          "height": 206,
+          "top": 29,
+          "right": 1055,
+          "bottom": 235,
+          "left": 37
+        },
+        "calendar": {
+          "x": 37,
+          "y": 235,
+          "width": 1018,
+          "height": 512,
+          "top": 235,
+          "right": 1055,
+          "bottom": 747,
+          "left": 37
+        },
+        "day": {
+          "x": 1055,
+          "y": 29,
+          "width": 420,
+          "height": 718,
+          "top": 29,
+          "right": 1475,
+          "bottom": 747,
+          "left": 1055
+        },
+        "records": {
+          "x": 1072,
+          "y": 110,
+          "width": 387,
+          "height": 550,
+          "top": 110,
+          "right": 1459,
+          "bottom": 660,
+          "left": 1072
+        },
+        "nav": {
+          "x": 37,
+          "y": 747,
+          "width": 1438,
+          "height": 64,
+          "top": 747,
+          "right": 1475,
+          "bottom": 811,
+          "left": 37
+        },
+        "toolbar": {
+          "x": 1056,
+          "y": 676,
+          "width": 419,
+          "height": 71,
+          "top": 676,
+          "right": 1475,
+          "bottom": 747,
+          "left": 1056
+        },
+        "card": {
+          "x": 1072,
+          "y": 120,
+          "width": 387,
+          "height": 103,
+          "top": 120,
+          "right": 1459,
+          "bottom": 223,
+          "left": 1072
+        },
+        "dayFont": 15
+      }
+    },
+    {
+      "name": "tablet-portrait",
+      "width": 768,
+      "height": 1024,
+      "theme": "dark",
+      "passed": true,
+      "layout": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "document": {
+          "width": 768,
+          "height": 1024
+        },
+        "device": {
+          "x": 16,
+          "y": 16,
+          "width": 736,
+          "height": 992,
+          "top": 16,
+          "right": 752,
+          "bottom": 1008,
+          "left": 16
+        },
+        "header": {
+          "x": 17,
+          "y": 17,
+          "width": 734,
+          "height": 127.90625,
+          "top": 17,
+          "right": 751,
+          "bottom": 144.90625,
+          "left": 17
+        },
+        "calendar": {
+          "x": 17,
+          "y": 144.90625,
+          "width": 734,
+          "height": 442.09375,
+          "top": 144.90625,
+          "right": 751,
+          "bottom": 587,
+          "left": 17
+        },
+        "day": {
+          "x": 17,
+          "y": 587,
+          "width": 734,
+          "height": 360,
+          "top": 587,
+          "right": 751,
+          "bottom": 947,
+          "left": 17
+        },
+        "records": {
+          "x": 37,
+          "y": 648,
+          "width": 694,
+          "height": 228,
+          "top": 648,
+          "right": 731,
+          "bottom": 876,
+          "left": 37
+        },
+        "nav": {
+          "x": 17,
+          "y": 947,
+          "width": 734,
+          "height": 60,
+          "top": 947,
+          "right": 751,
+          "bottom": 1007,
+          "left": 17
+        },
+        "toolbar": {
+          "x": 17,
+          "y": 884,
+          "width": 734,
+          "height": 63,
+          "top": 884,
+          "right": 751,
+          "bottom": 947,
+          "left": 17
+        },
+        "card": {
+          "x": 37,
+          "y": 656,
+          "width": 694,
+          "height": 119,
+          "top": 656,
+          "right": 731,
+          "bottom": 775,
+          "left": 37
+        },
+        "dayFont": 14
+      },
+      "openSearchLayout": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "document": {
+          "width": 768,
+          "height": 1024
+        },
+        "device": {
+          "x": 16,
+          "y": 16,
+          "width": 736,
+          "height": 992,
+          "top": 16,
+          "right": 752,
+          "bottom": 1008,
+          "left": 16
+        },
+        "header": {
+          "x": 17,
+          "y": 17,
+          "width": 734,
+          "height": 179.90625,
+          "top": 17,
+          "right": 751,
+          "bottom": 196.90625,
+          "left": 17
+        },
+        "calendar": {
+          "x": 17,
+          "y": 196.90625,
+          "width": 734,
+          "height": 390.09375,
+          "top": 196.90625,
+          "right": 751,
+          "bottom": 587,
+          "left": 17
+        },
+        "day": {
+          "x": 17,
+          "y": 587,
+          "width": 734,
+          "height": 360,
+          "top": 587,
+          "right": 751,
+          "bottom": 947,
+          "left": 17
+        },
+        "records": {
+          "x": 37,
+          "y": 648,
+          "width": 694,
+          "height": 228,
+          "top": 648,
+          "right": 731,
+          "bottom": 876,
+          "left": 37
+        },
+        "nav": {
+          "x": 17,
+          "y": 947,
+          "width": 734,
+          "height": 60,
+          "top": 947,
+          "right": 751,
+          "bottom": 1007,
+          "left": 17
+        },
+        "toolbar": {
+          "x": 17,
+          "y": 884,
+          "width": 734,
+          "height": 63,
+          "top": 884,
+          "right": 751,
+          "bottom": 947,
+          "left": 17
+        },
+        "card": {
+          "x": 37,
+          "y": 587,
+          "width": 694,
+          "height": 119,
+          "top": 587,
+          "right": 731,
+          "bottom": 706,
+          "left": 37
+        },
+        "dayFont": 14
+      },
+      "searchLayout": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "document": {
+          "width": 768,
+          "height": 1024
+        },
+        "device": {
+          "x": 16,
+          "y": 16,
+          "width": 736,
+          "height": 992,
+          "top": 16,
+          "right": 752,
+          "bottom": 1008,
+          "left": 16
+        },
+        "header": {
+          "x": 17,
+          "y": 17,
+          "width": 734,
+          "height": 179.90625,
+          "top": 17,
+          "right": 751,
+          "bottom": 196.90625,
+          "left": 17
+        },
+        "calendar": {
+          "x": 17,
+          "y": 196.90625,
+          "width": 734,
+          "height": 533.09375,
+          "top": 196.90625,
+          "right": 751,
+          "bottom": 730,
+          "left": 17
+        },
+        "day": {
+          "x": 17,
+          "y": 730,
+          "width": 734,
+          "height": 217,
+          "top": 730,
+          "right": 751,
+          "bottom": 947,
+          "left": 17
+        },
+        "records": {
+          "x": 37,
+          "y": 791,
+          "width": 694,
+          "height": 85,
+          "top": 791,
+          "right": 731,
+          "bottom": 876,
+          "left": 37
+        },
+        "nav": {
+          "x": 17,
+          "y": 947,
+          "width": 734,
+          "height": 60,
+          "top": 947,
+          "right": 751,
+          "bottom": 1007,
+          "left": 17
+        },
+        "toolbar": {
+          "x": 17,
+          "y": 884,
+          "width": 734,
+          "height": 63,
+          "top": 884,
+          "right": 751,
+          "bottom": 947,
+          "left": 17
+        },
+        "card": {
+          "x": 37,
+          "y": 799,
+          "width": 694,
+          "height": 77,
+          "top": 799,
+          "right": 731,
+          "bottom": 876,
+          "left": 37
+        },
+        "dayFont": 14
+      }
+    },
+    {
+      "name": "iphone-light",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "passed": true,
+      "layout": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "document": {
+          "width": 390,
+          "height": 844
+        },
+        "device": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 111.296875,
+          "top": 0,
+          "right": 390,
+          "bottom": 111.296875,
+          "left": 0
+        },
+        "calendar": {
+          "x": 0,
+          "y": 111.296875,
+          "width": 390,
+          "height": 316.703125,
+          "top": 111.296875,
+          "right": 390,
+          "bottom": 428,
+          "left": 0
+        },
+        "day": {
+          "x": 0,
+          "y": 428,
+          "width": 390,
+          "height": 360,
+          "top": 428,
+          "right": 390,
+          "bottom": 788,
+          "left": 0
+        },
+        "records": {
+          "x": 16,
+          "y": 489,
+          "width": 358,
+          "height": 228,
+          "top": 489,
+          "right": 374,
+          "bottom": 717,
+          "left": 16
+        },
+        "nav": {
+          "x": 0,
+          "y": 788,
+          "width": 390,
+          "height": 56,
+          "top": 788,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "toolbar": {
+          "x": 0,
+          "y": 725,
+          "width": 390,
+          "height": 63,
+          "top": 725,
+          "right": 390,
+          "bottom": 788,
+          "left": 0
+        },
+        "card": {
+          "x": 16,
+          "y": 497,
+          "width": 358,
+          "height": 119,
+          "top": 497,
+          "right": 374,
+          "bottom": 616,
+          "left": 16
+        },
+        "dayFont": 12
+      },
+      "openSearchLayout": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "document": {
+          "width": 390,
+          "height": 844
+        },
+        "device": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 167.296875,
+          "top": 0,
+          "right": 390,
+          "bottom": 167.296875,
+          "left": 0
+        },
+        "calendar": {
+          "x": 0,
+          "y": 167.296875,
+          "width": 390,
+          "height": 260.703125,
+          "top": 167.296875,
+          "right": 390,
+          "bottom": 428,
+          "left": 0
+        },
+        "day": {
+          "x": 0,
+          "y": 428,
+          "width": 390,
+          "height": 360,
+          "top": 428,
+          "right": 390,
+          "bottom": 788,
+          "left": 0
+        },
+        "records": {
+          "x": 16,
+          "y": 489,
+          "width": 358,
+          "height": 228,
+          "top": 489,
+          "right": 374,
+          "bottom": 717,
+          "left": 16
+        },
+        "nav": {
+          "x": 0,
+          "y": 788,
+          "width": 390,
+          "height": 56,
+          "top": 788,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "toolbar": {
+          "x": 0,
+          "y": 725,
+          "width": 390,
+          "height": 63,
+          "top": 725,
+          "right": 390,
+          "bottom": 788,
+          "left": 0
+        },
+        "card": {
+          "x": 16,
+          "y": 380,
+          "width": 358,
+          "height": 119,
+          "top": 380,
+          "right": 374,
+          "bottom": 499,
+          "left": 16
+        },
+        "dayFont": 12
+      },
+      "searchLayout": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "document": {
+          "width": 390,
+          "height": 844
+        },
+        "device": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "top": 0,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 167.296875,
+          "top": 0,
+          "right": 390,
+          "bottom": 167.296875,
+          "left": 0
+        },
+        "calendar": {
+          "x": 0,
+          "y": 167.296875,
+          "width": 390,
+          "height": 379.703125,
+          "top": 167.296875,
+          "right": 390,
+          "bottom": 547,
+          "left": 0
+        },
+        "day": {
+          "x": 0,
+          "y": 547,
+          "width": 390,
+          "height": 241,
+          "top": 547,
+          "right": 390,
+          "bottom": 788,
+          "left": 0
+        },
+        "records": {
+          "x": 16,
+          "y": 608,
+          "width": 358,
+          "height": 109,
+          "top": 608,
+          "right": 374,
+          "bottom": 717,
+          "left": 16
+        },
+        "nav": {
+          "x": 0,
+          "y": 788,
+          "width": 390,
+          "height": 56,
+          "top": 788,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "toolbar": {
+          "x": 0,
+          "y": 725,
+          "width": 390,
+          "height": 63,
+          "top": 725,
+          "right": 390,
+          "bottom": 788,
+          "left": 0
+        },
+        "card": {
+          "x": 16,
+          "y": 616,
+          "width": 358,
+          "height": 101,
+          "top": 616,
+          "right": 374,
+          "bottom": 717,
+          "left": 16
+        },
+        "dayFont": 12
+      }
+    },
+    {
+      "name": "landscape",
+      "width": 844,
+      "height": 390,
+      "theme": "dark",
+      "passed": true,
+      "layout": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "document": {
+          "width": 844,
+          "height": 390
+        },
+        "device": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390,
+          "top": 0,
+          "right": 844,
+          "bottom": 390,
+          "left": 0
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 524,
+          "height": 114.546875,
+          "top": 0,
+          "right": 524,
+          "bottom": 114.546875,
+          "left": 0
+        },
+        "calendar": {
+          "x": 0,
+          "y": 114.546875,
+          "width": 524,
+          "height": 219.453125,
+          "top": 114.546875,
+          "right": 524,
+          "bottom": 334,
+          "left": 0
+        },
+        "day": {
+          "x": 524,
+          "y": 0,
+          "width": 320,
+          "height": 334,
+          "top": 0,
+          "right": 844,
+          "bottom": 334,
+          "left": 524
+        },
+        "records": {
+          "x": 541,
+          "y": 87,
+          "width": 287,
+          "height": 176,
+          "top": 87,
+          "right": 828,
+          "bottom": 263,
+          "left": 541
+        },
+        "nav": {
+          "x": 0,
+          "y": 334,
+          "width": 844,
+          "height": 56,
+          "top": 334,
+          "right": 844,
+          "bottom": 390,
+          "left": 0
+        },
+        "toolbar": {
+          "x": 525,
+          "y": 271,
+          "width": 319,
+          "height": 63,
+          "top": 271,
+          "right": 844,
+          "bottom": 334,
+          "left": 525
+        },
+        "card": {
+          "x": 541,
+          "y": 97,
+          "width": 287,
+          "height": 128.328125,
+          "top": 97,
+          "right": 828,
+          "bottom": 225.328125,
+          "left": 541
+        },
+        "dayFont": 15
+      },
+      "openSearchLayout": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "document": {
+          "width": 844,
+          "height": 390
+        },
+        "device": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390,
+          "top": 0,
+          "right": 844,
+          "bottom": 390,
+          "left": 0
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 524,
+          "height": 170.546875,
+          "top": 0,
+          "right": 524,
+          "bottom": 170.546875,
+          "left": 0
+        },
+        "calendar": {
+          "x": 0,
+          "y": 170.546875,
+          "width": 524,
+          "height": 163.453125,
+          "top": 170.546875,
+          "right": 524,
+          "bottom": 334,
+          "left": 0
+        },
+        "day": {
+          "x": 524,
+          "y": 0,
+          "width": 320,
+          "height": 334,
+          "top": 0,
+          "right": 844,
+          "bottom": 334,
+          "left": 524
+        },
+        "records": {
+          "x": 541,
+          "y": 87,
+          "width": 287,
+          "height": 176,
+          "top": 87,
+          "right": 828,
+          "bottom": 263,
+          "left": 541
+        },
+        "nav": {
+          "x": 0,
+          "y": 334,
+          "width": 844,
+          "height": 56,
+          "top": 334,
+          "right": 844,
+          "bottom": 390,
+          "left": 0
+        },
+        "toolbar": {
+          "x": 525,
+          "y": 271,
+          "width": 319,
+          "height": 63,
+          "top": 271,
+          "right": 844,
+          "bottom": 334,
+          "left": 525
+        },
+        "card": {
+          "x": 541,
+          "y": -91,
+          "width": 287,
+          "height": 128.328125,
+          "top": -91,
+          "right": 828,
+          "bottom": 37.328125,
+          "left": 541
+        },
+        "dayFont": 15
+      },
+      "searchLayout": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "document": {
+          "width": 844,
+          "height": 390
+        },
+        "device": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390,
+          "top": 0,
+          "right": 844,
+          "bottom": 390,
+          "left": 0
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 524,
+          "height": 170.546875,
+          "top": 0,
+          "right": 524,
+          "bottom": 170.546875,
+          "left": 0
+        },
+        "calendar": {
+          "x": 0,
+          "y": 170.546875,
+          "width": 524,
+          "height": 163.453125,
+          "top": 170.546875,
+          "right": 524,
+          "bottom": 334,
+          "left": 0
+        },
+        "day": {
+          "x": 524,
+          "y": 0,
+          "width": 320,
+          "height": 334,
+          "top": 0,
+          "right": 844,
+          "bottom": 334,
+          "left": 524
+        },
+        "records": {
+          "x": 541,
+          "y": 87,
+          "width": 287,
+          "height": 176,
+          "top": 87,
+          "right": 828,
+          "bottom": 263,
+          "left": 541
+        },
+        "nav": {
+          "x": 0,
+          "y": 334,
+          "width": 844,
+          "height": 56,
+          "top": 334,
+          "right": 844,
+          "bottom": 390,
+          "left": 0
+        },
+        "toolbar": {
+          "x": 525,
+          "y": 271,
+          "width": 319,
+          "height": 63,
+          "top": 271,
+          "right": 844,
+          "bottom": 334,
+          "left": 525
+        },
+        "card": {
+          "x": 541,
+          "y": 97,
+          "width": 287,
+          "height": 103,
+          "top": 97,
+          "right": 828,
+          "bottom": 200,
+          "left": 541
+        },
+        "dayFont": 15
+      }
+    }
+  ]
+}

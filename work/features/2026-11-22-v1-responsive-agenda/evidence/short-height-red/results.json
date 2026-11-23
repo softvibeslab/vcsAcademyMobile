@@ -1,0 +1,13 @@
+{
+  "passed": false,
+  "cases": [
+    {
+      "name": "phone-small",
+      "width": 320,
+      "height": 568,
+      "theme": "light",
+      "passed": false,
+      "error": "Day records have a usable scroll viewport"
+    }
+  ]
+}
