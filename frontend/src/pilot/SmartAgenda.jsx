@@ -9,13 +9,6 @@ import "./smart-agenda.css";
 const amount = (value, compact = false) => new Intl.NumberFormat("en-US", { notation: compact ? "compact" : "standard", maximumFractionDigits: compact ? 1 : 2 }).format(value).replace("K", "k");
 const dayTitle = (date) => `${formatCalendarDate(date, "es-MX", { weekday: "long" })}, ${Number(date.slice(-2))} ${formatCalendarDate(date, "es-MX", { month: "short" }).replace(/\.$/, "")}`;
 
-function StatusBar() {
-  return <header className="sa-status" data-purpose="ios-status-bar" aria-hidden="true">
-    <span>9:41</span><div className="sa-island"><i /><i /></div>
-    <div className="sa-status-icons"><svg viewBox="0 0 16 16"><path d="M1 11h2v3H1v-3zm4-3h2v6H5V8zm4-3h2v9H9V5zm4-3h2v12h-2V2z" /></svg><svg viewBox="0 0 16 16"><path d="M8 12.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM2.5 8a8.5 8.5 0 0111 0 .75.75 0 001.06-1.06A10 10 0 001.44 6.94a.75.75 0 001.06 1.06zm2.83 2.83a4.5 4.5 0 015.34 0 .75.75 0 10.96-1.15 6 6 0 00-7.26 0 .75.75 0 10.96 1.15z" /></svg><span className="sa-battery"><i /></span></div>
-  </header>;
-}
-
 function EntryCard({ event }) {
   if (!event) return <div className="sa-detail-card sa-empty-day"><p>Sin registros para este día.</p></div>;
   const followup = event.kind === "followup";
@@ -65,7 +58,6 @@ export function SmartAgenda({ data, onAddFollowup }) {
 
   return <div className="smart-agenda-route">
     <section className="sa-device" aria-label="Calendario mensual" style={{ "--sa-sheet-height": `${sheetHeight}px` }}>
-      <StatusBar />
       <header className="sa-calendar-header" data-purpose="calendar-top-header">
         <div className="sa-top-controls">
           <button className="sa-year-button" ref={monthTrigger} type="button" aria-label="Elegir mes y año" onClick={() => { setMonthValue(selectedDate.slice(0, 7)); setMonthOpen(true); }}><ChevronLeft size={22} aria-hidden="true" /><span>{selectedDate.slice(0, 4)}</span></button>

@@ -1,0 +1,42 @@
+{
+  "phase": "red",
+  "startedAt": "2026-11-23T00:00:58.089Z",
+  "passed": false,
+  "checks": [
+    {
+      "name": "Real temporary local API contains synthetic sale/note/follow-up",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "mobile390-dark-before.png",
+    "mobile390-failure.png"
+  ],
+  "baseline": {
+    "theme": "dark",
+    "statusBars": 1,
+    "device": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(23, 23, 23)",
+      "scheme": "light"
+    },
+    "route": {
+      "background": "rgb(242, 242, 247)",
+      "color": "rgb(23, 23, 23)",
+      "scheme": "light"
+    }
+  },
+  "failure": {
+    "name": "mobile390",
+    "message": "Decorative 9:41/island/status bar must be removed\n\n1 !== 0\n",
+    "runtimeErrors": [],
+    "mutations": [
+      {
+        "method": "POST",
+        "path": "/api/auth/login"
+      }
+    ]
+  },
+  "error": "Decorative 9:41/island/status bar must be removed\n\n1 !== 0\n",
+  "finishedAt": "2026-11-23T00:00:59.107Z"
+}

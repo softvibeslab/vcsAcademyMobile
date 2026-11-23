@@ -1,0 +1,320 @@
+{
+  "phase": "green",
+  "startedAt": "2026-11-23T00:02:42.507Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Real temporary local API contains synthetic sale/note/follow-up",
+      "passed": true
+    },
+    {
+      "name": "mobile390/light: no status bar/gap, themed surfaces/search/dialog, Home toggle/reload persistence and calendar/FAB regression pass",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 884
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 884
+      },
+      "surfaces": {
+        ".smart-agenda-route": {
+          "background": "rgb(242, 242, 247)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-device": {
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-day-sheet": {
+          "background": "rgba(255, 255, 255, 0.95)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-detail-card": {
+          "background": "rgb(252, 251, 247)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-app-nav": {
+          "background": "rgba(250, 250, 250, 0.95)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        }
+      },
+      "searchPalette": {
+        "background": "rgb(245, 245, 245)",
+        "color": "rgb(23, 23, 23)",
+        "scheme": "light"
+      }
+    },
+    {
+      "name": "mobile390/dark: no status bar/gap, themed surfaces/search/dialog, Home toggle/reload persistence and calendar/FAB regression pass",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 884
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 884
+      },
+      "surfaces": {
+        ".smart-agenda-route": {
+          "background": "rgb(16, 19, 25)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-device": {
+          "background": "rgb(16, 19, 25)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-day-sheet": {
+          "background": "rgba(26, 31, 38, 0.97)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-detail-card": {
+          "background": "rgb(26, 31, 38)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-app-nav": {
+          "background": "rgba(26, 31, 38, 0.97)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        }
+      },
+      "searchPalette": {
+        "background": "rgb(26, 31, 38)",
+        "color": "rgb(241, 243, 245)",
+        "scheme": "dark"
+      }
+    },
+    {
+      "name": "mobile390: no runtime errors, no horizontal overflow and no business writes",
+      "passed": true
+    },
+    {
+      "name": "mobile320/light: no status bar/gap, themed surfaces/search/dialog, Home toggle/reload persistence and calendar/FAB regression pass",
+      "passed": true,
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 740
+      },
+      "surfaces": {
+        ".smart-agenda-route": {
+          "background": "rgb(242, 242, 247)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-device": {
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-day-sheet": {
+          "background": "rgba(255, 255, 255, 0.95)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-detail-card": {
+          "background": "rgb(252, 251, 247)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-app-nav": {
+          "background": "rgba(250, 250, 250, 0.95)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        }
+      },
+      "searchPalette": {
+        "background": "rgb(245, 245, 245)",
+        "color": "rgb(23, 23, 23)",
+        "scheme": "light"
+      }
+    },
+    {
+      "name": "mobile320/dark: no status bar/gap, themed surfaces/search/dialog, Home toggle/reload persistence and calendar/FAB regression pass",
+      "passed": true,
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 740
+      },
+      "surfaces": {
+        ".smart-agenda-route": {
+          "background": "rgb(16, 19, 25)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-device": {
+          "background": "rgb(16, 19, 25)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-day-sheet": {
+          "background": "rgba(26, 31, 38, 0.97)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-detail-card": {
+          "background": "rgb(26, 31, 38)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-app-nav": {
+          "background": "rgba(26, 31, 38, 0.97)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        }
+      },
+      "searchPalette": {
+        "background": "rgb(26, 31, 38)",
+        "color": "rgb(241, 243, 245)",
+        "scheme": "dark"
+      }
+    },
+    {
+      "name": "mobile320: no runtime errors, no horizontal overflow and no business writes",
+      "passed": true
+    },
+    {
+      "name": "desktop1440/light: no status bar/gap, themed surfaces/search/dialog, Home toggle/reload persistence and calendar/FAB regression pass",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "frame": {
+        "x": 505,
+        "y": 34,
+        "width": 430,
+        "height": 932
+      },
+      "surfaces": {
+        ".smart-agenda-route": {
+          "background": "rgb(242, 242, 247)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-device": {
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-day-sheet": {
+          "background": "rgba(255, 255, 255, 0.95)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-detail-card": {
+          "background": "rgb(252, 251, 247)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        },
+        ".sa-app-nav": {
+          "background": "rgba(250, 250, 250, 0.95)",
+          "color": "rgb(23, 23, 23)",
+          "scheme": "light"
+        }
+      },
+      "searchPalette": {
+        "background": "rgb(245, 245, 245)",
+        "color": "rgb(23, 23, 23)",
+        "scheme": "light"
+      }
+    },
+    {
+      "name": "desktop1440/dark: no status bar/gap, themed surfaces/search/dialog, Home toggle/reload persistence and calendar/FAB regression pass",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "frame": {
+        "x": 505,
+        "y": 34,
+        "width": 430,
+        "height": 932
+      },
+      "surfaces": {
+        ".smart-agenda-route": {
+          "background": "rgb(16, 19, 25)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-device": {
+          "background": "rgb(16, 19, 25)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-day-sheet": {
+          "background": "rgba(26, 31, 38, 0.97)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-detail-card": {
+          "background": "rgb(26, 31, 38)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        },
+        ".sa-app-nav": {
+          "background": "rgba(26, 31, 38, 0.97)",
+          "color": "rgb(241, 243, 245)",
+          "scheme": "dark"
+        }
+      },
+      "searchPalette": {
+        "background": "rgb(26, 31, 38)",
+        "color": "rgb(241, 243, 245)",
+        "scheme": "dark"
+      }
+    },
+    {
+      "name": "desktop1440: no runtime errors, no horizontal overflow and no business writes",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "mobile390-light.png",
+    "mobile390-light-search.png",
+    "mobile390-light-dialog.png",
+    "mobile390-dark.png",
+    "mobile390-dark-search.png",
+    "mobile390-dark-dialog.png",
+    "mobile320-light.png",
+    "mobile320-light-search.png",
+    "mobile320-light-dialog.png",
+    "mobile320-dark.png",
+    "mobile320-dark-search.png",
+    "mobile320-dark-dialog.png",
+    "desktop1440-light.png",
+    "desktop1440-light-search.png",
+    "desktop1440-light-dialog.png",
+    "desktop1440-dark.png",
+    "desktop1440-dark-search.png",
+    "desktop1440-dark-dialog.png"
+  ],
+  "finishedAt": "2026-11-23T00:02:47.903Z"
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "name": "primary",
+    "foreground": "#f1f3f5",
+    "background": "#101319",
+    "ratio": 16.72
+  },
+  {
+    "name": "secondary",
+    "foreground": "#9ba3af",
+    "background": "#1a1f26",
+    "ratio": 6.51
+  },
+  {
+    "name": "actions",
+    "foreground": "#ff817b",
+    "background": "#101319",
+    "ratio": 7.69
+  },
+  {
+    "name": "date-selection",
+    "foreground": "#ffffff",
+    "background": "#dc2626",
+    "ratio": 4.83
+  },
+  {
+    "name": "sale",
+    "foreground": "#8ce7ba",
+    "background": "#12392d",
+    "ratio": 8.65
+  },
+  {
+    "name": "selected-sale",
+    "foreground": "#ffffff",
+    "background": "#065f46",
+    "ratio": 7.68
+  },
+  {
+    "name": "no-sale",
+    "foreground": "#ffaba8",
+    "background": "#421f25",
+    "ratio": 8.01
+  },
+  {
+    "name": "follow-up",
+    "foreground": "#a9cbff",
+    "background": "#142c4c",
+    "ratio": 8.48
+  },
+  {
+    "name": "warning",
+    "foreground": "#ffe09c",
+    "background": "#46371b",
+    "ratio": 8.99
+  },
+  {
+    "name": "spiff",
+    "foreground": "#d9b2ff",
+    "background": "#1a1f26",
+    "ratio": 9.28
+  },
+  {
+    "name": "fab",
+    "foreground": "#101319",
+    "background": "#f1f3f5",
+    "ratio": 16.72
+  }
+]

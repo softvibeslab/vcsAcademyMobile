@@ -1,0 +1,6 @@
+Command: node work/features/2026-11-22-v1-agenda-theme/verify-theme.cjs
+Exit code: 0
+Observed stdout:
+PASS: removed status bar, light/dark theme and persistence, mobile/desktop controls and no implicit writes.
+Started: 2026-11-23T00:02:42.507Z
+Finished: 2026-11-23T00:02:47.903Z

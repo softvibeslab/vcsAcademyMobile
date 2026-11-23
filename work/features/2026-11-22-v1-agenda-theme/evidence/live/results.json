@@ -1,0 +1,174 @@
+{
+  "target": "https://aisalesv1.softvibes.pro/",
+  "startedAt": "2026-11-23T00:04:43.404Z",
+  "resolution": "system DNS",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Private V5 baseline via GET only",
+      "passed": true,
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    },
+    {
+      "name": "Public V1 HTML exactly matches local build",
+      "passed": true,
+      "htmlSha256": "1ccf5d99a7d3f4c81fff462c1e610cd187dad2d3777709faf5117769fd074869"
+    },
+    {
+      "name": "Public asset exactly matches local V1 build",
+      "passed": true,
+      "asset": "/assets/pilot-BHk_pdBB.js",
+      "sha256": "db6709e684fc8c20019c69776d1c7085b8e64cb0cb1a84ec56cd29c7695ee98b"
+    },
+    {
+      "name": "Public asset exactly matches local V1 build",
+      "passed": true,
+      "asset": "/assets/pilot-lrl43DIl.css",
+      "sha256": "b54cbc405f0a653304c2e6244ab942fb157c62a1876be4fd89c7dbb34c0bc67e"
+    },
+    {
+      "name": "V1 legacy API remains ready",
+      "passed": true
+    },
+    {
+      "name": "mobile390-light: trusted HTTPS, no decorative status bar, persisted app theme, monthly calendar and direct follow-up prefill without save, login/logout",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 884
+      },
+      "theme": "light",
+      "themeSurface": {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(23, 23, 23)",
+        "scheme": "light"
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 884
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "desktop1440-light: trusted HTTPS, no decorative status bar, persisted app theme, monthly calendar and direct follow-up prefill without save, login/logout",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "themeSurface": {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(23, 23, 23)",
+        "scheme": "light"
+      },
+      "frame": {
+        "x": 505,
+        "y": 34,
+        "width": 430,
+        "height": 932
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "mobile390-dark: trusted HTTPS, no decorative status bar, persisted app theme, monthly calendar and direct follow-up prefill without save, login/logout",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 884
+      },
+      "theme": "dark",
+      "themeSurface": {
+        "background": "rgb(16, 19, 25)",
+        "color": "rgb(241, 243, 245)",
+        "scheme": "dark"
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 884
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "desktop1440-dark: trusted HTTPS, no decorative status bar, persisted app theme, monthly calendar and direct follow-up prefill without save, login/logout",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "themeSurface": {
+        "background": "rgb(16, 19, 25)",
+        "color": "rgb(241, 243, 245)",
+        "scheme": "dark"
+      },
+      "frame": {
+        "x": 505,
+        "y": 34,
+        "width": 430,
+        "height": 932
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "Private V5 unchanged after public smoke",
+      "passed": true,
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "mobile390-light",
+      "file": "mobile390-light-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop1440-light",
+      "file": "desktop1440-light-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "mobile390-dark",
+      "file": "mobile390-dark-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop1440-dark",
+      "file": "desktop1440-dark-agenda.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "finishedAt": "2026-11-23T00:05:06.325Z"
+}
