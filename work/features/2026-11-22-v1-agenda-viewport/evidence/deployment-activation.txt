@@ -1,0 +1,13 @@
+2026/11/23 00:14:50 [warn] 3396768#3396768: could not build optimal server_names_hash, you should increase either server_names_hash_max_size: 512 or server_names_hash_bucket_size: 64; ignoring server_names_hash_bucket_size
+2026/11/23 00:14:50 [warn] 3396768#3396768: could not build optimal server_names_hash, you should increase either server_names_hash_max_size: 512 or server_names_hash_bucket_size: 64; ignoring server_names_hash_bucket_size
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+    root /srv/aisales-v1-release-20261122-agenda-viewport/web;
+c970803b4d5962d16401112046bd74dcac5612340af9ea91731d9521ce732853  /srv/aisales-v1-release-20261122-agenda-viewport/web/index.html
+51d15d4152d19bd84b4806a50e5028a96ea9ebcf0bbc23ead25037df7c5a9c92  /srv/aisales-v1/ops/agenda-viewport-20261122-build/assets/pilot-B99LA0O0.js
+c619983e3c60ec9562d52552cf270e40370a35d36363549803aec4b37a8e55c0  /srv/aisales-v1/ops/agenda-viewport-20261122-build/assets/pilot-z1WX0d_C.css
+/srv/aisales-release-20261120-role-accounts
+2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d  /etc/nginx/sites-available/aisales.softvibes.pro.conf
+8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4  /srv/aisales/current/web/index.html
+aisales-v1-20261122 aisales-api:20261114c 127.0.0.1:18824->8001/tcp
+aisales-pilot-20261120-accounts-r2 aisales-pilot:20261120-accounts-r2 127.0.0.1:18823->8001/tcp

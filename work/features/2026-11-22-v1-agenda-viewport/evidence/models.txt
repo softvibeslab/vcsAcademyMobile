@@ -1,0 +1,45 @@
+✔ date keys validate real civil dates, including leap-year century rules (0.388459ms)
+✔ adding civil days crosses months, leap days and years in either direction (0.515583ms)
+✔ a week always runs Monday through Sunday across month and year boundaries (0.750125ms)
+✔ grouping preserves event order and objects without mutating the input (0.142167ms)
+✔ finding nearby activity prefers the first later date, otherwise the latest earlier date (0.102958ms)
+✔ formatting uses locale options while preserving the calendar day in UTC (7.810625ms)
+✔ civil date arithmetic and labels do not change across host time zones or DST (1.3825ms)
+✔ November 2026 starts on Sunday and places the sixth on Friday in a 42-day grid (1.361916ms)
+✔ month grids include adjacent month dates across leap days and year boundaries (0.746083ms)
+✔ month navigation clamps the selected day while preserving month and year intent (0.159417ms)
+✔ monthly date keys remain stable across host time zones and DST (2.925375ms)
+✔ Anyway uses present spending in year one and handles zero inflation (0.610959ms)
+✔ Anyway rejects ranges and nonfinite values (0.106417ms)
+✔ Loan uses nominal monthly interest and zero rate and full deposit (0.4135ms)
+✔ Loan rejects invalid terms and preserves no stale result (0.078084ms)
+✔ Money is exact cents and rejects ambiguous separators (0.131667ms)
+✔ No Tour strips hidden result and amount; sold tours keep original classification (0.05925ms)
+✔ Goal is monthly money and optional basis point target (0.068416ms)
+✔ Routes never give representative owner destinations (0.048417ms)
+✔ Business day is Cancun, not browser UTC (8.524084ms)
+✔ individual permission concurrency uses its own version, not the lesson version (0.2025ms)
+✔ a previous No Tour corrected into a Q defaults to no sale (0.05175ms)
+✔ publishing preserves reviewed lesson content and requires a new saved draft to republish (0.093667ms)
+✔ month metrics exclude other periods and reuse canonical qualified-tour denominator (1.06ms)
+✔ weekly range starts Monday and excludes future entries (0.421375ms)
+✔ no-sale form clears stale volume, validates input and never adds unsupported channel fields (0.2035ms)
+✔ role preference cannot grant manager access (0.068833ms)
+✔ notebook storage is scoped to authenticated identity (0.088291ms)
+✔ agenda maps existing sales, no-sale days, no-tour days and dated follow-ups without inventing fields (0.667167ms)
+✔ missing data does not create a sale, an amount or a dated event (0.4885ms)
+✔ daily and monthly summaries reuse canonical metrics and preserve absent financial fields as null (0.272792ms)
+✔ a future follow-up selects today's origin form without changing the follow-up date or creating a record (0.057833ms)
+✔ Blueprint keeps the canonical 11-step order (0.55325ms)
+✔ GoalSheet metrics avoid division by zero (0.075333ms)
+✔ GoalSheet validation catches inconsistent sales outcome (0.068667ms)
+✔ Sensitive resources require explicit access or admin role (0.054541ms)
+✔ Smart Agent refuses hidden-fee coaching (0.107708ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 49.510042

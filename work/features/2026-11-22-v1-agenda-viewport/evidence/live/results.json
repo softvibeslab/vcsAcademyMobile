@@ -1,0 +1,1288 @@
+{
+  "target": "https://aisalesv1.softvibes.pro/",
+  "startedAt": "2026-11-23T00:15:16.838Z",
+  "resolution": "system DNS",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Private V5 baseline via GET only",
+      "passed": true,
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    },
+    {
+      "name": "Public V1 HTML exactly matches local build",
+      "passed": true,
+      "htmlSha256": "c970803b4d5962d16401112046bd74dcac5612340af9ea91731d9521ce732853"
+    },
+    {
+      "name": "Public asset exactly matches local V1 build",
+      "passed": true,
+      "asset": "/assets/pilot-B99LA0O0.js",
+      "sha256": "51d15d4152d19bd84b4806a50e5028a96ea9ebcf0bbc23ead25037df7c5a9c92"
+    },
+    {
+      "name": "Public asset exactly matches local V1 build",
+      "passed": true,
+      "asset": "/assets/pilot-z1WX0d_C.css",
+      "sha256": "c619983e3c60ec9562d52552cf270e40370a35d36363549803aec4b37a8e55c0"
+    },
+    {
+      "name": "V1 legacy API remains ready",
+      "passed": true
+    },
+    {
+      "name": "android360-light: trusted HTTPS, full viewport with 42 visible dates/no page or month scrolling, persisted theme, calendar/FAB without save, login/logout",
+      "passed": true,
+      "engine": "chromium",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "light",
+      "themeSurface": {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(23, 23, 23)",
+        "scheme": "light"
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 800
+      },
+      "fitting": {
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "calendarScroll": false,
+        "pageScroll": false
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "desktop1440-light: trusted HTTPS, full viewport with 42 visible dates/no page or month scrolling, persisted theme, calendar/FAB without save, login/logout",
+      "passed": true,
+      "engine": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "light",
+      "themeSurface": {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(23, 23, 23)",
+        "scheme": "light"
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 900
+      },
+      "fitting": {
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "calendarScroll": false,
+        "pageScroll": false
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "iphone390-light: trusted HTTPS, full viewport with 42 visible dates/no page or month scrolling, persisted theme, calendar/FAB without save, login/logout",
+      "passed": true,
+      "engine": "webkit",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light",
+      "themeSurface": {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(23, 23, 23)",
+        "scheme": "light"
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "fitting": {
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "calendarScroll": false,
+        "pageScroll": false
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "android360-dark: trusted HTTPS, full viewport with 42 visible dates/no page or month scrolling, persisted theme, calendar/FAB without save, login/logout",
+      "passed": true,
+      "engine": "chromium",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "theme": "dark",
+      "themeSurface": {
+        "background": "rgb(16, 19, 25)",
+        "color": "rgb(241, 243, 245)",
+        "scheme": "dark"
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 800
+      },
+      "fitting": {
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "calendarScroll": false,
+        "pageScroll": false
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "desktop1440-dark: trusted HTTPS, full viewport with 42 visible dates/no page or month scrolling, persisted theme, calendar/FAB without save, login/logout",
+      "passed": true,
+      "engine": "chromium",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "themeSurface": {
+        "background": "rgb(16, 19, 25)",
+        "color": "rgb(241, 243, 245)",
+        "scheme": "dark"
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 1440,
+        "height": 900
+      },
+      "fitting": {
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "calendarScroll": false,
+        "pageScroll": false
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "iphone390-dark: trusted HTTPS, full viewport with 42 visible dates/no page or month scrolling, persisted theme, calendar/FAB without save, login/logout",
+      "passed": true,
+      "engine": "webkit",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "themeSurface": {
+        "background": "rgb(16, 19, 25)",
+        "color": "rgb(241, 243, 245)",
+        "scheme": "dark"
+      },
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "fitting": {
+        "dates": [
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          },
+          {
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "calendarScroll": false,
+        "pageScroll": false
+      },
+      "today": "2026-11-22",
+      "apiRequests": 22,
+      "mutationPaths": [
+        "/api/auth/login",
+        "/api/auth/logout"
+      ],
+      "runtimeErrors": []
+    },
+    {
+      "name": "Private V5 unchanged after public smoke",
+      "passed": true,
+      "htmlSha256": "8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4",
+      "mode": "private_pilot",
+      "version": "1.0.0"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "android360-light",
+      "file": "android360-light-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop1440-light",
+      "file": "desktop1440-light-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "iphone390-light",
+      "file": "iphone390-light-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "android360-dark",
+      "file": "android360-dark-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop1440-dark",
+      "file": "desktop1440-dark-agenda.png",
+      "horizontalOverflow": false
+    },
+    {
+      "name": "iphone390-dark",
+      "file": "iphone390-dark-agenda.png",
+      "horizontalOverflow": false
+    }
+  ],
+  "finishedAt": "2026-11-23T00:15:53.016Z"
+}

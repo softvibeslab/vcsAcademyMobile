@@ -16,7 +16,7 @@
 />
 ```
 
-Genera 42 días, de domingo a sábado, incluyendo los días adyacentes. Muestra hasta tres eventos por celda y el contador de adicionales. Las etiquetas accesibles incluyen fecha y cantidad de registros; las flechas mueven uno o siete días, Home/End el inicio/final de fila y PageUp/PageDown un mes, ajustando el día al último válido. El foco acompaña la selección por teclado.
+Genera 42 días, de domingo a sábado, incluyendo los días adyacentes. `maxVisibleEvents` limita los eventos por celda (tres por defecto); el contador `+N` anuncia los registros adicionales. La agenda a pantalla completa usa uno para que las seis semanas quepan en el viewport, y conserva todos los registros en el panel del día. Las etiquetas accesibles incluyen fecha y cantidad de registros; las flechas mueven uno o siete días, Home/End el inicio/final de fila y PageUp/PageDown un mes, ajustando el día al último válido. El foco acompaña la selección por teclado.
 
 El consumidor aporta `renderEvent` y los estilos de `.sa-month-matrix`, `.sa-month-week`, `.sa-month-day`, `.sa-day-number`, `.sa-day-events` y `.sa-day-more`. La composición `frontend/src/pilot/SmartAgenda.jsx` y su CSS reproducen el diseño adjunto; el componente de cuadrícula no contiene acciones de negocio. `smart-agenda-model.mjs` adapta Goal Sheet y recordatorios sin fabricar campos ausentes.
 

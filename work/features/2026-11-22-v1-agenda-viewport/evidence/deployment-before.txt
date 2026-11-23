@@ -1,0 +1,6 @@
+    root /srv/aisales-v1-release-20261122-agenda-theme/web;
+/srv/aisales-release-20261120-role-accounts
+2f0759d85abb98ec544c2dccbed1593206d61f78707beaf6c2a922786171da9d  /etc/nginx/sites-available/aisales.softvibes.pro.conf
+8295063c1ea548f99000a5004c32c60e300e6bab6cce43aba0018d116df18be4  /srv/aisales/current/web/index.html
+aisales-v1-20261122 aisales-api:20261114c 127.0.0.1:18824->8001/tcp
+aisales-pilot-20261120-accounts-r2 aisales-pilot:20261120-accounts-r2 127.0.0.1:18823->8001/tcp

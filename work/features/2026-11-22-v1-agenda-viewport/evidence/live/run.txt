@@ -1,0 +1,6 @@
+Command: node work/features/2026-11-22-v1-agenda-viewport/verify-live.cjs
+Exit code: 0
+Observed stdout:
+PASS: V1 build hashes, full-viewport 42-day month without scroll/overlap, persisted themes, calendar/FAB mobile/desktop, no business-data writes; V5 unchanged.
+Started: 2026-11-23T00:15:16.838Z
+Finished: 2026-11-23T00:15:53.016Z

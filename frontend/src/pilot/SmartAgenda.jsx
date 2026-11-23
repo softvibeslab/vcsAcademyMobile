@@ -29,19 +29,13 @@ export function SmartAgenda({ data, onAddFollowup }) {
   const [collapsed, setCollapsed] = useState(false);
   const [monthOpen, setMonthOpen] = useState(false);
   const [monthValue, setMonthValue] = useState(today.slice(0, 7));
-  const [sheetHeight, setSheetHeight] = useState(300);
-  const sheet = useRef(null), scrollArea = useRef(null), monthTrigger = useRef(null), monthInput = useRef(null), searchInput = useRef(null), monthDialog = useRef(null);
+  const scrollArea = useRef(null), monthTrigger = useRef(null), monthInput = useRef(null), searchInput = useRef(null), monthDialog = useRef(null);
   const events = useMemo(() => agendaEvents(data.entries, data.reminders), [data.entries, data.reminders]);
   const filtered = events.filter((event) => (filter === "all" || (filter === "sales" && event.kind === "sale")) && `${event.title} ${event.note || ""}`.toLocaleLowerCase("es").includes(query.trim().toLocaleLowerCase("es")));
   const dayEvents = filtered.filter((event) => event.date === selectedDate);
   const monthEvents = filtered.filter((event) => event.date.slice(0, 7) === selectedDate.slice(0, 7)).sort((a, b) => a.date.localeCompare(b.date));
   const month = summaryFor(data.entries, selectedDate.slice(0, 7)), day = summaryFor(data.entries, selectedDate);
 
-  useEffect(() => {
-    const observer = new ResizeObserver(([entry]) => setSheetHeight(entry.target.getBoundingClientRect().height));
-    if (sheet.current) observer.observe(sheet.current);
-    return () => observer.disconnect();
-  }, []);
   useEffect(() => { if (searchOpen) searchInput.current?.focus(); }, [searchOpen]);
   useEffect(() => { if (monthOpen) { monthDialog.current?.showModal(); monthInput.current?.focus(); } }, [monthOpen]);
 
@@ -57,7 +51,7 @@ export function SmartAgenda({ data, onAddFollowup }) {
   </span>;
 
   return <div className="smart-agenda-route">
-    <section className="sa-device" aria-label="Calendario mensual" style={{ "--sa-sheet-height": `${sheetHeight}px` }}>
+    <section className="sa-device" aria-label="Calendario mensual">
       <header className="sa-calendar-header" data-purpose="calendar-top-header">
         <div className="sa-top-controls">
           <button className="sa-year-button" ref={monthTrigger} type="button" aria-label="Elegir mes y año" onClick={() => { setMonthValue(selectedDate.slice(0, 7)); setMonthOpen(true); }}><ChevronLeft size={22} aria-hidden="true" /><span>{selectedDate.slice(0, 4)}</span></button>
@@ -71,10 +65,10 @@ export function SmartAgenda({ data, onAddFollowup }) {
         {searchOpen && <div className="sa-search"><input ref={searchInput} type="search" aria-label="Buscar en el mes" placeholder="Buscar eventos" value={query} onChange={(event) => setQuery(event.target.value)} /><button type="button" aria-label="Cerrar búsqueda" onClick={() => { setSearchOpen(false); setQuery(""); }}><X size={18} /></button></div>}
         <div className="sa-weekdays" aria-hidden="true">{["D", "L", "M", "M", "J", "V", "S"].map((letter, i) => <span key={i}>{letter}</span>)}</div>
       </header>
-      <div className="sa-month-scroll" ref={scrollArea} data-purpose="calendar-month-grid">
-        {listView ? <div className="sa-history-list" aria-label="Historial del mes">{monthEvents.length ? monthEvents.map((event) => <button key={event.id} type="button" onClick={() => { selectDate(event.date); setListView(false); }}><time>{dayTitle(event.date)}</time>{renderChip(event, event.date === selectedDate)}</button>) : <p>No hay registros en este mes.</p>}</div> : <MonthlyCalendar selectedDate={selectedDate} today={today} events={filtered} onSelectDate={selectDate} renderEvent={renderChip} />}
+      <div className={"sa-month-scroll" + (listView ? " is-list-view" : "")} ref={scrollArea} data-purpose="calendar-month-grid">
+        {listView ? <div className="sa-history-list" aria-label="Historial del mes">{monthEvents.length ? monthEvents.map((event) => <button key={event.id} type="button" onClick={() => { selectDate(event.date); setListView(false); }}><time>{dayTitle(event.date)}</time>{renderChip(event, event.date === selectedDate)}</button>) : <p>No hay registros en este mes.</p>}</div> : <MonthlyCalendar maxVisibleEvents={1} selectedDate={selectedDate} today={today} events={filtered} onSelectDate={selectDate} renderEvent={renderChip} />}
       </div>
-      <section className="sa-day-sheet" ref={sheet} data-purpose="selected-day-preview-sheet" aria-label="Detalle del día">
+      <section className="sa-day-sheet" data-purpose="selected-day-preview-sheet" aria-label="Detalle del día">
         <button type="button" className="sa-sheet-handle" aria-label={collapsed ? "Expandir detalle del día" : "Contraer detalle del día"} aria-expanded={!collapsed} onClick={() => setCollapsed(!collapsed)}><span /></button>
         <div className="sa-sheet-content">
           <header className="sa-selected-day">
@@ -87,9 +81,9 @@ export function SmartAgenda({ data, onAddFollowup }) {
         <div className="sa-sheet-toolbar">
           <button type="button" className="sa-today" onClick={goToday}><i />Hoy</button>
           <div className="sa-filters" role="group" aria-label="Filtrar registros">{[["all", "Todos"], ["sales", "Ventas"], ["spiffs", "⭐ Spiffs"]].map(([value, label]) => <button key={value} type="button" aria-pressed={filter === value} onClick={() => setFilter(value)}>{label}</button>)}</div>
+          <button type="button" className="sa-followup-fab" aria-label="Agregar seguimiento" title="Agregar seguimiento" onClick={() => onAddFollowup(selectedDate)}><Plus size={23} aria-hidden="true" /></button>
         </div>
       </section>
-      <button type="button" className="sa-followup-fab" aria-label="Agregar seguimiento" title="Agregar seguimiento" onClick={() => onAddFollowup(selectedDate)}><Plus size={23} aria-hidden="true" /></button>
       <nav className="sa-app-nav" aria-label="Navegación de agenda" data-purpose="app-bottom-navbar">
         <a href="#home"><CalendarDays size={22} aria-hidden="true" /><span>Hoy</span></a>
         <button type="button" className={!listView ? "is-active" : ""} aria-current={!listView ? "page" : undefined} onClick={() => setListView(false)}><span className="sa-nav-icon"><ChartNoAxesColumnIncreasing size={22} aria-hidden="true" /></span><span>GoalSheet</span></button>

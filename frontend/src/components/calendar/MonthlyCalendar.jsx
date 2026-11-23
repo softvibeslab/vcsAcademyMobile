@@ -3,7 +3,8 @@ import { addDays, formatCalendarDate, groupEvents } from "./calendar-model.mjs";
 import { monthDates, shiftMonth } from "./month-model.mjs";
 
 /** Date-only monthly grid. Layout and event rendering are supplied by the consuming design. */
-export function MonthlyCalendar({ selectedDate, today, events, onSelectDate, renderEvent }) {
+export function MonthlyCalendar({ selectedDate, today, events, onSelectDate, renderEvent, maxVisibleEvents = 3 }) {
+  const visibleEventLimit = Number.isInteger(maxVisibleEvents) && maxVisibleEvents > 0 ? maxVisibleEvents : 3;
   const days = monthDates(selectedDate);
   const grouped = groupEvents(events);
   const buttons = useRef(new Map());
@@ -44,8 +45,8 @@ export function MonthlyCalendar({ selectedDate, today, events, onSelectDate, ren
                 aria-pressed={selected} aria-current={date === today ? "date" : undefined}
                 tabIndex={selected ? 0 : -1} onClick={() => onSelectDate(date)} onKeyDown={(event) => onKey(event, date)}>
                 <span className="sa-day-number">{Number(date.slice(-2))}</span>
-                <span className="sa-day-events">{dayEvents.slice(0, 3).map((item) => <React.Fragment key={item.id}>{renderEvent(item, selected)}</React.Fragment>)}
-                  {dayEvents.length > 3 && <span className="sa-day-more">+{dayEvents.length - 3} más</span>}
+                <span className="sa-day-events">{dayEvents.slice(0, visibleEventLimit).map((item) => <React.Fragment key={item.id}>{renderEvent(item, selected)}</React.Fragment>)}
+                  {dayEvents.length > visibleEventLimit && <span className="sa-day-more" aria-label={`${dayEvents.length - visibleEventLimit} registros más`}>+{dayEvents.length - visibleEventLimit}</span>}
                 </span>
               </button>
             );

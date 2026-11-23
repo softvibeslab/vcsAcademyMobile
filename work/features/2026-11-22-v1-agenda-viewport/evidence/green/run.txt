@@ -1,0 +1,6 @@
+Command: node work/features/2026-11-22-v1-agenda-viewport/verify-viewport.cjs
+Exit code: 0
+Observed stdout:
+PASS: viewport, all 42 dates, normal/extended detail, themes and controls across Chromium/WebKit.
+Started: 2026-11-23T00:12:21.403Z
+Finished: 2026-11-23T00:12:35.793Z

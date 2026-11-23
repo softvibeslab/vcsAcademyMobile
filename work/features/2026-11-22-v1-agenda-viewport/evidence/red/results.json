@@ -1,0 +1,741 @@
+{
+  "phase": "red",
+  "startedAt": "2026-11-23T00:09:54.550Z",
+  "passed": false,
+  "checks": [
+    {
+      "name": "Real temporary API contains normal, long-note and four-follow-up fixtures",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "android360x800-dark-normal.png",
+    "android360x800-dark-multiple-before.png",
+    "android360x800-dark-failure.png"
+  ],
+  "baseline": {
+    "viewport": {
+      "width": 360,
+      "height": 800,
+      "dpr": 2
+    },
+    "document": {
+      "width": 360,
+      "height": 800
+    },
+    "device": {
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 800,
+      "right": 360,
+      "bottom": 800
+    },
+    "grid": {
+      "x": 0,
+      "y": 117.5,
+      "width": 360,
+      "height": 682.5,
+      "right": 360,
+      "bottom": 800,
+      "clientHeight": 683,
+      "scrollHeight": 925,
+      "top": 0
+    },
+    "sheet": {
+      "x": 0,
+      "y": 455,
+      "width": 360,
+      "height": 279,
+      "right": 360,
+      "bottom": 734
+    },
+    "reading": [
+      {
+        "selector": "sa-sheet-content",
+        "clientHeight": 209,
+        "scrollHeight": 209,
+        "top": 0,
+        "x": 0,
+        "y": 476,
+        "width": 360,
+        "height": 209,
+        "right": 360,
+        "bottom": 685
+      },
+      {
+        "selector": "sa-detail-scroll",
+        "clientHeight": 139,
+        "scrollHeight": 139,
+        "top": 0,
+        "x": 14,
+        "y": 534,
+        "width": 332,
+        "height": 139,
+        "right": 346,
+        "bottom": 673
+      }
+    ],
+    "dates": [
+      {
+        "label": "domingo, 1 de noviembre de 2026 · 0 registros",
+        "x": 0,
+        "y": 117.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 51.421875,
+        "bottom": 209.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "lunes, 2 de noviembre de 2026 · 0 registros",
+        "x": 51.421875,
+        "y": 117.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 102.84375,
+        "bottom": 209.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "martes, 3 de noviembre de 2026 · 0 registros",
+        "x": 102.84375,
+        "y": 117.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 154.28125,
+        "bottom": 209.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "miércoles, 4 de noviembre de 2026 · 0 registros",
+        "x": 154.28125,
+        "y": 117.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 205.703125,
+        "bottom": 209.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "jueves, 5 de noviembre de 2026 · 0 registros",
+        "x": 205.703125,
+        "y": 117.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 257.140625,
+        "bottom": 209.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "viernes, 6 de noviembre de 2026 · 1 registro",
+        "x": 257.140625,
+        "y": 117.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 308.5625,
+        "bottom": 209.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "sábado, 7 de noviembre de 2026 · 1 registro",
+        "x": 308.5625,
+        "y": 117.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 359.984375,
+        "bottom": 209.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "domingo, 8 de noviembre de 2026 · 4 registros",
+        "x": 0,
+        "y": 210.5,
+        "width": 51.421875,
+        "height": 96,
+        "right": 51.421875,
+        "bottom": 306.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "lunes, 9 de noviembre de 2026 · 0 registros",
+        "x": 51.421875,
+        "y": 210.5,
+        "width": 51.421875,
+        "height": 96,
+        "right": 102.84375,
+        "bottom": 306.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "martes, 10 de noviembre de 2026 · 0 registros",
+        "x": 102.84375,
+        "y": 210.5,
+        "width": 51.4375,
+        "height": 96,
+        "right": 154.28125,
+        "bottom": 306.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "miércoles, 11 de noviembre de 2026 · 0 registros",
+        "x": 154.28125,
+        "y": 210.5,
+        "width": 51.421875,
+        "height": 96,
+        "right": 205.703125,
+        "bottom": 306.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "jueves, 12 de noviembre de 2026 · 0 registros",
+        "x": 205.703125,
+        "y": 210.5,
+        "width": 51.4375,
+        "height": 96,
+        "right": 257.140625,
+        "bottom": 306.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "viernes, 13 de noviembre de 2026 · 0 registros",
+        "x": 257.140625,
+        "y": 210.5,
+        "width": 51.421875,
+        "height": 96,
+        "right": 308.5625,
+        "bottom": 306.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "sábado, 14 de noviembre de 2026 · 0 registros",
+        "x": 308.5625,
+        "y": 210.5,
+        "width": 51.421875,
+        "height": 96,
+        "right": 359.984375,
+        "bottom": 306.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "domingo, 15 de noviembre de 2026 · 0 registros",
+        "x": 0,
+        "y": 307.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 51.421875,
+        "bottom": 399.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "lunes, 16 de noviembre de 2026 · 0 registros",
+        "x": 51.421875,
+        "y": 307.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 102.84375,
+        "bottom": 399.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "martes, 17 de noviembre de 2026 · 0 registros",
+        "x": 102.84375,
+        "y": 307.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 154.28125,
+        "bottom": 399.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "miércoles, 18 de noviembre de 2026 · 0 registros",
+        "x": 154.28125,
+        "y": 307.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 205.703125,
+        "bottom": 399.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "jueves, 19 de noviembre de 2026 · 0 registros",
+        "x": 205.703125,
+        "y": 307.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 257.140625,
+        "bottom": 399.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "viernes, 20 de noviembre de 2026 · 0 registros",
+        "x": 257.140625,
+        "y": 307.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 308.5625,
+        "bottom": 399.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "sábado, 21 de noviembre de 2026 · 0 registros",
+        "x": 308.5625,
+        "y": 307.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 359.984375,
+        "bottom": 399.5,
+        "fullyInGrid": true,
+        "beforeSheet": true,
+        "hit": true
+      },
+      {
+        "label": "domingo, 22 de noviembre de 2026 · 0 registros",
+        "x": 0,
+        "y": 400.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 51.421875,
+        "bottom": 492.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": true
+      },
+      {
+        "label": "lunes, 23 de noviembre de 2026 · 1 registro",
+        "x": 51.421875,
+        "y": 400.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 102.84375,
+        "bottom": 492.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": true
+      },
+      {
+        "label": "martes, 24 de noviembre de 2026 · 0 registros",
+        "x": 102.84375,
+        "y": 400.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 154.28125,
+        "bottom": 492.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": true
+      },
+      {
+        "label": "miércoles, 25 de noviembre de 2026 · 0 registros",
+        "x": 154.28125,
+        "y": 400.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 205.703125,
+        "bottom": 492.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": true
+      },
+      {
+        "label": "jueves, 26 de noviembre de 2026 · 0 registros",
+        "x": 205.703125,
+        "y": 400.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 257.140625,
+        "bottom": 492.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": true
+      },
+      {
+        "label": "viernes, 27 de noviembre de 2026 · 0 registros",
+        "x": 257.140625,
+        "y": 400.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 308.5625,
+        "bottom": 492.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": true
+      },
+      {
+        "label": "sábado, 28 de noviembre de 2026 · 0 registros",
+        "x": 308.5625,
+        "y": 400.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 359.984375,
+        "bottom": 492.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": true
+      },
+      {
+        "label": "domingo, 29 de noviembre de 2026 · 0 registros",
+        "x": 0,
+        "y": 493.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 51.421875,
+        "bottom": 585.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "lunes, 30 de noviembre de 2026 · 0 registros",
+        "x": 51.421875,
+        "y": 493.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 102.84375,
+        "bottom": 585.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "martes, 1 de diciembre de 2026 · 0 registros",
+        "x": 102.84375,
+        "y": 493.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 154.28125,
+        "bottom": 585.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "miércoles, 2 de diciembre de 2026 · 0 registros",
+        "x": 154.28125,
+        "y": 493.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 205.703125,
+        "bottom": 585.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "jueves, 3 de diciembre de 2026 · 0 registros",
+        "x": 205.703125,
+        "y": 493.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 257.140625,
+        "bottom": 585.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "viernes, 4 de diciembre de 2026 · 0 registros",
+        "x": 257.140625,
+        "y": 493.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 308.5625,
+        "bottom": 585.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "sábado, 5 de diciembre de 2026 · 0 registros",
+        "x": 308.5625,
+        "y": 493.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 359.984375,
+        "bottom": 585.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "domingo, 6 de diciembre de 2026 · 0 registros",
+        "x": 0,
+        "y": 586.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 51.421875,
+        "bottom": 678.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "lunes, 7 de diciembre de 2026 · 0 registros",
+        "x": 51.421875,
+        "y": 586.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 102.84375,
+        "bottom": 678.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "martes, 8 de diciembre de 2026 · 0 registros",
+        "x": 102.84375,
+        "y": 586.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 154.28125,
+        "bottom": 678.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "miércoles, 9 de diciembre de 2026 · 0 registros",
+        "x": 154.28125,
+        "y": 586.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 205.703125,
+        "bottom": 678.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "jueves, 10 de diciembre de 2026 · 0 registros",
+        "x": 205.703125,
+        "y": 586.5,
+        "width": 51.4375,
+        "height": 92,
+        "right": 257.140625,
+        "bottom": 678.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "viernes, 11 de diciembre de 2026 · 0 registros",
+        "x": 257.140625,
+        "y": 586.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 308.5625,
+        "bottom": 678.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      },
+      {
+        "label": "sábado, 12 de diciembre de 2026 · 0 registros",
+        "x": 308.5625,
+        "y": 586.5,
+        "width": 51.421875,
+        "height": 92,
+        "right": 359.984375,
+        "bottom": 678.5,
+        "fullyInGrid": true,
+        "beforeSheet": false,
+        "hit": false
+      }
+    ],
+    "controls": [
+      {
+        "name": "Elegir mes y año",
+        "x": 12,
+        "y": 8,
+        "width": 59.5625,
+        "height": 32,
+        "right": 71.5625,
+        "bottom": 40,
+        "hit": true
+      },
+      {
+        "name": "Cambiar vista",
+        "x": 228,
+        "y": 8,
+        "width": 32,
+        "height": 32,
+        "right": 260,
+        "bottom": 40,
+        "hit": true
+      },
+      {
+        "name": "Buscar eventos",
+        "x": 272,
+        "y": 8,
+        "width": 32,
+        "height": 32,
+        "right": 304,
+        "bottom": 40,
+        "hit": true
+      },
+      {
+        "name": "Nuevo registro de venta o tour",
+        "x": 316,
+        "y": 8,
+        "width": 32,
+        "height": 32,
+        "right": 348,
+        "bottom": 40,
+        "hit": true
+      },
+      {
+        "name": "Hoy",
+        "x": 12,
+        "y": 690,
+        "width": 54.40625,
+        "height": 32,
+        "right": 66.40625,
+        "bottom": 722,
+        "hit": true
+      },
+      {
+        "name": "Todos",
+        "x": 154.921875,
+        "y": 693,
+        "width": 41.109375,
+        "height": 26,
+        "right": 196.03125,
+        "bottom": 719,
+        "hit": true
+      },
+      {
+        "name": "Ventas",
+        "x": 196.03125,
+        "y": 693,
+        "width": 45.828125,
+        "height": 26,
+        "right": 241.859375,
+        "bottom": 719,
+        "hit": true
+      },
+      {
+        "name": "⭐ Spiffs",
+        "x": 241.859375,
+        "y": 693,
+        "width": 56.140625,
+        "height": 26,
+        "right": 298,
+        "bottom": 719,
+        "hit": true
+      },
+      {
+        "name": "Agregar seguimiento",
+        "x": 314,
+        "y": 684,
+        "width": 36,
+        "height": 36,
+        "right": 350,
+        "bottom": 720,
+        "hit": true
+      },
+      {
+        "name": "Hoy",
+        "x": 20,
+        "y": 737.5,
+        "width": 22,
+        "height": 48,
+        "right": 42,
+        "bottom": 785.5,
+        "hit": true
+      },
+      {
+        "name": "GoalSheet",
+        "x": 90.46875,
+        "y": 737.5,
+        "width": 54,
+        "height": 48,
+        "right": 144.46875,
+        "bottom": 785.5,
+        "hit": true
+      },
+      {
+        "name": "Historial",
+        "x": 192.9375,
+        "y": 737.5,
+        "width": 54,
+        "height": 48,
+        "right": 246.9375,
+        "bottom": 785.5,
+        "hit": true
+      },
+      {
+        "name": "Coaching",
+        "x": 295.40625,
+        "y": 737.5,
+        "width": 44.59375,
+        "height": 48,
+        "right": 340,
+        "bottom": 785.5,
+        "hit": true
+      }
+    ],
+    "safeArea": {
+      "headerPaddingTop": "8px",
+      "navPaddingBottom": "10px"
+    }
+  },
+  "multiBaseline": {
+    "chips": 3,
+    "more": "+1 más",
+    "details": 4
+  },
+  "failure": {
+    "name": "android360x800",
+    "theme": "dark",
+    "message": "42-day calendar must fit without internal month scrolling",
+    "runtimeErrors": [],
+    "mutations": [
+      {
+        "method": "POST",
+        "path": "/api/auth/login"
+      }
+    ]
+  },
+  "error": "42-day calendar must fit without internal month scrolling",
+  "finishedAt": "2026-11-23T00:09:55.567Z"
+}
