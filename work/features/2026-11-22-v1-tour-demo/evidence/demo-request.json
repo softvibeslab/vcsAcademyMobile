@@ -1,0 +1,12 @@
+{
+  "request_id": "529d6b43-8a71-43be-846a-e049a5685cf4",
+  "intent": "reflect",
+  "title": "DEMO · Bienvenida y descubrimiento",
+  "scheduled_at": "2026-11-23T02:21:35.497Z",
+  "context": "SIMULACIÓN: pareja completamente ficticia que busca vacaciones tranquilas en familia. Este ejemplo no corresponde a clientes ni a una venta real. Objetivo de práctica: dar una bienvenida breve, aclarar la duración y acordar la agenda antes de presentar.",
+  "feedback": {
+    "happened": "En la simulación saludé a la pareja y pregunté qué vacaciones disfrutan. Empecé la presentación antes de explicar la duración del recorrido. La pareja preguntó cuánto tardaría la visita.",
+    "worked": "Escuché su pregunta, respondí con calma y confirmé su interés en vacaciones tranquilas en familia.",
+    "improve_next": "Practicar una bienvenida breve: presentarme, confirmar cuánto tiempo tienen y acordar la agenda antes de presentar."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "synthetic": true,
+  "account": "rep@vcsa.local",
+  "visitId": "fdaef241-a407-40bd-a3fc-a2ed7fbe125d",
+  "title": "DEMO · Bienvenida y descubrimiento",
+  "eventDate": "2026-11-22",
+  "url": "https://aisalesv1.softvibes.pro/#agenda/fdaef241-a407-40bd-a3fc-a2ed7fbe125d",
+  "status": "completed",
+  "analysisHttpStatus": 200,
+  "analysis": {
+    "status": "ready",
+    "provider": "hermes",
+    "summary": "La visita completada fue una simulación con una pareja ficticia, no una venta real. Según tu relato, saludaste y preguntaste qué vacaciones disfrutan, pero empezaste la presentación sin explicar primero la duración del recorrido. Cuando preguntaron cuánto tardaría la visita, respondiste con calma y confirmaste su interés en vacaciones tranquilas en familia.",
+    "recommendedSteps": [
+      {
+        "step_id": "step_1",
+        "title": "Meet & Greet",
+        "reason": "Repasar la bienvenida te ayuda a practicar una presentación breve y cálida antes de pasar a la agenda, como planteaste en tu objetivo de mejora."
+      },
+      {
+        "step_id": "step_2",
+        "title": "Agenda",
+        "reason": "Es el foco principal de mejora: explicar la duración, confirmar el tiempo disponible y acordar el flujo antes de iniciar la presentación."
+      }
+    ]
+  },
+  "goalSheetUnchanged": true
+}
